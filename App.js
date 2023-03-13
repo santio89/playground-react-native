@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import AppNavigator from './navigation/AppNavigator.js';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
@@ -27,11 +27,11 @@ export default function App() {
 
 
   return (
-    <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
+    <View style={styles.container} onLayout={onLayoutRootView}>
       <Header />
       <AppNavigator />
       <Footer />
-    </SafeAreaView >
+    </View >
   );
 }
 
@@ -43,7 +43,5 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between',
       color: Constants.colorWhite,
       width: '100%',
-      minHeight: 'auto',
-      maxHeight: 'auto',
   }
 });
