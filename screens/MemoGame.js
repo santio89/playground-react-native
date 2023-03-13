@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     },
     winner: {
         fontSize: Constants.fontLg,
-        padding: 20,
+        padding: 10,
         borderRadius: 4,
         borderWidth: 4,
         outlineColor: Constants.colorWhite,
@@ -355,7 +355,7 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     cardsContainer: {
-        padding: 20,
+        padding: 10,
         justifyContent: 'center',
         alignItems: 'center'
     },
