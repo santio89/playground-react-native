@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
         maxWidth: 800,
         justifyContent: 'center',
         alignItems: 'stretch',
-        minWidth: 500
+        minWidth: 300
     },
 
     modal: {
