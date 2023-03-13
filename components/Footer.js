@@ -25,6 +25,6 @@ const styles = StyleSheet.create({
         color: Constants.colorWhite,
         fontFamily: Constants.fontPrimary,
         fontSize: Constants.fontSm,
-        padding: 8,
+        padding: 4,
     }
 })
