@@ -24,7 +24,7 @@ const MemoGame = () => {
     /* storage-max score */
     const storeData = async (score) => {
         try {
-            await storageSetItem("mg-score", JSON.stringify(score));
+            await storageSetItem("pg-mg-score", JSON.stringify(score));
         } catch (error) {
             console.log("error saving data to storage")
         }
@@ -32,7 +32,7 @@ const MemoGame = () => {
 
     const retrieveData = async () => {
         try {
-            const value = await storageGetItem('mg-score');
+            const value = await storageGetItem('pg-mg-score');
             if (value !== null) {
                 setBestScore(JSON.parse(value))
             }
