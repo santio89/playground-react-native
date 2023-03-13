@@ -22,8 +22,8 @@ const AppNavigator = () => {
 
     return (
         <NavigationContainer theme={MyTheme}>
-            <Stack.Navigator initialRouteName='MENU'>
-                <Stack.Screen name='MENU' component={MainMenu} />
+            <Stack.Navigator initialRouteName='Home'>
+                <Stack.Screen name='Home' component={MainMenu} />
                 <Stack.Screen name='ToDoList' component={ToDoList} />
                 <Stack.Screen name='MemoGame' component={MemoGame} />
             </Stack.Navigator>
