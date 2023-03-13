@@ -30,6 +30,7 @@ export default function ListItem({ storeData, items, setItems, item, modalVisibl
 
 const styles = StyleSheet.create({
     listItemContainer: {
+        width: '100%',
         flex: 1
     },
     listItem: {
@@ -44,7 +45,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderColor: Constants.colorPrimaryDark,
         borderStyle: 'solid',
-        borderWidth: 2
+        borderWidth: 2,
+        width: '100%',
     },
     listItemComplete: {
         borderStyle: 'dotted',

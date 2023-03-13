@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, Text, TextInput, View, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Modal, Platform } from 'react-native'
+import { FlatList, Text, TextInput, View, ScrollView, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Modal, Platform } from 'react-native'
 import 'react-native-get-random-values'; /* for uuid */
 import { v4 as uuidv4 } from 'uuid';
 import ListItem from '../components/ListItem';
@@ -56,7 +56,7 @@ export default function ToDoList() {
 
     return (
         <> 
-            <View style={styles.todoListContainer}>
+            <ScrollView contentContainerStyle={styles.todoListContainer}>
                 <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.inputContainer}>
                     <TextInput value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuidv4(), text: input }); setInput('') }} placeholder='NUEVA TAREA' placeholderTextColor="#808080" style={styles.input} />
 
@@ -67,7 +67,7 @@ export default function ToDoList() {
                     </TouchableOpacity>
                 </KeyboardAvoidingView>
 
-                <FlatList contentContainerStyle={styles.listItemContainer}
+                <FlatList contentContainerStyle={styles.listItemsContainer}
                     data={items}
                     renderItem={({ item }) => (
                         <>
@@ -92,7 +92,7 @@ export default function ToDoList() {
                     )}
                     keyExtractor={item => item.id}
                 />
-            </View>
+            </ScrollView>
         </>
     )
 }
@@ -145,10 +145,13 @@ const styles = StyleSheet.create({
         color: Constants.colorWhite,
         fontSize: Constants.fontMd,
     },
-    listItemContainer: {
+    listItemsContainer: {
         width: '100%',
         padding: 10,
         maxWidth: 800,
+        justifyContent: 'center',
+        alignItems: 'stretch',
+        minWidth: 500
     },
 
     modal: {
