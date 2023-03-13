@@ -42,6 +42,8 @@ const styles = StyleSheet.create({
       backgroundColor: Constants.colorDark,
       justifyContent: 'space-between',
       color: Constants.colorWhite,
-      width: '100%'
+      width: '100%',
+      minHeight: 'auto',
+      maxHeight: 'auto',
   }
 });

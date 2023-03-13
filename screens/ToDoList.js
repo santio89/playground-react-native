@@ -67,7 +67,7 @@ export default function ToDoList() {
                     </TouchableOpacity>
                 </KeyboardAvoidingView>
 
-                <FlatList style={styles.listItemContainer}
+                <FlatList contentContainerStyle={styles.listItemContainer}
                     data={items}
                     renderItem={({ item }) => (
                         <>
