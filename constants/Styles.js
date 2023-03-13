@@ -11,4 +11,5 @@ export default {
   fontLg: 28,
   fontMd: 20,
   fontSm: 16,
+  fontXs: 12
 }
