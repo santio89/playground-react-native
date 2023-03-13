@@ -200,7 +200,6 @@ const MemoGame = () => {
                         </>
                 }
             </View>
-
         </ScrollView>
     )
 }
