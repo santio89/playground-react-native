@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Dimensions, TouchableOpacity } from 'react-native'
 import { useState, useEffect } from 'react'
 import React from 'react'
 import Constants from '../constants/Styles'
@@ -19,7 +19,7 @@ const MainMenu = ({ navigation }) => {
     })
 
     return (
-        <View style={styles.menuWrapper}>
+        <ScrollView contentContainerStyle={styles.menuWrapper}>
             <View style={[styles.menuContainer, { flexDirection: windowWidth > 800 ? 'row' : 'column' }/* , { alignItems: windowWidth > 800 ? 'center' : 'stretch' } */]}>
                 <TouchableOpacity style={[styles.menuOption, { width: windowWidth > 800 ? 'auto' : (windowWidth>320?300:'100%') }]} onPress={() => { navigation.navigate("ToDoList") }}>
                     <Text style={styles.menuOptionText}>TO DO LIST</Text>
@@ -28,7 +28,7 @@ const MainMenu = ({ navigation }) => {
                     <Text style={styles.menuOptionText}>MEMO GAME</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 

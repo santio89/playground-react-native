@@ -55,49 +55,57 @@ export default function ToDoList() {
 
 
     return (
-        <> 
+        <>
             <ScrollView contentContainerStyle={styles.todoListContainer}>
-                <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.inputContainer}>
-                    <TextInput value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuidv4(), text: input }); setInput('') }} placeholder='NUEVA TAREA' placeholderTextColor="#808080" style={styles.input} />
+                <View style={styles.listContainer}>
+                    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.inputContainer}>
+                        <TextInput value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuidv4(), text: input }); setInput('') }} placeholder='NUEVA TAREA' placeholderTextColor="#808080" style={styles.input} />
 
-                    <TouchableOpacity disabled={btnDisabled} onPress={() => { addItem({ id: uuidv4(), text: input, completed: false }); setInput('') }} style={[styles.buttonAddContainer, btnDisabled && styles.buttonDisabled]}>
-                        <Text style={styles.buttonAdd}>
-                            AGREGAR
-                        </Text>
-                    </TouchableOpacity>
-                </KeyboardAvoidingView>
+                        <TouchableOpacity disabled={btnDisabled} onPress={() => { addItem({ id: uuidv4(), text: input, completed: false }); setInput('') }} style={[styles.buttonAddContainer, btnDisabled && styles.buttonDisabled]}>
+                            <Text style={styles.buttonAdd}>
+                                AGREGAR
+                            </Text>
+                        </TouchableOpacity>
+                    </KeyboardAvoidingView>
 
-                <FlatList contentContainerStyle={styles.listItemsContainer}
-                    data={items}
-                    renderItem={({ item }) => (
-                        <>
-                            <ListItem storeData={storeData} items={items} setItems={setItems} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} />
+                    <FlatList contentContainerStyle={styles.listItemsContainer}
+                        data={items}
+                        renderItem={({ item }) => (
+                            <>
+                                <ListItem storeData={storeData} items={items} setItems={setItems} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} />
 
-                            <Modal visible={modalVisible.active} transparent={true} animationType='fade'>
-                                <View style={styles.modal}>
-                                    <View style={styles.modalInner}>
-                                        <Text style={styles.modalTitle}>ELIMINAR TAREA?</Text>
-                                        <View style={styles.modalBtnContainer}>
-                                            <TouchableOpacity style={styles.modalBtn}>
-                                                <Text style={styles.modalBtnText} onPress={() => setModalVisible({ active: false, id: null })}>Cancelar</Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={styles.modalBtn} onPress={() => { deleteItem(modalVisible.id); setModalVisible({ active: false, id: null }) }}>
-                                                <Text style={[styles.modalBtnText, styles.borderRed]}>Eliminar</Text>
-                                            </TouchableOpacity>
+                                <Modal visible={modalVisible.active} transparent={true} animationType='fade'>
+                                    <View style={styles.modal}>
+                                        <View style={styles.modalInner}>
+                                            <Text style={styles.modalTitle}>ELIMINAR TAREA?</Text>
+                                            <View style={styles.modalBtnContainer}>
+                                                <TouchableOpacity style={styles.modalBtn}>
+                                                    <Text style={styles.modalBtnText} onPress={() => setModalVisible({ active: false, id: null })}>Cancelar</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity style={styles.modalBtn} onPress={() => { deleteItem(modalVisible.id); setModalVisible({ active: false, id: null }) }}>
+                                                    <Text style={[styles.modalBtnText, styles.borderRed]}>Eliminar</Text>
+                                                </TouchableOpacity>
+                                            </View>
                                         </View>
                                     </View>
-                                </View>
-                            </Modal>
-                        </>
-                    )}
-                    keyExtractor={item => item.id}
-                />
+                                </Modal>
+                            </>
+                        )}
+                        keyExtractor={item => item.id}
+                    />
+                </View>
             </ScrollView>
         </>
     )
 }
 
 const styles = StyleSheet.create({
+    listContainer: {
+        width: '100%',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     todoListContainer: {
         flex: 1,
         backgroundColor: Constants.colorDark,
