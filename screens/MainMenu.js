@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, ScrollView, Dimensions, TouchableOpacity } from 'react-native'
 import { useState, useEffect } from 'react'
-import React from 'react'
 import Constants from '../constants/Styles'
 
 const MainMenu = ({ navigation }) => {

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, ScrollView, Dimensions } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import 'react-native-get-random-values'; /* for uuid */
 import { v4 as uuidv4 } from 'uuid';
 import Constants from '../constants/Styles.js';

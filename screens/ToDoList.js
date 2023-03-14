@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FlatList, Text, TextInput, View, ScrollView, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Modal, Platform } from 'react-native'
 import 'react-native-get-random-values'; /* for uuid */
 import { v4 as uuidv4 } from 'uuid';
 import ListItem from '../components/ListItem';
-import { storageSetItem, storageGetItem } from '../utils/AsyncStorage';
+import { storageSetItem, storageGetItem } from '../components/AsyncStorage';
 import Constants from '../constants/Styles';
 
 export default function ToDoList() {
