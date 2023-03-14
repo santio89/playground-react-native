@@ -3,7 +3,7 @@ import { FlatList, Text, TextInput, View, ScrollView, KeyboardAvoidingView, Styl
 import 'react-native-get-random-values'; /* for uuid */
 import { v4 as uuidv4 } from 'uuid';
 import ListItem from '../components/ListItem';
-import { storageSetItem, storageGetItem } from '../components/AsyncStorage';
+import { storageSetItem, storageGetItem } from '../utils/AsyncStorage';
 import Constants from '../constants/Styles';
 
 export default function ToDoList() {

@@ -34,6 +34,7 @@ const MainMenu = ({ navigation }) => {
 
 export default MainMenu
 
+
 const styles = StyleSheet.create({
     menuWrapper: {
         width: '100%',

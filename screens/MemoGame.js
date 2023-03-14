@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Constants from '../constants/Styles.js';
 import Card from '../components/Card';
 import emojis from '../constants/Emojis.js';
-import { storageGetItem, storageSetItem } from '../components/AsyncStorage.js';
+import { storageGetItem, storageSetItem } from '../utils/AsyncStorage.js';
 
 
 const MemoGame = () => {

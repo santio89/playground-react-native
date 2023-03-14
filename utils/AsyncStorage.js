@@ -3,16 +3,16 @@
 
 
     export const storageSetItem = Platform.OS === 'web' ? 
-    async (name, items)=>{
-        await localStorage.setItem(name, items);
+    (name, items)=>{
+        localStorage.setItem(name, items);
     } : 
     async (name, items)=>{
         await AsyncStorage.setItem(name, items);
     }
 
     export const storageGetItem = Platform.OS === 'web' ? 
-    async (name)=>{
-        return await localStorage.getItem(name);
+    (name)=>{
+        return localStorage.getItem(name);
     } : 
     async (name)=>{
         return await AsyncStorage.getItem(name);
