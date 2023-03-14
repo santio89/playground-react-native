@@ -1,5 +1,4 @@
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
-import React from 'react'
 import Constants from '../constants/Styles'
 
 const Card = ({ card, handleChoice, choiceOne, choiceTwo, disabled }) => {

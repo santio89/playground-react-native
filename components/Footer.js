@@ -1,4 +1,3 @@
-import React from 'react'
 import { View, Text, StyleSheet, Linking } from 'react-native'
 import Constants from '../constants/Styles'
 
