@@ -114,8 +114,6 @@ const styles = StyleSheet.create({
         width: '100%',
         minWidth: 300,
         maxWidth: 800,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     inputContainer: {
         width: '100%',
@@ -157,8 +155,6 @@ const styles = StyleSheet.create({
     listItemsContainer: {
         padding: 10,
         width: '100%',
-        minWidth: 300,
-        maxWidth: '100%',
         justifyContent: 'center',
         alignItems: 'stretch',
     },
