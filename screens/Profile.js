@@ -1,13 +1,13 @@
-import { StyleSheet, Text, ScrollView, View } from 'react-native'
-import { useState } from 'react'
+import { StyleSheet, Text, ScrollView, View, Image } from 'react-native'
 import Constants from '../constants/Styles.js'
+import { useState } from 'react'
 
 const Profile = () => {
     /* estado de prueba */
     const [user, setUser] = useState({
         email: "correotest@gmail.com",
         nombre: "Nombre Test",
-        edad: 99,
+        avatar: "https://source.unsplash.com/random/"
     })
     return (
         <ScrollView contentContainerStyle={styles.profileContainer}>
@@ -21,8 +21,11 @@ const Profile = () => {
                     <Text style={styles.profileItemText}>{user.nombre}</Text>
                 </View>
                 <View style={styles.profileItem}>
-                    <Text style={styles.profileItemLabel}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>Edad: </Text></Text>
-                    <Text style={styles.profileItemText}>{user.edad}</Text>
+                    <Text style={styles.profileItemLabel}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>Avatar: </Text></Text>
+                    <Image
+                        style={styles.profileItemImage}
+                        source={{uri: user.avatar}}
+                    />
                 </View>
             </View>
         </ScrollView>
@@ -42,14 +45,15 @@ const styles = StyleSheet.create({
         padding: 10
     },
     itemsContainer: {
+        width: '100%',
         minWidth: 300,
         maxWidth: 800,
         padding: 20,
-        paddingBottom: 10,
+        paddingBottom: 0,
         backgroundColor: Constants.colorPrimary,
         borderRadius: 8,
         borderWidth: 4,
-        borderColor: Constants.colorPrimaryDark
+        borderColor: Constants.colorPrimaryDark,
     },
     profileItemIndicator: {
         fontFamily: Constants.fontPrimaryBold,
@@ -58,7 +62,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
-    },  
+    },
     profileItem: {
         marginBottom: 20,
         justifyContent: 'start',
@@ -77,5 +81,12 @@ const styles = StyleSheet.create({
         fontFamily: Constants.fontPrimaryBold,
         fontSize: Constants.fontMd,
         color: Constants.colorDark,
+    },
+    profileItemImage: {
+        width: 80,
+        height: 80,
+        resizeMode: 'cover',
+        borderRadius: 4,
+        marginTop: 8
     }
 })

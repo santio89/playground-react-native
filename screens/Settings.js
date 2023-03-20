@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
         padding: 10
     },
     itemsContainer: {
+        width: '100%',
         minWidth: 300,
         maxWidth: 800,
         padding: 20,
