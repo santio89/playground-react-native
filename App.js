@@ -1,11 +1,12 @@
 import { StyleSheet, SafeAreaView } from 'react-native'
-import AppNavigator from './navigation/AppNavigator.js';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import {useCallback} from 'react'
+import { useCallback } from 'react'
 import Header from './components/Header.js'
 import Footer from './components/Footer.js'
 import Constants from './constants/Styles.js'
+import MainNavigator from './navigation/MainNavigator.js'
+
 
 SplashScreen.preventAutoHideAsync();
 
@@ -26,11 +27,12 @@ export default function App() {
   }
 
 
+
   return (
     <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
       <Header />
-      <AppNavigator />
-      <Footer />
+      <MainNavigator />
+     {/*  <Footer /> */}
     </SafeAreaView >
   );
 }
@@ -38,10 +40,10 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-      backgroundColor: Constants.colorDark,
-      justifyContent: 'space-between',
-      color: Constants.colorWhite,
-      width: '100%',
+    flex: 1,
+    backgroundColor: Constants.colorDark,
+    justifyContent: 'space-between',
+    color: Constants.colorWhite,
+    width: '100%',
   }
 });
