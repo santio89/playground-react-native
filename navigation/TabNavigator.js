@@ -1,15 +1,28 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Dimensions } from 'react-native'
+import { useEffect, useState } from 'react';
 import AppNavigator from './AppNavigator';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Constants from '../constants/Styles.js'
 import { Ionicons } from '@expo/vector-icons';
 import Profile from '../screens/Profile';
 import Settings from '../screens/Settings';
-import Header from '../components/Header';
-
 const BottomTabs = createBottomTabNavigator();
 
 const TabNavigator = () => {
+    const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
+
+    const updateWindowWidth = () => {
+        setWindowWidth(Dimensions.get('window').width)
+    }
+
+    useEffect(() => {
+        const dimensionsHandler = Dimensions.addEventListener("change", updateWindowWidth)
+
+        return () => {
+            dimensionsHandler.remove()
+        }
+    })
+
   return (
     <BottomTabs.Navigator initialRouteName='Apps' 
     screenOptions={{headerShown: false, tabBarShowLabel: false, tabBarStyle:styles.tabBar}}>
@@ -18,7 +31,7 @@ const TabNavigator = () => {
             tabBarIcon: ({focused}) => (
                 <View style={[styles.item, focused && styles.itemFocused]}>
                     <Ionicons name="apps-sharp" size={Constants.fontLg} color={focused?Constants.colorWhite:Constants.colorDark} />
-                    <Text>APPS</Text>
+                    <Text style={[styles.itemText, focused && styles.itemTextFocused, windowWidth<=800 && styles.itemTextMobile]}>APPS</Text>
                 </View>
             ),
             title: 'APPS | PLAYGROUND'
@@ -28,7 +41,7 @@ const TabNavigator = () => {
             tabBarIcon: ({focused}) => (
                 <View style={[styles.item, focused && styles.itemFocused]}>
                     <Ionicons name="person" size={Constants.fontLg} color={focused?Constants.colorWhite:Constants.colorDark} />
-                    <Text>PERFIL</Text>
+                    <Text style={[styles.itemText, focused && styles.itemTextFocused, windowWidth<=800 && styles.itemTextMobile]}>PERFIL</Text>
                 </View>
             ),
             title: 'PERFIL | PLAYGROUND'
@@ -38,7 +51,7 @@ const TabNavigator = () => {
             tabBarIcon: ({focused}) => (
                 <View style={[styles.item, focused && styles.itemFocused]}>
                     <Ionicons name="settings" size={Constants.fontLg} color={focused?Constants.colorWhite:Constants.colorDark} />
-                    <Text>CONFIG</Text>
+                    <Text style={[styles.itemText, focused && styles.itemTextFocused, windowWidth<=800 && styles.itemTextMobile]}>CONFIG</Text>
                 </View>
             ),
             title: 'CONFIG | PLAYGROUND'
@@ -54,7 +67,7 @@ const styles = StyleSheet.create({
     tabBar: {
         color: Constants.colorPrimaryDark,
         backgroundColor: Constants.colorPrimaryDark,
-        padding: 30,
+        height: 60,
         borderTopColor: Constants.colorPrimary,
         borderTopWidth: 1,
     },
@@ -66,5 +79,15 @@ const styles = StyleSheet.create({
     },
     itemFocused: {
         color: Constants.colorWhite
+    },
+    itemText: {
+        color: Constants.colorDark,
+        fontSize: 16,
+    },
+    itemTextFocused: {
+        color: Constants.colorWhite,
+    },
+    itemTextMobile: {
+        fontSize: 12
     }
 })

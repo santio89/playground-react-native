@@ -22,7 +22,7 @@ const MainMenu = ({ navigation }) => {
         <>
             <Header />
             <ScrollView contentContainerStyle={styles.menuWrapper}>
-                <View style={[styles.menuContainer, { flexDirection: windowWidth > 800 ? 'row' : 'column' }/* , { alignItems: windowWidth > 800 ? 'center' : 'stretch' } */]}>
+                <View style={[styles.menuContainer, { flexDirection: windowWidth > 800 ? 'row' : 'column' }]}>
                     <TouchableOpacity style={[styles.menuOption, { width: windowWidth > 800 ? 'auto' : (windowWidth > 320 ? 300 : '100%') }]} onPress={() => { navigation.navigate("ToDoList") }}>
                         <Text style={styles.menuOptionText}>TO DO LIST</Text>
                     </TouchableOpacity>
