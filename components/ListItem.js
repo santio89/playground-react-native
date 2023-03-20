@@ -31,7 +31,6 @@ export default function ListItem({ storeData, items, setItems, item, modalVisibl
 const styles = StyleSheet.create({
     listItemContainer: {
         width: '100%',
-        flex: 1
     },
     listItem: {
         color: Constants.colorWhite,

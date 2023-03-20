@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, ScrollView, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions } from 'react-native'
 import { useEffect, useState } from 'react'
 import 'react-native-get-random-values'; /* for uuid */
 import { v4 as uuidv4 } from 'uuid';
@@ -139,7 +139,7 @@ const MemoGame = () => {
     })
 
     return (
-        <ScrollView contentContainerStyle={styles.memoGameContainer}>
+        <View style={styles.memoGameContainer}>
             <View style={styles.gameContainer}>
                 {
                     !startState ?
@@ -200,7 +200,7 @@ const MemoGame = () => {
                         </>
                 }
             </View>
-        </ScrollView>
+        </View>
     )
 }
 

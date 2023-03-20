@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import Constants from '../constants/Styles.js'
 import { useState } from 'react'
+import Header from '../components/Header.js'
 
 const Settings = () => {
     /* estado de prueba */
@@ -11,22 +12,25 @@ const Settings = () => {
     })
 
     return (
-        <ScrollView contentContainerStyle={styles.settingsContainer}>
-            <View style={styles.itemsContainer}>
-                <View style={styles.settingsItem}>
-                    <Text style={styles.settingsItemLabel}><Text style={styles.settingsItemIndicator}>●&nbsp;</Text><Text>Idioma: </Text></Text>
-                    <Text style={styles.settingsItemText}>{userSettings.idioma}</Text>
+        <>
+            <Header />
+            <ScrollView contentContainerStyle={styles.settingsContainer}>
+                <View style={styles.itemsContainer}>
+                    <View style={styles.settingsItem}>
+                        <Text style={styles.settingsItemLabel}><Text style={styles.settingsItemIndicator}>●&nbsp;</Text><Text>Idioma: </Text></Text>
+                        <Text style={styles.settingsItemText}>{userSettings.idioma}</Text>
+                    </View>
+                    <View style={styles.settingsItem}>
+                        <Text style={styles.settingsItemLabel}><Text style={styles.settingsItemIndicator}>●&nbsp;</Text><Text>Modo Oscuro: </Text></Text>
+                        <Text style={styles.settingsItemText}>{userSettings.darkMode ? "Activado" : "Desactivado"}</Text>
+                    </View>
+                    <View style={styles.settingsItem}>
+                        <Text style={styles.settingsItemLabel}><Text style={styles.settingsItemIndicator}>●&nbsp;</Text><Text>Tema de Color: </Text></Text>
+                        <Text style={styles.settingsItemText}>{userSettings.colorTheme}</Text>
+                    </View>
                 </View>
-                <View style={styles.settingsItem}>
-                    <Text style={styles.settingsItemLabel}><Text style={styles.settingsItemIndicator}>●&nbsp;</Text><Text>Modo Oscuro: </Text></Text>
-                    <Text style={styles.settingsItemText}>{userSettings.darkMode?"Activado":"Desactivado"}</Text>
-                </View>
-                <View style={styles.settingsItem}>
-                    <Text style={styles.settingsItemLabel}><Text style={styles.settingsItemIndicator}>●&nbsp;</Text><Text>Tema de Color: </Text></Text>
-                    <Text style={styles.settingsItemText}>{userSettings.colorTheme}</Text>
-                </View>
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </>
     )
 }
 
@@ -60,8 +64,8 @@ const styles = StyleSheet.create({
     },
     settingsItem: {
         marginBottom: 20,
-        justifyContent: 'start',
-        alignItems: 'start'
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start'
     },
     settingsItemLabel: {
         fontFamily: Constants.fontPrimary,

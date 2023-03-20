@@ -1,6 +1,7 @@
 import { StyleSheet, Text, ScrollView, View, Image } from 'react-native'
 import Constants from '../constants/Styles.js'
 import { useState } from 'react'
+import Header from '../components/Header.js'
 
 const Profile = () => {
     /* estado de prueba */
@@ -10,25 +11,28 @@ const Profile = () => {
         avatar: "https://source.unsplash.com/random/"
     })
     return (
-        <ScrollView contentContainerStyle={styles.profileContainer}>
-            <View style={styles.itemsContainer}>
-                <View style={styles.profileItem}>
-                    <Text style={styles.profileItemLabel}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>Correo: </Text></Text>
-                    <Text style={styles.profileItemText}>{user.email}</Text>
+        <>
+            <Header />
+            <ScrollView contentContainerStyle={styles.profileContainer}>
+                <View style={styles.itemsContainer}>
+                    <View style={styles.profileItem}>
+                        <Text style={styles.profileItemLabel}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>Correo: </Text></Text>
+                        <Text style={styles.profileItemText}>{user.email}</Text>
+                    </View>
+                    <View style={styles.profileItem}>
+                        <Text style={styles.profileItemLabel}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>Nombre: </Text></Text>
+                        <Text style={styles.profileItemText}>{user.nombre}</Text>
+                    </View>
+                    <View style={styles.profileItem}>
+                        <Text style={styles.profileItemLabel}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>Avatar: </Text></Text>
+                        <Image
+                            style={styles.profileItemImage}
+                            source={{ uri: user.avatar }}
+                        />
+                    </View>
                 </View>
-                <View style={styles.profileItem}>
-                    <Text style={styles.profileItemLabel}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>Nombre: </Text></Text>
-                    <Text style={styles.profileItemText}>{user.nombre}</Text>
-                </View>
-                <View style={styles.profileItem}>
-                    <Text style={styles.profileItemLabel}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>Avatar: </Text></Text>
-                    <Image
-                        style={styles.profileItemImage}
-                        source={{uri: user.avatar}}
-                    />
-                </View>
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </>
     )
 }
 
@@ -65,8 +69,8 @@ const styles = StyleSheet.create({
     },
     profileItem: {
         marginBottom: 20,
-        justifyContent: 'start',
-        alignItems: 'start'
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start'
     },
     profileItemLabel: {
         fontFamily: Constants.fontPrimary,

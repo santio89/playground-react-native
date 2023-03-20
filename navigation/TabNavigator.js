@@ -5,6 +5,7 @@ import Constants from '../constants/Styles.js'
 import { Ionicons } from '@expo/vector-icons';
 import Profile from '../screens/Profile';
 import Settings from '../screens/Settings';
+import Header from '../components/Header';
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -53,7 +54,9 @@ const styles = StyleSheet.create({
     tabBar: {
         color: Constants.colorPrimaryDark,
         backgroundColor: Constants.colorPrimaryDark,
-        padding: 30
+        padding: 30,
+        borderTopColor: Constants.colorPrimary,
+        borderTopWidth: 1,
     },
     item: {
         justifyContent: 'center',

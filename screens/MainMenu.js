@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, ScrollView, Dimensions, TouchableOpacity } from 'react-native'
 import { useState, useEffect } from 'react'
 import Constants from '../constants/Styles'
+import Header from '../components/Header'
 
 const MainMenu = ({ navigation }) => {
     const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
@@ -18,16 +19,19 @@ const MainMenu = ({ navigation }) => {
     })
 
     return (
-        <ScrollView contentContainerStyle={styles.menuWrapper}>
-            <View style={[styles.menuContainer, { flexDirection: windowWidth > 800 ? 'row' : 'column' }/* , { alignItems: windowWidth > 800 ? 'center' : 'stretch' } */]}>
-                <TouchableOpacity style={[styles.menuOption, { width: windowWidth > 800 ? 'auto' : (windowWidth>320?300:'100%') }]} onPress={() => { navigation.navigate("ToDoList") }}>
-                    <Text style={styles.menuOptionText}>TO DO LIST</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.menuOption, { width: windowWidth > 800 ? 'auto' : (windowWidth>320?300:'100%') }]} onPress={() => { navigation.navigate("MemoGame") }}>
-                    <Text style={styles.menuOptionText}>MEMO GAME</Text>
-                </TouchableOpacity>
-            </View>
-        </ScrollView>
+        <>
+            <Header />
+            <ScrollView contentContainerStyle={styles.menuWrapper}>
+                <View style={[styles.menuContainer, { flexDirection: windowWidth > 800 ? 'row' : 'column' }/* , { alignItems: windowWidth > 800 ? 'center' : 'stretch' } */]}>
+                    <TouchableOpacity style={[styles.menuOption, { width: windowWidth > 800 ? 'auto' : (windowWidth > 320 ? 300 : '100%') }]} onPress={() => { navigation.navigate("ToDoList") }}>
+                        <Text style={styles.menuOptionText}>TO DO LIST</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.menuOption, { width: windowWidth > 800 ? 'auto' : (windowWidth > 320 ? 300 : '100%') }]} onPress={() => { navigation.navigate("MemoGame") }}>
+                        <Text style={styles.menuOptionText}>MEMO GAME</Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
+        </>
     )
 }
 

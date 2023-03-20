@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { FlatList, Text, TextInput, View, ScrollView, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Modal, Platform } from 'react-native'
+import { FlatList, Text, TextInput, View, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Modal, Platform } from 'react-native'
 import 'react-native-get-random-values'; /* for uuid */
 import { v4 as uuidv4 } from 'uuid';
 import ListItem from '../components/ListItem';
@@ -56,7 +56,7 @@ export default function ToDoList() {
 
     return (
         <>
-            <ScrollView contentContainerStyle={styles.todoListContainer}>
+            <View style={styles.todoListContainer}>
                 <View style={styles.listContainer}>
                     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.inputContainer}>
                         <TextInput value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuidv4(), text: input }); setInput('') }} placeholder='NUEVA TAREA' placeholderTextColor="#808080" style={styles.input} />
@@ -94,7 +94,7 @@ export default function ToDoList() {
                         keyExtractor={item => item.id}
                     />
                 </View>
-            </ScrollView>
+            </View>
         </>
     )
 }
@@ -110,8 +110,10 @@ const styles = StyleSheet.create({
         padding: 10
     },
     listContainer: {
-        width: '100%',
         flex: 1,
+        width: '100%',
+        minWidth: 300,
+        maxWidth: 800,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -120,7 +122,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 10,
         marginBottom: 20,
-        maxWidth: 800,
         justifyContent: 'space-between',
         padding: 10,
     },
@@ -154,10 +155,10 @@ const styles = StyleSheet.create({
         fontSize: Constants.fontMd,
     },
     listItemsContainer: {
-        width: '100%',
         padding: 10,
-        minWidth: 300,
-        maxWidth: 800,
+        width: '100%',
+        minWidth: '100%',
+        maxWidth: '100%',
         justifyContent: 'center',
         alignItems: 'stretch',
     },

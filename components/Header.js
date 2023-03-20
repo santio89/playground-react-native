@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     padding: 8,
     paddingTop: Platform.OS === 'web' ? 8 : 20,
     width: '100%',
-    borderBottomColor: Constants.colorWhite,
-    borderBottomWidth: 2,
+    borderBottomColor: Constants.colorPrimaryDark,
+    borderBottomWidth: 1,
   },
 
   header: {
