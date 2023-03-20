@@ -215,10 +215,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         color: Constants.colorWhite,
         width: '100%',
+        padding: 10
     },
     gameContainer: {
-        padding: 10,
         width: '100%',
+        minWidth: 300,
         maxWidth: 800,
         justifyContent: 'center',
         alignItems: 'center',

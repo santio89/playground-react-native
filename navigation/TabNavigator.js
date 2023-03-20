@@ -19,7 +19,8 @@ const TabNavigator = () => {
                     <Ionicons name="apps-sharp" size={Constants.fontLg} color={focused?Constants.colorWhite:Constants.colorDark} />
                     <Text>APPS</Text>
                 </View>
-            )
+            ),
+            title: 'APPS | PLAYGROUND'
         }}/>
         <BottomTabs.Screen name='Profile' component={Profile} 
         options={{
@@ -28,7 +29,8 @@ const TabNavigator = () => {
                     <Ionicons name="person" size={Constants.fontLg} color={focused?Constants.colorWhite:Constants.colorDark} />
                     <Text>PERFIL</Text>
                 </View>
-            )
+            ),
+            title: 'PERFIL | PLAYGROUND'
         }}/>
         <BottomTabs.Screen name='Settings' component={Settings} 
         options={{
@@ -37,7 +39,8 @@ const TabNavigator = () => {
                     <Ionicons name="settings" size={Constants.fontLg} color={focused?Constants.colorWhite:Constants.colorDark} />
                     <Text>CONFIG</Text>
                 </View>
-            )
+            ),
+            title: 'CONFIG | PLAYGROUND'
         }}/>
 
     </BottomTabs.Navigator>

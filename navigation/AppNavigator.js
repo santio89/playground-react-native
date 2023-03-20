@@ -9,9 +9,9 @@ const AppNavigator = () => {
 
     return (
         <Stack.Navigator initialRouteName='Apps'>
-            <Stack.Screen name='Apps' component={MainMenu} options={{ title: 'APPS', headerShown: false }}/>
-            <Stack.Screen name='ToDoList' component={ToDoList} options={{ title: 'TO DO LIST' }}/>
-            <Stack.Screen name='MemoGame' component={MemoGame} options={{ title: 'MEMO GAME' }}/>
+            <Stack.Screen name='Apps' component={MainMenu} options={{ title: 'APPS | PLAYGROUND', headerShown: false }}/>
+            <Stack.Screen name='ToDoList' component={ToDoList} options={{ title: 'TO DO LIST | PLAYGROUND' }}/>
+            <Stack.Screen name='MemoGame' component={MemoGame} options={{ title: 'MEMO GAME | PLAYGROUND' }}/>
         </Stack.Navigator>
     )
 }

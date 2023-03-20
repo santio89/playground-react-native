@@ -100,12 +100,6 @@ export default function ToDoList() {
 }
 
 const styles = StyleSheet.create({
-    listContainer: {
-        width: '100%',
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     todoListContainer: {
         flex: 1,
         backgroundColor: Constants.colorDark,
@@ -115,7 +109,12 @@ const styles = StyleSheet.create({
         width: '100%',
         padding: 10
     },
-
+    listContainer: {
+        width: '100%',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     inputContainer: {
         width: '100%',
         flexDirection: 'row',
@@ -157,10 +156,10 @@ const styles = StyleSheet.create({
     listItemsContainer: {
         width: '100%',
         padding: 10,
+        minWidth: 300,
         maxWidth: 800,
         justifyContent: 'center',
         alignItems: 'stretch',
-        minWidth: 300
     },
 
     modal: {
