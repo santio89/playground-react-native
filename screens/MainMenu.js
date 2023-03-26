@@ -1,10 +1,17 @@
 import { StyleSheet, Text, View, ScrollView, Dimensions, TouchableOpacity } from 'react-native'
 import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import Constants from '../constants/Styles'
 import Header from '../components/Header'
 
+
 const MainMenu = ({ navigation }) => {
     const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
+
+    const languageSelected = useSelector(state=>state.languages.selected)
+    const langs = useSelector(state=>state.languages.langs)
+
+    const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
 
     const updateWindowWidth = () => {
         setWindowWidth(Dimensions.get('window').width)
@@ -17,6 +24,10 @@ const MainMenu = ({ navigation }) => {
             dimensionsHandler.remove()
         }
     })
+    
+    useEffect(()=>{
+        setText(langs.find(lang=>lang.lang === languageSelected).text)
+    }, [languageSelected])
 
     return (
         <>
@@ -24,10 +35,10 @@ const MainMenu = ({ navigation }) => {
             <ScrollView contentContainerStyle={styles.menuWrapper}>
                 <View style={[styles.menuContainer, { flexDirection: windowWidth > 800 ? 'row' : 'column' }]}>
                     <TouchableOpacity style={[styles.menuOption, { width: windowWidth > 800 ? 'auto' : (windowWidth > 320 ? 300 : '100%') }]} onPress={() => { navigation.navigate("ToDoList") }}>
-                        <Text style={styles.menuOptionText}>TO DO LIST</Text>
+                        <Text style={styles.menuOptionText}>{text.toDoList}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.menuOption, { width: windowWidth > 800 ? 'auto' : (windowWidth > 320 ? 300 : '100%') }]} onPress={() => { navigation.navigate("MemoGame") }}>
-                        <Text style={styles.menuOptionText}>MEMO GAME</Text>
+                        <Text style={styles.menuOptionText}>{text.memoGame}</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>

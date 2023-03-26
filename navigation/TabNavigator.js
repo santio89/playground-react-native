@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import AppNavigator from './AppNavigator';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Constants from '../constants/Styles.js'
 import { Ionicons } from '@expo/vector-icons';
 import Profile from '../screens/Profile';
 import Settings from '../screens/Settings';
+
 const BottomTabs = createBottomTabNavigator();
 
 const TabNavigator = () => {
@@ -14,6 +16,11 @@ const TabNavigator = () => {
     const updateWindowWidth = () => {
         setWindowWidth(Dimensions.get('window').width)
     }
+
+    const languageSelected = useSelector(state=>state.languages.selected)
+    const langs = useSelector(state=>state.languages.langs)
+
+    const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
 
     useEffect(() => {
         const dimensionsHandler = Dimensions.addEventListener("change", updateWindowWidth)
@@ -41,10 +48,10 @@ const TabNavigator = () => {
             tabBarIcon: ({focused}) => (
                 <View style={[styles.item, focused && styles.itemFocused]}>
                     <Ionicons name="person" size={Constants.fontLg} color={focused?Constants.colorWhite:Constants.colorDark} />
-                    <Text style={[styles.itemText, focused && styles.itemTextFocused, windowWidth<=800 && styles.itemTextMobile]}>PERFIL</Text>
+                    <Text style={[styles.itemText, focused && styles.itemTextFocused, windowWidth<=800 && styles.itemTextMobile]}>{text.profile}</Text>
                 </View>
             ),
-            title: 'PERFIL | PLAYGROUND'
+            title: 'PROFILE | PLAYGROUND'
         }}/>
         <BottomTabs.Screen name='Settings' component={Settings} 
         options={{

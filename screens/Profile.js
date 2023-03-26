@@ -1,30 +1,48 @@
 import { StyleSheet, Text, ScrollView, View, Image } from 'react-native'
+import { useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
 import Constants from '../constants/Styles.js'
-import { useState } from 'react'
 import Header from '../components/Header.js'
 
-const Profile = () => {
+const Profile = ({navigation}) => {
     /* estado de prueba */
     const [user, setUser] = useState({
-        email: "correotest@gmail.com",
-        nombre: "Nombre Test",
+        email: "TEST@GMAIL.COM",
+        nombre: "TEST",
         avatar: "https://source.unsplash.com/random/"
     })
+
+    const languageSelected = useSelector(state=>state.languages.selected)
+    const langs = useSelector(state=>state.languages.langs)
+
+    const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
+
+    useEffect(()=>{
+        setText(langs.find(lang=>lang.lang === languageSelected).text)
+    }, [languageSelected])
+
+    useEffect(()=>{
+        navigation.setOptions({
+            title: `${text.profile} | PLAYGROUND`,
+            headerShown: false
+        })
+    }, [text])
+
     return (
         <>
             <Header />
             <ScrollView contentContainerStyle={styles.profileContainer}>
                 <View style={styles.itemsContainer}>
                     <View style={styles.profileItem}>
-                        <Text style={styles.profileItemLabel}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>Correo: </Text></Text>
+                        <Text style={styles.profileItemLabel}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>{text.email}: </Text></Text>
                         <Text style={styles.profileItemText}>{user.email}</Text>
                     </View>
                     <View style={styles.profileItem}>
-                        <Text style={styles.profileItemLabel}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>Nombre: </Text></Text>
+                        <Text style={styles.profileItemLabel}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>{text.name}: </Text></Text>
                         <Text style={styles.profileItemText}>{user.nombre}</Text>
                     </View>
                     <View style={styles.profileItem}>
-                        <Text style={styles.profileItemLabel}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>Avatar: </Text></Text>
+                        <Text style={styles.profileItemLabel}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>{text.avatar}: </Text></Text>
                         <Image
                             style={styles.profileItemImage}
                             source={{ uri: user.avatar }}

@@ -1,0 +1,1 @@
+export const URL_API = "https://playground-react-native-9aef6-default-rtdb.firebaseio.com/"

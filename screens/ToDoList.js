@@ -1,16 +1,22 @@
 import { useEffect, useState } from 'react'
 import { FlatList, Text, TextInput, View, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Modal, Platform } from 'react-native'
+import { useSelector } from 'react-redux';
 import 'react-native-get-random-values'; /* for uuid */
 import { v4 as uuidv4 } from 'uuid';
 import ListItem from '../components/ListItem';
 import { storageSetItem, storageGetItem } from '../utils/AsyncStorage';
 import Constants from '../constants/Styles';
 
-export default function ToDoList() {
+export default function ToDoList({navigation}) {
     const [btnDisabled, setBtnDisabled] = useState(true)
     const [input, setInput] = useState("")
     const [items, setItems] = useState([])
     const [modalVisible, setModalVisible] = useState({ active: false, id: null });
+    
+    const languageSelected = useSelector(state=>state.languages.selected)
+    const langs = useSelector(state=>state.languages.langs)
+
+    const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
 
     const storeData = async (items) => {
         try {
@@ -40,6 +46,7 @@ export default function ToDoList() {
     const deleteItem = (id) => {
         setItems((oldItems) => oldItems.filter(item => item.id != id))
     }
+    
 
     useEffect(() => {
         retrieveData();
@@ -53,17 +60,28 @@ export default function ToDoList() {
         storeData(items)
     }, [items])
 
+    useEffect(()=>{
+        setText(langs.find(lang=>lang.lang === languageSelected).text)
+    }, [languageSelected])
+
+    useEffect(()=>{
+        navigation.setOptions({
+            title: `${text.toDoList} | PLAYGROUND`,
+            headerShown: false
+        })
+    }, [text])
+
 
     return (
         <>
             <View style={styles.todoListContainer}>
                 <View style={styles.listContainer}>
                     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.inputContainer}>
-                        <TextInput value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuidv4(), text: input }); setInput('') }} placeholder='NUEVA TAREA' placeholderTextColor="#808080" style={styles.input} />
+                        <TextInput value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuidv4(), text: input }); setInput('') }} placeholder={text.newTask} placeholderTextColor="#808080" style={styles.input} />
 
                         <TouchableOpacity disabled={btnDisabled} onPress={() => { addItem({ id: uuidv4(), text: input, completed: false }); setInput('') }} style={[styles.buttonAddContainer, btnDisabled && styles.buttonDisabled]}>
                             <Text style={styles.buttonAdd}>
-                                AGREGAR
+                                {text.add}
                             </Text>
                         </TouchableOpacity>
                     </KeyboardAvoidingView>
@@ -77,13 +95,13 @@ export default function ToDoList() {
                                 <Modal visible={modalVisible.active} transparent={true} animationType='fade'>
                                     <View style={styles.modal}>
                                         <View style={styles.modalInner}>
-                                            <Text style={styles.modalTitle}>ELIMINAR TAREA?</Text>
+                                            <Text style={styles.modalTitle}>{text.deleteTask}?</Text>
                                             <View style={styles.modalBtnContainer}>
                                                 <TouchableOpacity style={styles.modalBtn}>
-                                                    <Text style={styles.modalBtnText} onPress={() => setModalVisible({ active: false, id: null })}>Cancelar</Text>
+                                                    <Text style={styles.modalBtnText} onPress={() => setModalVisible({ active: false, id: null })}>{text.cancel}</Text>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity style={styles.modalBtn} onPress={() => { deleteItem(modalVisible.id); setModalVisible({ active: false, id: null }) }}>
-                                                    <Text style={[styles.modalBtnText, styles.borderRed]}>Eliminar</Text>
+                                                    <Text style={[styles.modalBtnText, styles.borderRed]}>{text.delete}</Text>
                                                 </TouchableOpacity>
                                             </View>
                                         </View>

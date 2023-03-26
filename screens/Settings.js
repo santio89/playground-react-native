@@ -1,15 +1,30 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import Constants from '../constants/Styles.js'
-import { useState } from 'react'
 import Header from '../components/Header.js'
 
 const Settings = () => {
+
+    const dispatch = useDispatch()
+
+    const languageSelected = useSelector(state=>state.languages.selected)
+    const langs = useSelector(state=>state.languages.langs)
+
+    const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
+
+    
     /* estado de prueba */
     const [userSettings, setUserSettings] = useState({
-        idioma: "Español",
+        idioma: text.spanish,
         darkMode: true,
-        colorTheme: 'Púrpura'
+        colorTheme: text.purple
     })
+
+    useEffect(()=>{
+        setText(langs.find(lang=>lang.lang === languageSelected).text)
+    }, [languageSelected])
+
 
     return (
         <>
@@ -17,15 +32,15 @@ const Settings = () => {
             <ScrollView contentContainerStyle={styles.settingsContainer}>
                 <View style={styles.itemsContainer}>
                     <View style={styles.settingsItem}>
-                        <Text style={styles.settingsItemLabel}><Text style={styles.settingsItemIndicator}>●&nbsp;</Text><Text>Idioma: </Text></Text>
+                        <Text style={styles.settingsItemLabel}><Text style={styles.settingsItemIndicator}>●&nbsp;</Text><Text>{text.language}: </Text></Text>
                         <Text style={styles.settingsItemText}>{userSettings.idioma}</Text>
                     </View>
                     <View style={styles.settingsItem}>
-                        <Text style={styles.settingsItemLabel}><Text style={styles.settingsItemIndicator}>●&nbsp;</Text><Text>Modo Oscuro: </Text></Text>
-                        <Text style={styles.settingsItemText}>{userSettings.darkMode ? "Activado" : "Desactivado"}</Text>
+                        <Text style={styles.settingsItemLabel}><Text style={styles.settingsItemIndicator}>●&nbsp;</Text><Text>{text.darkMode}: </Text></Text>
+                        <Text style={styles.settingsItemText}>{userSettings.darkMode ? text.enabled : text.disabled}</Text>
                     </View>
                     <View style={styles.settingsItem}>
-                        <Text style={styles.settingsItemLabel}><Text style={styles.settingsItemIndicator}>●&nbsp;</Text><Text>Tema de Color: </Text></Text>
+                        <Text style={styles.settingsItemLabel}><Text style={styles.settingsItemIndicator}>●&nbsp;</Text><Text>{text.colorTheme}: </Text></Text>
                         <Text style={styles.settingsItemText}>{userSettings.colorTheme}</Text>
                     </View>
                 </View>

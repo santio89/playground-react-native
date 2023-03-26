@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions } from 'react-native'
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import 'react-native-get-random-values'; /* for uuid */
 import { v4 as uuidv4 } from 'uuid';
 import Constants from '../constants/Styles.js';
@@ -8,7 +9,7 @@ import emojis from '../constants/Emojis.js';
 import { storageGetItem, storageSetItem } from '../utils/AsyncStorage.js';
 
 
-const MemoGame = () => {
+const MemoGame = ({navigation}) => {
     const [cardPics, setCardPics] = useState([])
     const [cards, setCards] = useState([])
     const [turns, setTurns] = useState(0)
@@ -19,6 +20,11 @@ const MemoGame = () => {
     const [startState, setStartState] = useState(false)
     const [bestScore, setBestScore] = useState("-");
     const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
+
+    const languageSelected = useSelector(state=>state.languages.selected)
+    const langs = useSelector(state=>state.languages.langs)
+
+    const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
 
 
     /* storage-max score */
@@ -138,6 +144,17 @@ const MemoGame = () => {
         }
     })
 
+    useEffect(()=>{
+        setText(langs.find(lang=>lang.lang === languageSelected).text)
+    }, [languageSelected])
+
+    useEffect(()=>{
+        navigation.setOptions({
+            title: `${text.memoGame} | PLAYGROUND`,
+            headerShown: false
+        })
+    }, [text])
+
     return (
         <View style={styles.memoGameContainer}>
             <View style={styles.gameContainer}>
@@ -145,33 +162,33 @@ const MemoGame = () => {
                     !startState ?
                         <>
                             <TouchableOpacity onPress={shuffleCards}>
-                                <Text style={styles.newGame}>Nuevo Juego</Text>
+                                <Text style={styles.newGame}>{text.newGame}</Text>
                             </TouchableOpacity>
-                            <View style={styles.bestScore}><Text style={styles.bestScoreText}>Mejor Score: </Text><Text style={styles.bestScoreNumber}>{bestScore}</Text></View>
+                            <View style={styles.bestScore}><Text style={styles.bestScoreText}>{text.bestScore}: </Text><Text style={styles.bestScoreNumber}>{bestScore}</Text></View>
                         </> :
                         <>
                             {winner === true ?
                                 <>
                                     <Text style={styles.winner}>
                                         <Text>🔥</Text>
-                                        <Text style={styles.winnerText}>COMPLETADO</Text>
-                                        <View><Text style={styles.winnerButtonsTurns}>Turnos: {turns}</Text></View>
+                                        <Text style={styles.winnerText}>{text.completed}</Text>
+                                        <View><Text style={styles.winnerButtonsTurns}>{text.turns}: {turns}</Text></View>
                                     </Text>
                                     <View style={styles.winnerButtons}>
                                         <TouchableOpacity onPress={shuffleCards} style={styles.winnerButtonsWrapper}>
-                                            <Text style={styles.winnerButtonsText}>Nuevo Juego</Text>
+                                            <Text style={styles.winnerButtonsText}>{text.newGame}</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </> :
                                 <>
-                                    <View style={styles.bestScore}><Text style={styles.bestScoreText}>Mejor Score: </Text><Text style={styles.bestScoreNumber}>{bestScore}</Text></View>
+                                    <View style={styles.bestScore}><Text style={styles.bestScoreText}>{text.bestScore}: </Text><Text style={styles.bestScoreNumber}>{bestScore}</Text></View>
                                     <View style={styles.turnsButtonsContainer}>
                                         <View style={styles.turns}>
-                                            <Text style={styles.turnsText}>Turnos: {turns}</Text>
+                                            <Text style={styles.turnsText}>{text.turns}: {turns}</Text>
                                         </View>
 
                                         <TouchableOpacity onPress={shuffleCards} style={styles.turns}>
-                                            <Text style={styles.turnsText}>Reset</Text>
+                                            <Text style={styles.turnsText}>{text.reset}</Text>
                                         </TouchableOpacity>
 
                                     </View>
