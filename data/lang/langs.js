@@ -24,7 +24,7 @@ export const LANGS = [{id: 1, lang: "english", text: {
     english: "ENGLISH",
     purple: "PURPLE"
 }}, {id: 2, lang: "spanish", text: {
-    toDoList: "LISTA DE PENDIENTES",
+    toDoList: "LISTA DE TAREAS",
     memoGame: "JUEGO DE MEMORIA",
     newGame: "NUEVO JUEGO",
     bestScore: "MEJOR RESULTADO",
