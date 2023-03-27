@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectLang } from '../store/actions/language.action.js';
 import { storageGetItem, storageSetItem } from '../utils/AsyncStorage.js';
-import Constants from '../constants/Styles.js'
-import Header from '../components/Header.js'
+import Constants from '../constants/Styles'
+import Header from '../components/Header'
 
 const Settings = () => {
 

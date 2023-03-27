@@ -2,7 +2,7 @@ import { StyleSheet, Text, ScrollView, View, Image } from 'react-native'
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import Constants from '../constants/Styles.js'
-import Header from '../components/Header.js'
+import Header from '../components/Header'
 
 const Profile = ({navigation}) => {
     /* estado de prueba */

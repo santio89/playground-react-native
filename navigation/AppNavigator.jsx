@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import MainMenu from '../screens/MainMenu.js'
-import ToDoList from '../screens/ToDoList.js'
-import MemoGame from '../screens/MemoGame.js'
+import MainMenu from '../screens/MainMenu'
+import ToDoList from '../screens/ToDoList'
+import MemoGame from '../screens/MemoGame'
 
 const Stack = createNativeStackNavigator();
 

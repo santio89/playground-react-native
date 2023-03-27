@@ -3,7 +3,7 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react'
 import Constants from './constants/Styles.js'
-import MainNavigator from './navigation/MainNavigator.js'
+import MainNavigator from './navigation/MainNavigator.jsx'
 import { Provider } from 'react-redux';
 import store from './store/index'
 
