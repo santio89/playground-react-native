@@ -12,7 +12,7 @@ const Profile = ({navigation}) => {
         avatar: "https://source.unsplash.com/random/"
     })
 
-    const {selected: languageSelected, langs} = useSelector(state=>state.languages)
+    const {selected: languageSelected, langs} = useSelector(state=>state.settings.language)
 
     const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
 

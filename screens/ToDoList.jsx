@@ -13,7 +13,7 @@ export default function ToDoList({navigation}) {
     const [items, setItems] = useState([])
     const [modalVisible, setModalVisible] = useState({ active: false, id: null });
     
-    const {selected: languageSelected, langs} = useSelector(state=>state.languages)
+    const {selected: languageSelected, langs} = useSelector(state=>state.settings.language)
 
     const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
 

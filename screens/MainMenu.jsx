@@ -8,7 +8,7 @@ import Header from '../components/Header'
 const MainMenu = ({ navigation }) => {
     const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
 
-    const {selected: languageSelected, langs} = useSelector(state=>state.languages)
+    const {selected: languageSelected, langs} = useSelector(state=>state.settings.language)
 
     const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
 
