@@ -1,6 +1,6 @@
-export const SELECT_LANG = 'SELECT_LANGUAGE'
+export const SELECT_LANG = 'SELECT_LANG'
 
-export const selectLanguage = (langId) => ({
+export const selectLang = (lang) => ({
     type: SELECT_LANG,
-    langId
+    lang
 })

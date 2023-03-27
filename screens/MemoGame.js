@@ -21,8 +21,7 @@ const MemoGame = ({navigation}) => {
     const [bestScore, setBestScore] = useState("-");
     const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
 
-    const languageSelected = useSelector(state=>state.languages.selected)
-    const langs = useSelector(state=>state.languages.langs)
+    const {selected: languageSelected, langs} = useSelector(state=>state.languages)
 
     const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
 
@@ -151,7 +150,6 @@ const MemoGame = ({navigation}) => {
     useEffect(()=>{
         navigation.setOptions({
             title: `${text.memoGame} | PLAYGROUND`,
-            headerShown: false
         })
     }, [text])
 

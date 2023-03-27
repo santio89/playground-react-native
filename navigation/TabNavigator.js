@@ -17,8 +17,7 @@ const TabNavigator = () => {
         setWindowWidth(Dimensions.get('window').width)
     }
 
-    const languageSelected = useSelector(state=>state.languages.selected)
-    const langs = useSelector(state=>state.languages.langs)
+    const {selected: languageSelected, langs} = useSelector(state=>state.languages)
 
     const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
 

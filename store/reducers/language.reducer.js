@@ -11,7 +11,7 @@ const langsReducer = (state=initialState, action) => {
         case SELECT_LANG:
             return {
                 ...state,
-                selected: state.langs.find(lang=>lang.id===action.langId)
+                selected: action.lang
             }
         default:
             return state

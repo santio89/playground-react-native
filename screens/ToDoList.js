@@ -13,8 +13,7 @@ export default function ToDoList({navigation}) {
     const [items, setItems] = useState([])
     const [modalVisible, setModalVisible] = useState({ active: false, id: null });
     
-    const languageSelected = useSelector(state=>state.languages.selected)
-    const langs = useSelector(state=>state.languages.langs)
+    const {selected: languageSelected, langs} = useSelector(state=>state.languages)
 
     const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
 
@@ -67,7 +66,6 @@ export default function ToDoList({navigation}) {
     useEffect(()=>{
         navigation.setOptions({
             title: `${text.toDoList} | PLAYGROUND`,
-            headerShown: false
         })
     }, [text])
 
