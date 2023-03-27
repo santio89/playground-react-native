@@ -30,7 +30,7 @@ export const LANGS = [{id: 1, lang: "english", text: {
     bestScore: "MEJOR RESULTADO",
     completed: "COMPLETADO",
     turns: "TURNOS",
-    reset: "RESETEAR",
+    reset: "REINICIAR",
     add: "AGREGAR",
     newTask: "NUEVA TAREA",
     deleteTask: "ELIMINAR TAREA",

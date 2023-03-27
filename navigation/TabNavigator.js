@@ -17,9 +17,9 @@ const TabNavigator = () => {
         setWindowWidth(Dimensions.get('window').width)
     }
 
-    const {selected: languageSelected, langs} = useSelector(state=>state.languages)
+    const { selected: languageSelected, langs } = useSelector(state => state.languages)
 
-    const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
+    const [text, setText] = useState(langs.find(lang => lang.lang === languageSelected).text)
 
     useEffect(() => {
         const dimensionsHandler = Dimensions.addEventListener("change", updateWindowWidth)
@@ -29,42 +29,46 @@ const TabNavigator = () => {
         }
     })
 
-  return (
-    <BottomTabs.Navigator initialRouteName='Apps' 
-    screenOptions={{headerShown: false, tabBarShowLabel: false, tabBarStyle:styles.tabBar}}>
-        <BottomTabs.Screen name='Apps' component={AppNavigator} 
-        options={{
-            tabBarIcon: ({focused}) => (
-                <View style={[styles.item, focused && styles.itemFocused]}>
-                    <Ionicons name="apps-sharp" size={Constants.fontLg} color={focused?Constants.colorWhite:Constants.colorDark} />
-                    <Text style={[styles.itemText, focused && styles.itemTextFocused, windowWidth<=800 && styles.itemTextMobile]}>APPS</Text>
-                </View>
-            ),
-            title: 'APPS | PLAYGROUND'
-        }}/>
-        <BottomTabs.Screen name='Profile' component={Profile} 
-        options={{
-            tabBarIcon: ({focused}) => (
-                <View style={[styles.item, focused && styles.itemFocused]}>
-                    <Ionicons name="person" size={Constants.fontLg} color={focused?Constants.colorWhite:Constants.colorDark} />
-                    <Text style={[styles.itemText, focused && styles.itemTextFocused, windowWidth<=800 && styles.itemTextMobile]}>{text.profile}</Text>
-                </View>
-            ),
-            title: 'PROFILE | PLAYGROUND'
-        }}/>
-        <BottomTabs.Screen name='Settings' component={Settings} 
-        options={{
-            tabBarIcon: ({focused}) => (
-                <View style={[styles.item, focused && styles.itemFocused]}>
-                    <Ionicons name="settings" size={Constants.fontLg} color={focused?Constants.colorWhite:Constants.colorDark} />
-                    <Text style={[styles.itemText, focused && styles.itemTextFocused, windowWidth<=800 && styles.itemTextMobile]}>CONFIG</Text>
-                </View>
-            ),
-            title: 'CONFIG | PLAYGROUND'
-        }}/>
+    useEffect(() => {
+        setText(langs.find(lang => lang.lang === languageSelected).text)
+    }, [languageSelected])
 
-    </BottomTabs.Navigator>
-  )
+    return (
+        <BottomTabs.Navigator initialRouteName='Apps'
+            screenOptions={{ headerShown: false, tabBarShowLabel: false, tabBarStyle: styles.tabBar }}>
+            <BottomTabs.Screen name='Apps' component={AppNavigator}
+                options={{
+                    tabBarIcon: ({ focused }) => (
+                        <View style={[styles.item, focused && styles.itemFocused]}>
+                            <Ionicons name="apps-sharp" size={Constants.fontLg} color={focused ? Constants.colorWhite : Constants.colorDark} />
+                            <Text style={[styles.itemText, focused && styles.itemTextFocused, windowWidth <= 800 && styles.itemTextMobile]}>APPS</Text>
+                        </View>
+                    ),
+                    title: 'APPS | PLAYGROUND'
+                }} />
+            <BottomTabs.Screen name='Profile' component={Profile}
+                options={{
+                    tabBarIcon: ({ focused }) => (
+                        <View style={[styles.item, focused && styles.itemFocused]}>
+                            <Ionicons name="person" size={Constants.fontLg} color={focused ? Constants.colorWhite : Constants.colorDark} />
+                            <Text style={[styles.itemText, focused && styles.itemTextFocused, windowWidth <= 800 && styles.itemTextMobile]}>{text.profile}</Text>
+                        </View>
+                    ),
+                    title: 'PROFILE | PLAYGROUND'
+                }} />
+            <BottomTabs.Screen name='Settings' component={Settings}
+                options={{
+                    tabBarIcon: ({ focused }) => (
+                        <View style={[styles.item, focused && styles.itemFocused]}>
+                            <Ionicons name="settings" size={Constants.fontLg} color={focused ? Constants.colorWhite : Constants.colorDark} />
+                            <Text style={[styles.itemText, focused && styles.itemTextFocused, windowWidth <= 800 && styles.itemTextMobile]}>CONFIG</Text>
+                        </View>
+                    ),
+                    title: 'CONFIG | PLAYGROUND'
+                }} />
+
+        </BottomTabs.Navigator>
+    )
 }
 
 export default TabNavigator
