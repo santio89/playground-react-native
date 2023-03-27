@@ -43,6 +43,7 @@ const Settings = () => {
 
     useEffect(()=>{
         dispatch(selectLang(config.lang))
+        storeData()
     }, [config])
 
     useEffect(() => {
