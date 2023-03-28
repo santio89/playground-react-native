@@ -7,8 +7,8 @@ export default function Header() {
 
   return (
     <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
-      <View style={[styles.headerContainer, !darkMode && styles.borderDark]}>
-        <Text style={[styles.header]}>PLAYGROUND</Text>
+      <View style={styles.headerContainer}>
+        <Text style={styles.header}>PLAYGROUND</Text>
       </View>
     </TouchableWithoutFeedback>
   )
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     padding: 8,
     paddingTop: Platform.OS === 'web' ? 8 : 20,
     width: '100%',
-    borderBottomColor: Constants.colorWhite,
+    borderBottomColor: Constants.colorPrimaryDark,
     borderBottomWidth: 1,
   },
   header: {
@@ -32,9 +32,5 @@ const styles = StyleSheet.create({
     fontSize: Constants.fontLg,
     fontWeight: 'bold',
     fontFamily: Constants.fontPrimaryBold,
-  },
-  /* for dark mode off */
-  borderDark: {
-    borderBottomColor: Constants.colorDark,
   },
 });
