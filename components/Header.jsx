@@ -1,9 +1,7 @@
 import { Text, View, StyleSheet, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
 import Constants from '../constants/Styles';
-import { useSelector } from 'react-redux';
 
 export default function Header() {
-  const darkMode = useSelector(state => state.settings.darkMode.enabled)
 
   return (
     <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
