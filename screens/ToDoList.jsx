@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { FlatList, Text, TextInput, View, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Modal, Platform } from 'react-native'
+import { FlatList, Text, TextInput, View, SafeAreaView, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Modal, Platform } from 'react-native'
 import { useSelector } from 'react-redux';
 import 'react-native-get-random-values'; /* for uuid */
 import { v4 as uuidv4 } from 'uuid';
@@ -12,6 +12,8 @@ export default function ToDoList({navigation}) {
     const [input, setInput] = useState("")
     const [items, setItems] = useState([])
     const [modalVisible, setModalVisible] = useState({ active: false, id: null });
+
+    const darkMode = useSelector(state => state.settings.darkMode.enabled)
     
     const {selected: languageSelected, langs} = useSelector(state=>state.settings.language)
 
@@ -72,10 +74,10 @@ export default function ToDoList({navigation}) {
 
     return (
         <>
-            <View style={styles.todoListContainer}>
+            <View style={[styles.todoListContainer, !darkMode && styles.backgroundWhite]}>
                 <View style={styles.listContainer}>
                     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.inputContainer}>
-                        <TextInput value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuidv4(), text: input }); setInput('') }} placeholder={text.newTask} placeholderTextColor="#808080" style={styles.input} />
+                        <TextInput value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuidv4(), text: input }); setInput('') }} placeholder={text.newTask} placeholderTextColor="#808080" style={[styles.input, !darkMode && styles.colorDark]} />
 
                         <TouchableOpacity disabled={btnDisabled} onPress={() => { addItem({ id: uuidv4(), text: input, completed: false }); setInput('') }} style={[styles.buttonAddContainer, btnDisabled && styles.buttonDisabled]}>
                             <Text style={styles.buttonAdd}>
@@ -91,8 +93,8 @@ export default function ToDoList({navigation}) {
                                 <ListItem storeData={storeData} items={items} setItems={setItems} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} />
 
                                 <Modal visible={modalVisible.active} transparent={true} animationType='fade'>
-                                    <View style={styles.modal}>
-                                        <View style={styles.modalInner}>
+                                    <SafeAreaView style={styles.modal}>
+                                        <View style={[styles.modalInner, !darkMode && styles.borderDark]}>
                                             <Text style={styles.modalTitle}>{text.deleteTask}?</Text>
                                             <View style={styles.modalBtnContainer}>
                                                 <TouchableOpacity style={styles.modalBtn}>
@@ -103,7 +105,7 @@ export default function ToDoList({navigation}) {
                                                 </TouchableOpacity>
                                             </View>
                                         </View>
-                                    </View>
+                                    </SafeAreaView>
                                 </Modal>
                             </>
                         )}
@@ -121,7 +123,6 @@ const styles = StyleSheet.create({
         backgroundColor: Constants.colorDark,
         justifyContent: 'center',
         alignItems: 'center',
-        color: Constants.colorWhite,
         width: '100%',
         padding: 10
     },
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
     input: {
         borderBottomColor: Constants.colorPrimary,
         borderBottomWidth: 2,
-        color: 'white',
+        color: Constants.colorWhite,
         flex: 1,
         marginRight: 10,
         fontSize: Constants.fontMd,
@@ -221,5 +222,15 @@ const styles = StyleSheet.create({
     },
     borderRed: {
         borderColor: Constants.colorRed,
+    },
+    /* for dark mode off */
+    backgroundWhite: {
+        backgroundColor: Constants.colorWhite,
+    },
+    colorDark: {
+        color: Constants.colorDark,
+    },
+    borderDark: {
+        borderColor: Constants.colorDark,
     }
 })

@@ -4,7 +4,7 @@ export default {
   colorPrimary: '#6a5acd',
   colorPrimaryDark: '#483d8b',
   colorDark: '#1a1a1a',
-  colorWhite: '#fff',
+  colorWhite: '#fAf9f6',
   colorRed: '#8b0000',
   fontXxl: 80,
   fontXl: 40,

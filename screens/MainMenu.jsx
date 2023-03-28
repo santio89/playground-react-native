@@ -8,6 +8,8 @@ import Header from '../components/Header'
 const MainMenu = ({ navigation }) => {
     const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
 
+    const darkMode = useSelector(state => state.settings.darkMode.enabled)
+
     const {selected: languageSelected, langs} = useSelector(state=>state.settings.language)
 
     const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
@@ -31,13 +33,13 @@ const MainMenu = ({ navigation }) => {
     return (
         <>
             <Header />
-            <ScrollView contentContainerStyle={styles.menuWrapper}>
-                <View style={[styles.menuContainer, { flexDirection: windowWidth > 800 ? 'row' : 'column' }]}>
+            <ScrollView contentContainerStyle={[styles.menuWrapper, !darkMode && styles.backgroundWhite]}>
+                <View style={[styles.menuContainer, !darkMode && styles.backgroundWhite, { flexDirection: windowWidth > 800 ? 'row' : 'column' }]}>
                     <TouchableOpacity style={[styles.menuOption, { width: windowWidth > 800 ? 'auto' : (windowWidth > 320 ? 300 : '100%') }]} onPress={() => { navigation.navigate("ToDoList") }}>
-                        <Text style={styles.menuOptionText}>{text.toDoList}</Text>
+                        <Text style={[styles.menuOptionText]}>{text.toDoList}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.menuOption, { width: windowWidth > 800 ? 'auto' : (windowWidth > 320 ? 300 : '100%') }]} onPress={() => { navigation.navigate("MemoGame") }}>
-                        <Text style={styles.menuOptionText}>{text.memoGame}</Text>
+                        <Text style={[styles.menuOptionText]}>{text.memoGame}</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -84,5 +86,9 @@ const styles = StyleSheet.create({
         fontSize: Constants.fontLg,
         fontFamily: Constants.fontPrimaryBold,
         color: Constants.colorWhite,
-    }
+    },
+    /* for dark mode off */
+    backgroundWhite: {
+        backgroundColor: Constants.colorWhite
+    },
 })

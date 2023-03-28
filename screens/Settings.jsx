@@ -9,11 +9,13 @@ const Settings = () => {
 
     const dispatch = useDispatch()
 
-    const { language, darkMode, colorTheme } = useSelector(state => state.settings)
+    const { language, colorTheme } = useSelector(state => state.settings)
+
+    const darkMode = useSelector(state => state.settings.darkMode.enabled)
 
     const [text, setText] = useState(language.langs.find(lang => lang.lang === language.selected).text)
 
-    const [config, setConfig] = useState({lang: "english", darkMode: true, colorTheme: "purple"});
+    const [config, setConfig] = useState({lang: language.selected, darkMode, colorTheme: "purple"});
 
 
     useEffect(()=>{
@@ -35,24 +37,24 @@ const Settings = () => {
     return (
         <>
             <Header />
-            <ScrollView contentContainerStyle={styles.settingsContainer}>
+            <ScrollView contentContainerStyle={[styles.settingsContainer, !darkMode && styles.backgroundWhite, !darkMode && styles.colorDark]}>
                 <View style={styles.itemsContainer}>
                     <View style={styles.settingsItem}>
-                        <Text style={styles.settingsItemLabel}><Text style={styles.settingsItemIndicator}>●&nbsp;</Text><Text>{text.language}: </Text></Text>
+                        <Text style={[styles.settingsItemLabel]}><Text style={styles.settingsItemIndicator}>●&nbsp;</Text><Text>{text.language}: </Text></Text>
                         <View style={styles.settingsItemTextWrapper}>
                             <TouchableOpacity style={[styles.settingsItemTextButton, config.lang==="english" && styles.itemSelected]} onPress={()=>{setConfig(config=>({...config, lang: "english"}))}}><Text style={[styles.settingsItemText, config.lang==="english" && styles.itemSelected]}>{text.english}</Text></TouchableOpacity>
                             <TouchableOpacity style={[styles.settingsItemTextButton, config.lang==="spanish" && styles.itemSelected]} onPress={()=>{setConfig(config=>({...config, lang: "spanish"}))}}><Text style={[styles.settingsItemText, config.lang==="spanish" && styles.itemSelected]}>{text.spanish}</Text></TouchableOpacity>
                         </View>
                     </View>
                     <View style={styles.settingsItem}>
-                        <Text style={styles.settingsItemLabel}><Text style={styles.settingsItemIndicator}>●&nbsp;</Text><Text>{text.darkMode}: </Text></Text>
+                        <Text style={[styles.settingsItemLabel]}><Text style={styles.settingsItemIndicator}>●&nbsp;</Text><Text>{text.darkMode}: </Text></Text>
                         <View style={styles.settingsItemTextWrapper}>
                             <TouchableOpacity style={[styles.settingsItemTextButton, !config.darkMode && styles.itemSelected]} onPress={()=>{setConfig(config=>({...config, darkMode: false}))}}><Text style={[styles.settingsItemText, !config.darkMode && styles.itemSelected]}>{text.disabled}</Text></TouchableOpacity>
                             <TouchableOpacity style={[styles.settingsItemTextButton, config.darkMode && styles.itemSelected]} onPress={()=>{setConfig(config=>({...config, darkMode: true}))}}><Text style={[styles.settingsItemText, config.darkMode && styles.itemSelected]}>{text.enabled}</Text></TouchableOpacity>
                         </View>
                     </View>
                     <View style={styles.settingsItem}>
-                        <Text style={styles.settingsItemLabel}><Text style={styles.settingsItemIndicator}>●&nbsp;</Text><Text>{text.colorTheme}: </Text></Text>
+                        <Text style={[styles.settingsItemLabel]}><Text style={styles.settingsItemIndicator}>●&nbsp;</Text><Text>{text.colorTheme}: </Text></Text>
                         <View style={styles.settingsItemTextWrapper}>
                             <TouchableOpacity style={[styles.settingsItemTextButton, config.colorTheme==="purple" && styles.itemSelected]} onPress={()=>{setConfig(config=>({...config, colorTheme: "purple"}))}}><Text style={[styles.settingsItemText, config.colorTheme==="purple" && styles.itemSelected]}>{text.purple}</Text></TouchableOpacity>
                         </View>
@@ -130,5 +132,12 @@ const styles = StyleSheet.create({
     itemSelected: {
         color: Constants.colorWhite,
         borderColor: Constants.colorWhite
+    },
+    /* for dark mode off */
+    backgroundWhite: {
+        backgroundColor: Constants.colorWhite
+    },
+    colorDark: {
+        color: Constants.colorDark
     }
 })

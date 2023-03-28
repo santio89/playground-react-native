@@ -21,6 +21,8 @@ const MemoGame = ({navigation}) => {
     const [bestScore, setBestScore] = useState("-");
     const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
 
+    const darkMode = useSelector(state => state.settings.darkMode.enabled)
+
     const {selected: languageSelected, langs} = useSelector(state=>state.settings.language)
 
     const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
@@ -154,20 +156,20 @@ const MemoGame = ({navigation}) => {
     }, [text])
 
     return (
-        <View style={styles.memoGameContainer}>
-            <View style={styles.gameContainer}>
+        <View style={[styles.memoGameContainer, !darkMode && styles.backgroundWhite]}>
+            <View style={[styles.gameContainer, !darkMode && styles.backgroundWhite]}>
                 {
                     !startState ?
                         <>
                             <TouchableOpacity onPress={shuffleCards}>
                                 <Text style={styles.newGame}>{text.newGame}</Text>
                             </TouchableOpacity>
-                            <View style={styles.bestScore}><Text style={styles.bestScoreText}>{text.bestScore}: </Text><Text style={styles.bestScoreNumber}>{bestScore}</Text></View>
+                            <View style={styles.bestScore}><Text style={[styles.bestScoreText, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={styles.bestScoreNumber}>{bestScore}</Text></View>
                         </> :
                         <>
                             {winner === true ?
                                 <>
-                                    <Text style={styles.winner}>
+                                    <Text style={[styles.winner]}>
                                         <Text>🔥</Text>
                                         <Text style={styles.winnerText}>{text.completed}</Text>
                                         <View><Text style={styles.winnerButtonsTurns}>{text.turns}: {turns}</Text></View>
@@ -179,7 +181,7 @@ const MemoGame = ({navigation}) => {
                                     </View>
                                 </> :
                                 <>
-                                    <View style={styles.bestScore}><Text style={styles.bestScoreText}>{text.bestScore}: </Text><Text style={styles.bestScoreNumber}>{bestScore}</Text></View>
+                                    <View style={styles.bestScore}><Text style={[styles.bestScoreText, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={styles.bestScoreNumber}>{bestScore}</Text></View>
                                     <View style={styles.turnsButtonsContainer}>
                                         <View style={styles.turns}>
                                             <Text style={styles.turnsText}>{text.turns}: {turns}</Text>
@@ -273,10 +275,7 @@ const styles = StyleSheet.create({
         fontSize: Constants.fontLg,
         padding: 10,
         borderRadius: 4,
-        borderWidth: 4,
-        outlineColor: Constants.colorWhite,
-        outlineWidth: 2,
-        outlineStyle: "solid",
+        borderWidth: 8,
         borderColor: Constants.colorPrimaryDark,
         backgroundColor: Constants.colorPrimary,
         color: Constants.colorWhite,
@@ -374,4 +373,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    /* for dark mode off */
+    backgroundWhite: {
+        backgroundColor: Constants.colorWhite
+    },
+    colorDark: {
+        color: Constants.colorDark
+    }
 })

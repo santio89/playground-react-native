@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Constants from '../constants/Styles.js'
 import Header from '../components/Header'
 
-const Profile = ({navigation}) => {
+const Profile = ({ navigation }) => {
     /* estado de prueba */
     const [user, setUser] = useState({
         email: "TEST@GMAIL.COM",
@@ -12,15 +12,17 @@ const Profile = ({navigation}) => {
         avatar: "https://source.unsplash.com/random/"
     })
 
-    const {selected: languageSelected, langs} = useSelector(state=>state.settings.language)
+    const darkMode = useSelector(state => state.settings.darkMode.enabled)
 
-    const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
+    const { selected: languageSelected, langs } = useSelector(state => state.settings.language)
 
-    useEffect(()=>{
-        setText(langs.find(lang=>lang.lang === languageSelected).text)
+    const [text, setText] = useState(langs.find(lang => lang.lang === languageSelected).text)
+
+    useEffect(() => {
+        setText(langs.find(lang => lang.lang === languageSelected).text)
     }, [languageSelected])
 
-    useEffect(()=>{
+    useEffect(() => {
         navigation.setOptions({
             title: `${text.profile} | PLAYGROUND`,
             headerShown: false
@@ -30,18 +32,18 @@ const Profile = ({navigation}) => {
     return (
         <>
             <Header />
-            <ScrollView contentContainerStyle={styles.profileContainer}>
+            <ScrollView contentContainerStyle={[styles.profileContainer, !darkMode && styles.colorDark, !darkMode && styles.backgroundWhite]}>
                 <View style={styles.itemsContainer}>
                     <View style={styles.profileItem}>
-                        <Text style={styles.profileItemLabel}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>{text.email}: </Text></Text>
-                        <Text style={styles.profileItemText}>{user.email}</Text>
+                        <Text style={[styles.profileItemLabel]}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>{text.email}: </Text></Text>
+                        <Text style={[styles.profileItemText]}>{user.email}</Text>
                     </View>
                     <View style={styles.profileItem}>
-                        <Text style={styles.profileItemLabel}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>{text.name}: </Text></Text>
-                        <Text style={styles.profileItemText}>{user.nombre}</Text>
+                        <Text style={[styles.profileItemLabel]}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>{text.name}: </Text></Text>
+                        <Text style={[styles.profileItemText]}>{user.nombre}</Text>
                     </View>
                     <View style={styles.profileItem}>
-                        <Text style={styles.profileItemLabel}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>{text.avatar}: </Text></Text>
+                        <Text style={[styles.profileItemLabel]}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>{text.avatar}: </Text></Text>
                         <Image
                             style={styles.profileItemImage}
                             source={{ uri: user.avatar }}
@@ -109,5 +111,12 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         borderRadius: 4,
         marginTop: 8
+    },
+    /* for dark mode off */
+    backgroundWhite: {
+        backgroundColor: Constants.colorWhite
+    },
+    colorDark: {
+        color: Constants.colorDark
     }
 })
