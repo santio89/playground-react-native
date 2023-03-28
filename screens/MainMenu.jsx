@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         textAlign: 'center',
         maxWidth: 400,
-        maxHeight: 100
+        maxHeight: 120
     },
     menuOptionText: {
         fontSize: Constants.fontLg,
