@@ -12,7 +12,7 @@ export const selectDarkMode = (darkMode) => ({
     darkMode
 })
 
-export const selectColorTheme = (colorTheme) => ({
+export const selectColorTheme = (altColorTheme) => ({
     type: SELECT_COLORTHEME,
-    colorTheme
+    altColorTheme
 })

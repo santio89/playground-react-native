@@ -12,8 +12,8 @@ const Profile = ({ navigation }) => {
         avatar: "https://source.unsplash.com/random/"
     })
 
+    const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
-
     const { selected: languageSelected, langs } = useSelector(state => state.settings.language)
 
     const [text, setText] = useState(langs.find(lang => lang.lang === languageSelected).text)
@@ -33,17 +33,17 @@ const Profile = ({ navigation }) => {
         <>
             <Header />
             <ScrollView contentContainerStyle={[styles.profileContainer, !darkMode && styles.colorDark, !darkMode && styles.backgroundWhite]}>
-                <View style={styles.itemsContainer}>
+                <View style={[styles.itemsContainer, altColorTheme && styles.altItemsContainer]}>
                     <View style={styles.profileItem}>
-                        <Text style={[styles.profileItemLabel]}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>{text.email}: </Text></Text>
+                        <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.email}: </Text></Text>
                         <Text style={[styles.profileItemText]}>{user.email}</Text>
                     </View>
                     <View style={styles.profileItem}>
-                        <Text style={[styles.profileItemLabel]}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>{text.name}: </Text></Text>
+                        <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.name}: </Text></Text>
                         <Text style={[styles.profileItemText]}>{user.nombre}</Text>
                     </View>
                     <View style={styles.profileItem}>
-                        <Text style={[styles.profileItemLabel]}><Text style={styles.profileItemIndicator}>●&nbsp;</Text><Text>{text.avatar}: </Text></Text>
+                        <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.avatar}: </Text></Text>
                         <Image
                             style={styles.profileItemImage}
                             source={{ uri: user.avatar }}
@@ -118,5 +118,13 @@ const styles = StyleSheet.create({
     },
     colorDark: {
         color: Constants.colorDark
-    }
+    },
+    /* for alt color theme */
+    altItemsContainer: {
+        backgroundColor: Constants.colorSecondary,
+        borderColor: Constants.colorSecondaryDark,
+    },
+    altProfileItemIndicator: {
+        color: Constants.colorSecondaryDark,
+    },
 })

@@ -5,16 +5,17 @@ import { useSelector } from 'react-redux';
 
 const MainNavigator = () => {
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
+    const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
 
     const MyTheme = {
         dark: darkMode?true:false,
         colors: {
-            primary: Constants.colorPrimary,
+            primary: altColorTheme?Constants.colorSecondary:Constants.colorPrimary,
             background: darkMode?Constants.colorDark:Constants.colorWhite,
             card: darkMode?Constants.colorDark:Constants.colorWhite,
-            text: Constants.colorPrimary,
+            text: altColorTheme?Constants.colorSecondary:Constants.colorPrimary,
             border: 'transparent',
-            notification: Constants.colorPrimary,
+            notification: altColorTheme?Constants.colorSecondary:Constants.colorPrimary,
         },
     };
 

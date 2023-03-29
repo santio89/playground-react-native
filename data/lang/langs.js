@@ -22,7 +22,8 @@ export const LANGS = [{id: 1, lang: "english", text: {
     profile: "PROFILE",
     spanish: "SPANISH",
     english: "ENGLISH",
-    purple: "PURPLE"
+    purple: "PURPLE",
+    orange: "ORANGE"
 }}, {id: 2, lang: "spanish", text: {
     toDoList: "LISTA DE TAREAS",
     memoGame: "JUEGO DE MEMORIA",
@@ -47,5 +48,6 @@ export const LANGS = [{id: 1, lang: "english", text: {
     profile: "PERFIL",
     spanish: "ESPAÑOL",
     english: "INGLÉS",
-    purple: "PÚRPURA"
+    purple: "PÚRPURA",
+    orange: "NARANJA"
 }}]

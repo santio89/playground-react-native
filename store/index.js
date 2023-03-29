@@ -24,7 +24,7 @@ store.subscribe(()=>{
     storeData({
         lang: state.settings.language.selected, 
         darkMode: state.settings.darkMode.enabled, 
-        colorTheme: state.settings.colorTheme.selected
+        altColorTheme: state.settings.altColorTheme.enabled
     });
             
 })

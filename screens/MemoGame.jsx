@@ -21,8 +21,8 @@ const MemoGame = ({navigation}) => {
     const [bestScore, setBestScore] = useState("-");
     const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
 
+    const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
-
     const {selected: languageSelected, langs} = useSelector(state=>state.settings.language)
 
     const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
@@ -64,7 +64,7 @@ const MemoGame = ({navigation}) => {
                 i--
                 continue;
             }
-            newArray.push({ "front": randomElement, "back": "⚛️", "matched": false })
+            newArray.push({ "front": randomElement, "back": "🔥", "matched": false })
         }
         setCardPics(newArray)
     }
@@ -162,32 +162,32 @@ const MemoGame = ({navigation}) => {
                     !startState ?
                         <>
                             <TouchableOpacity onPress={shuffleCards}>
-                                <Text style={styles.newGame}>{text.newGame}</Text>
+                                <Text style={[styles.newGame, altColorTheme && styles.altNewGame]}>{text.newGame}</Text>
                             </TouchableOpacity>
-                            <View style={styles.bestScore}><Text style={[styles.bestScoreText, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={styles.bestScoreNumber}>{bestScore}</Text></View>
+                            <View style={styles.bestScore}><Text style={[styles.bestScoreText, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={[styles.bestScoreNumber, altColorTheme && styles.altBestScoreNumber]}>{bestScore}</Text></View>
                         </> :
                         <>
                             {winner === true ?
                                 <>
-                                    <Text style={[styles.winner]}>
+                                    <Text style={[styles.winner, altColorTheme && styles.altWinner]}>
                                         <Text>🔥</Text>
                                         <Text style={styles.winnerText}>{text.completed}</Text>
                                         <View><Text style={styles.winnerButtonsTurns}>{text.turns}: {turns}</Text></View>
                                     </Text>
                                     <View style={styles.winnerButtons}>
                                         <TouchableOpacity onPress={shuffleCards} style={styles.winnerButtonsWrapper}>
-                                            <Text style={styles.winnerButtonsText}>{text.newGame}</Text>
+                                            <Text style={[styles.winnerButtonsText, altColorTheme && styles.altWinnerButtonsText]}>{text.newGame}</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </> :
                                 <>
-                                    <View style={styles.bestScore}><Text style={[styles.bestScoreText, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={styles.bestScoreNumber}>{bestScore}</Text></View>
+                                    <View style={styles.bestScore}><Text style={[styles.bestScoreText, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={[styles.bestScoreNumber, altColorTheme && styles.altBestScoreNumber]}>{bestScore}</Text></View>
                                     <View style={styles.turnsButtonsContainer}>
-                                        <View style={styles.turns}>
+                                        <View style={[styles.turns, altColorTheme && styles.altTurns]}>
                                             <Text style={styles.turnsText}>{text.turns}: {turns}</Text>
                                         </View>
 
-                                        <TouchableOpacity onPress={shuffleCards} style={styles.turns}>
+                                        <TouchableOpacity onPress={shuffleCards} style={[styles.turns, altColorTheme && styles.altTurns]}>
                                             <Text style={styles.turnsText}>{text.reset}</Text>
                                         </TouchableOpacity>
 
@@ -379,5 +379,26 @@ const styles = StyleSheet.create({
     },
     colorDark: {
         color: Constants.colorDark
-    }
+    },
+    /* for alt color theme */
+    altNewGame: {
+        borderColor: Constants.colorSecondaryDark,
+        backgroundColor: Constants.colorSecondary,
+    },
+    altBestScoreNumber: {
+        color: Constants.colorSecondary,
+    },
+    altWinner: {
+        borderColor: Constants.colorSecondaryDark,
+        backgroundColor: Constants.colorSecondary,
+        shadowColor: Constants.colorSecondary,
+    },
+    altWinnerButtonsText: {
+        borderColor: Constants.colorSecondaryDark,
+        backgroundColor: Constants.colorSecondary,
+    },
+    altTurns: {
+        borderColor: Constants.colorSecondaryDark,
+        backgroundColor: Constants.colorSecondary,
+    },
 })

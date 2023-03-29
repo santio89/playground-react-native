@@ -1,11 +1,13 @@
 import { Text, View, StyleSheet, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
 import Constants from '../constants/Styles';
+import { useSelector } from 'react-redux';
 
 export default function Header() {
+  const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
 
   return (
     <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
-      <View style={styles.headerContainer}>
+      <View style={[styles.headerContainer, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder]}>
         <Text style={styles.header}>PLAYGROUND</Text>
       </View>
     </TouchableWithoutFeedback>
@@ -24,6 +26,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderBottomColor: Constants.colorPrimaryDark,
     borderBottomWidth: 1,
+    height: 50,
   },
   header: {
     color: Constants.colorWhite,
@@ -31,4 +34,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: Constants.fontPrimaryBold,
   },
+  /* for alt color theme */
+  altBackground: {
+    backgroundColor: Constants.colorSecondary
+  },
+  altBorder: {
+    borderBottomColor: Constants.colorSecondaryDark
+  }
 });

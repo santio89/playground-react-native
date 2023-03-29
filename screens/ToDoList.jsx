@@ -13,8 +13,8 @@ export default function ToDoList({navigation}) {
     const [items, setItems] = useState([])
     const [modalVisible, setModalVisible] = useState({ active: false, id: null });
 
+    const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
-    
     const {selected: languageSelected, langs} = useSelector(state=>state.settings.language)
 
     const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
@@ -77,9 +77,9 @@ export default function ToDoList({navigation}) {
             <View style={[styles.todoListContainer, !darkMode && styles.backgroundWhite]}>
                 <View style={styles.listContainer}>
                     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.inputContainer}>
-                        <TextInput value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuidv4(), text: input }); setInput('') }} placeholder={text.newTask} placeholderTextColor="#808080" style={[styles.input, !darkMode && styles.colorDark]} />
+                        <TextInput value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuidv4(), text: input }); setInput('') }} placeholder={text.newTask} placeholderTextColor="#808080" style={[styles.input, !darkMode && styles.colorDark, altColorTheme && styles.altInput]} />
 
-                        <TouchableOpacity disabled={btnDisabled} onPress={() => { addItem({ id: uuidv4(), text: input, completed: false }); setInput('') }} style={[styles.buttonAddContainer, btnDisabled && styles.buttonDisabled]}>
+                        <TouchableOpacity disabled={btnDisabled} onPress={() => { addItem({ id: uuidv4(), text: input, completed: false }); setInput('') }} style={[styles.buttonAddContainer, altColorTheme && styles.buttonAddContainer, altColorTheme && styles.altButtonAddContainer, btnDisabled && styles.buttonDisabled]}>
                             <Text style={styles.buttonAdd}>
                                 {text.add}
                             </Text>
@@ -94,14 +94,14 @@ export default function ToDoList({navigation}) {
 
                                 <Modal visible={modalVisible.active} transparent={true} animationType='fade'>
                                     <SafeAreaView style={styles.modal}>
-                                        <View style={[styles.modalInner, !darkMode && styles.borderDark]}>
+                                        <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
                                             <Text style={styles.modalTitle}>{text.deleteTask}?</Text>
                                             <View style={styles.modalBtnContainer}>
                                                 <TouchableOpacity style={styles.modalBtn}>
-                                                    <Text style={styles.modalBtnText} onPress={() => setModalVisible({ active: false, id: null })}>{text.cancel}</Text>
+                                                    <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => setModalVisible({ active: false, id: null })}>{text.cancel}</Text>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity style={styles.modalBtn} onPress={() => { deleteItem(modalVisible.id); setModalVisible({ active: false, id: null }) }}>
-                                                    <Text style={[styles.modalBtnText, styles.borderRed]}>{text.delete}</Text>
+                                                    <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText, styles.borderRed]}>{text.delete}</Text>
                                                 </TouchableOpacity>
                                             </View>
                                         </View>
@@ -232,5 +232,20 @@ const styles = StyleSheet.create({
     },
     borderDark: {
         borderColor: Constants.colorDark,
-    }
+    },
+    /* for alt color theme */
+    altInput: {
+        borderBottomColor: Constants.colorSecondary,
+    },
+    altButtonAddContainer: {
+        backgroundColor: Constants.colorSecondary,
+        borderColor: Constants.colorSecondaryDark,
+    },
+    altModalInner: {
+        backgroundColor: Constants.colorSecondary,
+      
+    },
+    altModalBtnText: {
+        backgroundColor: Constants.colorSecondaryDark,
+    },
 })

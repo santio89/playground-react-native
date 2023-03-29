@@ -1,20 +1,29 @@
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import Constants from '../constants/Styles'
+import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
 
 const Card = ({ card, handleChoice, choiceOne, choiceTwo, disabled }) => {
+    const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
+
     const handleClick = () => {
         if (disabled) { return }
         handleChoice(card)
     }
 
+    useEffect(() => {
+     console.log(styles.altBackground)
+    }, [])
+    
+
     return (
-        <Text style={[styles.card, card.matched?styles.cardMatched:""]}>
+        <Text style={[styles.card, card.matched && styles.cardMatched, card.matched && altColorTheme && styles.altShadow]}>
             {
                 card.matched || card.id === choiceOne?.id || card.id === choiceTwo?.id ?
-                    <TouchableOpacity style={[styles.cardBackWrapper, styles.cardFront]}>
+                    <TouchableOpacity style={[styles.cardBackWrapper, styles.cardFront, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder]}>
                         <Text style={styles.cardText}>{card.front}</Text>
                     </TouchableOpacity> :
-                    <TouchableOpacity style={[styles.cardBackWrapper, styles.cardBack]} onPress={handleClick}>
+                    <TouchableOpacity style={[styles.cardBackWrapper, styles.cardBack, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder]} onPress={handleClick}>
                         <Text style={styles.cardText}>{card.back}</Text>
                     </TouchableOpacity>
             }
@@ -72,5 +81,15 @@ const styles = StyleSheet.create({
         padding: 4,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    /* for alt color theme */
+    altShadow: {
+        shadowColor: Constants.colorSecondary,
+    },
+    altBackground: {
+        backgroundColor: Constants.colorSecondaryDark,
+    },
+    altBorder: {
+        borderColor: Constants.colorSecondary,
     }
 })

@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Text, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { useSelector } from 'react-redux';
 import Constants from '../constants/Styles'
 
 export default function ListItem({ storeData, items, setItems, item, modalVisible, setModalVisible }) {
     const [itemComplete, setItemComplete] = useState(item.completed);
+    const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
 
 
     useEffect(() => {
@@ -14,9 +16,9 @@ export default function ListItem({ storeData, items, setItems, item, modalVisibl
 
     return (
         <View style={[styles.listItemContainer, modalVisible.active && modalVisible.id === item.id && styles.grayScale]}>
-            <TouchableOpacity style={[styles.listItem, itemComplete && styles.listItemComplete]} onPress={() => setItemComplete(itemComplete => !itemComplete)}>
+            <TouchableOpacity style={[styles.listItem, itemComplete && styles.listItemComplete, altColorTheme && styles.altListItem, itemComplete && altColorTheme && styles.altListItemComplete]} onPress={() => setItemComplete(itemComplete => !itemComplete)}>
 
-                <Text style={[styles.listItemText, itemComplete && styles.grayScale]}> <Text style={[styles.listItemIndicator, itemComplete && styles.grayScale]}>●&nbsp;</Text> <Text style={itemComplete && [styles.lineThrough, styles.grayScale]}>{item.text}</Text></Text>
+                <Text style={[styles.listItemText, itemComplete && styles.grayScale]}> <Text style={[styles.listItemIndicator, altColorTheme && styles.altListItemIndicator, itemComplete && styles.grayScale]}>●&nbsp;</Text> <Text style={itemComplete && [styles.lineThrough, styles.grayScale]}>{item.text}</Text></Text>
                 <TouchableOpacity onPress={() => setModalVisible({active: true, id: item.id})}>
                     <Text style={styles.listItemDelete}>X</Text>
                 </TouchableOpacity>
@@ -80,4 +82,16 @@ const styles = StyleSheet.create({
         color: 'darkgray',
         filter: 'grayscale(1)'
     },  
+    /* for alt color theme */
+    altListItem: {
+        backgroundColor: Constants.colorSecondary,
+        borderColor: Constants.colorSecondary
+    },
+    altListItemComplete: {
+        backgroundColor: Constants.colorSecondaryDark,
+        borderColor: Constants.colorSecondary
+    },
+    altListItemIndicator: {
+        color: Constants.colorSecondaryDark,
+    },
 })

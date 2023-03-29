@@ -10,8 +10,8 @@ const initialState = {
     darkMode: {
         enabled: true
     },
-    colorTheme: {
-        selected: "purple"
+    altColorTheme: {
+        enabled: false
     }
 }
 
@@ -22,7 +22,7 @@ const retrieveData = async () => {
             const data = JSON.parse(value)
             initialState.language.selected = data?.lang
             initialState.darkMode.enabled = data?.darkMode
-            initialState.colorTheme.selected = data?.colorTheme
+            initialState.altColorTheme.enabled = data?.altColorTheme
         }
     } catch (error) {
         console.log("error retrieving data from storage")
@@ -46,7 +46,7 @@ const settingsReducer = (state=initialState, action) => {
         case SELECT_COLORTHEME:
             return {
                 ...state,
-                colorTheme: {...state.colorTheme, selected: action.colorTheme}
+                altColorTheme: {...state.altColorTheme, enabled: action.altColorTheme}
             }
         default:
             return state
