@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, Keyboard, Platform } from 'react-native';
 import Constants from '../constants/Styles';
 import { useSelector } from 'react-redux';
-import { Ionicons } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
 export default function Header() {
   const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
@@ -12,7 +12,7 @@ export default function Header() {
         <Text style={styles.header}>PLAYGROUND</Text>
         <TouchableOpacity style={[styles.loginContainer, altColorTheme && styles.altLoginContainer]} title="login">
           <View>
-            <Ionicons name="logo-google" size={28} color={Constants.colorWhite} />
+          <Entypo name="login" size={28} color={Constants.colorWhite} />
           </View>
         </TouchableOpacity>
       </View>
