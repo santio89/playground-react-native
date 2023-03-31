@@ -3,13 +3,13 @@ import Constants from '../constants/Styles';
 import { useSelector } from 'react-redux';
 import { Entypo } from '@expo/vector-icons';
 
-export default function Header() {
+export default function Header({navigation}) {
   const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={[styles.headerContainer, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder]}>
-        <Text style={styles.header}>PLAYGROUND</Text>
+        <TouchableOpacity onPress={()=>navigation.navigate("AppsHome") || navigation.navigate("Apps")}><Text style={styles.header}>PLAYGROUND</Text></TouchableOpacity>
         <TouchableOpacity style={[styles.loginContainer, altColorTheme && styles.altLoginContainer]} title="login">
           <View>
           <Entypo name="login" size={28} color={Constants.colorWhite} />

@@ -5,7 +5,7 @@ import { selectLang, selectDarkMode, selectColorTheme } from '../store/actions/s
 import Constants from '../constants/Styles'
 import Header from '../components/Header'
 
-const Settings = () => {
+const Settings = ({navigation}) => {
 
     const dispatch = useDispatch()
 
@@ -36,7 +36,7 @@ const Settings = () => {
 
     return (
         <>
-            <Header />
+            <Header navigation={navigation} />
             <ScrollView contentContainerStyle={[styles.settingsContainer, !darkMode && styles.backgroundWhite, !darkMode && styles.colorDark]}>
                 <View style={[styles.itemsContainer, altColorTheme && styles.altItemsContainer]}>
                     <View style={styles.settingsItem}>

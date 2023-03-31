@@ -31,7 +31,7 @@ const Profile = ({ navigation }) => {
 
     return (
         <>
-            <Header />
+            <Header navigation={navigation}/>
             <ScrollView contentContainerStyle={[styles.profileContainer, !darkMode && styles.colorDark, !darkMode && styles.backgroundWhite]}>
                 <View style={[styles.itemsContainer, altColorTheme && styles.altItemsContainer]}>
                     <View style={styles.profileItem}>
