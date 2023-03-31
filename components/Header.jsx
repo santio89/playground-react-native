@@ -9,8 +9,8 @@ export default function Header({navigation}) {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={[styles.headerContainer, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder]}>
-        <TouchableOpacity onPress={()=>navigation.navigate("AppsHome") || navigation.navigate("Apps")}><Text style={styles.header}>PLAYGROUND</Text></TouchableOpacity>
-        <TouchableOpacity style={[styles.loginContainer, altColorTheme && styles.altLoginContainer]} title="login">
+        <TouchableOpacity onPress={()=>navigation.navigate("Apps")}><Text style={styles.header}>PLAYGROUND</Text></TouchableOpacity>
+        <TouchableOpacity style={[styles.loginContainer, altColorTheme && styles.altLoginContainer]} title="login" onPress={()=>navigation.navigate("Auth")}>
           <View>
           <Entypo name="login" size={28} color={Constants.colorWhite} />
           </View>

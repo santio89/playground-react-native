@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import AppNavigator from './AppNavigator';
+import AuthNavigator from './AuthNavigator';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Constants from '../constants/Styles.js'
 import { Ionicons } from '@expo/vector-icons';
@@ -67,6 +68,11 @@ const TabNavigator = () => {
                     ),
                     title: 'CONFIG | PLAYGROUND'
                 }} />
+            <BottomTabs.Screen name='Auth' component={AuthNavigator}
+                options={{
+                    tabBarButton: () => null,
+                    tabBarVisible: false,
+                  }} />
 
         </BottomTabs.Navigator>
     )
