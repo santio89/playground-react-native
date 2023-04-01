@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useSelector } from 'react-redux/es/exports'
 import { useState, useEffect } from 'react'
 import Header from '../components/Header'
@@ -30,26 +31,28 @@ const LogIn = ({ navigation }) => {
         <>
             <Header navigation={navigation} />
             <ScrollView contentContainerStyle={[styles.profileContainer, !darkMode && styles.colorDark, !darkMode && styles.backgroundWhite]}>
-                <View style={[styles.itemsContainer, altColorTheme && styles.altItemsContainer]}>
-                    <View style={styles.profileItem}>
-                        <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.email}: </Text></Text>
-                        <TextInput style={[styles.textInput, altColorTheme && styles.altTextInput]} value={email} onChangeText={email => setEmail(email)}/>
-                    </View>
-                    <View style={styles.profileItem}>
-                        <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.password}: </Text></Text>
-                        <TextInput secureTextEntry={true} style={[styles.textInput, altColorTheme && styles.altTextInput]} value={password} onChangeText={password => setPassword(password)} />
-                    </View>
-                    <View style={styles.profileItem}>
-                        <View style={styles.authItemTextWrapper}>
-                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme  && styles.altAuthItemTextButton]}>
-                                <Text style={[styles.authItemText]}>{text.logIn}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme  && styles.altAuthItemTextButton, styles.authItemTextButtonRegister]} onPress={() => navigation.navigate("SignUp")}>
-                                <Text style={[styles.authItemText, styles.authItemTextRegister]}>{text.signUp}</Text>
-                            </TouchableOpacity>
+                <KeyboardAwareScrollView>
+                    <View style={[styles.itemsContainer, altColorTheme && styles.altItemsContainer]}>
+                        <View style={styles.profileItem}>
+                            <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.email}: </Text></Text>
+                            <TextInput style={[styles.textInput, altColorTheme && styles.altTextInput]} value={email} onChangeText={email => setEmail(email)} />
+                        </View>
+                        <View style={styles.profileItem}>
+                            <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.password}: </Text></Text>
+                            <TextInput secureTextEntry={true} style={[styles.textInput, altColorTheme && styles.altTextInput]} value={password} onChangeText={password => setPassword(password)} />
+                        </View>
+                        <View style={styles.profileItem}>
+                            <View style={styles.authItemTextWrapper}>
+                                <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton]}>
+                                    <Text style={[styles.authItemText]}>{text.logIn}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, styles.authItemTextButtonRegister]} onPress={() => navigation.navigate("SignUp")}>
+                                    <Text style={[styles.authItemText, styles.authItemTextRegister]}>{text.signUp}</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
-                </View>
+                </KeyboardAwareScrollView>
             </ScrollView>
         </>
     )
