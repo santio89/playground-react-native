@@ -15,6 +15,8 @@ const LogIn = ({ navigation }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const [validInput, setValidInput] = useState(false)
+
     useEffect(() => {
         setText(langs.find(lang => lang.lang === languageSelected).text)
     }, [languageSelected])
@@ -25,6 +27,10 @@ const LogIn = ({ navigation }) => {
             headerShown: false
         })
     }, [text])
+
+    useEffect(()=>{
+        email.length > 0 && password.length > 0 ? setValidInput(true) : setValidInput(false)
+    }, [email, password])
 
 
     return (
@@ -42,8 +48,8 @@ const LogIn = ({ navigation }) => {
                     </View>
                     <View style={styles.profileItem}>
                         <View style={styles.authItemTextWrapper}>
-                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton]}>
-                                <Text style={[styles.authItemText]}>{text.logIn}</Text>
+                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInput && { borderColor: 'darkgray' }]} disabled={!validInput}>
+                                <Text style={[styles.authItemText, !validInput && { color: 'darkgray' }]}>{text.logIn}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, styles.authItemTextButtonRegister]} onPress={() => navigation.navigate("SignUp")}>
                                 <Text style={[styles.authItemText, styles.authItemTextRegister]}>{text.signUp}</Text>
