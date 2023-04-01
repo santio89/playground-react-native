@@ -49,8 +49,8 @@ const Settings = ({navigation}) => {
                     <View style={styles.settingsItem}>
                         <Text style={[styles.settingsItemLabel]}><Text style={[styles.settingsItemIndicator, altColorTheme && styles.altSettingsItemIndicator]}>●&nbsp;</Text><Text>{text.darkMode}: </Text></Text>
                         <View style={styles.settingsItemTextWrapper}>
-                            <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, !config.darkMode && styles.itemSelected]} onPress={()=>{setConfig(config=>({...config, darkMode: false}))}}><Text style={[styles.settingsItemText, !config.darkMode && styles.itemSelected]}>{text.disabled}</Text></TouchableOpacity>
-                            <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, config.darkMode && styles.itemSelected]} onPress={()=>{setConfig(config=>({...config, darkMode: true}))}}><Text style={[styles.settingsItemText, config.darkMode && styles.itemSelected]}>{text.enabled}</Text></TouchableOpacity>
+                            <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, !config.darkMode && styles.itemSelected]} onPress={()=>{setConfig(config=>({...config, darkMode: false}))}}><Text style={[styles.settingsItemText, !config.darkMode && styles.itemSelected]}>{text.inactive}</Text></TouchableOpacity>
+                            <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, config.darkMode && styles.itemSelected]} onPress={()=>{setConfig(config=>({...config, darkMode: true}))}}><Text style={[styles.settingsItemText, config.darkMode && styles.itemSelected]}>{text.active}</Text></TouchableOpacity>
                         </View>
                     </View>
                     <View style={styles.settingsItem}>
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
         width: '100%',
         minWidth: 300,
         maxWidth: 800,
-        padding: 20,
+        padding: 10,
         paddingBottom: 10,
         backgroundColor: Constants.colorPrimary,
         borderRadius: 8,
@@ -111,6 +111,8 @@ const styles = StyleSheet.create({
     },
     settingsItemTextWrapper: {
         flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
         width: '100%',
         marginTop: 4,
         marginBottom: 4
@@ -122,9 +124,10 @@ const styles = StyleSheet.create({
         borderColor: 'darkgray',
         backgroundColor: Constants.colorPrimaryDark,
         textAlign: 'center',
-        marginInline: 4,
+        marginInline: '1%',
         padding: 8,
-        color: Constants.colorDark
+        color: Constants.colorDark,
+        /* maxWidth: 180 */
     },
     settingsItemText: {
         fontFamily: Constants.fontPrimaryBold,

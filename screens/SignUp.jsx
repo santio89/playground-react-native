@@ -57,21 +57,21 @@ const SignUp = ({ navigation }) => {
             <ScrollView contentContainerStyle={[styles.profileContainer, !darkMode && styles.colorDark, !darkMode && styles.backgroundWhite]}>
                 <View style={[styles.itemsContainer, altColorTheme && styles.altItemsContainer]}>
                     <View style={styles.profileItem}>
-                        <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.email}: </Text></Text>
-                        <TextInput style={[styles.textInput, !validEmail && {borderBottomColor: Constants.colorRed}]} value={email} onChangeText={email => setEmail(email)}/>
+                        <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator, !validEmail && {color: Constants.colorRed}]}>●&nbsp;</Text><Text style={!validEmail && {color: Constants.colorRed}}>{text.email}: </Text></Text>
+                        <TextInput style={[styles.textInput, altColorTheme && styles.altTextInput, !validEmail && {borderBottomColor: Constants.colorRed}]} value={email} onChangeText={email => setEmail(email)} placeholder={text.minEmail} placeholderTextColor={altColorTheme?Constants.colorSecondaryDark:Constants.colorPrimaryDark}/>
                     </View>
                     <View style={styles.profileItem}>
-                        <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.password}: </Text></Text>
-                        <TextInput secureTextEntry={true} style={[styles.textInput, !validPassword && {borderBottomColor: Constants.colorRed}]} placeholder={text.minPassword}
-                            placeholderTextColor={Constants.colorPrimaryDark} value={password} onChangeText={password => setPassword(password)}/>
+                        <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator, !validPassword && {color: Constants.colorRed}]}>●&nbsp;</Text><Text style={!validPassword && {color: Constants.colorRed}}>{text.password}: </Text></Text>
+                        <TextInput style={[styles.textInput, altColorTheme && styles.altTextInput, !validPassword && {borderBottomColor: Constants.colorRed}]} secureTextEntry={true} placeholder={text.minPassword}
+                            placeholderTextColor={altColorTheme?Constants.colorSecondaryDark:Constants.colorPrimaryDark} value={password} onChangeText={password => setPassword(password)}/>
                     </View>
                     <View style={styles.profileItem}>
                         <View style={styles.authItemTextWrapper}>
-                            <TouchableOpacity style={[styles.authItemTextButton, !validInputs && {borderColor: 'darkgray'}]} disabled={!validInputs}>
+                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme  && styles.altAuthItemTextButton, !validInputs && {borderColor: 'darkgray'}]} disabled={!validInputs}>
                                 <Text style={[styles.authItemText, !validInputs && {color: 'darkgray'}]}>{text.signUp}</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity style={[styles.authItemTextButton, styles.authItemTextButtonRegister]} onPress={() => navigation.navigate("LogIn")}>
+                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme  && styles.altAuthItemTextButton, styles.authItemTextButtonRegister]} onPress={() => navigation.navigate("LogIn")}>
                                 <Text style={[styles.authItemText, styles.authItemTextRegister]}>{text.logIn}</Text>
                             </TouchableOpacity>
                         </View>
@@ -150,6 +150,9 @@ const styles = StyleSheet.create({
         width: '100%',
         color: Constants.colorWhite
     },
+    altTextInput: {
+        borderBottomColor: Constants.colorSecondaryDark,
+    },
     authItemTextWrapper: {
         width: '100%',
         marginTop: 4,
@@ -167,6 +170,9 @@ const styles = StyleSheet.create({
         padding: 8,
         color: Constants.colorDark,
         width: 180
+    },
+    altAuthItemTextButton: {
+        backgroundColor: Constants.colorSecondaryDark,
     },
     authItemText: {
         fontFamily: Constants.fontPrimaryBold,

@@ -12,13 +12,13 @@ export const LANGS = [{id: 1, lang: "english", text: {
     cancel: "CANCEL",
     delete: "DELETE",
     email: "E-MAIL",
-    password: "PASSOWRD",
+    password: "PASSWORD",
     name: "NAME",
     avatar: "AVATAR",
     language: "LANGUAGE",
     darkMode: "DARK MODE",
-    enabled: "ENABLED",
-    disabled: "DISABLED",
+    active: "ON",
+    inactive: "OFF",
     colorTheme: "COLOR THEME",
     profile: "PROFILE",
     spanish: "SPANISH",
@@ -27,6 +27,7 @@ export const LANGS = [{id: 1, lang: "english", text: {
     orange: "ORANGE",
     logIn: "LOG IN",
     signUp: "REGISTER",
+    minEmail: "EXAMPLE@DOMAIN.COM",
     minPassword: "8 CHARACTERS MINIMUM"
 }}, {id: 2, lang: "spanish", text: {
     toDoList: "LISTA DE TAREAS",
@@ -47,8 +48,8 @@ export const LANGS = [{id: 1, lang: "english", text: {
     avatar: "AVATAR",
     language: "IDIOMA",
     darkMode: "MODO OSCURO",
-    enabled: "ACTIVADO",
-    disabled: "DESACTIVADO",
+    active: "ACTIVO",
+    inactive: "INACTIVO",
     colorTheme: "TEMA DE COLOR",
     profile: "PERFIL",
     spanish: "ESPAÑOL",
@@ -57,5 +58,6 @@ export const LANGS = [{id: 1, lang: "english", text: {
     orange: "NARANJA",
     logIn: "INGRESAR",
     signUp: "REGISTRARSE",
+    minEmail: "EJEMPLO@DOMINIO.COM",
     minPassword: "8 CARACTERES MÍNIMO"
 }}]
