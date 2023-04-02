@@ -15,6 +15,8 @@ const LogIn = ({ navigation }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const [logInLoading, setLogInLoading] = useState(false)
+
     const [validInput, setValidInput] = useState(false)
 
     useEffect(() => {
@@ -28,7 +30,7 @@ const LogIn = ({ navigation }) => {
         })
     }, [text])
 
-    useEffect(()=>{
+    useEffect(() => {
         email.length > 0 && password.length > 0 ? setValidInput(true) : setValidInput(false)
     }, [email, password])
 
@@ -48,8 +50,8 @@ const LogIn = ({ navigation }) => {
                     </View>
                     <View style={styles.profileItem}>
                         <View style={styles.authItemTextWrapper}>
-                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInput && { borderColor: 'darkgray' }]} disabled={!validInput}>
-                                <Text style={[styles.authItemText, !validInput && { color: 'darkgray' }]}>{text.logIn}</Text>
+                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInput && { borderColor: 'darkgray' }, {height: 44}]} disabled={!validInput}>
+                                {logInLoading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Text style={[styles.authItemText, !validInput && { color: 'darkgray' }]}>{text.logIn}</Text>}
                             </TouchableOpacity>
                             <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, styles.authItemTextButtonRegister]} onPress={() => navigation.navigate("SignUp")}>
                                 <Text style={[styles.authItemText, styles.authItemTextRegister]}>{text.signUp}</Text>
@@ -149,7 +151,7 @@ const styles = StyleSheet.create({
         marginInline: 4,
         padding: 8,
         color: Constants.colorDark,
-        width: 180
+        width: 180,
     },
     altAuthItemTextButton: {
         backgroundColor: Constants.colorSecondaryDark,

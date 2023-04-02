@@ -28,7 +28,11 @@ export const LANGS = [{id: 1, lang: "english", text: {
     logIn: "LOG IN",
     signUp: "REGISTER",
     minEmail: "EXAMPLE@DOMAIN.COM",
-    minPassword: "8 CHARACTERS MINIMUM"
+    minPassword: "8 CHARACTERS MINIMUM",
+    emailExists: "E-MAIL ALREADY EXISTS",
+    blockedRequests: "REQUESTS BLOCKED DUE TO UNUSUAL ACTIVITY. TRY AGAIN LATER",
+    genericError: "ERROR PROCESSING REQUEST",
+    createdAccount: "ACCOUNT CREATED SUCCESFFULLY"
 }}, {id: 2, lang: "spanish", text: {
     toDoList: "LISTA DE TAREAS",
     memoGame: "JUEGO DE MEMORIA",
@@ -59,5 +63,9 @@ export const LANGS = [{id: 1, lang: "english", text: {
     logIn: "INGRESAR",
     signUp: "REGISTRARSE",
     minEmail: "EJEMPLO@DOMINIO.COM",
-    minPassword: "8 CARACTERES MÍNIMO"
+    minPassword: "8 CARACTERES MÍNIMO",
+    emailExits: "CORREO YA EXISTE",
+    blockedRequests: "SOLICITUDES BLOQUEDAS DEBIDO A ACTIVIDAD INUSUAL. INTENTE MÁS TARDE",
+    genericError: "ERROR GENERANDO SOLICITUD",
+    createdAccount: "CUENTA CREADA EXITOSAMENTE"
 }}]

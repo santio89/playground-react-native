@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Modal, SafeAreaView, ActivityIndicator } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useSelector } from 'react-redux/es/exports'
 import { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import Constants from '../constants/Styles.js'
 import { useDispatch } from 'react-redux/es/exports'
-import {signUp} from '../store/actions/auth.action'
+import { signUp } from '../store/actions/auth.action'
 
 const SignUp = ({ navigation }) => {
     const dispatch = useDispatch()
@@ -19,6 +19,14 @@ const SignUp = ({ navigation }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const [modalVisible, setModalVisible] = useState(false);
+    const [emailError, setEmailError] = useState(false)
+
+    const [accountCreatedModal, setAccountCreatedModal] = useState(false)
+    const [accountEmail, setAccountEmail] = useState("")
+
+    const [signUpLoading, setSignUpLoading] = useState(false)
+
     const [validEmail, setValidEmail] = useState(true)
     const [validPassword, setValidPassword] = useState(true)
     const [validInputs, setValidInputs] = useState(false);
@@ -29,12 +37,12 @@ const SignUp = ({ navigation }) => {
     };
 
     const validatePassword = (password) => {
-        var re = /^(?=.*\d).{8,}$/;
+        var re = /[^ ]{8,16}/;
         return re.test(password);
     };
 
-    const handleSignUp = ()=>{
-        dispatch()
+    const handleSignUp = () => {
+        dispatch(signUp(email, password, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail))
     }
 
     useEffect(() => {
@@ -77,8 +85,9 @@ const SignUp = ({ navigation }) => {
                     </View>
                     <View style={styles.profileItem}>
                         <View style={styles.authItemTextWrapper}>
-                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInputs && { borderColor: 'darkgray' }]} disabled={!validInputs} onPress={handleSignUp}>
-                                <Text style={[styles.authItemText, !validInputs && { color: 'darkgray' }]}>{text.signUp}</Text>
+                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInputs && { borderColor: 'darkgray' }, {height: 44}]} disabled={!validInputs} onPress={handleSignUp}>
+                                {signUpLoading?<ActivityIndicator size="small" color={altColorTheme?Constants.colorSecondary:Constants.colorPrimary} />:<Text style={[styles.authItemText, !validInputs && { color: 'darkgray' }]}>{text.signUp}</Text>}
+                                
                             </TouchableOpacity>
 
                             <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, styles.authItemTextButtonRegister]} onPress={() => navigation.navigate("LogIn")}>
@@ -88,6 +97,30 @@ const SignUp = ({ navigation }) => {
                     </View>
                 </View>
             </KeyboardAwareScrollView>
+            <Modal visible={modalVisible} transparent={true} animationType='fade'>
+                <SafeAreaView style={styles.modal}>
+                    <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
+                        <Text style={styles.modalTitle}>ERROR: {emailError === 'email_exists'?text.emailExists:(emailError === 'blocked_requests'?text.blockedRequests:text.genericError)}</Text>
+                        <View style={styles.modalBtnContainer}>
+                            <TouchableOpacity style={styles.modalBtn}>
+                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => {setModalVisible(false)}}>OK</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </SafeAreaView>
+            </Modal>
+            <Modal visible={accountCreatedModal} transparent={true} animationType='fade'>
+                <SafeAreaView style={styles.modal}>
+                    <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
+                        <Text style={styles.modalTitle}>{`${text.createdAccount}: \n${accountEmail.toLocaleUpperCase()}`} </Text>
+                        <View style={styles.modalBtnContainer}>
+                            <TouchableOpacity style={styles.modalBtn}>
+                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => {setAccountCreatedModal(false)}}>OK</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </SafeAreaView>
+            </Modal>
         </>
     )
 }
@@ -179,7 +212,7 @@ const styles = StyleSheet.create({
         marginInline: 4,
         padding: 8,
         color: Constants.colorDark,
-        width: 180
+        width: 180,
     },
     altAuthItemTextButton: {
         backgroundColor: Constants.colorSecondaryDark,
@@ -199,6 +232,53 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginTop: 20
     },
+    modal: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        width: '80%',
+        minWidth: 300,
+        maxWidth: 600,
+        height: 300,
+    },
+    modalInner: {
+        backgroundColor: Constants.colorPrimary,
+        borderColor: Constants.colorWhite,
+        borderRadius: 4,
+        borderWidth: 2,
+        padding: 8,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: 300,
+    },
+    modalTitle: {
+        fontSize: Constants.fontLg,
+        fontWeight: 'bold',
+        fontFamily: Constants.fontPrimaryBold,
+        color: Constants.colorWhite,
+        marginBottom: 40
+    },
+    modalBtnContainer: {
+        flexDirection: 'row',
+    },
+    modalBtnText: {
+        fontFamily: Constants.fontPrimary,
+        fontSize: Constants.fontMd,
+        padding: 8,
+        borderWidth: 1,
+        borderRadius: 4,
+        borderStyle: 'solid',
+        backgroundColor: Constants.colorPrimaryDark,
+        borderColor: Constants.colorWhite,
+        color: Constants.colorWhite,
+        marginHorizontal: 10
+    },
+    borderRed: {
+        borderColor: Constants.colorRed,
+    },
     /* for dark mode off */
     backgroundWhite: {
         backgroundColor: Constants.colorWhite
@@ -213,5 +293,12 @@ const styles = StyleSheet.create({
     },
     altProfileItemIndicator: {
         color: Constants.colorSecondaryDark,
+    },
+    altModalInner: {
+        backgroundColor: Constants.colorSecondary,
+      
+    },
+    altModalBtnText: {
+        backgroundColor: Constants.colorSecondaryDark,
     },
 })
