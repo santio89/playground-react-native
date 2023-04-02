@@ -59,11 +59,11 @@ const SignUp = ({ navigation }) => {
                 <View style={[styles.itemsContainer, altColorTheme && styles.altItemsContainer]}>
                     <View style={styles.profileItem}>
                         <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator, !validEmail && { color: Constants.colorRed }]}>●&nbsp;</Text><Text style={!validEmail && { color: Constants.colorRed }}>{text.email}: </Text></Text>
-                        <TextInput style={[styles.textInput, altColorTheme && styles.altTextInput, !validEmail && { borderBottomColor: Constants.colorRed }]} value={email} onChangeText={email => setEmail(email)} placeholder={text.minEmail} placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} />
+                        <TextInput keyboardType='email-address' autoCapitalize='none' style={[styles.textInput, altColorTheme && styles.altTextInput, !validEmail && { borderBottomColor: Constants.colorRed }]} value={email} onChangeText={email => setEmail(email)} placeholder={text.minEmail} placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} />
                     </View>
                     <View style={styles.profileItem}>
                         <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator, !validPassword && { color: Constants.colorRed }]}>●&nbsp;</Text><Text style={!validPassword && { color: Constants.colorRed }}>{text.password}: </Text></Text>
-                        <TextInput style={[styles.textInput, altColorTheme && styles.altTextInput, !validPassword && { borderBottomColor: Constants.colorRed }]} secureTextEntry={true} placeholder={text.minPassword}
+                        <TextInput style={[styles.textInput, altColorTheme && styles.altTextInput, !validPassword && { borderBottomColor: Constants.colorRed }]} autoCapitalize='none' secureTextEntry={true} placeholder={text.minPassword}
                             placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} value={password} onChangeText={password => setPassword(password)} />
                     </View>
                     <View style={styles.profileItem}>

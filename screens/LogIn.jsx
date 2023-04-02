@@ -40,11 +40,11 @@ const LogIn = ({ navigation }) => {
                 <View style={[styles.itemsContainer, altColorTheme && styles.altItemsContainer]}>
                     <View style={styles.profileItem}>
                         <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.email}: </Text></Text>
-                        <TextInput style={[styles.textInput, altColorTheme && styles.altTextInput]} value={email} onChangeText={email => setEmail(email)} />
+                        <TextInput keyboardType='email-address' autoCapitalize='none' style={[styles.textInput, altColorTheme && styles.altTextInput]} value={email} onChangeText={email => setEmail(email)} />
                     </View>
                     <View style={styles.profileItem}>
                         <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.password}: </Text></Text>
-                        <TextInput secureTextEntry={true} style={[styles.textInput, altColorTheme && styles.altTextInput]} value={password} onChangeText={password => setPassword(password)} />
+                        <TextInput secureTextEntry={true} autoCapitalize='none' style={[styles.textInput, altColorTheme && styles.altTextInput]} value={password} onChangeText={password => setPassword(password)} />
                     </View>
                     <View style={styles.profileItem}>
                         <View style={styles.authItemTextWrapper}>
