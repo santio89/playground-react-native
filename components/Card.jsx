@@ -10,10 +10,6 @@ const Card = ({ card, handleChoice, choiceOne, choiceTwo, disabled }) => {
         if (disabled) { return }
         handleChoice(card)
     }
-
-    useEffect(() => {
-     console.log(styles.altBackground)
-    }, [])
     
 
     return (
