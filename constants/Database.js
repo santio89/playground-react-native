@@ -1,1 +1,2 @@
 export const URL_API = "https://playground-react-native-9aef6-default-rtdb.firebaseio.com/"
+export const URL_AUTH_SIGNUP = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=IzaSyB4ZsGKWtQ1d4K0RMYwi2MelPqw9PaW_nM"

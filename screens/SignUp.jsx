@@ -1,11 +1,15 @@
-import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useSelector } from 'react-redux/es/exports'
 import { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import Constants from '../constants/Styles.js'
+import { useDispatch } from 'react-redux/es/exports'
+import {signUp} from '../store/actions/auth.action'
 
 const SignUp = ({ navigation }) => {
+    const dispatch = useDispatch()
+
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
     const { selected: languageSelected, langs } = useSelector(state => state.settings.language)
@@ -23,10 +27,15 @@ const SignUp = ({ navigation }) => {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
     };
+
     const validatePassword = (password) => {
         var re = /^(?=.*\d).{8,}$/;
         return re.test(password);
     };
+
+    const handleSignUp = ()=>{
+        dispatch()
+    }
 
     useEffect(() => {
         setText(langs.find(lang => lang.lang === languageSelected).text)
@@ -68,7 +77,7 @@ const SignUp = ({ navigation }) => {
                     </View>
                     <View style={styles.profileItem}>
                         <View style={styles.authItemTextWrapper}>
-                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInputs && { borderColor: 'darkgray' }]} disabled={!validInputs}>
+                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInputs && { borderColor: 'darkgray' }]} disabled={!validInputs} onPress={handleSignUp}>
                                 <Text style={[styles.authItemText, !validInputs && { color: 'darkgray' }]}>{text.signUp}</Text>
                             </TouchableOpacity>
 
