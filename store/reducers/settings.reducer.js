@@ -1,6 +1,6 @@
 import { LANGS } from "../../data/lang/langs";
-import { SELECT_LANG, SELECT_DARKMODE, SELECT_COLORTHEME } from "../actions/settings.action";
-import { storageGetItem } from '../../utils/AsyncStorage.js';
+import { SELECT_LANG, SELECT_DARKMODE, SELECT_COLORTHEME, SET_SETTINGS, GET_SETTINGS } from "../actions/settings.action";
+
 
 const initialState = {
     language: {
@@ -15,38 +15,31 @@ const initialState = {
     }
 }
 
-const retrieveData = async () => {
-    try {
-        const value = await storageGetItem('pg-settings');
-        if (value !== null) {
-            const data = JSON.parse(value)
-            initialState.language.selected = data?.lang
-            initialState.darkMode.enabled = data?.darkMode
-            initialState.altColorTheme.enabled = data?.altColorTheme
-        }
-    } catch (error) {
-        console.log("error retrieving data from storage")
-    }
-}
-retrieveData()
 
 
-const settingsReducer = (state=initialState, action) => {
-    switch(action.type){
+const settingsReducer = (state = initialState, action) => {
+    switch (action.type) {
         case SELECT_LANG:
             return {
                 ...state,
-                language: {...state.language, selected: action.lang}
+                language: { ...state.language, selected: action.lang }
             }
         case SELECT_DARKMODE:
             return {
                 ...state,
-                darkMode: {...state.darkMode, enabled: action.darkMode}
+                darkMode: { ...state.darkMode, enabled: action.darkMode }
             }
         case SELECT_COLORTHEME:
             return {
                 ...state,
-                altColorTheme: {...state.altColorTheme, enabled: action.altColorTheme}
+                altColorTheme: { ...state.altColorTheme, enabled: action.altColorTheme }
+            }
+        case GET_SETTINGS:
+            return state
+        case SET_SETTINGS:
+            return {
+                ...state,
+                ...action.settings
             }
         default:
             return state

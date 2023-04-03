@@ -2,8 +2,9 @@ export const SIGN_UP = "SIGN_UP"
 export const LOG_IN = "LOG_IN"
 import { URL_AUTH_SIGNUP } from "../../constants/Database"
 import { URL_AUTH_LOGIN } from "../../constants/Database"
+import { URL_API } from "../../constants/Database"
 
-export const signUp = (email, password, displayName, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail) => {
+export const signUp = (email, password, displayName, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings) => {
 
     return async dispatch => {
         setSignUpLoading(true)
@@ -12,7 +13,7 @@ export const signUp = (email, password, displayName, setEmailError, setModalVisi
         try {
             const response = await fetch(URL_AUTH_SIGNUP, {
                 method: 'POST',
-                header: {
+                headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
@@ -38,6 +39,23 @@ export const signUp = (email, password, displayName, setEmailError, setModalVisi
 
             const data = await response.json()
 
+            /* envio a firebase settings actuales como default del usuario */
+            try {
+                await fetch(URL_API + "settings.json", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        ...settings,
+                        userId: data.localId,
+                    })
+                })
+            } catch (e) {
+                console.log("error saving settings: ", e)
+            }
+
+            /* seteo modal */
             setAccountEmail(`${data.email}\n${data.displayName}`)
             setAccountCreatedModal(true)
 
@@ -48,7 +66,7 @@ export const signUp = (email, password, displayName, setEmailError, setModalVisi
                 displayName: data.displayName
             })
 
-  
+
         } catch (e) {
             if (e.message === 'email_exists') {
                 setEmailError('email_exists');
@@ -57,7 +75,7 @@ export const signUp = (email, password, displayName, setEmailError, setModalVisi
                 setEmailError('blocked_requests');
                 setModalVisible(true)
             }
-        } finally{
+        } finally {
             setSignUpLoading(false)
             setValidInputs(true)
         }
@@ -87,15 +105,15 @@ export const logIn = (email, password, setLogInError, setModalVisible, setLogInL
                 const errorResData = await response.json();
                 const errorId = errorResData.error.message;
                 let message = 'cant_login';
-                
+
                 if (errorId === 'INVALID_PASSWORD' || 'EMAIL_NOT_FOUND') {
                     message = 'wrong_credentials';
-                } 
+                }
                 throw new Error(message);
             }
 
             const data = await response.json()
-            
+
             setAccountEmail(data.displayName)
             setLogInSuccess(true);
 
@@ -106,13 +124,13 @@ export const logIn = (email, password, setLogInError, setModalVisible, setLogInL
                 displayName: data.displayName
             })
 
-  
+
         } catch (e) {
             if (e.message === 'wrong_credentials') {
                 setLogInError('wrong_credentials');
                 setModalVisible(true)
-            } 
-        } finally{
+            }
+        } finally {
             setLogInLoading(false)
             setValidInput(true)
         }

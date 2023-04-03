@@ -10,9 +10,11 @@ import { signUp } from '../store/actions/auth.action'
 const SignUp = ({ navigation }) => {
     const dispatch = useDispatch()
 
-    const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
+    const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const { selected: languageSelected, langs } = useSelector(state => state.settings.language)
+
+    const settings = {darkMode, altColorTheme, languageSelected}
 
     const [text, setText] = useState(langs.find(lang => lang.lang === languageSelected).text)
 
@@ -49,7 +51,7 @@ const SignUp = ({ navigation }) => {
     };
 
     const handleSignUp = () => {
-        dispatch(signUp(email, password, displayName, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail))
+        dispatch(signUp(email, password, displayName, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings))
     }
 
     useEffect(() => {
