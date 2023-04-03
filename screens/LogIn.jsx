@@ -1,11 +1,15 @@
-import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Modal, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useSelector } from 'react-redux/es/exports'
 import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux/es/exports'
+import { logIn } from '../store/actions/auth.action'
 import Header from '../components/Header'
 import Constants from '../constants/Styles.js'
 
 const LogIn = ({ navigation }) => {
+    const dispatch = useDispatch();
+
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
     const { selected: languageSelected, langs } = useSelector(state => state.settings.language)
@@ -17,7 +21,17 @@ const LogIn = ({ navigation }) => {
 
     const [logInLoading, setLogInLoading] = useState(false)
 
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const [logInSuccess, setLogInSuccess] = useState(false)
+    const [accountEmail, setAccountEmail] = useState("")
+
+    const [logInError, setLogInError] = useState(false)
     const [validInput, setValidInput] = useState(false)
+
+    const handleLogIn = () => {
+        dispatch(logIn(email, password, setLogInError, setModalVisible, setLogInLoading, setValidInput, setLogInSuccess, setAccountEmail))
+    }
 
     useEffect(() => {
         setText(langs.find(lang => lang.lang === languageSelected).text)
@@ -50,7 +64,7 @@ const LogIn = ({ navigation }) => {
                     </View>
                     <View style={styles.profileItem}>
                         <View style={styles.authItemTextWrapper}>
-                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInput && { borderColor: 'darkgray' }, {height: 44}]} disabled={!validInput}>
+                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInput && { borderColor: 'darkgray' }, {height: 44}]} disabled={!validInput} onPress={handleLogIn}>
                                 {logInLoading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Text style={[styles.authItemText, !validInput && { color: 'darkgray' }]}>{text.logIn}</Text>}
                             </TouchableOpacity>
                             <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, styles.authItemTextButtonRegister]} onPress={() => navigation.navigate("SignUp")}>
@@ -60,6 +74,30 @@ const LogIn = ({ navigation }) => {
                     </View>
                 </View>
             </KeyboardAwareScrollView>
+            <Modal visible={modalVisible} transparent={true} animationType='fade'>
+                <SafeAreaView style={styles.modal}>
+                    <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
+                        <Text style={styles.modalTitle}>{`ERROR: \n${logInError === 'wrong_credentials'?text.wrongCredentials:text.genericError}`}</Text>
+                        <View style={styles.modalBtnContainer}>
+                            <TouchableOpacity style={styles.modalBtn}>
+                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => {setModalVisible(false)}}>OK</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </SafeAreaView>
+            </Modal>
+            <Modal visible={logInSuccess} transparent={true} animationType='fade'>
+                <SafeAreaView style={styles.modal}>
+                    <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
+                        <Text style={styles.modalTitle}>{`${text.welcome} ${accountEmail.toLocaleUpperCase()}`} </Text>
+                        <View style={styles.modalBtnContainer}>
+                            <TouchableOpacity style={styles.modalBtn}>
+                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => {setLogInSuccess(false)}}>OK</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </SafeAreaView>
+            </Modal>
         </>
     )
 }
@@ -171,6 +209,52 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginTop: 20
     },
+    modal: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        width: '80%',
+        minWidth: 300,
+        maxWidth: 600,
+        height: 300,
+    },
+    modalInner: {
+        backgroundColor: Constants.colorPrimary,
+        borderColor: Constants.colorWhite,
+        borderRadius: 4,
+        borderWidth: 2,
+        padding: 8,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: 300,
+    },
+    modalTitle: {
+        fontSize: Constants.fontLg,
+        fontWeight: 'bold',
+        fontFamily: Constants.fontPrimaryBold,
+        color: Constants.colorWhite,
+        marginBottom: 40,
+        width: '100%'
+    },
+    modalBtnContainer: {
+        flexDirection: 'row',
+        maxWidth: '100%'
+    },
+    modalBtnText: {
+        fontFamily: Constants.fontPrimary,
+        fontSize: Constants.fontMd,
+        padding: 8,
+        borderWidth: 1,
+        borderRadius: 4,
+        borderStyle: 'solid',
+        backgroundColor: Constants.colorPrimaryDark,
+        borderColor: Constants.colorWhite,
+        color: Constants.colorWhite,
+        marginHorizontal: 10
+    },
     /* for dark mode off */
     backgroundWhite: {
         backgroundColor: Constants.colorWhite
@@ -185,5 +269,12 @@ const styles = StyleSheet.create({
     },
     altProfileItemIndicator: {
         color: Constants.colorSecondaryDark,
+    },
+    altModalInner: {
+        backgroundColor: Constants.colorSecondary,
+      
+    },
+    altModalBtnText: {
+        backgroundColor: Constants.colorSecondaryDark,
     },
 })

@@ -100,7 +100,7 @@ const SignUp = ({ navigation }) => {
             <Modal visible={modalVisible} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
-                        <Text style={styles.modalTitle}>ERROR: {emailError === 'email_exists'?text.emailExists:(emailError === 'blocked_requests'?text.blockedRequests:text.genericError)}</Text>
+                        <Text style={styles.modalTitle}>{`ERROR: \n${emailError === 'email_exists'?text.emailExists:(emailError === 'blocked_requests'?text.blockedRequests:text.genericError)}`}</Text>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={styles.modalBtn}>
                                 <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => {setModalVisible(false)}}>OK</Text>
@@ -259,10 +259,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontFamily: Constants.fontPrimaryBold,
         color: Constants.colorWhite,
-        marginBottom: 40
+        marginBottom: 40,
+        width: '100%'
     },
     modalBtnContainer: {
         flexDirection: 'row',
+        maxWidth: '100%'
     },
     modalBtnText: {
         fontFamily: Constants.fontPrimary,
@@ -275,9 +277,6 @@ const styles = StyleSheet.create({
         borderColor: Constants.colorWhite,
         color: Constants.colorWhite,
         marginHorizontal: 10
-    },
-    borderRed: {
-        borderColor: Constants.colorRed,
     },
     /* for dark mode off */
     backgroundWhite: {

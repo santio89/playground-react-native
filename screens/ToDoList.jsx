@@ -175,7 +175,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'stretch',
     },
-
     modal: {
         flex: 1,
         justifyContent: 'center',
@@ -203,10 +202,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontFamily: Constants.fontPrimaryBold,
         color: Constants.colorWhite,
-        marginBottom: 40
+        marginBottom: 40,
+        width: '100%'
     },
     modalBtnContainer: {
         flexDirection: 'row',
+        maxWidth: '100%'
     },
     modalBtnText: {
         fontFamily: Constants.fontPrimary,

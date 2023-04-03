@@ -1,5 +1,7 @@
 export const SIGN_UP = "SIGN_UP"
+export const LOG_IN = "LOG_IN"
 import { URL_AUTH_SIGNUP } from "../../constants/Database"
+import { URL_AUTH_LOGIN } from "../../constants/Database"
 
 export const signUp = (email, password, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail) => {
 
@@ -34,8 +36,10 @@ export const signUp = (email, password, setEmailError, setModalVisible, setSignU
             }
 
             const data = await response.json()
+
             setAccountEmail(email)
-            setAccountCreatedModal(true);
+            setAccountCreatedModal(true)
+
             dispatch({
                 type: SIGN_UP,
                 token: data.idToken,
@@ -54,6 +58,60 @@ export const signUp = (email, password, setEmailError, setModalVisible, setSignU
         } finally{
             setSignUpLoading(false)
             setValidInputs(true)
+        }
+    }
+}
+
+export const logIn = (email, password, setLogInError, setModalVisible, setLogInLoading, setValidInput, setLogInSuccess, setAccountEmail) => {
+
+    return async dispatch => {
+        setLogInLoading(true)
+        setValidInput(false)
+
+        try {
+            const response = await fetch(URL_AUTH_LOGIN, {
+                method: 'POST',
+                header: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                    returnSecureToken: true
+                })
+            })
+
+            if (!response.ok) {
+                const errorResData = await response.json();
+                const errorId = errorResData.error.message;
+                let message = 'cant_login';
+             
+                if (errorId === 'INVALID_PASSWORD' || 'EMAIL_NOT_FOUND') {
+                    message = 'wrong_credentials';
+                } 
+                throw new Error(message);
+            }
+
+            const data = await response.json()
+
+            setAccountEmail(email)
+            setLogInSuccess(true);
+
+            dispatch({
+                type: LOG_IN,
+                token: data.idToken,
+                userId: data.localId
+            })
+
+  
+        } catch (e) {
+            if (e.message === 'wrong_credentials') {
+                setLogInError('wrong_credentials');
+                setModalVisible(true)
+            } 
+        } finally{
+            setLogInLoading(false)
+            setValidInput(true)
         }
     }
 }
