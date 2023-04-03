@@ -92,7 +92,7 @@ const LogIn = ({ navigation }) => {
                         <Text style={styles.modalTitle}>{`${text.welcome} ${accountEmail.toLocaleUpperCase()}`} </Text>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={styles.modalBtn}>
-                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => {setLogInSuccess(false)}}>OK</Text>
+                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => {setLogInSuccess(false); navigation.navigate("Apps")}}>OK</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

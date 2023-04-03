@@ -115,7 +115,7 @@ const SignUp = ({ navigation }) => {
                         <Text style={styles.modalTitle}>{`${text.createdAccount}: \n${accountEmail.toLocaleUpperCase()}`} </Text>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={styles.modalBtn}>
-                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => {setAccountCreatedModal(false)}}>OK</Text>
+                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => {setAccountCreatedModal(false); navigation.navigate("Apps")}}>OK</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
