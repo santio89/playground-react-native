@@ -3,7 +3,7 @@ export const LOG_IN = "LOG_IN"
 import { URL_AUTH_SIGNUP } from "../../constants/Database"
 import { URL_AUTH_LOGIN } from "../../constants/Database"
 
-export const signUp = (email, password, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail) => {
+export const signUp = (email, password, displayName, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail) => {
 
     return async dispatch => {
         setSignUpLoading(true)
@@ -18,6 +18,7 @@ export const signUp = (email, password, setEmailError, setModalVisible, setSignU
                 body: JSON.stringify({
                     email,
                     password,
+                    displayName,
                     returnSecureToken: true
                 })
             })
@@ -37,13 +38,14 @@ export const signUp = (email, password, setEmailError, setModalVisible, setSignU
 
             const data = await response.json()
 
-            setAccountEmail(email)
+            setAccountEmail(`${data.email}\n${data.displayName}`)
             setAccountCreatedModal(true)
 
             dispatch({
                 type: SIGN_UP,
                 token: data.idToken,
-                userId: data.localId
+                userId: data.localId,
+                displayName: data.displayName
             })
 
   
@@ -85,7 +87,7 @@ export const logIn = (email, password, setLogInError, setModalVisible, setLogInL
                 const errorResData = await response.json();
                 const errorId = errorResData.error.message;
                 let message = 'cant_login';
-             
+                
                 if (errorId === 'INVALID_PASSWORD' || 'EMAIL_NOT_FOUND') {
                     message = 'wrong_credentials';
                 } 
@@ -93,14 +95,15 @@ export const logIn = (email, password, setLogInError, setModalVisible, setLogInL
             }
 
             const data = await response.json()
-
-            setAccountEmail(email)
+            
+            setAccountEmail(data.displayName)
             setLogInSuccess(true);
 
             dispatch({
                 type: LOG_IN,
                 token: data.idToken,
-                userId: data.localId
+                userId: data.localId,
+                displayName: data.displayName
             })
 
   

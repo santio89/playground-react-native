@@ -203,7 +203,8 @@ const styles = StyleSheet.create({
         fontFamily: Constants.fontPrimaryBold,
         color: Constants.colorWhite,
         marginBottom: 40,
-        width: '100%'
+        width: '100%',
+        textAlign: 'center'
     },
     modalBtnContainer: {
         flexDirection: 'row',

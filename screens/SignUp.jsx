@@ -18,6 +18,7 @@ const SignUp = ({ navigation }) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [displayName, setDisplayName] = useState("")
 
     const [modalVisible, setModalVisible] = useState(false);
     const [emailError, setEmailError] = useState(false)
@@ -29,6 +30,7 @@ const SignUp = ({ navigation }) => {
 
     const [validEmail, setValidEmail] = useState(true)
     const [validPassword, setValidPassword] = useState(true)
+    const [validName, setValidName] = useState(false)
     const [validInputs, setValidInputs] = useState(false);
 
     const validateEmail = (email) => {
@@ -41,8 +43,13 @@ const SignUp = ({ navigation }) => {
         return re.test(password);
     };
 
+    const validateName = (name) => {
+        var re = /[^ ]{4,16}/;
+        return re.test(name);
+    };
+
     const handleSignUp = () => {
-        dispatch(signUp(email, password, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail))
+        dispatch(signUp(email, password, displayName, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail))
     }
 
     useEffect(() => {
@@ -63,10 +70,13 @@ const SignUp = ({ navigation }) => {
     useEffect(() => {
         validatePassword(password) || password === "" ? setValidPassword(true) : setValidPassword(false)
     }, [password])
+    useEffect(() => {
+        validateName(displayName) || displayName === "" ? setValidName(true) : setValidName(false)
+    }, [displayName])
 
     useEffect(() => {
-        validateEmail(email) && validatePassword(password) ? setValidInputs(true) : setValidInputs(false)
-    }, [email, password])
+        validateEmail(email) && validatePassword(password) && validateName(displayName) ? setValidInputs(true) : setValidInputs(false)
+    }, [email, password, displayName])
 
 
     return (
@@ -84,10 +94,15 @@ const SignUp = ({ navigation }) => {
                             placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} value={password} onChangeText={password => setPassword(password)} />
                     </View>
                     <View style={styles.profileItem}>
+                        <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator, !validName && { color: Constants.colorRed }]}>●&nbsp;</Text><Text style={!validName && { color: Constants.colorRed }}>{text.name}: </Text></Text>
+                        <TextInput style={[styles.textInput, altColorTheme && styles.altTextInput, !validName && { borderBottomColor: Constants.colorRed }]} autoCapitalize='none' placeholder={text.minName}
+                            placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} value={displayName} onChangeText={displayName => setDisplayName(displayName)} />
+                    </View>
+                    <View style={styles.profileItem}>
                         <View style={styles.authItemTextWrapper}>
-                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInputs && { borderColor: 'darkgray' }, {height: 44}]} disabled={!validInputs} onPress={handleSignUp}>
-                                {signUpLoading?<ActivityIndicator size="small" color={altColorTheme?Constants.colorSecondary:Constants.colorPrimary} />:<Text style={[styles.authItemText, !validInputs && { color: 'darkgray' }]}>{text.signUp}</Text>}
-                                
+                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInputs && { borderColor: 'darkgray' }, { height: 44 }]} disabled={!validInputs} onPress={handleSignUp}>
+                                {signUpLoading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Text style={[styles.authItemText, !validInputs && { color: 'darkgray' }]}>{text.signUp}</Text>}
+
                             </TouchableOpacity>
 
                             <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, styles.authItemTextButtonRegister]} onPress={() => navigation.navigate("LogIn")}>
@@ -100,10 +115,13 @@ const SignUp = ({ navigation }) => {
             <Modal visible={modalVisible} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
-                        <Text style={styles.modalTitle}>{`ERROR: \n${emailError === 'email_exists'?text.emailExists:(emailError === 'blocked_requests'?text.blockedRequests:text.genericError)}`}</Text>
+                        <Text style={styles.modalTitle}>
+                            <Text>{`ERROR: \n`}</Text>
+                            <Text style={{ fontFamily: Constants.fontPrimary }}>{emailError === 'email_exists' ? text.emailExists : (emailError === 'blocked_requests' ? text.blockedRequests : text.genericError)}</Text>
+                        </Text>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={styles.modalBtn}>
-                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => {setModalVisible(false)}}>OK</Text>
+                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => { setModalVisible(false) }}>OK</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -112,10 +130,13 @@ const SignUp = ({ navigation }) => {
             <Modal visible={accountCreatedModal} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
-                        <Text style={styles.modalTitle}>{`${text.createdAccount}: \n${accountEmail.toLocaleUpperCase()}`} </Text>
+                        <Text style={styles.modalTitle}> 
+                            <Text>{`${text.createdAccount}: \n`}</Text>
+                            <Text style={{ fontFamily: Constants.fontPrimary }}>{accountEmail.toLocaleUpperCase()}</Text>
+                        </Text>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={styles.modalBtn}>
-                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => {setAccountCreatedModal(false); navigation.navigate("Apps")}}>OK</Text>
+                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => { setAccountCreatedModal(false); navigation.navigate("Apps") }}>OK</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -260,7 +281,8 @@ const styles = StyleSheet.create({
         fontFamily: Constants.fontPrimaryBold,
         color: Constants.colorWhite,
         marginBottom: 40,
-        width: '100%'
+        width: '100%',
+        textAlign: 'center'
     },
     modalBtnContainer: {
         flexDirection: 'row',
@@ -295,7 +317,7 @@ const styles = StyleSheet.create({
     },
     altModalInner: {
         backgroundColor: Constants.colorSecondary,
-      
+
     },
     altModalBtnText: {
         backgroundColor: Constants.colorSecondaryDark,

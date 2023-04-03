@@ -64,7 +64,7 @@ const LogIn = ({ navigation }) => {
                     </View>
                     <View style={styles.profileItem}>
                         <View style={styles.authItemTextWrapper}>
-                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInput && { borderColor: 'darkgray' }, {height: 44}]} disabled={!validInput} onPress={handleLogIn}>
+                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInput && { borderColor: 'darkgray' }, { height: 44 }]} disabled={!validInput} onPress={handleLogIn}>
                                 {logInLoading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Text style={[styles.authItemText, !validInput && { color: 'darkgray' }]}>{text.logIn}</Text>}
                             </TouchableOpacity>
                             <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, styles.authItemTextButtonRegister]} onPress={() => navigation.navigate("SignUp")}>
@@ -77,10 +77,13 @@ const LogIn = ({ navigation }) => {
             <Modal visible={modalVisible} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
-                        <Text style={styles.modalTitle}>{`ERROR: \n${logInError === 'wrong_credentials'?text.wrongCredentials:text.genericError}`}</Text>
+                        <Text style={styles.modalTitle}>
+                            <Text>{`ERROR: \n`}</Text>
+                            <Text style={{ fontFamily: Constants.fontPrimary }}>{logInError === 'wrong_credentials' ? text.wrongCredentials : text.genericError}</Text>
+                        </Text>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={styles.modalBtn}>
-                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => {setModalVisible(false)}}>OK</Text>
+                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => { setModalVisible(false) }}>OK</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -89,10 +92,13 @@ const LogIn = ({ navigation }) => {
             <Modal visible={logInSuccess} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
-                        <Text style={styles.modalTitle}>{`${text.welcome} ${accountEmail.toLocaleUpperCase()}`} </Text>
+                        <Text style={styles.modalTitle}>
+                            <Text>{`${text.welcome}:\n`}</Text>
+                            <Text style={{ fontFamily: Constants.fontPrimary }}>{accountEmail.toLocaleUpperCase()}</Text>
+                        </Text>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={styles.modalBtn}>
-                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => {setLogInSuccess(false); navigation.navigate("Apps")}}>OK</Text>
+                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => { setLogInSuccess(false); navigation.navigate("Apps") }}>OK</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -237,7 +243,8 @@ const styles = StyleSheet.create({
         fontFamily: Constants.fontPrimaryBold,
         color: Constants.colorWhite,
         marginBottom: 40,
-        width: '100%'
+        width: '100%',
+        textAlign: 'center'
     },
     modalBtnContainer: {
         flexDirection: 'row',
@@ -272,7 +279,7 @@ const styles = StyleSheet.create({
     },
     altModalInner: {
         backgroundColor: Constants.colorSecondary,
-      
+
     },
     altModalBtnText: {
         backgroundColor: Constants.colorSecondaryDark,
