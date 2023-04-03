@@ -4,7 +4,7 @@ import { URL_AUTH_SIGNUP } from "../../constants/Database"
 import { URL_AUTH_LOGIN } from "../../constants/Database"
 import { URL_API } from "../../constants/Database"
 
-export const signUp = (email, password, displayName, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings) => {
+export const signUp = (email, password, displayName, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings, setSettingsFirebase) => {
 
     return async dispatch => {
         setSignUpLoading(true)
@@ -40,20 +40,7 @@ export const signUp = (email, password, displayName, setEmailError, setModalVisi
             const data = await response.json()
 
             /* envio a firebase settings actuales como default del usuario */
-            try {
-                await fetch(URL_API + "settings.json", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        ...settings,
-                        userId: data.localId,
-                    })
-                })
-            } catch (e) {
-                console.log("error saving settings: ", e)
-            }
+            dispatch(setSettingsFirebase(settings, data.localId))
 
             /* seteo modal */
             setAccountEmail(`${data.email}\n${data.displayName}`)

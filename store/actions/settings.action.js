@@ -50,7 +50,6 @@ export const getSettingsFirebase = () => {
     return async dispatch => {
         /* traigo de firebase settings actuales del usuario */
         try {
-            console.log("fetch a " + URL_API)
             const response = await fetch(URL_API + "settings.json")
             const data = response.json()
 

@@ -6,6 +6,7 @@ import Header from '../components/Header'
 import Constants from '../constants/Styles.js'
 import { useDispatch } from 'react-redux/es/exports'
 import { signUp } from '../store/actions/auth.action'
+import { setSettingsFirebase } from '../store/actions/settings.action'
 
 const SignUp = ({ navigation }) => {
     const dispatch = useDispatch()
@@ -14,7 +15,7 @@ const SignUp = ({ navigation }) => {
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const { selected: languageSelected, langs } = useSelector(state => state.settings.language)
 
-    const settings = {darkMode, altColorTheme, languageSelected}
+    const settings = useSelector(state=>state.settings)
 
     const [text, setText] = useState(langs.find(lang => lang.lang === languageSelected).text)
 
@@ -51,7 +52,7 @@ const SignUp = ({ navigation }) => {
     };
 
     const handleSignUp = () => {
-        dispatch(signUp(email, password, displayName, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings))
+        dispatch(signUp(email, password, displayName, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings, setSettingsFirebase))
     }
 
     useEffect(() => {
