@@ -49,6 +49,14 @@ const LogIn = ({ navigation }) => {
         email.length > 0 && password.length > 0 ? setValidInput(true) : setValidInput(false)
     }, [email, password])
 
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+              setEmail("");
+              setPassword("");
+        });
+        return unsubscribe;
+     }, [navigation]);
+
 
     return (
         <>

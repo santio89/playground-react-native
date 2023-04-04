@@ -34,7 +34,7 @@ const SignUp = ({ navigation }) => {
 
     const [validEmail, setValidEmail] = useState(true)
     const [validPassword, setValidPassword] = useState(true)
-    const [validName, setValidName] = useState(false)
+    const [validName, setValidName] = useState(true)
     const [validInputs, setValidInputs] = useState(false);
 
     const validateEmail = (email) => {
@@ -82,6 +82,14 @@ const SignUp = ({ navigation }) => {
         validateEmail(email) && validatePassword(password) && validateName(displayName) ? setValidInputs(true) : setValidInputs(false)
     }, [email, password, displayName])
 
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+              setEmail("");
+              setPassword("");
+              setDisplayName("");
+        });
+        return unsubscribe;
+     }, [navigation]);
 
     return (
         <>
