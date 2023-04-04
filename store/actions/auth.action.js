@@ -2,7 +2,6 @@ export const SIGN_UP = "SIGN_UP"
 export const LOG_IN = "LOG_IN"
 import { URL_AUTH_SIGNUP } from "../../constants/Database"
 import { URL_AUTH_LOGIN } from "../../constants/Database"
-import { URL_API } from "../../constants/Database"
 
 export const signUp = (email, password, displayName, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings, setSettingsFirebase) => {
 

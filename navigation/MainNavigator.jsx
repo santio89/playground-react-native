@@ -30,7 +30,7 @@ const MainNavigator = () => {
 
 
     useEffect(()=>{
-        userId?dispatch(getSettingsFirebase):dispatch(getSettingsLocal(storageGetItem))
+        userId?dispatch(getSettingsFirebase(userId)):dispatch(getSettingsLocal(storageGetItem))
     }, [userId])
     
     useEffect(()=>{

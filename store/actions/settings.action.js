@@ -26,8 +26,8 @@ export const setSettingsFirebase = (settings, userId) => {
         /* envio a firebase settings actuales como default del usuario */
         /* REVISAR QUE ACTUALIZE EL USUARIO */
         try {
-            await fetch(URL_API + "settings.json", {
-                method: 'POST',
+            await fetch(`${URL_API}settings/${userId}.json`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -45,20 +45,18 @@ export const setSettingsFirebase = (settings, userId) => {
         })
     }
 }
-export const getSettingsFirebase = () => {
+export const getSettingsFirebase = (userId) => {
 
     return async dispatch => {
         /* traigo de firebase settings actuales del usuario */
         try {
-            const response = await fetch(URL_API + "settings.json")
-            const data = response.json()
-
-            console.log(data)
+            const response = await fetch(`${URL_API}settings/${userId}.json`)
+            const data = await response.json()
 
             /* dispatch seteando settings */
             dispatch({
                 type: SET_SETTINGS,
-                settings: data[0]
+                settings: data
             })
         } catch (e) {
             console.log("error getting settings: ", e)
