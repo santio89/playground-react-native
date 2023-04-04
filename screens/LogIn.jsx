@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View, SafeAreaView, Modal, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { useFocusEffect } from '@react-navigation/native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useSelector } from 'react-redux/es/exports'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux/es/exports'
 import { logIn } from '../store/actions/auth.action'
 import Header from '../components/Header'
@@ -49,13 +50,14 @@ const LogIn = ({ navigation }) => {
         email.length > 0 && password.length > 0 ? setValidInput(true) : setValidInput(false)
     }, [email, password])
 
-    useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-              setEmail("");
-              setPassword("");
-        });
-        return unsubscribe;
-     }, [navigation]);
+    useFocusEffect(
+        useCallback(() => {
+            return () => {
+                setEmail("");
+                setPassword("");
+            };
+        }, [])
+    )
 
 
     return (
@@ -88,7 +90,7 @@ const LogIn = ({ navigation }) => {
                     <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
                         <Text style={styles.modalTitle}>
                             <Text>{`ERROR: \n`}</Text>
-                            <Text style={ [styles.modalText, altColorTheme && styles.altModalText] }>{logInError === 'wrong_credentials' ? text.wrongCredentials : text.genericError}</Text>
+                            <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{logInError === 'wrong_credentials' ? text.wrongCredentials : text.genericError}</Text>
                         </Text>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={styles.modalBtn}>
@@ -103,7 +105,7 @@ const LogIn = ({ navigation }) => {
                     <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
                         <Text style={styles.modalTitle}>
                             <Text>{`${text.welcome}\n`}</Text>
-                            <Text style={ [styles.modalText, altColorTheme && styles.altModalText] }>{accountEmail.toLocaleUpperCase()}</Text>
+                            <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{accountEmail.toLocaleUpperCase()}</Text>
                         </Text>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={styles.modalBtn}>

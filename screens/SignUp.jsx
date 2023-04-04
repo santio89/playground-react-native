@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Modal, SafeAreaView, ActivityIndicator } from 'react-native'
+import { useFocusEffect } from '@react-navigation/native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useSelector } from 'react-redux/es/exports'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Header from '../components/Header'
 import Constants from '../constants/Styles.js'
 import { LANGS } from '../constants/Langs'
@@ -16,7 +17,7 @@ const SignUp = ({ navigation }) => {
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const { selected: languageSelected } = useSelector(state => state.settings.language)
 
-    const settings = useSelector(state=>state.settings)
+    const settings = useSelector(state => state.settings)
 
     const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
@@ -82,14 +83,16 @@ const SignUp = ({ navigation }) => {
         validateEmail(email) && validatePassword(password) && validateName(displayName) ? setValidInputs(true) : setValidInputs(false)
     }, [email, password, displayName])
 
-    useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-              setEmail("");
-              setPassword("");
-              setDisplayName("");
-        });
-        return unsubscribe;
-     }, [navigation]);
+    useFocusEffect(
+        useCallback(() => {
+            return () => {
+                setEmail("");
+                setPassword("");
+                setDisplayName("")
+            };
+        }, [])
+    )
+
 
     return (
         <>
@@ -129,7 +132,7 @@ const SignUp = ({ navigation }) => {
                     <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
                         <Text style={styles.modalTitle}>
                             <Text>{`ERROR: \n`}</Text>
-                            <Text style={ [styles.modalText, altColorTheme && styles.altModalText] }>{emailError === 'email_exists' ? text.emailExists : (emailError === 'blocked_requests' ? text.blockedRequests : text.genericError)}</Text>
+                            <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{emailError === 'email_exists' ? text.emailExists : (emailError === 'blocked_requests' ? text.blockedRequests : text.genericError)}</Text>
                         </Text>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={styles.modalBtn}>
@@ -142,9 +145,9 @@ const SignUp = ({ navigation }) => {
             <Modal visible={accountCreatedModal} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
-                        <Text style={[styles.modalTitle]}> 
+                        <Text style={[styles.modalTitle]}>
                             <Text>{`${text.createdAccount}: \n`}</Text>
-                            <Text style={ [styles.modalText, altColorTheme && styles.altModalText] }>{accountEmail.toLocaleUpperCase()}</Text>
+                            <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{accountEmail.toLocaleUpperCase()}</Text>
                         </Text>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={styles.modalBtn}>
