@@ -32,7 +32,7 @@ const LogIn = ({ navigation }) => {
     const [validInput, setValidInput] = useState(false)
 
     const handleLogIn = () => {
-        dispatch(logIn(email, password, setLogInError, setModalVisible, setLogInLoading, setValidInput, setLogInSuccess, setAccountEmail))
+        dispatch(logIn(email.trim(), password, setLogInError, setModalVisible, setLogInLoading, setValidInput, setLogInSuccess, setAccountEmail))
     }
 
     useEffect(() => {

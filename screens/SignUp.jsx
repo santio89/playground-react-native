@@ -54,7 +54,7 @@ const SignUp = ({ navigation }) => {
     };
 
     const handleSignUp = () => {
-        dispatch(signUp(email, password, `🦊${displayName}`, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings, setSettingsFirebase))
+        dispatch(signUp(email.trim(), password, `🦊${displayName.trim()}`, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings, setSettingsFirebase))
     }
 
     useEffect(() => {
