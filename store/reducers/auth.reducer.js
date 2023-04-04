@@ -5,6 +5,7 @@ import { LOG_OUT } from "../actions/auth.action";
 const initialState = {
    token: null,
    userId: null,
+   email: "",
    displayName: ""
 }
 
@@ -16,21 +17,24 @@ const AuthReducer = (state=initialState, action) => {
                ...state,
                token: action.token,
                userId: action.userId,
-               displayName: action.displayName
+               displayName: action.displayName,
+               email: action.email
             }
         case LOG_IN:
             return {
                 ...state,
                 token: action.token,
                 userId: action.userId,
-                displayName: action.displayName
+                displayName: action.displayName,
+                email: action.email
             }
         case LOG_OUT:
             return {
                 ...state,
                 token: null,
                 userId: null,
-                displayName: ""
+                displayName: "",
+                email: "",
             }
         default:
             return state

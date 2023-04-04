@@ -21,6 +21,9 @@ const Profile = ({ navigation }) => {
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
     const { selected: languageSelected } = useSelector(state => state.settings.language)
 
+    const email = useSelector(state=>state.auth.email)
+    const displayName = useSelector(state=>state.auth.displayName)
+
     const userId = useSelector(state => state.auth.userId)
 
     const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
@@ -45,11 +48,11 @@ const Profile = ({ navigation }) => {
                         <>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.email}: </Text></Text>
-                                <Text style={[styles.profileItemText]}>{user.email}</Text>
+                                <Text style={[styles.profileItemText]}>{email.toLocaleUpperCase()}</Text>
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.name}: </Text></Text>
-                                <Text style={[styles.profileItemText]}>{user.nombre}</Text>
+                                <Text style={[styles.profileItemText]}>{displayName.toLocaleUpperCase()}</Text>
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.avatar}: </Text></Text>

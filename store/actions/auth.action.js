@@ -45,12 +45,13 @@ export const signUp = (email, password, displayName, setEmailError, setModalVisi
             /* seteo modal */
             setAccountEmail(`${data.email}\n${data.displayName}`)
             setAccountCreatedModal(true)
-
+            
             dispatch({
                 type: SIGN_UP,
                 token: data.idToken,
                 userId: data.localId,
-                displayName: data.displayName
+                displayName: data.displayName,
+                email: data.email
             })
 
 
@@ -100,7 +101,7 @@ export const logIn = (email, password, setLogInError, setModalVisible, setLogInL
             }
 
             const data = await response.json()
-
+            
             setAccountEmail(data.displayName)
             setLogInSuccess(true);
 
@@ -108,7 +109,8 @@ export const logIn = (email, password, setLogInError, setModalVisible, setLogInL
                 type: LOG_IN,
                 token: data.idToken,
                 userId: data.localId,
-                displayName: data.displayName
+                displayName: data.displayName,
+                email: data.email
             })
 
 
