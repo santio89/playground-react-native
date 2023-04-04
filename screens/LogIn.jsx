@@ -63,8 +63,8 @@ const LogIn = ({ navigation }) => {
     return (
         <>
             <Header navigation={navigation} />
-            <KeyboardAwareScrollView contentContainerStyle={[styles.profileContainer, !darkMode && styles.colorDark, !darkMode && styles.backgroundWhite]}>
-                <View style={[styles.itemsContainer, altColorTheme && styles.altItemsContainer]}>
+            <View style={[styles.profileContainer, !darkMode && styles.colorDark, !darkMode && styles.backgroundWhite]}>
+                <KeyboardAwareScrollView contentContainerStyle={[styles.itemsContainer, altColorTheme && styles.altItemsContainer]}>
                     <View style={styles.profileItem}>
                         <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.email}: </Text></Text>
                         <TextInput keyboardType='email-address' autoCapitalize='none' style={[styles.textInput, altColorTheme && styles.altTextInput]} value={email} onChangeText={email => setEmail(email)} />
@@ -83,8 +83,8 @@ const LogIn = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                </View>
-            </KeyboardAwareScrollView>
+                </KeyboardAwareScrollView>
+            </View>
             <Modal visible={modalVisible} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
