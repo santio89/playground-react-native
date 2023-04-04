@@ -10,12 +10,6 @@ import { useDispatch } from 'react-redux'
 const Profile = ({ navigation }) => {
     const dispatch = useDispatch();
 
-    /* estado de prueba */
-    const [user, setUser] = useState({
-        email: "TEST@GMAIL.COM",
-        nombre: "TEST",
-        avatar: "https://source.unsplash.com/random/"
-    })
 
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
