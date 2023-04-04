@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import 'react-native-get-random-values'; /* for uuid */
 import { v4 as uuidv4 } from 'uuid';
 import Constants from '../constants/Styles.js';
+import { LANGS } from '../constants/Langs.js';
 import Card from '../components/Card';
 import emojis from '../constants/Emojis.js';
 import { storageGetItem, storageSetItem } from '../utils/AsyncStorage.js';
@@ -23,9 +24,9 @@ const MemoGame = ({navigation}) => {
 
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
-    const {selected: languageSelected, langs} = useSelector(state=>state.settings.language)
+    const {selected: languageSelected} = useSelector(state=>state.settings.language)
 
-    const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
+    const [text, setText] = useState(LANGS.find(lang=>lang.lang === languageSelected).text)
 
 
     /* storage-max score */
@@ -146,7 +147,7 @@ const MemoGame = ({navigation}) => {
     })
 
     useEffect(()=>{
-        setText(langs.find(lang=>lang.lang === languageSelected).text)
+        setText(LANGS.find(lang=>lang.lang === languageSelected).text)
     }, [languageSelected])
 
     useEffect(()=>{

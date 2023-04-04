@@ -1,10 +1,7 @@
-import { LANGS } from "../../data/lang/langs";
 import { SELECT_LANG, SELECT_DARKMODE, SELECT_COLORTHEME, SET_SETTINGS, GET_SETTINGS } from "../actions/settings.action";
-
 
 const initialState = {
     language: {
-        langs: LANGS,
         selected: "english"
     },
     darkMode: {

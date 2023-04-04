@@ -6,15 +6,16 @@ import { useDispatch } from 'react-redux/es/exports'
 import { logIn } from '../store/actions/auth.action'
 import Header from '../components/Header'
 import Constants from '../constants/Styles.js'
+import { LANGS } from '../constants/Langs'
 
 const LogIn = ({ navigation }) => {
     const dispatch = useDispatch();
 
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
-    const { selected: languageSelected, langs } = useSelector(state => state.settings.language)
+    const { selected: languageSelected } = useSelector(state => state.settings.language)
 
-    const [text, setText] = useState(langs.find(lang => lang.lang === languageSelected).text)
+    const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -34,7 +35,7 @@ const LogIn = ({ navigation }) => {
     }
 
     useEffect(() => {
-        setText(langs.find(lang => lang.lang === languageSelected).text)
+        setText(LANGS.find(lang => lang.lang === languageSelected).text)
     }, [languageSelected])
 
     useEffect(() => {

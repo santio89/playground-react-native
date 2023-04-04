@@ -5,6 +5,7 @@ import AppNavigator from './AppNavigator';
 import AuthNavigator from './AuthNavigator';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Constants from '../constants/Styles.js'
+import { LANGS } from '../constants/Langs.js';
 import { Ionicons } from '@expo/vector-icons';
 import Profile from '../screens/Profile';
 import Settings from '../screens/Settings';
@@ -18,10 +19,10 @@ const TabNavigator = () => {
         setWindowWidth(Dimensions.get('window').width)
     }
 
-    const { selected: languageSelected, langs } = useSelector(state => state.settings.language)
+    const { selected: languageSelected } = useSelector(state => state.settings.language)
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     
-    const [text, setText] = useState(langs.find(lang => lang.lang === languageSelected).text)
+    const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
     useEffect(() => {
         const dimensionsHandler = Dimensions.addEventListener("change", updateWindowWidth)
@@ -32,7 +33,7 @@ const TabNavigator = () => {
     })
 
     useEffect(() => {
-        setText(langs.find(lang => lang.lang === languageSelected).text)
+        setText(LANGS.find(lang => lang.lang === languageSelected).text)
     }, [languageSelected])
 
     return (

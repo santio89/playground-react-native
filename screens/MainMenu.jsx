@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, ScrollView, Dimensions, TouchableOpacity } from
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import Constants from '../constants/Styles'
+import { LANGS } from '../constants/Langs'
 import Header from '../components/Header'
 
 
@@ -10,9 +11,9 @@ const MainMenu = ({ navigation }) => {
 
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
-    const {selected: languageSelected, langs} = useSelector(state=>state.settings.language)
+    const {selected: languageSelected} = useSelector(state=>state.settings.language)
 
-    const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
+    const [text, setText] = useState(LANGS.find(lang=>lang.lang === languageSelected).text)
 
     const updateWindowWidth = () => {
         setWindowWidth(Dimensions.get('window').width)
@@ -27,7 +28,7 @@ const MainMenu = ({ navigation }) => {
     })
     
     useEffect(()=>{
-        setText(langs.find(lang=>lang.lang === languageSelected).text)
+        setText(LANGS.find(lang=>lang.lang === languageSelected).text)
     }, [languageSelected])
 
     return (

@@ -26,6 +26,7 @@ export const LANGS = [{id: 1, lang: "english", text: {
     purple: "PURPLE",
     orange: "ORANGE",
     logIn: "LOG IN",
+    logOut: "LOG OUT",
     signUp: "REGISTER",
     minEmail: "EXAMPLE@DOMAIN.COM",
     minPassword: "8 CHARACTERS MINIMUM",
@@ -36,7 +37,8 @@ export const LANGS = [{id: 1, lang: "english", text: {
     createdAccount: "ACCOUNT CREATED SUCCESFFULLY",
     wrongCredentials: "WRONG CREDENTIALS",
     welcome: "WELCOME",
-    name: "NAME"
+    name: "NAME",
+    logInProfile: "LOG IN TO SEE YOUR PROFILE",
 }}, {id: 2, lang: "spanish", text: {
     toDoList: "LISTA DE TAREAS",
     memoGame: "JUEGO DE MEMORIA",
@@ -65,6 +67,7 @@ export const LANGS = [{id: 1, lang: "english", text: {
     purple: "PÚRPURA",
     orange: "NARANJA",
     logIn: "INGRESAR",
+    logOut: "SALIR",
     signUp: "REGISTRARSE",
     minEmail: "EJEMPLO@DOMINIO.COM",
     minPassword: "8 CARACTERES MÍNIMO",
@@ -75,5 +78,6 @@ export const LANGS = [{id: 1, lang: "english", text: {
     createdAccount: "CUENTA CREADA EXITOSAMENTE",
     wrongCredentials: "CREDENCIALES INVÁLIDAS",
     welcome: "BIENVENIDO/A",
-    name: "NOMBRE"
+    name: "NOMBRE",
+    logInProfile: "INGRESA PARA VER TU PERFIL",
 }}]

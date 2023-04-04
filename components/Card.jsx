@@ -1,7 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import Constants from '../constants/Styles'
 import { useSelector } from 'react-redux'
-import { useEffect } from 'react'
 
 const Card = ({ card, handleChoice, choiceOne, choiceTwo, disabled }) => {
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)

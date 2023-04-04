@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ListItem from '../components/ListItem';
 import { storageSetItem, storageGetItem } from '../utils/AsyncStorage';
 import Constants from '../constants/Styles';
+import { LANGS } from '../constants/Langs';
 
 export default function ToDoList({navigation}) {
     const [btnDisabled, setBtnDisabled] = useState(true)
@@ -15,9 +16,9 @@ export default function ToDoList({navigation}) {
 
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
-    const {selected: languageSelected, langs} = useSelector(state=>state.settings.language)
+    const {selected: languageSelected} = useSelector(state=>state.settings.language)
 
-    const [text, setText] = useState(langs.find(lang=>lang.lang === languageSelected).text)
+    const [text, setText] = useState(LANGS.find(lang=>lang.lang === languageSelected).text)
 
     const storeData = async (items) => {
         try {
@@ -62,7 +63,7 @@ export default function ToDoList({navigation}) {
     }, [items])
 
     useEffect(()=>{
-        setText(langs.find(lang=>lang.lang === languageSelected).text)
+        setText(LANGS.find(lang=>lang.lang === languageSelected).text)
     }, [languageSelected])
 
     useEffect(()=>{

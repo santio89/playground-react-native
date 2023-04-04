@@ -1,5 +1,6 @@
 export const SIGN_UP = "SIGN_UP"
 export const LOG_IN = "LOG_IN"
+export const LOG_OUT = "LOG_OUT"
 import { URL_AUTH_SIGNUP } from "../../constants/Database"
 import { URL_AUTH_LOGIN } from "../../constants/Database"
 
@@ -120,5 +121,12 @@ export const logIn = (email, password, setLogInError, setModalVisible, setLogInL
             setLogInLoading(false)
             setValidInput(true)
         }
+    }
+}
+
+export const logOut = () => {
+
+    return dispatch => {
+        dispatch({type: LOG_OUT})
     }
 }

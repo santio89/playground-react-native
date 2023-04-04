@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectLang, selectDarkMode, selectColorTheme } from '../store/actions/settings.action.js';
 import Constants from '../constants/Styles'
+import { LANGS } from '../constants/Langs.js';
 import Header from '../components/Header'
 
 const Settings = ({navigation}) => {
@@ -13,7 +14,7 @@ const Settings = ({navigation}) => {
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
 
-    const [text, setText] = useState(language.langs.find(lang => lang.lang === language.selected).text)
+    const [text, setText] = useState(LANGS.find(lang => lang.lang === language.selected).text)
 
     const [config, setConfig] = useState({lang: language.selected, darkMode, altColorTheme});
 
@@ -31,7 +32,7 @@ const Settings = ({navigation}) => {
     }, [config.altColorTheme])
 
     useEffect(() => {
-        setText(language.langs.find(lang => lang.lang === language.selected).text)
+        setText(LANGS.find(lang => lang.lang === language.selected).text)
     }, [language.selected])
 
     return (
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
         marginInline: '1%',
         padding: 8,
         color: Constants.colorDark,
-        /* maxWidth: 180 */
+        maxWidth: '100%'
     },
     settingsItemText: {
         fontFamily: Constants.fontPrimaryBold,
