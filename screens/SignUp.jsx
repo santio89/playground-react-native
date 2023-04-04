@@ -53,7 +53,7 @@ const SignUp = ({ navigation }) => {
     };
 
     const handleSignUp = () => {
-        dispatch(signUp(email, password, displayName, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings, setSettingsFirebase))
+        dispatch(signUp(email, password, `🦊${displayName}`, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings, setSettingsFirebase))
     }
 
     useEffect(() => {
@@ -121,7 +121,7 @@ const SignUp = ({ navigation }) => {
                     <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
                         <Text style={styles.modalTitle}>
                             <Text>{`ERROR: \n`}</Text>
-                            <Text style={{ fontFamily: Constants.fontPrimary }}>{emailError === 'email_exists' ? text.emailExists : (emailError === 'blocked_requests' ? text.blockedRequests : text.genericError)}</Text>
+                            <Text style={ [styles.modalText, altColorTheme && styles.altModalText] }>{emailError === 'email_exists' ? text.emailExists : (emailError === 'blocked_requests' ? text.blockedRequests : text.genericError)}</Text>
                         </Text>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={styles.modalBtn}>
@@ -134,9 +134,9 @@ const SignUp = ({ navigation }) => {
             <Modal visible={accountCreatedModal} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
-                        <Text style={styles.modalTitle}> 
+                        <Text style={[styles.modalTitle]}> 
                             <Text>{`${text.createdAccount}: \n`}</Text>
-                            <Text style={{ fontFamily: Constants.fontPrimary }}>{accountEmail.toLocaleUpperCase()}</Text>
+                            <Text style={ [styles.modalText, altColorTheme && styles.altModalText] }>{accountEmail.toLocaleUpperCase()}</Text>
                         </Text>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={styles.modalBtn}>
@@ -286,6 +286,24 @@ const styles = StyleSheet.create({
         color: Constants.colorWhite,
         marginBottom: 40,
         width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center'
+    },
+    modalText: {
+        fontFamily: Constants.fontPrimary,
+        backgroundColor: Constants.colorPrimaryDark,
+        padding: 8,
+        borderRadius: 4,
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        marginTop: 20,
+        wordBreak: 'break-all',
         textAlign: 'center'
     },
     modalBtnContainer: {
@@ -324,6 +342,12 @@ const styles = StyleSheet.create({
 
     },
     altModalBtnText: {
+        backgroundColor: Constants.colorSecondaryDark,
+    },
+    altModalText: {
+        backgroundColor: Constants.colorSecondaryDark,
+    },
+    altModalText: {
         backgroundColor: Constants.colorSecondaryDark,
     },
 })

@@ -9,6 +9,7 @@ export default {
   colorWhite: '#fAf9f6',
   colorRed: '#8b0000',
   fontXxl: 80,
+  fontXll: 60,
   fontXl: 40,
   fontLg: 28,
   fontMd: 20,

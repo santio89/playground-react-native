@@ -6,11 +6,13 @@ const initialState = {
    token: null,
    userId: null,
    email: "",
-   displayName: ""
+   displayName: "",
+   avatar: "",
 }
 
 
 const AuthReducer = (state=initialState, action) => {
+    
     switch(action.type){
         case SIGN_UP:
             return {
@@ -18,6 +20,7 @@ const AuthReducer = (state=initialState, action) => {
                token: action.token,
                userId: action.userId,
                displayName: action.displayName,
+               avatar: action.avatar,
                email: action.email
             }
         case LOG_IN:
@@ -26,6 +29,7 @@ const AuthReducer = (state=initialState, action) => {
                 token: action.token,
                 userId: action.userId,
                 displayName: action.displayName,
+                avatar: action.avatar,
                 email: action.email
             }
         case LOG_OUT:
@@ -35,6 +39,7 @@ const AuthReducer = (state=initialState, action) => {
                 userId: null,
                 displayName: "",
                 email: "",
+                avatar: ""
             }
         default:
             return state

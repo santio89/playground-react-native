@@ -5,15 +5,17 @@ import { Entypo } from '@expo/vector-icons';
 
 export default function Header({ navigation }) {
   const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
-  const displayName = useSelector(state => state.auth.displayName)
+  const avatar = useSelector(state=>state.auth.avatar)
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={[styles.headerContainer, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder]}>
         <TouchableOpacity onPress={() => navigation.navigate("Apps")}><Text style={styles.header}>PLAYGROUND</Text></TouchableOpacity>
-        <TouchableOpacity style={[styles.loginContainer, altColorTheme && styles.altLoginContainer]} title="login" onPress={() => displayName?navigation.navigate("Profile"):navigation.navigate("Auth")}>
+        <TouchableOpacity style={[styles.loginContainer, altColorTheme && styles.altLoginContainer]} onPress={() => avatar ? navigation.navigate("Profile") : navigation.navigate("Auth")}>
           <View>
-            {displayName?<Text style={styles.displayName}>{displayName[0].toLocaleUpperCase()}</Text>:<Entypo name="login" size={28} color={Constants.colorWhite} />}
+            {avatar ?
+              <Text style={styles.avatar}>{avatar}</Text> :
+              <Entypo name="login" size={28} color={Constants.colorWhite} />}
           </View>
         </TouchableOpacity>
       </View>
@@ -56,7 +58,7 @@ const styles = StyleSheet.create({
   altLoginContainer: {
     backgroundColor: Constants.colorSecondaryDark,
   },
-  displayName: {
+  avatar: {
     color: Constants.colorWhite,
     fontFamily: Constants.fontPrimaryBold,
     fontSize: Constants.fontLg

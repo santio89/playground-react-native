@@ -15,8 +15,9 @@ const Profile = ({ navigation }) => {
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
     const { selected: languageSelected } = useSelector(state => state.settings.language)
 
-    const email = useSelector(state=>state.auth.email)
-    const displayName = useSelector(state=>state.auth.displayName)
+    const email = useSelector(state => state.auth.email)
+    const displayName = useSelector(state => state.auth.displayName)
+    const avatar = useSelector(state=>state.auth.avatar)
 
     const userId = useSelector(state => state.auth.userId)
 
@@ -50,10 +51,11 @@ const Profile = ({ navigation }) => {
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.avatar}: </Text></Text>
-                                <Image
+                                {/* <Image
                                     style={styles.profileItemImage}
                                     source={{ uri: user.avatar }}
-                                />
+                                /> */}
+                                <TouchableOpacity><Text style={[styles.profileItemAvatar, altColorTheme && styles.altProfileItemAvatar]}>{avatar}</Text></TouchableOpacity>
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}>
@@ -62,9 +64,9 @@ const Profile = ({ navigation }) => {
                                 </Text>
                             </View>
                         </> :
-                        <View style={[styles.profileItem, {justifyContent: "center", alignItems: "center", marginTop: 10}]}>
+                        <View style={[styles.profileItem, { justifyContent: "center", alignItems: "center", marginTop: 10 }]}>
                             <Text style={[styles.profileItemLabel]}>
-                                <TouchableOpacity style={[styles.settingsItemTextButton, {padding: 16}, altColorTheme && styles.altSettingsItemTextButton]} onPress={() => { navigation.navigate("Auth") }}><Text style={[styles.settingsItemText, {fontFamily: Constants.fontPrimaryBold, fontSize: Constants.fontLg}]}>{text.logInProfile}</Text></TouchableOpacity>
+                                <TouchableOpacity style={[styles.settingsItemTextButton, { padding: 16 }, altColorTheme && styles.altSettingsItemTextButton]} onPress={() => { navigation.navigate("Auth") }}><Text style={[styles.settingsItemText, { fontFamily: Constants.fontPrimaryBold, fontSize: Constants.fontLg }]}>{text.logInProfile}</Text></TouchableOpacity>
                             </Text>
                         </View>
                     }
@@ -132,6 +134,16 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         marginTop: 8
     },
+    profileItemAvatar: {
+        fontSize: Constants.fontXll,
+        backgroundColor: Constants.colorPrimaryDark,
+        padding: 8,
+        borderRadius: 4,
+        marginTop: 8,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     settingsItemTextButton: {
         borderWidth: 1,
         borderRadius: 4,
@@ -162,6 +174,9 @@ const styles = StyleSheet.create({
     },
     altProfileItemIndicator: {
         color: Constants.colorSecondaryDark,
+    },
+    altProfileItemAvatar: {
+        backgroundColor: Constants.colorSecondaryDark,
     },
     altSettingsItemTextButton: {
         backgroundColor: Constants.colorSecondaryDark,

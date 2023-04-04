@@ -38,20 +38,21 @@ export const signUp = (email, password, displayName, setEmailError, setModalVisi
             }
 
             const data = await response.json()
-
+            
             /* envio a firebase settings actuales como default del usuario */
             dispatch(setSettingsFirebase(settings, data.localId))
 
             /* seteo modal */
-            setAccountEmail(`${data.email}\n${data.displayName}`)
+            setAccountEmail(`${data.email}`)
             setAccountCreatedModal(true)
             
             dispatch({
                 type: SIGN_UP,
                 token: data.idToken,
                 userId: data.localId,
-                displayName: data.displayName,
-                email: data.email
+                displayName: data.displayName.slice(2),
+                avatar: [...data.displayName][0],
+                email: data.email,
             })
 
 
@@ -101,15 +102,16 @@ export const logIn = (email, password, setLogInError, setModalVisible, setLogInL
             }
 
             const data = await response.json()
-            
-            setAccountEmail(data.displayName)
+            console.log(data)
+            setAccountEmail(`${data.displayName.slice(2).toLocaleUpperCase()}\n${[...data.displayName][0]}`)
             setLogInSuccess(true);
-
+            
             dispatch({
                 type: LOG_IN,
                 token: data.idToken,
                 userId: data.localId,
-                displayName: data.displayName,
+                displayName: data.displayName.slice(2),
+                avatar: [...data.displayName][0],
                 email: data.email
             })
 

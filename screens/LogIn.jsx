@@ -80,7 +80,7 @@ const LogIn = ({ navigation }) => {
                     <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
                         <Text style={styles.modalTitle}>
                             <Text>{`ERROR: \n`}</Text>
-                            <Text style={{ fontFamily: Constants.fontPrimary }}>{logInError === 'wrong_credentials' ? text.wrongCredentials : text.genericError}</Text>
+                            <Text style={ [styles.modalText, altColorTheme && styles.altModalText] }>{logInError === 'wrong_credentials' ? text.wrongCredentials : text.genericError}</Text>
                         </Text>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={styles.modalBtn}>
@@ -94,8 +94,8 @@ const LogIn = ({ navigation }) => {
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
                         <Text style={styles.modalTitle}>
-                            <Text>{`${text.welcome}:\n`}</Text>
-                            <Text style={{ fontFamily: Constants.fontPrimary }}>{accountEmail.toLocaleUpperCase()}</Text>
+                            <Text>{`${text.welcome}\n`}</Text>
+                            <Text style={ [styles.modalText, altColorTheme && styles.altModalText] }>{accountEmail.toLocaleUpperCase()}</Text>
                         </Text>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={styles.modalBtn}>
@@ -245,6 +245,24 @@ const styles = StyleSheet.create({
         color: Constants.colorWhite,
         marginBottom: 40,
         width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center'
+    },
+    modalText: {
+        fontFamily: Constants.fontPrimary,
+        backgroundColor: Constants.colorPrimaryDark,
+        padding: 8,
+        borderRadius: 4,
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        marginTop: 20,
+        wordBreak: 'break-all',
         textAlign: 'center'
     },
     modalBtnContainer: {
@@ -283,6 +301,9 @@ const styles = StyleSheet.create({
 
     },
     altModalBtnText: {
+        backgroundColor: Constants.colorSecondaryDark,
+    },
+    altModalText: {
         backgroundColor: Constants.colorSecondaryDark,
     },
 })
