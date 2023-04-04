@@ -3,8 +3,8 @@ import TabNavigator from './TabNavigator';
 import Constants from '../constants/Styles.js'
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from "react";
-import { getSettingsLocal, setSettingsLocal, getSettingsFirebase, setSettingsFirebase } from "../store/actions/settings.action";
-import { storageGetItem, storageSetItem } from "../utils/AsyncStorage";
+import { getSettingsFirebase, setSettingsFirebase } from "../store/actions/settings.action";
+
 
 const MainNavigator = () => {
     const dispatch = useDispatch();
@@ -30,11 +30,11 @@ const MainNavigator = () => {
 
 
     useEffect(()=>{
-        userId?dispatch(getSettingsFirebase(userId)):dispatch(getSettingsLocal(storageGetItem))
+        userId && dispatch(getSettingsFirebase(userId))
     }, [userId])
     
     useEffect(()=>{
-        userId?dispatch(setSettingsFirebase(settings, userId)):dispatch(setSettingsLocal(storageSetItem, settings))
+        userId && dispatch(setSettingsFirebase(settings, userId))
     }, [settings])
 
 

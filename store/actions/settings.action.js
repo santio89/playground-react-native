@@ -64,32 +64,3 @@ export const getSettingsFirebase = (userId) => {
 
     }
 }
-export const getSettingsLocal = (storageGetItem) => {
-
-    return async dispatch => {
-        /* traigo settings actuales del storage */
-        try {
-            const value = await storageGetItem('pg-settings');
-            if (value !== null) {
-                const settings = JSON.parse(value)
-                dispatch({
-                    type: SET_SETTINGS,
-                    settings
-                })
-
-            }
-        } catch (error) {
-            console.log("error retrieving data from storage")
-        }
-
-    }
-}
-export const setSettingsLocal = (storageSetItem, settings) => {
-    return async dispatch => {
-        try {
-            await storageSetItem("pg-settings", JSON.stringify(settings));
-        } catch (error) {
-            console.log("error saving data to storage")
-        }
-    }
-}

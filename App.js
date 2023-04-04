@@ -6,6 +6,8 @@ import Constants from './constants/Styles.js'
 import MainNavigator from './navigation/MainNavigator.jsx'
 import { Provider } from 'react-redux';
 import store from './store/index'
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,14 +27,16 @@ export default function App() {
     return null;
   }
 
-
+  const persistor = persistStore(store)
 
   return (
-    <Provider store={store}>
-      <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
-        <MainNavigator />
-      </SafeAreaView >
-    </Provider>
+    <PersistGate persistor={persistor}>
+      <Provider store={store}>
+        <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
+          <MainNavigator />
+        </SafeAreaView >
+      </Provider>
+    </PersistGate>
   );
 }
 
