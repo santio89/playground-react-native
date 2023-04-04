@@ -45,6 +45,7 @@ export const setSettingsFirebase = (settings, userId) => {
         })
     }
 }
+
 export const getSettingsFirebase = (userId) => {
 
     return async dispatch => {
@@ -61,6 +62,5 @@ export const getSettingsFirebase = (userId) => {
         } catch (e) {
             console.log("error getting settings: ", e)
         }
-
     }
 }
