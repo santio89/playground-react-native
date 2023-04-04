@@ -97,8 +97,8 @@ const SignUp = ({ navigation }) => {
     return (
         <>
             <Header navigation={navigation} />
-            <View style={[styles.profileContainer, !darkMode && styles.colorDark, !darkMode && styles.backgroundWhite]}>
-                <KeyboardAwareScrollView contentContainerStyle={[styles.itemsContainer, altColorTheme && styles.altItemsContainer]}>
+            <KeyboardAwareScrollView contentContainerStyle={[styles.profileContainer, !darkMode && styles.colorDark, !darkMode && styles.backgroundWhite]}>
+                <View style={[styles.itemsContainer, altColorTheme && styles.altItemsContainer]}>
                     <View style={styles.profileItem}>
                         <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator, !validEmail && { color: Constants.colorRed }]}>●&nbsp;</Text><Text style={!validEmail && { color: Constants.colorRed }}>{text.email}: </Text></Text>
                         <TextInput keyboardType='email-address' autoCapitalize='none' style={[styles.textInput, altColorTheme && styles.altTextInput, !validEmail && { borderBottomColor: Constants.colorRed }]} value={email} onChangeText={email => setEmail(email)} placeholder={text.minEmail} placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} />
@@ -125,8 +125,8 @@ const SignUp = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                </KeyboardAwareScrollView>
-            </View>
+                </View>
+            </KeyboardAwareScrollView>
             <Modal visible={modalVisible} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         color: Constants.colorWhite,
         width: '100%',
-        padding: 10
+        padding: 10,
     },
     itemsContainer: {
         width: '100%',
