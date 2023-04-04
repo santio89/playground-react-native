@@ -43,11 +43,11 @@ const Profile = ({ navigation }) => {
                         <>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.email}: </Text></Text>
-                                <Text style={[styles.profileItemText]}>{email.toLocaleUpperCase()}</Text>
+                                <Text style={[styles.profileItemText]}>{email?.toLocaleUpperCase()}</Text>
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.name}: </Text></Text>
-                                <Text style={[styles.profileItemText]}>{displayName.toLocaleUpperCase()}</Text>
+                                <Text style={[styles.profileItemText]}>{displayName?.toLocaleUpperCase()}</Text>
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.avatar}: </Text></Text>
