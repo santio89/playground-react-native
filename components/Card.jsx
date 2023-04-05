@@ -15,7 +15,7 @@ const Card = ({ card, handleChoice, choiceOne, choiceTwo, disabled }) => {
         <Text style={[styles.card, card.matched && styles.cardMatched, card.matched && altColorTheme && styles.altShadow]}>
             {
                 card.matched || card.id === choiceOne?.id || card.id === choiceTwo?.id ?
-                    <TouchableOpacity style={[styles.cardBackWrapper, styles.cardFront, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder]}>
+                    <TouchableOpacity style={[styles.cardBackWrapper, styles.cardFront, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder, altColorTheme && styles.altCardFront]}>
                         <Text style={styles.cardText}>{card.front}</Text>
                     </TouchableOpacity> :
                     <TouchableOpacity style={[styles.cardBackWrapper, styles.cardBack, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder]} onPress={handleClick}>
@@ -95,5 +95,9 @@ const styles = StyleSheet.create({
     },
     altBorder: {
         borderColor: Constants.colorSecondary,
-    }
+    },
+    altCardFront: {
+        backgroundColor: Constants.colorSecondary,
+        borderColor: Constants.colorSecondaryDark,
+    },
 })
