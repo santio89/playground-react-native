@@ -57,25 +57,27 @@ const styles = StyleSheet.create({
     cardText: {
         fontSize: Constants.fontXxl,
     },
-    cardFront: {
-        cursor: 'default',
-        pointerEvents: 'none',
-        userSelect: 'none',
-    },
-    cardBack: {
-        userSelect: 'none'
-    },
     cardBackWrapper: {
         width: 130,
         aspectRatio: 1,
         height: 130,
         backgroundColor: Constants.colorPrimaryDark,
-        borderRadius: 8,
         borderColor: Constants.colorPrimary,
+        borderRadius: 8,
         borderWidth: 4,
         padding: 4,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    cardFront: {
+        cursor: 'default',
+        pointerEvents: 'none',
+        userSelect: 'none',
+        backgroundColor: Constants.colorPrimary,
+        borderColor: Constants.colorPrimaryDark,
+    },
+    cardBack: {
+        userSelect: 'none'
     },
     /* for alt color theme */
     altShadow: {
