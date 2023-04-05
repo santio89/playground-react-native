@@ -151,7 +151,7 @@ const SignUp = ({ navigation }) => {
                         </Text>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={styles.modalBtn}>
-                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => { setAccountCreatedModal(false); navigation.navigate("LogIn"); navigation.navigate("Apps") }}>OK</Text>
+                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => { setAccountCreatedModal(false); navigation.navigate("LogIn"); navigation.navigate("AppsHome") }}>OK</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

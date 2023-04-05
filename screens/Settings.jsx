@@ -18,7 +18,7 @@ const Settings = ({navigation}) => {
 
     const [config, setConfig] = useState({lang: language.selected, darkMode, altColorTheme});
 
-
+    
     useEffect(()=>{
         dispatch(selectLang(config.lang))
     }, [config.lang])

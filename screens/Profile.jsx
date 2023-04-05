@@ -1,4 +1,4 @@
-import { StyleSheet, Text, ScrollView, View, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Modal, SafeAreaView } from 'react-native'
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { LANGS } from '../constants/Langs.js'
@@ -22,6 +22,9 @@ const Profile = ({ navigation }) => {
     const userId = useSelector(state => state.auth.userId)
 
     const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
+
+    const [logOutSuccess, setLogOutSuccess] = useState(false)
+
 
     useEffect(() => {
         setText(LANGS.find(lang => lang.lang === languageSelected).text)
@@ -50,17 +53,13 @@ const Profile = ({ navigation }) => {
                                 <Text style={[styles.profileItemText]}>{displayName?.toLocaleUpperCase()}</Text>
                             </View>
                             <View style={styles.profileItem}>
-                                <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.avatar}: </Text></Text>
-                                {/* <Image
-                                    style={styles.profileItemImage}
-                                    source={{ uri: user.avatar }}
-                                /> */}
+                                <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.avatar}: </Text></Text>                           
                                 <TouchableOpacity><Text style={[styles.profileItemAvatar, altColorTheme && styles.altProfileItemAvatar]}>{avatar}</Text></TouchableOpacity>
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}>
                                     <Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text>
-                                    <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton]} onPress={() => { dispatch(logOut()) }}><Text style={[styles.settingsItemText]}>{text.logOut}</Text></TouchableOpacity>
+                                    <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton]} onPress={() => { dispatch(logOut()); setLogOutSuccess(true) }}><Text style={[styles.settingsItemText]}>{text.logOut}</Text></TouchableOpacity>
                                 </Text>
                             </View>
                         </> :
@@ -70,9 +69,24 @@ const Profile = ({ navigation }) => {
                             </Text>
                         </View>
                     }
-
                 </View>
             </ScrollView>
+            
+            <Modal visible={logOutSuccess} transparent={true} animationType='fade'>
+                <SafeAreaView style={styles.modal}>
+                    <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
+                        <Text style={styles.modalTitle}>
+                            <Text>{`${text.goodbye}\n`}</Text>
+                            <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{text.userLoggedOut}</Text>
+                        </Text>
+                        <View style={styles.modalBtnContainer}>
+                            <TouchableOpacity style={styles.modalBtn}>
+                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => { setLogOutSuccess(false); navigation.navigate("AppsHome") }}>OK</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </SafeAreaView>
+            </Modal>
         </>
     )
 }
@@ -160,6 +174,71 @@ const styles = StyleSheet.create({
         fontSize: Constants.fontMd,
         color: Constants.colorWhite,
     },
+    modal: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        width: '80%',
+        minWidth: 300,
+        maxWidth: 600,
+        height: 300,
+    },
+    modalInner: {
+        backgroundColor: Constants.colorPrimary,
+        borderColor: Constants.colorWhite,
+        borderRadius: 4,
+        borderWidth: 2,
+        padding: 8,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: 300,
+    },
+    modalTitle: {
+        fontSize: Constants.fontLg,
+        fontWeight: 'bold',
+        fontFamily: Constants.fontPrimaryBold,
+        color: Constants.colorWhite,
+        marginBottom: 40,
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center'
+    },
+    modalText: {
+        fontFamily: Constants.fontPrimary,
+        backgroundColor: Constants.colorPrimaryDark,
+        padding: 8,
+        borderRadius: 4,
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        marginTop: 20,
+        wordBreak: 'break-all',
+        textAlign: 'center'
+    },
+    modalBtnContainer: {
+        flexDirection: 'row',
+        maxWidth: '100%'
+    },
+    modalBtnText: {
+        fontFamily: Constants.fontPrimary,
+        fontSize: Constants.fontMd,
+        padding: 8,
+        borderWidth: 1,
+        borderRadius: 4,
+        borderStyle: 'solid',
+        backgroundColor: Constants.colorPrimaryDark,
+        borderColor: Constants.colorWhite,
+        color: Constants.colorWhite,
+        marginHorizontal: 10,
+    },
     /* for dark mode off */
     backgroundWhite: {
         backgroundColor: Constants.colorWhite
@@ -179,6 +258,16 @@ const styles = StyleSheet.create({
         backgroundColor: Constants.colorSecondaryDark,
     },
     altSettingsItemTextButton: {
+        backgroundColor: Constants.colorSecondaryDark,
+    },
+    altModalInner: {
+        backgroundColor: Constants.colorSecondary,
+
+    },
+    altModalBtnText: {
+        backgroundColor: Constants.colorSecondaryDark,
+    },
+    altModalText: {
         backgroundColor: Constants.colorSecondaryDark,
     },
 })

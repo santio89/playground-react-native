@@ -108,7 +108,7 @@ const LogIn = ({ navigation }) => {
                         </Text>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={styles.modalBtn}>
-                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => { setLogInSuccess(false); navigation.navigate("Apps") }}>OK</Text>
+                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => { setLogInSuccess(false); navigation.navigate("AppsHome") }}>OK</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

@@ -39,6 +39,8 @@ export const LANGS = [{id: 1, lang: "english", text: {
     welcome: "WELCOME",
     name: "NAME",
     logInProfile: "LOG IN TO SEE YOUR PROFILE",
+    goodbye: "GOODBYE",
+    userLoggedOut: "USER LOGGED OUT"
 }}, {id: 2, lang: "spanish", text: {
     toDoList: "LISTA DE TAREAS",
     memoGame: "JUEGO DE MEMORIA",
@@ -80,4 +82,6 @@ export const LANGS = [{id: 1, lang: "english", text: {
     welcome: "BIENVENIDO/A",
     name: "NOMBRE",
     logInProfile: "INGRESA PARA VER TU PERFIL",
+    goodbye: "ADIOS",
+    userLoggedOut: "USUARIO DESLOGUEADO"
 }}]
