@@ -4,42 +4,28 @@ import { useSelector } from 'react-redux';
 import 'react-native-get-random-values'; /* for uuid */
 import { v4 as uuidv4 } from 'uuid';
 import ListItem from '../components/ListItem';
-import { storageSetItem, storageGetItem } from '../utils/AsyncStorage';
+import { storageSetItem } from '../utils/AsyncStorage';
 import Constants from '../constants/Styles';
 import { LANGS } from '../constants/Langs';
+import { setListItems } from '../store/actions/apps.action';
+import { useDispatch } from 'react-redux/es/exports';
 
 export default function ToDoList({navigation}) {
+    const dispatch = useDispatch()
     const [btnDisabled, setBtnDisabled] = useState(true)
     const [input, setInput] = useState("")
     const [modalVisible, setModalVisible] = useState({ active: false, id: null });
 
-    /* traer de redux */
-    const [items, setItems] = useState([])
 
+    const listItems = useSelector(state=>state.apps.toDoList.items)
+    const [items, setItems] = useState(listItems)
+
+    const userId = useSelector(state=>state.auth.userId)
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
     const {selected: languageSelected} = useSelector(state=>state.settings.language)
 
     const [text, setText] = useState(LANGS.find(lang=>lang.lang === languageSelected).text)
-
-    const storeData = async (items) => {
-        try {
-            await storageSetItem("pg-tdl-list", JSON.stringify(items));
-        } catch (error) {
-            console.log("error saving data to storage")
-        }
-    };
-
-    const retrieveData = async () => {
-        try {
-            const value = await storageGetItem('pg-tdl-list');
-            if (value !== null) {
-                setItems(JSON.parse(value))
-            }
-        } catch (error) {
-            console.log("error retrieving data from storage")
-        }
-    };
 
 
     const addItem = (item) => {
@@ -53,15 +39,11 @@ export default function ToDoList({navigation}) {
     
 
     useEffect(() => {
-        retrieveData();
-    }, [])
-
-    useEffect(() => {
         input != '' ? setBtnDisabled(false) : setBtnDisabled(true)
     }, [input])
 
     useEffect(() => {
-        storeData(items)
+        dispatch(setListItems(userId, items, storageSetItem))
     }, [items])
 
     useEffect(()=>{
@@ -93,7 +75,7 @@ export default function ToDoList({navigation}) {
                         data={items}
                         renderItem={({ item }) => (
                             <>
-                                <ListItem storeData={storeData} items={items} setItems={setItems} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} />
+                                <ListItem items={items} setItems={setItems} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} />
 
                                 <Modal visible={modalVisible.active} transparent={true} animationType='fade'>
                                     <SafeAreaView style={styles.modal}>

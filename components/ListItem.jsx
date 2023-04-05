@@ -3,7 +3,7 @@ import { Text, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useSelector } from 'react-redux';
 import Constants from '../constants/Styles'
 
-export default function ListItem({ storeData, items, setItems, item, modalVisible, setModalVisible }) {
+export default function ListItem({ items, setItems, item, modalVisible, setModalVisible }) {
     const [itemComplete, setItemComplete] = useState(item.completed);
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
 
@@ -11,7 +11,6 @@ export default function ListItem({ storeData, items, setItems, item, modalVisibl
     useEffect(() => {
         item.completed = itemComplete
         setItems(items)
-        storeData(items)
     }, [itemComplete])
 
     return (

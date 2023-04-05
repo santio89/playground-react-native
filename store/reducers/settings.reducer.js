@@ -14,6 +14,7 @@ const initialState = {
 
 
 const settingsReducer = (state = initialState, action) => {
+    
     switch (action.type) {
         case SELECT_LANG:
             return {

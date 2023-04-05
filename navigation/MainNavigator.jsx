@@ -4,14 +4,14 @@ import Constants from '../constants/Styles.js'
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from "react";
 import { getSettingsFirebase, setSettingsFirebase } from "../store/actions/settings.action";
-
+import { getAppsData } from "../store/actions/apps.action";
+import { storageGetItem } from "../utils/AsyncStorage";
 
 const MainNavigator = () => {
     const dispatch = useDispatch();
 
-    const settings = useSelector(state=>state.settings)
     const userId = useSelector(state=>state.auth.userId)
-
+    const settings = useSelector(state=>state.settings)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     
@@ -28,15 +28,16 @@ const MainNavigator = () => {
         },
     };
 
-
-    useEffect(()=>{
-        userId && dispatch(getSettingsFirebase(userId))
-    }, [userId])
+    
     
     useEffect(()=>{
         userId && dispatch(setSettingsFirebase(settings, userId))
     }, [settings])
 
+    useEffect(()=>{
+        dispatch(getAppsData(userId, storageGetItem));
+        userId && dispatch(getSettingsFirebase(userId));
+    }, [userId])
 
 
     return (

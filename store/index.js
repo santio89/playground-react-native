@@ -2,13 +2,15 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import SettingsReducer from './reducers/settings.reducer'
 import AuthReducer from "./reducers/auth.reducer";
+import AppsReducer from "./reducers/apps.reducer";
 import thunk from "redux-thunk";
 import { persistReducer } from "redux-persist";
 import storage from 'redux-persist/lib/storage'
 
 const RootReducer = combineReducers({
     settings: SettingsReducer,
-    auth: AuthReducer
+    auth: AuthReducer,
+    apps: AppsReducer
 })
 
 const persistConfig = {

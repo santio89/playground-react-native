@@ -7,10 +7,12 @@ import Constants from '../constants/Styles.js';
 import { LANGS } from '../constants/Langs.js';
 import Card from '../components/Card';
 import emojis from '../constants/Emojis.js';
-import { storageGetItem, storageSetItem } from '../utils/AsyncStorage.js';
-
+import { storageSetItem } from '../utils/AsyncStorage.js';
+import { setMemoScore } from '../store/actions/apps.action.js';
+import { useDispatch } from 'react-redux/es/exports.js';
 
 const MemoGame = ({navigation}) => {
+    const dispatch = useDispatch()
     const [cardPics, setCardPics] = useState([])
     const [cards, setCards] = useState([])
     const [turns, setTurns] = useState(0)
@@ -20,37 +22,17 @@ const MemoGame = ({navigation}) => {
     const [winner, setWinner] = useState(false)
     const [startState, setStartState] = useState(false)
     
-    /* traer de redux */
-    const [bestScore, setBestScore] = useState("-");
+    const memoScore = useSelector(state=>state.apps.memoGame.bestScore)
+    const [bestScore, setBestScore] = useState(memoScore);
 
     const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
 
+    const userId = useSelector(state=>state.auth.userId)
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
     const {selected: languageSelected} = useSelector(state=>state.settings.language)
 
     const [text, setText] = useState(LANGS.find(lang=>lang.lang === languageSelected).text)
-
-
-    /* storage-max score */
-    const storeData = async (score) => {
-        try {
-            await storageSetItem("pg-mg-score", JSON.stringify(score));
-        } catch (error) {
-            console.log("error saving data to storage")
-        }
-    };
-
-    const retrieveData = async () => {
-        try {
-            const value = await storageGetItem('pg-mg-score');
-            if (value !== null) {
-                setBestScore(JSON.parse(value))
-            }
-        } catch (error) {
-            console.log("error retrieving data from storage")
-        }
-    };
 
 
     /* elijo emojis al azar */
@@ -133,12 +115,11 @@ const MemoGame = ({navigation}) => {
     }, [cards])
 
     useEffect(() => {
-        retrieveData()
         selectEmojis()
     }, [])
 
     useEffect(() => {
-        storeData(bestScore)
+        dispatch(setMemoScore(userId, bestScore, storageSetItem))
     }, [bestScore])
 
     useEffect(() => {
