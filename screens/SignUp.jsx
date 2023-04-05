@@ -8,6 +8,7 @@ import { LANGS } from '../constants/Langs'
 import { useDispatch } from 'react-redux/es/exports'
 import { signUp } from '../store/actions/auth.action'
 import { setSettingsFirebase } from '../store/actions/settings.action'
+import { setListItems, setMemoScore } from '../store/actions/apps.action'
 
 const SignUp = ({ navigation }) => {
     const dispatch = useDispatch()
@@ -53,7 +54,7 @@ const SignUp = ({ navigation }) => {
     };
 
     const handleSignUp = () => {
-        dispatch(signUp(email.trim(), password, `🦊${displayName.trim()}`, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings, setSettingsFirebase))
+        dispatch(signUp(email.trim(), password, `🦊${displayName.trim()}`, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings, setSettingsFirebase, setListItems, setMemoScore))
     }
 
     useEffect(() => {

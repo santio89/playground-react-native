@@ -10,7 +10,7 @@ const initialState = {
 }
 
 const AppsReducer = (state = initialState, action) => {
-
+    
     switch (action.type) {
         case SET_MEMO_SCORE:
             return {

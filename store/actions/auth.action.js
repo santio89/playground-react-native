@@ -4,7 +4,7 @@ export const LOG_OUT = "LOG_OUT"
 import { URL_AUTH_SIGNUP } from "../../constants/Database"
 import { URL_AUTH_LOGIN } from "../../constants/Database"
 
-export const signUp = (email, password, displayName, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings, setSettingsFirebase) => {
+export const signUp = (email, password, displayName, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings, setSettingsFirebase, setListItems, setMemoScore) => {
 
     return async dispatch => {
         setSignUpLoading(true)
@@ -38,14 +38,16 @@ export const signUp = (email, password, displayName, setEmailError, setModalVisi
             }
 
             const data = await response.json()
-            
-            /* envio a firebase settings actuales como default del usuario */
-            dispatch(setSettingsFirebase(settings, data.localId))
 
+            /* envio a firebase configs default de usuario */
+            dispatch(setSettingsFirebase(settings, data.localId))
+            dispatch(setListItems(data.localId, []))
+            dispatch(setMemoScore(data.localId, "-"))
+            
             /* seteo modal */
             setAccountEmail(`${data.email}`)
             setAccountCreatedModal(true)
-            
+
             dispatch({
                 type: SIGN_UP,
                 token: data.idToken,
@@ -102,10 +104,10 @@ export const logIn = (email, password, setLogInError, setModalVisible, setLogInL
             }
 
             const data = await response.json()
-            console.log(data)
+
             setAccountEmail(`${data.displayName.slice(2).toLocaleUpperCase()}\n${[...data.displayName][0]}`)
             setLogInSuccess(true);
-            
+
             dispatch({
                 type: LOG_IN,
                 token: data.idToken,
@@ -131,6 +133,6 @@ export const logIn = (email, password, setLogInError, setModalVisible, setLogInL
 export const logOut = () => {
 
     return dispatch => {
-        dispatch({type: LOG_OUT})
+        dispatch({ type: LOG_OUT })
     }
 }

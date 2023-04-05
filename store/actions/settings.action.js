@@ -23,8 +23,7 @@ export const selectColorTheme = (altColorTheme) => ({
 export const setSettingsFirebase = (settings, userId) => {
 
     return async dispatch => {
-        /* envio a firebase settings actuales como default del usuario */
-        /* REVISAR QUE ACTUALIZE EL USUARIO */
+        
         try {
             await fetch(`${URL_API}settings/${userId}.json`, {
                 method: 'PUT',
@@ -49,13 +48,13 @@ export const setSettingsFirebase = (settings, userId) => {
 export const getSettingsFirebase = (userId) => {
 
     return async dispatch => {
-        /* traigo de firebase settings actuales del usuario */
+        
         try {
             const response = await fetch(`${URL_API}settings/${userId}.json`)
             const data = await response.json()
 
-            /* dispatch seteando settings */
-            dispatch({
+            
+            data && dispatch({
                 type: SET_SETTINGS,
                 settings: data
             })

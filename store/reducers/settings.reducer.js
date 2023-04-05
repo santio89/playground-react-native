@@ -36,7 +36,15 @@ const settingsReducer = (state = initialState, action) => {
         case SET_SETTINGS:
             return {
                 ...state,
-                ...action.settings
+                language: {
+                    selected: action.settings.language.selected
+                },
+                darkMode: {
+                    enabled: action.settings.darkMode.enabled
+                },
+                altColorTheme: {
+                    enabled: action.settings.altColorTheme.enabled
+                }
             }
         default:
             return state

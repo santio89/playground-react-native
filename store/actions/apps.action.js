@@ -49,7 +49,7 @@ export const setListItems = (userId, items, storageSetItem) => {
             try {
                 await fetch(`${URL_API}apps/${userId}.json`, {
                     method: 'PATCH',
-                    heaeders: {
+                    headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
@@ -85,42 +85,62 @@ export const setListItems = (userId, items, storageSetItem) => {
 }
 
 export const getAppsData = (userId, storageGetItem) => {
-    
+
     if (userId) {
         return async dispatch => {
             try {
                 const response = await fetch(`${URL_API}apps/${userId}.json`)
 
                 const data = await response.json()
-
-                dispatch({
+                
+                data && dispatch({
                     type: GET_APPS_DATA,
-                    appsData: data,
+                    appsData: data
                 })
             } catch {
                 console.log("error getting apps data")
             }
         }
     } else {
+        
         return async dispatch => {
             try {
                 const valueList = await storageGetItem('pg-tdl-list');
                 const valueMemo = await storageGetItem('pg-mg-score');
 
-                if (valueList !== null && valueMemo !== null) {
-
-                    dispatch({
-                        type: GET_APPS_DATA,
-                        appsData: {
-                            toDoList: {
-                                items: JSON.parse(valueList)
-                            },
-                            memoGame: {
-                                bestScore: JSON.parse(valueMemo)
-                            }
+                valueList && !valueMemo && dispatch({
+                    type: GET_APPS_DATA,
+                    appsData: {
+                        toDoList: {
+                            items: JSON.parse(valueList)
+                        },
+                        memoGame: {
+                            bestScore: "-"
                         }
-                    })
-                }
+                    }
+                })
+                valueMemo && !valueList && dispatch({
+                    type: GET_APPS_DATA,
+                    appsData: {
+                        toDoList: {
+                            items: []
+                        },
+                        memoGame: {
+                            bestScore: JSON.parse(valueMemo)
+                        }
+                    }
+                })
+                valueList && valueMemo && dispatch({
+                    type: GET_APPS_DATA,
+                    appsData: {
+                        toDoList: {
+                            items: JSON.parse(valueList)
+                        },
+                        memoGame: {
+                            bestScore: JSON.parse(valueMemo)
+                        }
+                    }
+                })
             } catch (error) {
                 console.log("error retrieving data from storage")
             }

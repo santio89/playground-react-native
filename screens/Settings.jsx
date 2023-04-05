@@ -35,6 +35,10 @@ const Settings = ({navigation}) => {
         setText(LANGS.find(lang => lang.lang === language.selected).text)
     }, [language.selected])
 
+    useEffect(()=>{
+        setConfig({lang: language.selected, darkMode, altColorTheme})
+    }, [language.selected, altColorTheme, darkMode])
+
     return (
         <>
             <Header navigation={navigation} />
