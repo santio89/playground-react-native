@@ -82,6 +82,13 @@ const styles = StyleSheet.create({
     /* for alt color theme */
     altShadow: {
         shadowColor: Constants.colorSecondary,
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 16.00,
+        elevation: 24,
     },
     altBackground: {
         backgroundColor: Constants.colorSecondaryDark,
