@@ -11,8 +11,10 @@ import { LANGS } from '../constants/Langs';
 export default function ToDoList({navigation}) {
     const [btnDisabled, setBtnDisabled] = useState(true)
     const [input, setInput] = useState("")
-    const [items, setItems] = useState([])
     const [modalVisible, setModalVisible] = useState({ active: false, id: null });
+
+    /* traer de redux */
+    const [items, setItems] = useState([])
 
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)

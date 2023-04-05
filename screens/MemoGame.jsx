@@ -19,7 +19,10 @@ const MemoGame = ({navigation}) => {
     const [disabled, setDisabled] = useState(false)
     const [winner, setWinner] = useState(false)
     const [startState, setStartState] = useState(false)
+    
+    /* traer de redux */
     const [bestScore, setBestScore] = useState("-");
+
     const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
 
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
