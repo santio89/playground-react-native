@@ -1,6 +1,5 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Modal, SafeAreaView, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity, Modal, SafeAreaView, ActivityIndicator, KeyboardAvoidingView } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useSelector } from 'react-redux/es/exports'
 import { useState, useEffect, useCallback } from 'react'
 import Header from '../components/Header'
@@ -97,8 +96,8 @@ const SignUp = ({ navigation }) => {
     return (
         <>
             <Header navigation={navigation} />
-            <KeyboardAwareScrollView contentContainerStyle={[styles.profileContainer, !darkMode && styles.colorDark, !darkMode && styles.backgroundWhite]}>
-                <View style={[styles.itemsContainer, altColorTheme && styles.altItemsContainer]}>
+            <ScrollView contentContainerStyle={[styles.profileContainer, !darkMode && styles.colorDark, !darkMode && styles.backgroundWhite]}>
+                <KeyboardAvoidingView style={[styles.itemsContainer, altColorTheme && styles.altItemsContainer]}>
                     <View style={styles.profileItem}>
                         <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator, !validEmail && { color: Constants.colorRed }]}>●&nbsp;</Text><Text style={!validEmail && { color: Constants.colorRed }}>{text.email}: </Text></Text>
                         <TextInput keyboardType='email-address' autoCapitalize='none' style={[styles.textInput, altColorTheme && styles.altTextInput, !validEmail && { borderBottomColor: Constants.colorRed }]} value={email} onChangeText={email => setEmail(email)} placeholder={text.minEmail} placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} />
@@ -125,8 +124,8 @@ const SignUp = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                </View>
-            </KeyboardAwareScrollView>
+                </KeyboardAvoidingView>
+            </ScrollView>
             <Modal visible={modalVisible} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
