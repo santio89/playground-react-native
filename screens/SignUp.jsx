@@ -172,6 +172,7 @@ const styles = StyleSheet.create({
         color: Constants.colorWhite,
         width: '100%',
         padding: 10,
+        minHeight: 'auto'
     },
     itemsContainer: {
         width: '100%',
