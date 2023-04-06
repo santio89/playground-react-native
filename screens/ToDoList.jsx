@@ -30,6 +30,7 @@ export default function ToDoList({navigation}) {
 
     const addItem = (item) => {
         if (item.text === "") { return }
+        
         setItems((oldItems) => [item, ...oldItems])
     }
 
