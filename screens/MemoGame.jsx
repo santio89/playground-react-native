@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions } from 'react-native'
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity, FlatList, Dimensions } from 'react-native'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import 'react-native-get-random-values'; /* for uuid */
@@ -11,7 +11,7 @@ import { storageSetItem } from '../utils/AsyncStorage.js';
 import { setMemoScore } from '../store/actions/apps.action.js';
 import { useDispatch } from 'react-redux/es/exports.js';
 
-const MemoGame = ({navigation}) => {
+const MemoGame = ({ navigation }) => {
     const dispatch = useDispatch()
     const [cardPics, setCardPics] = useState([])
     const [cards, setCards] = useState([])
@@ -21,18 +21,18 @@ const MemoGame = ({navigation}) => {
     const [disabled, setDisabled] = useState(false)
     const [winner, setWinner] = useState(false)
     const [startState, setStartState] = useState(false)
-    
-    const memoScore = useSelector(state=>state.apps.memoGame.bestScore)
+
+    const memoScore = useSelector(state => state.apps.memoGame.bestScore)
     const [bestScore, setBestScore] = useState(memoScore);
 
     const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
 
-    const userId = useSelector(state=>state.auth.userId)
+    const userId = useSelector(state => state.auth.userId)
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
-    const {selected: languageSelected} = useSelector(state=>state.settings.language)
+    const { selected: languageSelected } = useSelector(state => state.settings.language)
 
-    const [text, setText] = useState(LANGS.find(lang=>lang.lang === languageSelected).text)
+    const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
 
     /* elijo emojis al azar */
@@ -130,11 +130,11 @@ const MemoGame = ({navigation}) => {
         }
     })
 
-    useEffect(()=>{
-        setText(LANGS.find(lang=>lang.lang === languageSelected).text)
+    useEffect(() => {
+        setText(LANGS.find(lang => lang.lang === languageSelected).text)
     }, [languageSelected])
 
-    useEffect(()=>{
+    useEffect(() => {
         navigation.setOptions({
             title: `${text.memoGame} | PLAYGROUND`,
         })
@@ -143,7 +143,7 @@ const MemoGame = ({navigation}) => {
     return (
         <View style={[styles.memoGameContainer, !darkMode && styles.backgroundWhite]}>
             <View style={[styles.gameContainer, !darkMode && styles.backgroundWhite]}>
-                {		        
+                {
                     !startState ?
                         <>
                             <TouchableOpacity onPress={shuffleCards}>
@@ -166,7 +166,7 @@ const MemoGame = ({navigation}) => {
                                     </View>
                                 </> :
                                 <>
-                                    <View style={[styles.bestScore, {flexDirection: 'row', padding: 0}]}><Text style={[styles.bestScoreText, {alignSelf: 'center'}, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={[styles.bestScoreText, {fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorPrimary, padding: 4}, altColorTheme && {color: Constants.colorSecondary}]}>{bestScore}</Text></View>
+                                    <View style={[styles.bestScore, { flexDirection: 'row', padding: 0 }]}><Text style={[styles.bestScoreText, { alignSelf: 'center' }, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={[styles.bestScoreText, { fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorPrimary, padding: 4 }, altColorTheme && { color: Constants.colorSecondary }]}>{bestScore}</Text></View>
                                     <View style={styles.turnsButtonsContainer}>
                                         <View style={[styles.turns, altColorTheme && styles.altTurns]}>
                                             <Text style={styles.turnsText}>{text.turns}: {turns}</Text>
@@ -177,27 +177,29 @@ const MemoGame = ({navigation}) => {
                                         </TouchableOpacity>
 
                                     </View>
-                                    {
-                                        windowWidth > 800 ?
-                                            <FlatList contentContainerStyle={styles.cardsContainer}
-                                                data={cards}
-                                                numColumns={4}
-                                                renderItem={({ item }) => (
-                                                    <Card card={item} handleChoice={handleChoice} choiceOne={choiceOne} choiceTwo={choiceTwo} disabled={disabled} />
-                                                )}
-                                                key={'-'}
-                                                keyExtractor={card => ("-" + card.id)}
-                                            />
-                                            : <FlatList contentContainerStyle={styles.cardsContainer}
-                                                data={cards}
-                                                numColumns={2}
-                                                renderItem={({ item }) => (
-                                                    <Card card={item} handleChoice={handleChoice} choiceOne={choiceOne} choiceTwo={choiceTwo} disabled={disabled} />
-                                                )}
-                                                key={'#'}
-                                                keyExtractor={card => ("#" + card.id)}
-                                            />
-                                    }
+                                    <View style={styles.cardsWrapper}>
+                                        {
+                                            windowWidth > 800 ?
+                                                <FlatList contentContainerStyle={styles.cardsContainer}
+                                                    data={cards}
+                                                    numColumns={4}
+                                                    renderItem={({ item }) => (
+                                                        <Card card={item} handleChoice={handleChoice} choiceOne={choiceOne} choiceTwo={choiceTwo} disabled={disabled} />
+                                                    )}
+                                                    key={'-'}
+                                                    keyExtractor={card => ("-" + card.id)}
+                                                />
+                                                : <FlatList contentContainerStyle={styles.cardsContainer}
+                                                    data={cards}
+                                                    numColumns={2}
+                                                    renderItem={({ item }) => (
+                                                        <Card card={item} handleChoice={handleChoice} choiceOne={choiceOne} choiceTwo={choiceTwo} disabled={disabled} />
+                                                    )}
+                                                    key={'#'}
+                                                    keyExtractor={card => ("#" + card.id)}
+                                                />
+                                        }
+                                    </View>
                                 </>}
                         </>
                 }
@@ -351,12 +353,18 @@ const styles = StyleSheet.create({
         width: '40%',
         maxWidth: 400,
         minWidth: 320,
-        marginBottom: 10
+    },
+    cardsWrapper: {
+        flex: 1,
+        justifyContent: 'center', 
+        alignItems: 'center',
+
     },
     cardsContainer: {
         padding: 10,
         justifyContent: 'center',
         alignItems: 'center',
+        flexGrow: 1
     },
     /* for dark mode off */
     backgroundWhite: {
