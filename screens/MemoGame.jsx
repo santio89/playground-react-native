@@ -351,7 +351,7 @@ const styles = StyleSheet.create({
         width: '40%',
         maxWidth: 400,
         minWidth: 320,
-        marginBottom: 20
+        marginBottom: 10
     },
     cardsContainer: {
         padding: 10,
