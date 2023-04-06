@@ -27,7 +27,6 @@ const AppsReducer = (state = initialState, action) => {
                 }
             }
         case GET_APPS_DATA:
-          
             return {
                 ...state,
                 toDoList: {
