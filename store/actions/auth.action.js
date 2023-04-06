@@ -51,6 +51,7 @@ export const signUp = (email, password, displayName, setEmailError, setModalVisi
             dispatch({
                 type: SIGN_UP,
                 token: data.idToken,
+                refreshToken: data.refreshToken,
                 userId: data.localId,
                 displayName: data.displayName.slice(2),
                 avatar: [...data.displayName][0],
@@ -107,10 +108,11 @@ export const logIn = (email, password, setLogInError, setModalVisible, setLogInL
 
             setAccountEmail(`${data.displayName.slice(2).toLocaleUpperCase()}\n${[...data.displayName][0]}`)
             setLogInSuccess(true);
-
+            
             dispatch({
                 type: LOG_IN,
                 token: data.idToken,
+                refreshToken: data.refreshToken,
                 userId: data.localId,
                 displayName: data.displayName.slice(2),
                 avatar: [...data.displayName][0],

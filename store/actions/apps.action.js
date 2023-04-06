@@ -7,7 +7,7 @@ export const setMemoScore = (userId, bestScore, storageSetItem) => {
     if (userId) {
         return async dispatch => {
             try {
-                await fetch(`${URL_API}apps/${userId}.json`, {
+                await fetch(`${URL_API}apps/${userId}.json?auth=${userId}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ export const setListItems = (userId, items, storageSetItem) => {
     if (userId) {
         return async dispatch => {
             try {
-                await fetch(`${URL_API}apps/${userId}.json`, {
+                await fetch(`${URL_API}apps/${userId}.json?auth=${userId}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json'
@@ -89,7 +89,7 @@ export const getAppsData = (userId, storageGetItem) => {
     if (userId) {
         return async dispatch => {
             try {
-                const response = await fetch(`${URL_API}apps/${userId}.json`)
+                const response = await fetch(`${URL_API}apps/${userId}.json?auth=${userId}`)
 
                 const data = await response.json()
                 

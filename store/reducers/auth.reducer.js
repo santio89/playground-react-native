@@ -4,6 +4,7 @@ import { LOG_OUT } from "../actions/auth.action";
 
 const initialState = {
    token: null,
+   refreshToken: null,
    userId: null,
    email: "",
    displayName: "",
@@ -18,6 +19,7 @@ const AuthReducer = (state=initialState, action) => {
             return {
                ...state,
                token: action.token,
+               refreshToken: action.refreshToken,
                userId: action.userId,
                displayName: action.displayName,
                avatar: action.avatar,
@@ -27,6 +29,7 @@ const AuthReducer = (state=initialState, action) => {
             return {
                 ...state,
                 token: action.token,
+                refreshToken: action.refreshToken,
                 userId: action.userId,
                 displayName: action.displayName,
                 avatar: action.avatar,
@@ -36,6 +39,7 @@ const AuthReducer = (state=initialState, action) => {
             return {
                 ...state,
                 token: null,
+                refreshToken: null,
                 userId: null,
                 displayName: "",
                 email: "",

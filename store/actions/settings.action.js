@@ -25,7 +25,7 @@ export const setSettingsFirebase = (settings, userId) => {
     return async dispatch => {
         
         try {
-            await fetch(`${URL_API}settings/${userId}.json`, {
+            await fetch(`${URL_API}settings/${userId}.json?auth=${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -50,9 +50,9 @@ export const getSettingsFirebase = (userId) => {
     return async dispatch => {
         
         try {
-            const response = await fetch(`${URL_API}settings/${userId}.json`)
+            const response = await fetch(`${URL_API}settings/${userId}.json?auth=${userId}`)
             const data = await response.json()
-
+            
             
             data && dispatch({
                 type: SET_SETTINGS,
