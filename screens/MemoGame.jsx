@@ -333,7 +333,8 @@ const styles = StyleSheet.create({
         borderWidth: 4,
         borderColor: Constants.colorPrimaryDark,
         backgroundColor: Constants.colorPrimary,
-        margin: 10,
+        marginVertical: 10,
+        marginInline: '2%',
         padding: 10,
         flex: 1
     },
@@ -350,8 +351,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        width: '40%',
-        maxWidth: 400,
+        width: '100%',
+        maxWidth: 380,
         minWidth: 320,
     },
     cardsWrapper: {
