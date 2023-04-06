@@ -166,7 +166,7 @@ const MemoGame = ({navigation}) => {
                                     </View>
                                 </> :
                                 <>
-                                    <View style={styles.bestScore}><Text style={[styles.bestScoreText, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={[styles.bestScoreNumber, altColorTheme && styles.altBestScoreNumber]}>{bestScore}</Text></View>
+                                    <View style={[styles.bestScore, {flexDirection: 'row'}]}><Text style={[styles.bestScoreText, {alignSelf: 'center'}, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={[styles.bestScoreText, {fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorPrimary, padding: 4}, altColorTheme && {color: Constants.colorSecondary}]}>{bestScore}</Text></View>
                                     <View style={styles.turnsButtonsContainer}>
                                         <View style={[styles.turns, altColorTheme && styles.altTurns]}>
                                             <Text style={styles.turnsText}>{text.turns}: {turns}</Text>
