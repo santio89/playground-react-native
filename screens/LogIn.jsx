@@ -92,8 +92,8 @@ const LogIn = ({ navigation }) => {
                             <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{logInError === 'wrong_credentials' ? text.wrongCredentials : text.genericError}</Text>
                         </Text>
                         <View style={styles.modalBtnContainer}>
-                            <TouchableOpacity style={styles.modalBtn}>
-                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => { setModalVisible(false) }}>OK</Text>
+                            <TouchableOpacity style={styles.modalBtn} onPress={() => { setModalVisible(false) }}>
+                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]}>OK</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -107,8 +107,8 @@ const LogIn = ({ navigation }) => {
                             <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{accountEmail.toLocaleUpperCase()}</Text>
                         </Text>
                         <View style={styles.modalBtnContainer}>
-                            <TouchableOpacity style={styles.modalBtn}>
-                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => { setLogInSuccess(false); navigation.navigate("AppsHome") }}>OK</Text>
+                            <TouchableOpacity style={styles.modalBtn} onPress={() => { setLogInSuccess(false); navigation.navigate("AppsHome") }}>
+                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]}>OK</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

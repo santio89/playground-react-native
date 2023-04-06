@@ -135,8 +135,8 @@ const SignUp = ({ navigation }) => {
                             <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{emailError === 'email_exists' ? text.emailExists : (emailError === 'blocked_requests' ? text.blockedRequests : text.genericError)}</Text>
                         </Text>
                         <View style={styles.modalBtnContainer}>
-                            <TouchableOpacity style={styles.modalBtn}>
-                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => { setModalVisible(false) }}>OK</Text>
+                            <TouchableOpacity style={styles.modalBtn} onPress={() => { setModalVisible(false) }}>
+                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]}>OK</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -150,8 +150,8 @@ const SignUp = ({ navigation }) => {
                             <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{accountEmail.toLocaleUpperCase()}</Text>
                         </Text>
                         <View style={styles.modalBtnContainer}>
-                            <TouchableOpacity style={styles.modalBtn}>
-                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => { setAccountCreatedModal(false); navigation.navigate("LogIn"); navigation.navigate("AppsHome") }}>OK</Text>
+                            <TouchableOpacity style={styles.modalBtn} onPress={() => { setAccountCreatedModal(false); navigation.navigate("LogIn"); navigation.navigate("AppsHome") }}>
+                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]}>OK</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

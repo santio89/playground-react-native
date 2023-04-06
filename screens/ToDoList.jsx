@@ -83,8 +83,8 @@ export default function ToDoList({navigation}) {
                                         <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
                                             <Text style={styles.modalTitle}>{text.deleteTask}?</Text>
                                             <View style={styles.modalBtnContainer}>
-                                                <TouchableOpacity style={styles.modalBtn}>
-                                                    <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => setModalVisible({ active: false, id: null })}>{text.cancel}</Text>
+                                                <TouchableOpacity style={styles.modalBtn} onPress={() => setModalVisible({ active: false, id: null })}>
+                                                    <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} >{text.cancel}</Text>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity style={styles.modalBtn} onPress={() => { deleteItem(modalVisible.id); setModalVisible({ active: false, id: null }) }}>
                                                     <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText, styles.borderRed]}>{text.delete}</Text>
