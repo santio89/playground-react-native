@@ -40,7 +40,7 @@ export default function App() {
   );
 }
 
-
+console.log("test")
 const styles = StyleSheet.create({
   container: {
     flex: 1,
