@@ -74,7 +74,7 @@ const Profile = ({ navigation }) => {
             
             <Modal visible={logOutSuccess} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
-                    <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
+                    <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
                         <Text style={styles.modalTitle}>
                             <Text>{`${text.goodbye}\n`}</Text>
                             <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{text.userLoggedOut}</Text>
@@ -238,6 +238,9 @@ const styles = StyleSheet.create({
         borderColor: Constants.colorWhite,
         color: Constants.colorWhite,
         marginHorizontal: 10,
+    },
+    modalBorderDark: {
+        borderColor: Constants.colorDark,
     },
     /* for dark mode off */
     backgroundWhite: {

@@ -80,7 +80,7 @@ export default function ToDoList({navigation}) {
 
                                 <Modal visible={modalVisible.active} transparent={true} animationType='fade'>
                                     <SafeAreaView style={styles.modal}>
-                                        <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
+                                        <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
                                             <Text style={styles.modalTitle}>{text.deleteTask}?</Text>
                                             <View style={styles.modalBtnContainer}>
                                                 <TouchableOpacity style={styles.modalBtn} onPress={() => setModalVisible({ active: false, id: null })}>
@@ -208,6 +208,9 @@ const styles = StyleSheet.create({
         color: Constants.colorWhite,
         marginHorizontal: 10
     },
+    modalBorderDark: {
+        borderColor: Constants.colorDark,
+    },
     borderRed: {
         borderColor: Constants.colorRed,
     },
@@ -217,9 +220,6 @@ const styles = StyleSheet.create({
     },
     colorDark: {
         color: Constants.colorDark,
-    },
-    borderDark: {
-        borderColor: Constants.colorDark,
     },
     /* for alt color theme */
     altInput: {

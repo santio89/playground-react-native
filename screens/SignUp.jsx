@@ -129,7 +129,7 @@ const SignUp = ({ navigation }) => {
             </ScrollView>
             <Modal visible={modalVisible} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
-                    <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
+                    <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
                         <Text style={styles.modalTitle}>
                             <Text>{`ERROR: \n`}</Text>
                             <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{emailError === 'email_exists' ? text.emailExists : (emailError === 'blocked_requests' ? text.blockedRequests : text.genericError)}</Text>
@@ -144,7 +144,7 @@ const SignUp = ({ navigation }) => {
             </Modal>
             <Modal visible={accountCreatedModal} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
-                    <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
+                    <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
                         <Text style={[styles.modalTitle]}>
                             <Text>{`${text.createdAccount}: \n`}</Text>
                             <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{accountEmail.toLocaleUpperCase()}</Text>
@@ -333,6 +333,9 @@ const styles = StyleSheet.create({
         borderColor: Constants.colorWhite,
         color: Constants.colorWhite,
         marginHorizontal: 10
+    },
+    modalBorderDark: {
+        borderColor: Constants.colorDark,
     },
     /* for dark mode off */
     backgroundWhite: {

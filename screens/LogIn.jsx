@@ -101,7 +101,7 @@ const LogIn = ({ navigation }) => {
             </Modal>
             <Modal visible={logInSuccess} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
-                    <View style={[styles.modalInner, !darkMode && styles.borderDark, altColorTheme && styles.altModalInner]}>
+                    <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
                         <Text style={styles.modalTitle}>
                             <Text>{`${text.welcome}\n`}</Text>
                             <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{accountEmail.toLocaleUpperCase()}</Text>
@@ -290,6 +290,9 @@ const styles = StyleSheet.create({
         borderColor: Constants.colorWhite,
         color: Constants.colorWhite,
         marginHorizontal: 10,
+    },
+    modalBorderDark: {
+        borderColor: Constants.colorDark,
     },
     /* for dark mode off */
     backgroundWhite: {
