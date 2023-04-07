@@ -39,7 +39,7 @@ export default function App() {
     </PersistGate>
   );
 }
-
+console.log("test")
 
 const styles = StyleSheet.create({
   container: {
