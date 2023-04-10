@@ -40,7 +40,11 @@ export const LANGS = [{id: 1, lang: "english", text: {
     name: "NAME",
     logInProfile: "LOG IN TO SEE YOUR PROFILE",
     goodbye: "GOODBYE",
-    userLoggedOut: "USER LOGGED OUT"
+    userLoggedOut: "USER LOGGED OUT",
+    weather: "WEATHER",
+    weatherReport: "WEATHER REPORT",
+    locationPermissionDenied: "PERMISSION TO ACCESS LOCATION DENIED",
+    location: "LOCATION",
 }}, {id: 2, lang: "spanish", text: {
     toDoList: "LISTA DE TAREAS",
     memoGame: "JUEGO DE MEMORIA",
@@ -83,5 +87,9 @@ export const LANGS = [{id: 1, lang: "english", text: {
     name: "NOMBRE",
     logInProfile: "INGRESA PARA VER TU PERFIL",
     goodbye: "ADIOS",
-    userLoggedOut: "USUARIO DESLOGUEADO"
+    userLoggedOut: "USUARIO DESLOGUEADO",
+    weather: "CLIMA",
+    weatherReport: "REPORTE DE CLIMA",
+    locationPermissionDenied: "PERMISO PARA ACCEDER A LA LOCACIÓN DENEGADO",
+    location: "LOCACIÓN"
 }}]

@@ -42,6 +42,9 @@ const MainMenu = ({ navigation }) => {
                     <TouchableOpacity style={[styles.menuOption, altColorTheme && styles.altMenuOption, { width: windowWidth > 800 ? 'auto' : (windowWidth > 320 ? 300 : '100%') }]} onPress={() => { navigation.navigate("MemoGame") }}>
                         <Text style={[styles.menuOptionText]}>{text.memoGame}</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity style={[styles.menuOption, altColorTheme && styles.altMenuOption, { width: windowWidth > 800 ? 'auto' : (windowWidth > 320 ? 300 : '100%') }]} onPress={() => { navigation.navigate("Weather") }}>
+                        <Text style={[styles.menuOptionText]}>{text.weather}</Text>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
         </>
@@ -81,7 +84,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         textAlign: 'center',
         maxWidth: 400,
-        maxHeight: 120
+        maxHeight: 120,
+        height: 110,
     },
     menuOptionText: {
         fontSize: Constants.fontLg,
