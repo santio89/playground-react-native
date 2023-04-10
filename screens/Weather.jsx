@@ -40,6 +40,10 @@ const Weather = ({ navigation }) => {
   }
 
   useEffect(() => {
+    setText(LANGS.find(lang => lang.lang === languageSelected).text)
+}, [languageSelected])
+
+  useEffect(() => {
     loadForecast()
   }, [])
 
