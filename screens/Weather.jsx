@@ -11,6 +11,7 @@ const Weather = ({ navigation }) => {
   const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&appid=${WEATHER_API_KEY}`
 
   const [forecast, setForecast] = useState(null)
+  const [spForecast, setSpForecast] = useState(null)
   const [refreshing, setRefreshing] = useState(false)
 
   const darkMode = useSelector(state => state.settings.darkMode.enabled)
@@ -20,28 +21,54 @@ const Weather = ({ navigation }) => {
 
   const loadForecast = async () => {
     setRefreshing(true);
-    const { status } = await Location.requestPermissionsAsync();
+    const { status } = await Location.requestForegroundPermissionsAsync();
 
     if (status !== 'granted') {
       Alert(`${text.locationPermissionDenied}`)
     } else {
-      const location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true })
-      const response = await fetch(`${url}&lat=${location.coords.latitude}&lon=${location.coords.longitude}`)
-      const data = await response.json()
-      
-      if (!response.ok) {
-        console.log("error fetching weather report ")
-      } else {
-        setForecast(data)
-      }
-    }
 
-    setRefreshing(false)
+      try {
+        const location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true })
+
+        try {
+          const response = await fetch(`${url}&lat=${location.coords.latitude}&lon=${location.coords.longitude}`)
+          const data = await response.json()
+
+          if (!response.ok) {
+            console.log("error fetching weather report ")
+          } else {
+            setForecast(data)
+          }
+        } catch (e) {
+          console.log("error fetching weather data: ", e)
+        }
+
+        /* para otro idioma */
+        try {
+          const response = await fetch(`${url}&lat=${location.coords.latitude}&lon=${location.coords.longitude}&lang=sp`)
+          const data = await response.json()
+
+          if (!response.ok) {
+            console.log("error fetching sp weather report ")
+          } else {
+
+            setSpForecast(data)
+          }
+        } catch (e) {
+          console.log("error fetching sp weather data: ", e)
+        }
+
+      } catch (e) {
+        console.log("error getting geo position: ", e)
+      }
+
+      setRefreshing(false)
+    }
   }
 
   useEffect(() => {
     setText(LANGS.find(lang => lang.lang === languageSelected).text)
-}, [languageSelected])
+  }, [languageSelected])
 
   useEffect(() => {
     loadForecast()
@@ -52,25 +79,29 @@ const Weather = ({ navigation }) => {
     <ScrollView contentContainerStyle={[styles.weatherAppWrapper, !darkMode && styles.altWeatherAppWrapper]}>
       <View style={styles.weatherAppContainer} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => loadForecast()} />} >
         <Text style={[styles.weatherTitle, altColorTheme && styles.altWeatherTitle]}>{text.weatherReport}</Text>
-        {!forecast ?
-          <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> :
-          <View style={styles.weatherData}>
-            <View style={[styles.weatherTitleContainer, altColorTheme && styles.altWeatherTitleContainer]}>
-              <Text style={styles.weatherTitleLocation}>{forecast.name.toLocaleUpperCase()}</Text>
-              <View style={styles.weatherTitleImgWrapper}>
-                <Image style={styles.weatherTitleImg} source={{ uri: `http://openweathermap.org/img/wn/${forecast?.weather[0].icon}.png` }} />
+        {
+          !forecast ?
+            <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
+            :
+            <View style={styles.weatherData}>
+              <View style={[styles.weatherTitleContainer, altColorTheme && styles.altWeatherTitleContainer]}>
+                <Text style={styles.weatherTitleLocation}>{forecast.name.toLocaleUpperCase()}</Text>
+                <View style={styles.weatherTitleContent}>
+                  <View style={styles.weatherTitleImgWrapper}>
+                    <Image style={styles.weatherTitleImg} source={{ uri: `http://openweathermap.org/img/wn/${forecast?.weather[0].icon}@4x.png` }} />
 
-                <Text style={styles.weatherTitleTemp}>{`${forecast.main.temp} °C`}</Text>
+                    <Text style={styles.weatherTitleTemp}>{`${Math.trunc(Number(forecast.main.temp))} °C / ${Math.trunc((Number(forecast.main.temp) * (9 / 5)) + 32)} °F`}</Text>
+                  </View>
+                  <Text style={styles.weatherTitleInfo}>
+                    {languageSelected === "spanish" ? spForecast?.weather[0].description.toLocaleUpperCase() : forecast?.weather[0].description.toLocaleUpperCase()}
+                  </Text>
+                </View>
               </View>
-              <Text style={styles.weatherTitleInfo}>
-                {forecast?.weather[0].main.toLocaleUpperCase()}
-              </Text>
-            </View>
 
-            {/* <View style={styles.weatherExtraInfo}>
+              {/* <View style={styles.weatherExtraInfo}>
               <Text></Text>
             </View> */}
-          </View>
+            </View>
         }
 
 
@@ -105,7 +136,8 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     borderColor: Constants.colorPrimaryDark,
     backgroundColor: Constants.colorPrimary,
-    padding: 10
+    padding: 10,
+    height: 300
   },
   weatherTitle:
   {
@@ -123,6 +155,11 @@ const styles = StyleSheet.create({
     fontSize: Constants.fontLg,
     textAlign: 'center',
     alignSelf: 'flex-start',
+  },
+  weatherTitleContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   weatherTitleImgWrapper: {
     flexDirection: 'row',
