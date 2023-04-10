@@ -8,7 +8,7 @@ import Alert from '../utils/Alert'
 import { useSelector } from 'react-redux'
 
 const Weather = ({ navigation }) => {
-  const url = `http://api.openweathermap.org/data/2.5/weather?units=metric&appid=${WEATHER_API_KEY}`
+  const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&appid=${WEATHER_API_KEY}`
 
   const [forecast, setForecast] = useState(null)
   const [refreshing, setRefreshing] = useState(false)
