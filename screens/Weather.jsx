@@ -84,6 +84,12 @@ const Weather = ({ navigation }) => {
     setText(LANGS.find(lang => lang.lang === languageSelected).text)
   }, [languageSelected])
 
+  useEffect(()=>{
+    navigation.setOptions({
+        title: `${text.weather} | PLAYGROUND`,
+    })
+}, [text])
+
   useEffect(() => {
     loadForecast()
   }, [])
