@@ -114,7 +114,7 @@ const Weather = ({ navigation }) => {
                   <View style={styles.weatherTitleContent}>
                     <View style={styles.weatherTitleImgWrapper}>
                       <Image style={styles.weatherTitleImg} source={{ uri: `https://cdn-icons-png.flaticon.com/512/5263/5263073.png` }} />
-                      <Text style={styles.weatherTitleTemp}>{forecast.main.humidity} </Text>
+                      <Text style={styles.weatherTitleTemp}>{`${forecast.main.humidity}%`}</Text>
                     </View>
                   </View>
                 </View>
