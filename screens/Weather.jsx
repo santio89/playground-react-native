@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl, Image, Dimensions, TouchableOpacity, Modal } from 'react-native'
 import * as Location from 'expo-location'
-import MapView from 'react-native-maps'
+/* import MapView from 'react-native-maps' */
 import { Entypo } from '@expo/vector-icons';
 import { useState, useEffect } from 'react'
 import Constants from '../constants/Styles.js'
 import { LANGS } from '../constants/Langs.js'
 import { WEATHER_API_KEY } from '../constants/Database.js'
+import { MAPS_API_KEY } from '../constants/Database.js'
 import Alert from '../utils/Alert'
 import { useSelector } from 'react-redux'
 
@@ -113,7 +114,7 @@ const Weather = ({ navigation }) => {
                 <>
                   <View style={styles.weatherHeader}>
                     <Text style={[styles.weatherTitle, altColorTheme && styles.altWeatherTitle]}>{forecast.name.toLocaleUpperCase()}</Text>
-                    <TouchableOpacity style={styles.weatherPinLocation} onPress={()=>{setModalVisible(true)}} ><Entypo name="location-pin" size={Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
+                    <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={()=>{setModalVisible(true)}} ><Entypo name="location-pin" size={Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
                   </View>
 
                   <View style={[styles.weatherTitleContainer, altColorTheme && styles.altWeatherTitleContainer]}>
@@ -201,8 +202,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderWidth: 1,
     borderRadius: 4,
-    borderColor: Constants.colorSecondaryDark,
-    backgroundColor: Constants.colorSecondary
+    borderColor: Constants.colorPrimaryDark,
+    backgroundColor: Constants.colorPrimary
   },
   weatherData: {
     flexGrow: 1,
@@ -356,5 +357,11 @@ const styles = StyleSheet.create({
   },
   altModalText: {
     backgroundColor: Constants.colorSecondaryDark,
+  },
+  altWeatherPinLocation: {
+    borderWidth: 1,
+    borderRadius: 4,
+    borderColor: Constants.colorSecondaryDark,
+    backgroundColor: Constants.colorSecondary
   },
 })
