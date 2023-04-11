@@ -1,5 +1,7 @@
-import { StyleSheet, Text, View, ScrollView, ActivityIndicator, RefreshControl, Image, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl, Image, Dimensions, TouchableOpacity, Modal } from 'react-native'
 import * as Location from 'expo-location'
+import MapView from 'react-native-maps'
+import { Entypo } from '@expo/vector-icons';
 import { useState, useEffect } from 'react'
 import Constants from '../constants/Styles.js'
 import { LANGS } from '../constants/Langs.js'
@@ -18,6 +20,8 @@ const Weather = ({ navigation }) => {
   const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
   const { selected: languageSelected } = useSelector(state => state.settings.language)
   const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
+
+  const [modalVisible, setModalVisible] = useState(false);
 
   const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
   const updateWindowWidth = () => {
@@ -94,58 +98,79 @@ const Weather = ({ navigation }) => {
     loadForecast()
   }, [])
 
-  
+
   return (
-    <ScrollView contentContainerStyle={[styles.weatherAppWrapper, !darkMode && styles.altWeatherAppWrapper]}>
-      <View style={styles.weatherAppContainer} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => loadForecast()} />} >
+    <>
+      <ScrollView contentContainerStyle={[styles.weatherAppWrapper, !darkMode && styles.altWeatherAppWrapper]}>
+        <View style={styles.weatherAppContainer} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => loadForecast()} />} >
 
 
-        <View style={styles.weatherData}>
-          {
-            !forecast ?
-              <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
-              :
-              <>
-                <Text style={[styles.weatherTitle, altColorTheme && styles.altWeatherTitle]}>{forecast.name.toLocaleUpperCase()}</Text>
-                <View style={[styles.weatherTitleContainer, altColorTheme && styles.altWeatherTitleContainer]}>
-                  <Text style={styles.weatherTitleLocation}>{text.weather}</Text>
-                  <View style={styles.weatherTitleContent}>
-                    <View style={styles.weatherTitleImgWrapper}>
-                      <Image style={styles.weatherTitleImg} source={{ uri: `http://openweathermap.org/img/wn/${forecast?.weather[0].icon}@4x.png` }} />
-                      <Text style={styles.weatherTitleTemp}>{`${Math.trunc(Number(forecast.main.temp))} °C\n${Math.trunc((Number(forecast.main.temp) * (9 / 5)) + 32)} °F`}</Text>
-                    </View>
-                    <Text style={styles.weatherTitleInfo}>
-                      {languageSelected === "spanish" ? spForecast?.weather[0].description.toLocaleUpperCase() : forecast?.weather[0].description.toLocaleUpperCase()}
-                    </Text>
+          <View style={styles.weatherData}>
+            {
+              !forecast ?
+                <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
+                :
+                <>
+                  <View style={styles.weatherHeader}>
+                    <Text style={[styles.weatherTitle, altColorTheme && styles.altWeatherTitle]}>{forecast.name.toLocaleUpperCase()}</Text>
+                    <TouchableOpacity style={styles.weatherPinLocation} onPress={()=>{setModalVisible(true)}} ><Entypo name="location-pin" size={Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
                   </View>
-                </View>
 
-                <View style={[styles.rowItems, windowWidth > 800 && { flexDirection: 'row' }]}>
-                  <View style={[styles.weatherTitleContainer, { height: 200, minHeight: 200, maxHeight: 200 }, windowWidth > 800 && { marginRight: 10, flex: 1 }, altColorTheme && styles.altWeatherTitleContainer]}>
-                    <Text style={styles.weatherTitleLocation}>{text.feels}</Text>
+                  <View style={[styles.weatherTitleContainer, altColorTheme && styles.altWeatherTitleContainer]}>
+                    <Text style={styles.weatherTitleLocation}>{text.weather}</Text>
                     <View style={styles.weatherTitleContent}>
                       <View style={styles.weatherTitleImgWrapper}>
-                        <Image style={[styles.weatherTitleImg, { maxWidth: 100 }]} source={{ uri: `https://cdn-icons-png.flaticon.com/512/5263/5263073.png` }} />
-                        <Text style={[styles.weatherTitleTemp, { padding: 20 }]}>{`${Math.trunc(Number(forecast.main.feels_like))} °C\n${Math.trunc((Number(forecast.main.feels_like) * (9 / 5)) + 32)} °F`}</Text>
+                        <Image style={styles.weatherTitleImg} source={{ uri: `http://openweathermap.org/img/wn/${forecast?.weather[0].icon}@4x.png` }} />
+                        <Text style={styles.weatherTitleTemp}>{`${Math.trunc(Number(forecast.main.temp))} °C\n${Math.trunc((Number(forecast.main.temp) * (9 / 5)) + 32)} °F`}</Text>
+                      </View>
+                      <Text style={styles.weatherTitleInfo}>
+                        {languageSelected === "spanish" ? spForecast?.weather[0].description.toLocaleUpperCase() : forecast?.weather[0].description.toLocaleUpperCase()}
+                      </Text>
+                    </View>
+                  </View>
+
+                  <View style={[styles.rowItems, windowWidth > 800 && { flexDirection: 'row' }]}>
+                    <View style={[styles.weatherTitleContainer, { height: 200, minHeight: 200, maxHeight: 200 }, windowWidth > 800 && { marginRight: 10, flex: 1 }, altColorTheme && styles.altWeatherTitleContainer]}>
+                      <Text style={styles.weatherTitleLocation}>{text.feels}</Text>
+                      <View style={styles.weatherTitleContent}>
+                        <View style={styles.weatherTitleImgWrapper}>
+                          <Image style={[styles.weatherTitleImg, { maxWidth: 100 }]} source={{ uri: `https://cdn-icons-png.flaticon.com/512/5263/5263073.png` }} />
+                          <Text style={[styles.weatherTitleTemp, { padding: 20 }]}>{`${Math.trunc(Number(forecast.main.feels_like))} °C\n${Math.trunc((Number(forecast.main.feels_like) * (9 / 5)) + 32)} °F`}</Text>
+                        </View>
+                      </View>
+                    </View>
+
+                    <View style={[styles.weatherTitleContainer, { height: 200, minHeight: 200, maxHeight: 200 }, windowWidth > 800 && { marginLeft: 10, flex: 1 }, altColorTheme && styles.altWeatherTitleContainer]}>
+                      <Text style={[styles.weatherTitleLocation]}>{text.humidity}</Text>
+                      <View style={styles.weatherTitleContent}>
+                        <View style={styles.weatherTitleImgWrapper}>
+                          <Image style={[styles.weatherTitleImg, { maxWidth: 100 }]} source={{ uri: `https://cdn-icons-png.flaticon.com/512/777/777610.png` }} />
+                          <Text style={[styles.weatherTitleTemp, { padding: 20 }]}>{`${forecast.main.humidity}%`}</Text>
+                        </View>
                       </View>
                     </View>
                   </View>
-
-                  <View style={[styles.weatherTitleContainer, { height: 200, minHeight: 200, maxHeight: 200 }, windowWidth > 800 && { marginLeft: 10, flex: 1 }, altColorTheme && styles.altWeatherTitleContainer]}>
-                    <Text style={[styles.weatherTitleLocation]}>{text.humidity}</Text>
-                    <View style={styles.weatherTitleContent}>
-                      <View style={styles.weatherTitleImgWrapper}>
-                        <Image style={[styles.weatherTitleImg, { maxWidth: 100 }]} source={{ uri: `https://cdn-icons-png.flaticon.com/512/777/777610.png` }} />
-                        <Text style={[styles.weatherTitleTemp, { padding: 20 }]}>{`${forecast.main.humidity}%`}</Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </>
-          }
+                </>
+            }
+          </View>
         </View>
-      </View>
-    </ScrollView >
+      </ScrollView >
+      <Modal visible={modalVisible} transparent={true} animationType='fade'>
+        <SafeAreaView style={styles.modal}>
+          <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
+            <Text style={[styles.modalTitle]}>
+              <Text>{`test`}</Text>
+              <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>"test"</Text>
+            </Text>
+            <View style={styles.modalBtnContainer}>
+              <TouchableOpacity style={styles.modalBtn} onPress={() => { setModalVisible(false) }}>
+                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]}>OK</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </SafeAreaView>
+      </Modal>
+    </>
   )
 }
 
@@ -165,6 +190,19 @@ const styles = StyleSheet.create({
     minWidth: 300,
     maxWidth: 800,
     flex: 1,
+  },
+  weatherHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  weatherPinLocation: {
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderRadius: 4,
+    borderColor: Constants.colorSecondaryDark,
+    backgroundColor: Constants.colorSecondary
   },
   weatherData: {
     flexGrow: 1,
@@ -186,8 +224,7 @@ const styles = StyleSheet.create({
     fontFamily: Constants.fontPrimaryBold,
     color: Constants.colorPrimary,
     fontSize: Constants.fontXl,
-    textAlign: 'center',
-    marginBottom: 20,
+    textAlign: 'center'
   },
   weatherTitleLocation:
   {
@@ -226,15 +263,98 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-evenly'
   },
+  modal: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    width: '80%',
+    minWidth: 300,
+    maxWidth: 600,
+    height: 300,
+  },
+  modalInner: {
+    backgroundColor: Constants.colorPrimary,
+    borderColor: Constants.colorWhite,
+    borderRadius: 4,
+    borderWidth: 2,
+    padding: 8,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: 300,
+  },
+  modalTitle: {
+    fontSize: Constants.fontLg,
+    fontWeight: 'bold',
+    fontFamily: Constants.fontPrimaryBold,
+    color: Constants.colorWhite,
+    marginBottom: 40,
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center'
+  },
+  modalText: {
+    fontFamily: Constants.fontPrimary,
+    backgroundColor: Constants.colorPrimaryDark,
+    padding: 8,
+    borderRadius: 4,
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    marginTop: 20,
+    wordBreak: 'break-word',
+    textAlign: 'center'
+  },
+  modalBtnContainer: {
+    flexDirection: 'row',
+    maxWidth: '100%'
+  },
+  modalBtnText: {
+    fontFamily: Constants.fontPrimary,
+    fontSize: Constants.fontMd,
+    padding: 8,
+    borderWidth: 1,
+    borderRadius: 4,
+    borderStyle: 'solid',
+    backgroundColor: Constants.colorPrimaryDark,
+    borderColor: Constants.colorWhite,
+    color: Constants.colorWhite,
+    marginHorizontal: 10
+  },
+  modalBorderDark: {
+    borderColor: Constants.colorDark,
+  },
   /* for dark mode off */
   altWeatherAppWrapper: {
     backgroundColor: Constants.colorWhite,
   },
+  /* for alt coor mode */
   altWeatherTitleContainer: {
     borderColor: Constants.colorSecondaryDark,
     backgroundColor: Constants.colorSecondary,
   },
   altWeatherTitle: {
     color: Constants.colorSecondary,
+  },
+
+  altModalInner: {
+    backgroundColor: Constants.colorSecondary,
+
+  },
+  altModalBtnText: {
+    backgroundColor: Constants.colorSecondaryDark,
+  },
+  altModalText: {
+    backgroundColor: Constants.colorSecondaryDark,
+  },
+  altModalText: {
+    backgroundColor: Constants.colorSecondaryDark,
   },
 })
