@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         backgroundColor: Constants.colorPrimary,
         borderRadius: 8,
-        borderWidth: 4,
+        borderWidth: 2,
         borderColor: Constants.colorPrimaryDark,
     },
     settingsItemIndicator: {
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     },
     settingsItemTextButton: {
         flex: .5,
-        borderWidth: 2,
+        borderWidth: 1,
         borderRadius: 4,
         borderColor: 'darkgray',
         backgroundColor: Constants.colorPrimaryDark,

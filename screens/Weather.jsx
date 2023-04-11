@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, ActivityIndicator, RefreshControl, Image } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, ActivityIndicator, RefreshControl, Image, Dimensions } from 'react-native'
 import * as Location from 'expo-location'
 import { useState, useEffect } from 'react'
 import Constants from '../constants/Styles.js'
@@ -18,6 +18,11 @@ const Weather = ({ navigation }) => {
   const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
   const { selected: languageSelected } = useSelector(state => state.settings.language)
   const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
+
+  const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
+  const updateWindowWidth = () => {
+    setWindowWidth(Dimensions.get('window').width)
+}
 
   const loadForecast = async () => {
     setRefreshing(true);
@@ -68,6 +73,14 @@ const Weather = ({ navigation }) => {
   }
 
   useEffect(() => {
+    const dimensionsHandler = Dimensions.addEventListener("change", updateWindowWidth)
+
+    return () => {
+        dimensionsHandler.remove()
+    }
+})
+
+  useEffect(() => {
     setText(LANGS.find(lang => lang.lang === languageSelected).text)
   }, [languageSelected])
 
@@ -79,14 +92,15 @@ const Weather = ({ navigation }) => {
   return (
     <ScrollView contentContainerStyle={[styles.weatherAppWrapper, !darkMode && styles.altWeatherAppWrapper]}>
       <View style={styles.weatherAppContainer} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => loadForecast()} />} >
-       {/*  <Text style={[styles.weatherTitle, altColorTheme && styles.altWeatherTitle]}>{text.weatherReport}</Text> */}
+        
         {
           !forecast ?
             <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
             :
             <View style={styles.weatherData}>
+              <Text style={[styles.weatherTitle, altColorTheme && styles.altWeatherTitle]}>{forecast.name.toLocaleUpperCase()}</Text>
               <View style={[styles.weatherTitleContainer, altColorTheme && styles.altWeatherTitleContainer]}>
-                <Text style={styles.weatherTitleLocation}>{forecast.name.toLocaleUpperCase()}</Text>
+                <Text style={styles.weatherTitleLocation}>{text.weather}</Text>
                 <View style={styles.weatherTitleContent}>
                   <View style={styles.weatherTitleImgWrapper}>
                     <Image style={styles.weatherTitleImg} source={{ uri: `http://openweathermap.org/img/wn/${forecast?.weather[0].icon}@4x.png` }} />
@@ -98,22 +112,22 @@ const Weather = ({ navigation }) => {
                 </View>
               </View>
 
-              <View style={styles.rowItems}>
-                <View style={[styles.weatherTitleContainer, styles.weatherTitleContainerRowLeft, altColorTheme && styles.altWeatherTitleContainer]}>
+              <View style={[styles.rowItems, windowWidth>800 && {flexDirection: 'row'}]}>
+                <View style={[styles.weatherTitleContainer, windowWidth>800 && {marginRight: 10, flex: 1}, altColorTheme && styles.altWeatherTitleContainer]}>
                   <Text style={styles.weatherTitleLocation}>{text.feels}</Text>
                   <View style={styles.weatherTitleContent}>
                     <View style={styles.weatherTitleImgWrapper}>
-                      <Image style={styles.weatherTitleImg} source={{ uri: `https://cdn-icons-png.flaticon.com/512/777/777610.png` }} />
+                      <Image style={[styles.weatherTitleImg, {maxWidth: 100}]} source={{ uri: `https://cdn-icons-png.flaticon.com/512/777/777610.png` }} />
                       <Text style={styles.weatherTitleTemp}>{`${Math.trunc(Number(forecast.main.feels_like))} °C\n${Math.trunc((Number(forecast.main.feels_like) * (9 / 5)) + 32)} °F`}</Text>
                     </View>
                   </View>
                 </View>
 
-                <View style={[styles.weatherTitleContainer, styles.weatherTitleContainerRowRight, altColorTheme && styles.altWeatherTitleContainer]}>
-                  <Text style={styles.weatherTitleLocation}>{text.humidity}</Text>
+                <View style={[styles.weatherTitleContainer,windowWidth>800 && {marginLeft: 10, flex: 1}, altColorTheme && styles.altWeatherTitleContainer]}>
+                  <Text style={[styles.weatherTitleLocation]}>{text.humidity}</Text>
                   <View style={styles.weatherTitleContent}>
                     <View style={styles.weatherTitleImgWrapper}>
-                      <Image style={styles.weatherTitleImg} source={{ uri: `https://cdn-icons-png.flaticon.com/512/5263/5263073.png` }} />
+                      <Image style={[styles.weatherTitleImg, {maxWidth: 100}]} source={{ uri: `https://cdn-icons-png.flaticon.com/512/5263/5263073.png` }} />
                       <Text style={styles.weatherTitleTemp}>{`${forecast.main.humidity}%`}</Text>
                     </View>
                   </View>
@@ -154,20 +168,13 @@ const styles = StyleSheet.create({
   },
   weatherTitleContainer: {
     borderRadius: 8,
-    borderWidth: 4,
+    borderWidth: 2,
     borderColor: Constants.colorPrimaryDark,
     backgroundColor: Constants.colorPrimary,
     padding: 10,
-    height: 300,
+    minHeight: 300,
+    maxHeight: 300,
     marginBottom: 20,
-  },
-  weatherTitleContainerRowLeft: {
-    marginRight: 10,
-    flex: 1
-  },
-  weatherTitleContainerRowRight: {
-    marginLeft: 10,
-    flex: 1
   },
   weatherTitle:
   {
@@ -183,7 +190,6 @@ const styles = StyleSheet.create({
     fontFamily: Constants.fontPrimaryBold,
     color: Constants.colorWhite,
     fontSize: Constants.fontLg,
-    textAlign: 'center',
     alignSelf: 'flex-start'
   },
   weatherTitleContent: {
@@ -213,7 +219,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   rowItems: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-evenly'
   },
   /* for dark mode off */

@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     menuOption: {
         padding: 20,
         borderRadius: 8,
-        borderWidth: 4,
+        borderWidth: 2,
         borderColor: Constants.colorPrimaryDark,
         backgroundColor: Constants.colorPrimary,
         margin: 20,

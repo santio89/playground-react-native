@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
         paddingBottom: 0,
         backgroundColor: Constants.colorPrimary,
         borderRadius: 8,
-        borderWidth: 4,
+        borderWidth: 2,
         borderColor: Constants.colorPrimaryDark,
     },
     profileItemIndicator: {
