@@ -5,7 +5,7 @@ import { Entypo } from '@expo/vector-icons';
 
 export default function Header({ navigation }) {
   const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
-  const avatar = useSelector(state=>state.auth.avatar)
+  const avatar = useSelector(state => state.auth.avatar)
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

@@ -11,9 +11,9 @@ const MainMenu = ({ navigation }) => {
 
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
-    const {selected: languageSelected} = useSelector(state=>state.settings.language)
+    const { selected: languageSelected } = useSelector(state => state.settings.language)
 
-    const [text, setText] = useState(LANGS.find(lang=>lang.lang === languageSelected).text)
+    const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
     const updateWindowWidth = () => {
         setWindowWidth(Dimensions.get('window').width)
@@ -26,14 +26,14 @@ const MainMenu = ({ navigation }) => {
             dimensionsHandler.remove()
         }
     })
-    
-    useEffect(()=>{
-        setText(LANGS.find(lang=>lang.lang === languageSelected).text)
+
+    useEffect(() => {
+        setText(LANGS.find(lang => lang.lang === languageSelected).text)
     }, [languageSelected])
 
     return (
         <>
-            <Header navigation={navigation}/>
+            <Header navigation={navigation} />
             <ScrollView contentContainerStyle={[styles.menuWrapper, !darkMode && styles.backgroundWhite]}>
                 <View style={[styles.menuContainer, !darkMode && styles.backgroundWhite, { flexDirection: windowWidth > 800 ? 'row' : 'column' }]}>
                     <TouchableOpacity style={[styles.menuOption, altColorTheme && styles.altMenuOption, { width: windowWidth > 800 ? 'auto' : (windowWidth > 320 ? 300 : '100%') }]} onPress={() => { navigation.navigate("ToDoList") }}>

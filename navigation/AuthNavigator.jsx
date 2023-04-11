@@ -7,8 +7,8 @@ const Stack = createNativeStackNavigator();
 const AuthNavigator = () => {
     return (
         <Stack.Navigator initialRouteName='LogIn'>
-            <Stack.Screen name='LogIn' component={LogIn} options={{ title: 'LOG IN | PLAYGROUND', headerShown: false }}/>
-            <Stack.Screen name='SignUp' component={SignUp} options={{ title: 'SIGN UP | PLAYGROUND', headerShown: false }}/>
+            <Stack.Screen name='LogIn' component={LogIn} options={{ title: 'LOG IN | PLAYGROUND', headerShown: false }} />
+            <Stack.Screen name='SignUp' component={SignUp} options={{ title: 'SIGN UP | PLAYGROUND', headerShown: false }} />
         </Stack.Navigator>
     )
 }

@@ -114,7 +114,7 @@ const Weather = ({ navigation }) => {
                 <>
                   <View style={styles.weatherHeader}>
                     <Text style={[styles.weatherTitle, altColorTheme && styles.altWeatherTitle]}>{forecast.name.toLocaleUpperCase()}</Text>
-                    <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={()=>{setModalVisible(true)}} ><Entypo name="location-pin" size={Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
+                    <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setModalVisible(true) }} ><Entypo name="location-pin" size={Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
                   </View>
 
                   <View style={[styles.weatherTitleContainer, altColorTheme && styles.altWeatherTitleContainer]}>
@@ -317,17 +317,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     maxWidth: '100%'
   },
-  modalBtnText: {
-    fontFamily: Constants.fontPrimary,
-    fontSize: Constants.fontMd,
+  modalBtn: {
     padding: 8,
     borderWidth: 1,
     borderRadius: 4,
     borderStyle: 'solid',
     backgroundColor: Constants.colorPrimaryDark,
     borderColor: Constants.colorWhite,
-    color: Constants.colorWhite,
     marginHorizontal: 10
+  },
+  modalBtnText: {
+    fontFamily: Constants.fontPrimary,
+    fontSize: Constants.fontMd,
+    color: Constants.colorWhite,
   },
   modalBorderDark: {
     borderColor: Constants.colorDark,
@@ -349,7 +351,7 @@ const styles = StyleSheet.create({
     backgroundColor: Constants.colorSecondary,
 
   },
-  altModalBtnText: {
+  altModalBtn: {
     backgroundColor: Constants.colorSecondaryDark,
   },
   altModalText: {

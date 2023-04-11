@@ -10,34 +10,34 @@ import { LANGS } from '../constants/Langs';
 import { setListItems } from '../store/actions/apps.action';
 import { useDispatch } from 'react-redux/es/exports';
 
-export default function ToDoList({navigation}) {
+export default function ToDoList({ navigation }) {
     const dispatch = useDispatch()
     const [btnDisabled, setBtnDisabled] = useState(true)
     const [input, setInput] = useState("")
     const [modalVisible, setModalVisible] = useState({ active: false, id: null });
 
 
-    const listItems = useSelector(state=>state.apps.toDoList.items)
+    const listItems = useSelector(state => state.apps.toDoList.items)
     const [items, setItems] = useState(listItems)
 
-    const userId = useSelector(state=>state.auth.userId)
+    const userId = useSelector(state => state.auth.userId)
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
-    const {selected: languageSelected} = useSelector(state=>state.settings.language)
+    const { selected: languageSelected } = useSelector(state => state.settings.language)
 
-    const [text, setText] = useState(LANGS.find(lang=>lang.lang === languageSelected).text)
+    const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
 
     const addItem = (item) => {
         if (item.text === "") { return }
-        
+
         setItems((oldItems) => [item, ...oldItems])
     }
 
     const deleteItem = (id) => {
         setItems((oldItems) => oldItems.filter(item => item.id != id))
     }
-    
+
 
     useEffect(() => {
         input != '' ? setBtnDisabled(false) : setBtnDisabled(true)
@@ -47,11 +47,11 @@ export default function ToDoList({navigation}) {
         dispatch(setListItems(userId, items, storageSetItem))
     }, [items])
 
-    useEffect(()=>{
-        setText(LANGS.find(lang=>lang.lang === languageSelected).text)
+    useEffect(() => {
+        setText(LANGS.find(lang => lang.lang === languageSelected).text)
     }, [languageSelected])
 
-    useEffect(()=>{
+    useEffect(() => {
         navigation.setOptions({
             title: `${text.toDoList} | PLAYGROUND`,
         })
@@ -83,11 +83,11 @@ export default function ToDoList({navigation}) {
                                         <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
                                             <Text style={styles.modalTitle}>{text.deleteTask}?</Text>
                                             <View style={styles.modalBtnContainer}>
-                                                <TouchableOpacity style={styles.modalBtn} onPress={() => setModalVisible({ active: false, id: null })}>
-                                                    <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} >{text.cancel}</Text>
+                                                <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => setModalVisible({ active: false, id: null })}>
+                                                    <Text style={[styles.modalBtnText]} >{text.cancel}</Text>
                                                 </TouchableOpacity>
-                                                <TouchableOpacity style={styles.modalBtn} onPress={() => { deleteItem(modalVisible.id); setModalVisible({ active: false, id: null }) }}>
-                                                    <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText, styles.borderRed]}>{text.delete}</Text>
+                                                <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn, styles.borderRed]} onPress={() => { deleteItem(modalVisible.id); setModalVisible({ active: false, id: null }) }}>
+                                                    <Text style={[styles.modalBtnText]}>{text.delete}</Text>
                                                 </TouchableOpacity>
                                             </View>
                                         </View>
@@ -196,17 +196,19 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         maxWidth: '100%'
     },
-    modalBtnText: {
-        fontFamily: Constants.fontPrimary,
-        fontSize: Constants.fontSm,
+    modalBtn: {
         padding: 8,
         borderWidth: 1,
         borderRadius: 4,
         borderStyle: 'solid',
         backgroundColor: Constants.colorPrimaryDark,
         borderColor: Constants.colorWhite,
-        color: Constants.colorWhite,
         marginHorizontal: 10
+    },
+    modalBtnText: {
+        fontFamily: Constants.fontPrimary,
+        fontSize: Constants.fontMd,
+        color: Constants.colorWhite,
     },
     modalBorderDark: {
         borderColor: Constants.colorDark,
@@ -231,9 +233,9 @@ const styles = StyleSheet.create({
     },
     altModalInner: {
         backgroundColor: Constants.colorSecondary,
-      
+
     },
-    altModalBtnText: {
+    altModalBtn: {
         backgroundColor: Constants.colorSecondaryDark,
     },
 })

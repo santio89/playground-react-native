@@ -92,7 +92,7 @@ export const getAppsData = (userId, storageGetItem) => {
                 const response = await fetch(`${URL_API}apps/${userId}.json?auth=${userId}`)
 
                 const data = await response.json()
-                if (data && !data.toDoList){
+                if (data && !data.toDoList) {
                     data.toDoList.items = []
                 }
                 data && dispatch({
@@ -104,7 +104,7 @@ export const getAppsData = (userId, storageGetItem) => {
             }
         }
     } else {
-        
+
         return async dispatch => {
             try {
                 const valueList = await storageGetItem('pg-tdl-list');

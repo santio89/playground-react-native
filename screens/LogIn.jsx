@@ -92,8 +92,8 @@ const LogIn = ({ navigation }) => {
                             <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{logInError === 'wrong_credentials' ? text.wrongCredentials : text.genericError}</Text>
                         </Text>
                         <View style={styles.modalBtnContainer}>
-                            <TouchableOpacity style={styles.modalBtn} onPress={() => { setModalVisible(false) }}>
-                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]}>OK</Text>
+                            <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setModalVisible(false) }}>
+                                <Text style={[styles.modalBtnText]}>OK</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -107,8 +107,8 @@ const LogIn = ({ navigation }) => {
                             <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{accountEmail.toLocaleUpperCase()}</Text>
                         </Text>
                         <View style={styles.modalBtnContainer}>
-                            <TouchableOpacity style={styles.modalBtn} onPress={() => { setLogInSuccess(false); navigation.navigate("AppsHome") }}>
-                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]}>OK</Text>
+                            <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setLogInSuccess(false); navigation.navigate("AppsHome") }}>
+                                <Text style={[styles.modalBtnText]}>OK</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -279,17 +279,19 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         maxWidth: '100%'
     },
-    modalBtnText: {
-        fontFamily: Constants.fontPrimary,
-        fontSize: Constants.fontMd,
+    modalBtn: {
         padding: 8,
         borderWidth: 1,
         borderRadius: 4,
         borderStyle: 'solid',
         backgroundColor: Constants.colorPrimaryDark,
         borderColor: Constants.colorWhite,
+        marginHorizontal: 10
+    },
+    modalBtnText: {
+        fontFamily: Constants.fontPrimary,
+        fontSize: Constants.fontMd,
         color: Constants.colorWhite,
-        marginHorizontal: 10,
     },
     modalBorderDark: {
         borderColor: Constants.colorDark,
@@ -313,7 +315,7 @@ const styles = StyleSheet.create({
         backgroundColor: Constants.colorSecondary,
 
     },
-    altModalBtnText: {
+    altModalBtn: {
         backgroundColor: Constants.colorSecondaryDark,
     },
     altModalText: {

@@ -21,7 +21,7 @@ const TabNavigator = () => {
 
     const { selected: languageSelected } = useSelector(state => state.settings.language)
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
-    
+
     const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
     useEffect(() => {
@@ -38,7 +38,7 @@ const TabNavigator = () => {
 
     return (
         <BottomTabs.Navigator initialRouteName='Apps'
-            screenOptions={{ headerShown: false, tabBarShowLabel: false, tabBarStyle: altColorTheme?styles.altTabBar:styles.tabBar }}>
+            screenOptions={{ headerShown: false, tabBarShowLabel: false, tabBarStyle: altColorTheme ? styles.altTabBar : styles.tabBar }}>
             <BottomTabs.Screen name='Apps' component={AppNavigator}
                 options={{
                     tabBarIcon: ({ focused }) => (
@@ -73,7 +73,7 @@ const TabNavigator = () => {
                 options={{
                     tabBarButton: () => null,
                     tabBarVisible: false,
-                  }} />
+                }} />
 
         </BottomTabs.Navigator>
     )
