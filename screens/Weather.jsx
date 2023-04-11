@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     fontSize: Constants.fontXl,
     textAlign: 'center',
     marginTop: 10,
-    marginBottom: 40,
+    marginBottom: 20,
   },
   weatherTitleLocation:
   {
