@@ -22,7 +22,7 @@ const Weather = ({ navigation }) => {
   const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
   const updateWindowWidth = () => {
     setWindowWidth(Dimensions.get('window').width)
-}
+  }
 
   const loadForecast = async () => {
     setRefreshing(true);
@@ -76,78 +76,76 @@ const Weather = ({ navigation }) => {
     const dimensionsHandler = Dimensions.addEventListener("change", updateWindowWidth)
 
     return () => {
-        dimensionsHandler.remove()
+      dimensionsHandler.remove()
     }
-})
+  })
 
   useEffect(() => {
     setText(LANGS.find(lang => lang.lang === languageSelected).text)
   }, [languageSelected])
 
-  useEffect(()=>{
+  useEffect(() => {
     navigation.setOptions({
-        title: `${text.weather} | PLAYGROUND`,
+      title: `${text.weather} | PLAYGROUND`,
     })
-}, [text])
+  }, [text])
 
   useEffect(() => {
     loadForecast()
   }, [])
 
-  /* forecast.current.weather[0] */
+  
   return (
     <ScrollView contentContainerStyle={[styles.weatherAppWrapper, !darkMode && styles.altWeatherAppWrapper]}>
       <View style={styles.weatherAppContainer} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => loadForecast()} />} >
-        
-        {
-          !forecast ?
-            <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
-            :
-            <View style={styles.weatherData}>
-              <Text style={[styles.weatherTitle, altColorTheme && styles.altWeatherTitle]}>{forecast.name.toLocaleUpperCase()}</Text>
-              <View style={[styles.weatherTitleContainer, altColorTheme && styles.altWeatherTitleContainer]}>
-                <Text style={styles.weatherTitleLocation}>{text.weather}</Text>
-                <View style={styles.weatherTitleContent}>
-                  <View style={styles.weatherTitleImgWrapper}>
-                    <Image style={styles.weatherTitleImg} source={{ uri: `http://openweathermap.org/img/wn/${forecast?.weather[0].icon}@4x.png` }} />
-                    <Text style={styles.weatherTitleTemp}>{`${Math.trunc(Number(forecast.main.temp))} °C\n${Math.trunc((Number(forecast.main.temp) * (9 / 5)) + 32)} °F`}</Text>
-                  </View>
-                  <Text style={styles.weatherTitleInfo}>
-                    {languageSelected === "spanish" ? spForecast?.weather[0].description.toLocaleUpperCase() : forecast?.weather[0].description.toLocaleUpperCase()}
-                  </Text>
-                </View>
-              </View>
 
-              <View style={[styles.rowItems, windowWidth>800 && {flexDirection: 'row'}]}>
-                <View style={[styles.weatherTitleContainer, {height: 200, minHeight: 200, maxHeight: 200}, windowWidth>800 && {marginRight: 10, flex: 1}, altColorTheme && styles.altWeatherTitleContainer]}>
-                  <Text style={styles.weatherTitleLocation}>{text.feels}</Text>
+
+        <View style={styles.weatherData}>
+          {
+            !forecast ?
+              <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
+              :
+              <>
+                <Text style={[styles.weatherTitle, altColorTheme && styles.altWeatherTitle]}>{forecast.name.toLocaleUpperCase()}</Text>
+                <View style={[styles.weatherTitleContainer, altColorTheme && styles.altWeatherTitleContainer]}>
+                  <Text style={styles.weatherTitleLocation}>{text.weather}</Text>
                   <View style={styles.weatherTitleContent}>
                     <View style={styles.weatherTitleImgWrapper}>
-                      <Image style={[styles.weatherTitleImg, {maxWidth: 100}]} source={{ uri: `https://cdn-icons-png.flaticon.com/512/5263/5263073.png` }} />
-                      <Text style={[styles.weatherTitleTemp, {padding: 20}]}>{`${Math.trunc(Number(forecast.main.feels_like))} °C\n${Math.trunc((Number(forecast.main.feels_like) * (9 / 5)) + 32)} °F`}</Text>
+                      <Image style={styles.weatherTitleImg} source={{ uri: `http://openweathermap.org/img/wn/${forecast?.weather[0].icon}@4x.png` }} />
+                      <Text style={styles.weatherTitleTemp}>{`${Math.trunc(Number(forecast.main.temp))} °C\n${Math.trunc((Number(forecast.main.temp) * (9 / 5)) + 32)} °F`}</Text>
+                    </View>
+                    <Text style={styles.weatherTitleInfo}>
+                      {languageSelected === "spanish" ? spForecast?.weather[0].description.toLocaleUpperCase() : forecast?.weather[0].description.toLocaleUpperCase()}
+                    </Text>
+                  </View>
+                </View>
+
+                <View style={[styles.rowItems, windowWidth > 800 && { flexDirection: 'row' }]}>
+                  <View style={[styles.weatherTitleContainer, { height: 200, minHeight: 200, maxHeight: 200 }, windowWidth > 800 && { marginRight: 10, flex: 1 }, altColorTheme && styles.altWeatherTitleContainer]}>
+                    <Text style={styles.weatherTitleLocation}>{text.feels}</Text>
+                    <View style={styles.weatherTitleContent}>
+                      <View style={styles.weatherTitleImgWrapper}>
+                        <Image style={[styles.weatherTitleImg, { maxWidth: 100 }]} source={{ uri: `https://cdn-icons-png.flaticon.com/512/5263/5263073.png` }} />
+                        <Text style={[styles.weatherTitleTemp, { padding: 20 }]}>{`${Math.trunc(Number(forecast.main.feels_like))} °C\n${Math.trunc((Number(forecast.main.feels_like) * (9 / 5)) + 32)} °F`}</Text>
+                      </View>
+                    </View>
+                  </View>
+
+                  <View style={[styles.weatherTitleContainer, { height: 200, minHeight: 200, maxHeight: 200 }, windowWidth > 800 && { marginLeft: 10, flex: 1 }, altColorTheme && styles.altWeatherTitleContainer]}>
+                    <Text style={[styles.weatherTitleLocation]}>{text.humidity}</Text>
+                    <View style={styles.weatherTitleContent}>
+                      <View style={styles.weatherTitleImgWrapper}>
+                        <Image style={[styles.weatherTitleImg, { maxWidth: 100 }]} source={{ uri: `https://cdn-icons-png.flaticon.com/512/777/777610.png` }} />
+                        <Text style={[styles.weatherTitleTemp, { padding: 20 }]}>{`${forecast.main.humidity}%`}</Text>
+                      </View>
                     </View>
                   </View>
                 </View>
-
-                <View style={[styles.weatherTitleContainer, {height: 200, minHeight: 200, maxHeight: 200}, windowWidth>800 && {marginLeft: 10, flex: 1}, altColorTheme && styles.altWeatherTitleContainer]}>
-                  <Text style={[styles.weatherTitleLocation]}>{text.humidity}</Text>
-                  <View style={styles.weatherTitleContent}>
-                    <View style={styles.weatherTitleImgWrapper}>
-                      <Image style={[styles.weatherTitleImg, {maxWidth: 100}]} source={{ uri: `https://cdn-icons-png.flaticon.com/512/777/777610.png` }} />
-                      <Text style={[styles.weatherTitleTemp, {padding: 20}]}>{`${forecast.main.humidity}%`}</Text>
-                    </View> 
-                  </View>
-                </View>
-              </View>
-              {/* <View style={styles.weatherExtraInfo}>
-              <Text></Text>
-            </View> */}
-            </View>
-        }
-
-
+              </>
+          }
+        </View>
       </View>
-    </ScrollView>
+    </ScrollView >
   )
 }
 
