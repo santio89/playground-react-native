@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     backgroundColor: Constants.colorPrimary,
     padding: 10,
     height: 300,
-    marginBottom: 40,
+    marginBottom: 20,
     flex: 1
   },
   weatherTitleContainerRowLeft: {
