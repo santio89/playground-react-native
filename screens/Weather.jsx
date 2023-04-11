@@ -118,7 +118,7 @@ const Weather = ({ navigation }) => {
                   <View style={styles.weatherTitleContent}>
                     <View style={styles.weatherTitleImgWrapper}>
                       <Image style={[styles.weatherTitleImg, {maxWidth: 100}]} source={{ uri: `https://cdn-icons-png.flaticon.com/512/777/777610.png` }} />
-                      <Text style={styles.weatherTitleTemp}>{`${Math.trunc(Number(forecast.main.feels_like))} °C\n${Math.trunc((Number(forecast.main.feels_like) * (9 / 5)) + 32)} °F`}</Text>
+                      <Text style={[styles.weatherTitleTemp, {padding: 20}]}>{`${Math.trunc(Number(forecast.main.feels_like))} °C\n${Math.trunc((Number(forecast.main.feels_like) * (9 / 5)) + 32)} °F`}</Text>
                     </View>
                   </View>
                 </View>
@@ -128,7 +128,7 @@ const Weather = ({ navigation }) => {
                   <View style={styles.weatherTitleContent}>
                     <View style={styles.weatherTitleImgWrapper}>
                       <Image style={[styles.weatherTitleImg, {maxWidth: 100}]} source={{ uri: `https://cdn-icons-png.flaticon.com/512/5263/5263073.png` }} />
-                      <Text style={styles.weatherTitleTemp}>{`${forecast.main.humidity}%`}</Text>
+                      <Text style={[styles.weatherTitleTemp, {padding: 20}]}>{`${forecast.main.humidity}%`}</Text>
                     </View>
                   </View>
                 </View>
