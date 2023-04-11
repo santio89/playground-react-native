@@ -79,7 +79,7 @@ const Weather = ({ navigation }) => {
   return (
     <ScrollView contentContainerStyle={[styles.weatherAppWrapper, !darkMode && styles.altWeatherAppWrapper]}>
       <View style={styles.weatherAppContainer} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => loadForecast()} />} >
-        <Text style={[styles.weatherTitle, altColorTheme && styles.altWeatherTitle]}>{text.weatherReport}</Text>
+       {/*  <Text style={[styles.weatherTitle, altColorTheme && styles.altWeatherTitle]}>{text.weatherReport}</Text> */}
         {
           !forecast ?
             <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
@@ -160,13 +160,14 @@ const styles = StyleSheet.create({
     padding: 10,
     height: 300,
     marginBottom: 20,
-    flex: 1
   },
   weatherTitleContainerRowLeft: {
     marginRight: 10,
+    flex: 1
   },
   weatherTitleContainerRowRight: {
     marginLeft: 10,
+    flex: 1
   },
   weatherTitle:
   {
