@@ -189,7 +189,6 @@ const styles = StyleSheet.create({
     color: Constants.colorPrimary,
     fontSize: Constants.fontXl,
     textAlign: 'center',
-    marginTop: 10,
     marginBottom: 20,
   },
   weatherTitleLocation:
