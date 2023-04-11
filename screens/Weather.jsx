@@ -38,6 +38,7 @@ const Weather = ({ navigation }) => {
             console.log("error fetching weather report ")
           } else {
             setForecast(data)
+            console.log(data)
           }
         } catch (e) {
           console.log("error fetching weather data: ", e)
@@ -89,8 +90,7 @@ const Weather = ({ navigation }) => {
                 <View style={styles.weatherTitleContent}>
                   <View style={styles.weatherTitleImgWrapper}>
                     <Image style={styles.weatherTitleImg} source={{ uri: `http://openweathermap.org/img/wn/${forecast?.weather[0].icon}@4x.png` }} />
-
-                    <Text style={styles.weatherTitleTemp}>{`${Math.trunc(Number(forecast.main.temp))} °C / ${Math.trunc((Number(forecast.main.temp) * (9 / 5)) + 32)} °F`}</Text>
+                    <Text style={styles.weatherTitleTemp}>{`${Math.trunc(Number(forecast.main.temp))} °C\n${Math.trunc((Number(forecast.main.temp) * (9 / 5)) + 32)} °F`}</Text>
                   </View>
                   <Text style={styles.weatherTitleInfo}>
                     {languageSelected === "spanish" ? spForecast?.weather[0].description.toLocaleUpperCase() : forecast?.weather[0].description.toLocaleUpperCase()}
@@ -98,6 +98,27 @@ const Weather = ({ navigation }) => {
                 </View>
               </View>
 
+              <View style={styles.rowItems}>
+                <View style={[styles.weatherTitleContainer, styles.weatherTitleContainerRowLeft, altColorTheme && styles.altWeatherTitleContainer]}>
+                  <Text style={styles.weatherTitleLocation}>{text.feels}</Text>
+                  <View style={styles.weatherTitleContent}>
+                    <View style={styles.weatherTitleImgWrapper}>
+                      <Image style={styles.weatherTitleImg} source={{ uri: `https://cdn-icons-png.flaticon.com/512/777/777610.png` }} />
+                      <Text style={styles.weatherTitleTemp}>{`${Math.trunc(Number(forecast.main.feels_like))} °C\n${Math.trunc((Number(forecast.main.feels_like) * (9 / 5)) + 32)} °F`}</Text>
+                    </View>
+                  </View>
+                </View>
+
+                <View style={[styles.weatherTitleContainer, styles.weatherTitleContainerRowRight, altColorTheme && styles.altWeatherTitleContainer]}>
+                  <Text style={styles.weatherTitleLocation}>{text.humidity}</Text>
+                  <View style={styles.weatherTitleContent}>
+                    <View style={styles.weatherTitleImgWrapper}>
+                      <Image style={styles.weatherTitleImg} source={{ uri: `https://cdn-icons-png.flaticon.com/512/5263/5263073.png` }} />
+                      <Text style={styles.weatherTitleTemp}>{forecast.main.humidity} </Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
               {/* <View style={styles.weatherExtraInfo}>
               <Text></Text>
             </View> */}
@@ -125,11 +146,11 @@ const styles = StyleSheet.create({
     width: '100%',
     minWidth: 300,
     maxWidth: 800,
-    flex: 1
+    flex: 1,
   },
   weatherData: {
-    flex: 1,
-    justifyContent: 'center'
+    flexGrow: 1,
+    justifyContent: 'center',
   },
   weatherTitleContainer: {
     borderRadius: 8,
@@ -137,7 +158,15 @@ const styles = StyleSheet.create({
     borderColor: Constants.colorPrimaryDark,
     backgroundColor: Constants.colorPrimary,
     padding: 10,
-    height: 300
+    height: 300,
+    marginBottom: 40,
+    flex: 1
+  },
+  weatherTitleContainerRowLeft: {
+    marginRight: 10,
+  },
+  weatherTitleContainerRowRight: {
+    marginLeft: 10,
   },
   weatherTitle:
   {
@@ -146,7 +175,7 @@ const styles = StyleSheet.create({
     fontSize: Constants.fontXl,
     textAlign: 'center',
     marginTop: 10,
-    marginBottom: 20
+    marginBottom: 40,
   },
   weatherTitleLocation:
   {
@@ -154,7 +183,7 @@ const styles = StyleSheet.create({
     color: Constants.colorWhite,
     fontSize: Constants.fontLg,
     textAlign: 'center',
-    alignSelf: 'flex-start',
+    alignSelf: 'flex-start'
   },
   weatherTitleContent: {
     flex: 1,
@@ -181,6 +210,10 @@ const styles = StyleSheet.create({
     color: Constants.colorWhite,
     fontSize: Constants.fontLg,
     textAlign: 'center'
+  },
+  rowItems: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
   },
   /* for dark mode off */
   altWeatherAppWrapper: {

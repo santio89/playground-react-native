@@ -45,6 +45,8 @@ export const LANGS = [{id: 1, lang: "english", text: {
     weatherReport: "WEATHER REPORT",
     locationPermissionDenied: "PERMISSION TO ACCESS LOCATION DENIED",
     location: "LOCATION",
+    feels: "FEELS",
+    humidity: "HUMIDITY"
 }}, {id: 2, lang: "spanish", text: {
     toDoList: "LISTA DE TAREAS",
     memoGame: "JUEGO DE MEMORIA",
@@ -91,5 +93,7 @@ export const LANGS = [{id: 1, lang: "english", text: {
     weather: "CLIMA",
     weatherReport: "REPORTE DE CLIMA",
     locationPermissionDenied: "PERMISO PARA ACCEDER A LA LOCACIÓN DENEGADO",
-    location: "LOCACIÓN"
+    location: "LOCACIÓN",
+    feels: "S.T.",
+    humidity: "HUMEDAD"
 }}]
