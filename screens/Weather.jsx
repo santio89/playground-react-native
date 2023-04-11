@@ -113,7 +113,7 @@ const Weather = ({ navigation }) => {
               </View>
 
               <View style={[styles.rowItems, windowWidth>800 && {flexDirection: 'row'}]}>
-                <View style={[styles.weatherTitleContainer, windowWidth>800 && {marginRight: 10, flex: 1}, altColorTheme && styles.altWeatherTitleContainer]}>
+                <View style={[styles.weatherTitleContainer, {height: 200, minHeight: 200, maxHeight: 200}, windowWidth>800 && {marginRight: 10, flex: 1}, altColorTheme && styles.altWeatherTitleContainer]}>
                   <Text style={styles.weatherTitleLocation}>{text.feels}</Text>
                   <View style={styles.weatherTitleContent}>
                     <View style={styles.weatherTitleImgWrapper}>
@@ -123,13 +123,13 @@ const Weather = ({ navigation }) => {
                   </View>
                 </View>
 
-                <View style={[styles.weatherTitleContainer,windowWidth>800 && {marginLeft: 10, flex: 1}, altColorTheme && styles.altWeatherTitleContainer]}>
+                <View style={[styles.weatherTitleContainer, {height: 200, minHeight: 200, maxHeight: 200}, windowWidth>800 && {marginLeft: 10, flex: 1}, altColorTheme && styles.altWeatherTitleContainer]}>
                   <Text style={[styles.weatherTitleLocation]}>{text.humidity}</Text>
                   <View style={styles.weatherTitleContent}>
                     <View style={styles.weatherTitleImgWrapper}>
                       <Image style={[styles.weatherTitleImg, {maxWidth: 100}]} source={{ uri: `https://cdn-icons-png.flaticon.com/512/5263/5263073.png` }} />
                       <Text style={[styles.weatherTitleTemp, {padding: 20}]}>{`${forecast.main.humidity}%`}</Text>
-                    </View>
+                    </View> 
                   </View>
                 </View>
               </View>
@@ -172,6 +172,7 @@ const styles = StyleSheet.create({
     borderColor: Constants.colorPrimaryDark,
     backgroundColor: Constants.colorPrimary,
     padding: 10,
+    height: 300,
     minHeight: 300,
     maxHeight: 300,
     marginBottom: 20,
