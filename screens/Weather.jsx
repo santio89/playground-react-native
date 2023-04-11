@@ -123,7 +123,7 @@ const Weather = ({ navigation }) => {
                   <Text style={styles.weatherTitleLocation}>{text.feels}</Text>
                   <View style={styles.weatherTitleContent}>
                     <View style={styles.weatherTitleImgWrapper}>
-                      <Image style={[styles.weatherTitleImg, {maxWidth: 100}]} source={{ uri: `https://cdn-icons-png.flaticon.com/512/777/777610.png` }} />
+                      <Image style={[styles.weatherTitleImg, {maxWidth: 100}]} source={{ uri: `https://cdn-icons-png.flaticon.com/512/5263/5263073.png` }} />
                       <Text style={[styles.weatherTitleTemp, {padding: 20}]}>{`${Math.trunc(Number(forecast.main.feels_like))} °C\n${Math.trunc((Number(forecast.main.feels_like) * (9 / 5)) + 32)} °F`}</Text>
                     </View>
                   </View>
@@ -133,7 +133,7 @@ const Weather = ({ navigation }) => {
                   <Text style={[styles.weatherTitleLocation]}>{text.humidity}</Text>
                   <View style={styles.weatherTitleContent}>
                     <View style={styles.weatherTitleImgWrapper}>
-                      <Image style={[styles.weatherTitleImg, {maxWidth: 100}]} source={{ uri: `https://cdn-icons-png.flaticon.com/512/5263/5263073.png` }} />
+                      <Image style={[styles.weatherTitleImg, {maxWidth: 100}]} source={{ uri: `https://cdn-icons-png.flaticon.com/512/777/777610.png` }} />
                       <Text style={[styles.weatherTitleTemp, {padding: 20}]}>{`${forecast.main.humidity}%`}</Text>
                     </View> 
                   </View>
