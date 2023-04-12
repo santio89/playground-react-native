@@ -30,13 +30,13 @@ export default function App() {
   const persistor = persistStore(store)
 
   return (
-    <PersistGate persistor={persistor}>
-      <Provider store={store}>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
         <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
           <MainNavigator />
         </SafeAreaView >
-      </Provider>
-    </PersistGate>
+      </PersistGate>
+    </Provider >
   );
 }
 

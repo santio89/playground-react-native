@@ -4,7 +4,7 @@ import SettingsReducer from './reducers/settings.reducer'
 import AuthReducer from "./reducers/auth.reducer";
 import AppsReducer from "./reducers/apps.reducer";
 import thunk from "redux-thunk";
-import { persistReducer } from "redux-persist";
+import { persistReducer } from "redux-persist"; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const RootReducer = combineReducers({

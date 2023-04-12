@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     backgroundColor: Constants.colorPrimary,
     padding: 10,
     paddingHorizontal: 10,
-    paddingTop: Platform.OS === 'web' ? 10 : 20,
+    paddingTop: Platform.OS === 'web' ? 10 : 30,
     width: '100%',
     borderBottomColor: Constants.colorPrimaryDark,
     borderBottomWidth: 1,

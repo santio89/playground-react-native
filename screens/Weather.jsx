@@ -132,7 +132,7 @@ const Weather = ({ navigation }) => {
 
           <View style={styles.weatherData}>
             {
-              !forecast ?
+              !forecast || !spForecast ?
                 <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
                 :
                 <>
@@ -291,7 +291,11 @@ const styles = StyleSheet.create({
   weatherTitleInfo: {
     color: Constants.colorWhite,
     fontSize: Constants.fontLg,
-    textAlign: 'center'
+    textAlign: 'center',
+    height: 36,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   rowItems: {
     flexDirection: 'column',
