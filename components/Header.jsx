@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderBottomColor: Constants.colorPrimaryDark,
     borderBottomWidth: 1,
-    height: 50,
+    height: Platform.OS === 'web' ? 50 : 'auto',
   },
   header: {
     color: Constants.colorWhite,

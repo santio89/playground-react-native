@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
   weatherAppWrapper: {
     flex: 1,
     backgroundColor: Constants.colorDark,
-    justifyContent: 'start',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 10,
     width: '100%'
