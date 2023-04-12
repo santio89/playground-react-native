@@ -46,7 +46,11 @@ export const LANGS = [{
         locationPermissionDenied: "PERMISSION TO ACCESS LOCATION DENIED",
         location: "LOCATION",
         feels: "FEELS",
-        humidity: "HUMIDITY"
+        humidity: "HUMIDITY",
+        inputLocation: "ENTER LOCATION",
+        close: "CLOSE",
+        search: "SEARCH",
+        searchError: "LOCATION NOT FOUND"
     }
 }, {
     id: 2, lang: "spanish", text: {
@@ -96,6 +100,10 @@ export const LANGS = [{
         locationPermissionDenied: "PERMISO PARA ACCEDER A LA LOCACIÓN DENEGADO",
         location: "LOCACIÓN",
         feels: "S.T.",
-        humidity: "HUMEDAD"
+        humidity: "HUMEDAD",
+        inputLocation: "INGRESE UBICACIÓN",
+        close: "CERRAR",
+        search: "BUSCAR",
+        searchError: "UBICACIÓN NO ENCONTRADA"
     }
 }]

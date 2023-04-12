@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl, Image, Dimensions, TouchableOpacity, Modal } from 'react-native'
 import * as Location from 'expo-location'
 /* import MapView from 'react-native-maps' */
-import { Entypo } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons'
 import { useState, useEffect } from 'react'
 import Constants from '../constants/Styles.js'
 import { LANGS } from '../constants/Langs.js'
@@ -9,6 +9,7 @@ import { WEATHER_API_KEY } from '../constants/Database.js'
 import { MAPS_API_KEY } from '../constants/Database.js'
 import Alert from '../utils/Alert'
 import { useSelector } from 'react-redux'
+import { TextInput } from 'react-native-web'
 
 const Weather = ({ navigation }) => {
   const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&appid=${WEATHER_API_KEY}`
@@ -22,14 +23,18 @@ const Weather = ({ navigation }) => {
   const { selected: languageSelected } = useSelector(state => state.settings.language)
   const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false)
+  const [searchError, setSearchError] = useState(null)
+
+  const [location, setLocation] = useState(null)
+  const [inputLocation, setInputLocation] = useState("")
 
   const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
   const updateWindowWidth = () => {
     setWindowWidth(Dimensions.get('window').width)
   }
 
-  const loadForecast = async () => {
+  const loadLocation = async () => {
     setRefreshing(true);
     const { status } = await Location.requestForegroundPermissionsAsync();
 
@@ -38,36 +43,12 @@ const Weather = ({ navigation }) => {
     } else {
 
       try {
-        const location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true })
+        const loc = await Location.getCurrentPositionAsync({
+          enableHighAccuracy: true,
+          timeout: 5000
+        })
 
-        try {
-          const response = await fetch(`${url}&lat=${location.coords.latitude}&lon=${location.coords.longitude}`)
-          const data = await response.json()
-
-          if (!response.ok) {
-            console.log("error fetching weather report ")
-          } else {
-            setForecast(data)
-            console.log(data)
-          }
-        } catch (e) {
-          console.log("error fetching weather data: ", e)
-        }
-
-        /* para otro idioma */
-        try {
-          const response = await fetch(`${url}&lat=${location.coords.latitude}&lon=${location.coords.longitude}&lang=sp`)
-          const data = await response.json()
-
-          if (!response.ok) {
-            console.log("error fetching sp weather report ")
-          } else {
-
-            setSpForecast(data)
-          }
-        } catch (e) {
-          console.log("error fetching sp weather data: ", e)
-        }
+        setLocation(loc)
 
       } catch (e) {
         console.log("error getting geo position: ", e)
@@ -76,6 +57,44 @@ const Weather = ({ navigation }) => {
       setRefreshing(false)
     }
   }
+
+  const fetchWeatherData = async (input) => {
+    try {
+      const response = await fetch(`${url}${input ? `&q=${input}` : `&lat=${location.coords.latitude}&lon=${location.coords.longitude}`}`)
+      const data = await response.json()
+      
+      if (!response.ok) {
+        input?setSearchError(text.searchError):console.log("error fetching weather report ")
+      } else {
+        setForecast(data)
+        setModalVisible(false)
+        setInputLocation("")
+        setSearchError(null)
+      }
+    } catch (e) {
+      console.log("error fetching weather data: ", e)
+    }
+
+    /* para otro idioma */
+    try {
+      const response = await fetch(`${url}${input ? `&q=${input}` : `&lat=${location.coords.latitude}&lon=${location.coords.longitude}`}&lang=sp`)
+      const data = await response.json()
+
+      if (!response.ok) {
+        input?setSearchError(text.searchError):console.log("error fetching weather report ")
+      } else {
+        setSpForecast(data)
+        setModalVisible(false)
+        setInputLocation("")
+        setSearchError(null)
+      }
+    } catch (e) {
+      console.log("error fetching weather data: ", e)
+    }
+
+
+  }
+
 
   useEffect(() => {
     const dimensionsHandler = Dimensions.addEventListener("change", updateWindowWidth)
@@ -96,14 +115,19 @@ const Weather = ({ navigation }) => {
   }, [text])
 
   useEffect(() => {
-    loadForecast()
+    location !== null && fetchWeatherData()
+  }, [location])
+
+
+  useEffect(() => {
+    loadLocation()
   }, [])
 
 
   return (
     <>
       <ScrollView contentContainerStyle={[styles.weatherAppWrapper, !darkMode && styles.altWeatherAppWrapper]}>
-        <View style={styles.weatherAppContainer} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => loadForecast()} />} >
+        <View style={styles.weatherAppContainer} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => loadLocation()} />} >
 
 
           <View style={styles.weatherData}>
@@ -160,12 +184,21 @@ const Weather = ({ navigation }) => {
         <SafeAreaView style={styles.modal}>
           <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
             <Text style={[styles.modalTitle]}>
-              <Text>{`test`}</Text>
-              <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>"test"</Text>
+              <Text style={searchError && {color: Constants.colorRed}}>{searchError?searchError:text.inputLocation}</Text>
+              <View style={[styles.modalText, altColorTheme && styles.altModalText]}>
+                <TextInput style={[styles.inputLocation, altColorTheme && styles.altInputLocation]} autoCapitalize='none' placeholder={forecast?.name.toLocaleUpperCase()}
+                  placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} value={inputLocation} onChangeText={location => setInputLocation(location.toLocaleUpperCase())} onSubmitEditing={() => { location !== "" && fetchWeatherData(inputLocation) }} />
+
+                {/*    <MapView initialRegion={{latitude: 0, longitude: 0, latitudeDelta: 0, longitudeDelta: 0}}/> */}
+
+              </View>
             </Text>
             <View style={styles.modalBtnContainer}>
-              <TouchableOpacity style={styles.modalBtn} onPress={() => { setModalVisible(false) }}>
-                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]}>OK</Text>
+              <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setModalVisible(false); setInputLocation(""); setSearchError(null) }}>
+                <Text style={[styles.modalBtnText]}>{text.close}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { location !== "" && fetchWeatherData(inputLocation) }}>
+                <Text style={[styles.modalBtnText]}>{text.search}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -324,7 +357,9 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     backgroundColor: Constants.colorPrimaryDark,
     borderColor: Constants.colorWhite,
-    marginHorizontal: 10
+    marginHorizontal: 10,
+    width: 100,
+    textAlign:'center'
   },
   modalBtnText: {
     fontFamily: Constants.fontPrimary,
@@ -334,11 +369,22 @@ const styles = StyleSheet.create({
   modalBorderDark: {
     borderColor: Constants.colorDark,
   },
+  inputLocation: {
+    width: '100%',
+    fontSize: Constants.fontLg,
+    color: Constants.colorWhite,
+    paddingHorizontal: 4,
+    paddingVertical: 16,
+    backgroundColor: 'transparent',
+    outlineStyle: 'none',
+    borderBottomWidth: 2,
+    borderBottomColor: Constants.colorPrimary,
+  },
   /* for dark mode off */
   altWeatherAppWrapper: {
     backgroundColor: Constants.colorWhite,
   },
-  /* for alt coor mode */
+  /* for alt color mode */
   altWeatherTitleContainer: {
     borderColor: Constants.colorSecondaryDark,
     backgroundColor: Constants.colorSecondary,
@@ -361,9 +407,10 @@ const styles = StyleSheet.create({
     backgroundColor: Constants.colorSecondaryDark,
   },
   altWeatherPinLocation: {
-    borderWidth: 1,
-    borderRadius: 4,
     borderColor: Constants.colorSecondaryDark,
     backgroundColor: Constants.colorSecondary
+  },
+  altInputLocation: {
+    borderBottomColor: Constants.colorSecondary,
   },
 })
