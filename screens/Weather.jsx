@@ -73,7 +73,7 @@ const Weather = ({ navigation }) => {
       console.log("error fetching weather data: ", e)
     }
 
-    /* para otro idioma */
+    /* fetch para otro idioma */
     try {
       const response = await fetch(`${url}${input ? `&q=${input}` : `&lat=${location.coords.latitude}&lon=${location.coords.longitude}`}&lang=sp`)
       const data = await response.json()
@@ -227,6 +227,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    flexWrap: 'wrap',
     marginBottom: 20,
   },
   weatherPinLocation: {
@@ -256,7 +257,6 @@ const styles = StyleSheet.create({
     fontFamily: Constants.fontPrimaryBold,
     color: Constants.colorPrimary,
     fontSize: Constants.fontXl,
-    textAlign: 'center'
   },
   weatherTitleLocation:
   {
