@@ -62,9 +62,9 @@ const Weather = ({ navigation }) => {
     try {
       const response = await fetch(`${url}${input ? `&q=${input}` : `&lat=${location.coords.latitude}&lon=${location.coords.longitude}`}`)
       const data = await response.json()
-      
+
       if (!response.ok) {
-        input?setSearchError(text.searchError):console.log("error fetching weather report ")
+        input ? setSearchError(text.searchError) : console.log("error fetching weather report ")
       } else {
         setForecast(data)
         setModalVisible(false)
@@ -81,7 +81,7 @@ const Weather = ({ navigation }) => {
       const data = await response.json()
 
       if (!response.ok) {
-        input?setSearchError(text.searchError):console.log("error fetching weather report ")
+        input ? setSearchError(text.searchError) : console.log("error fetching weather report ")
       } else {
         setSpForecast(data)
         setModalVisible(false)
@@ -159,7 +159,7 @@ const Weather = ({ navigation }) => {
                       <Text style={styles.weatherTitleLocation}>{text.feels}</Text>
                       <View style={styles.weatherTitleContent}>
                         <View style={styles.weatherTitleImgWrapper}>
-                          <Image style={[styles.weatherTitleImg, { maxWidth: 100 }]} source={{ uri: `https://cdn-icons-png.flaticon.com/512/5263/5263073.png` }} />
+                          <Image style={[styles.weatherTitleImg, { maxWidth: 100 }]} source={require('../assets/img/feels.png')} />
                           <Text style={[styles.weatherTitleTemp, { padding: 20 }]}>{`${Math.trunc(Number(forecast.main.feels_like))} °C\n${Math.trunc((Number(forecast.main.feels_like) * (9 / 5)) + 32)} °F`}</Text>
                         </View>
                       </View>
@@ -169,7 +169,7 @@ const Weather = ({ navigation }) => {
                       <Text style={[styles.weatherTitleLocation]}>{text.humidity}</Text>
                       <View style={styles.weatherTitleContent}>
                         <View style={styles.weatherTitleImgWrapper}>
-                          <Image style={[styles.weatherTitleImg, { maxWidth: 100 }]} source={{ uri: `https://cdn-icons-png.flaticon.com/512/777/777610.png` }} />
+                          <Image style={[styles.weatherTitleImg, { maxWidth: 100 }]} source={require('../assets/img/humidity.png')} />
                           <Text style={[styles.weatherTitleTemp, { padding: 20 }]}>{`${forecast.main.humidity}%`}</Text>
                         </View>
                       </View>
@@ -184,7 +184,7 @@ const Weather = ({ navigation }) => {
         <SafeAreaView style={styles.modal}>
           <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
             <Text style={[styles.modalTitle]}>
-              <Text style={searchError && {color: Constants.colorRed}}>{searchError?searchError:text.inputLocation}</Text>
+              <Text style={searchError && { color: Constants.colorRed }}>{searchError ? searchError : text.inputLocation}</Text>
               <View style={[styles.modalText, altColorTheme && styles.altModalText]}>
                 <TextInput style={[styles.inputLocation, altColorTheme && styles.altInputLocation]} autoCapitalize='none' placeholder={forecast?.name.toLocaleUpperCase()}
                   placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} value={inputLocation} onChangeText={location => setInputLocation(location.toLocaleUpperCase())} onSubmitEditing={() => { location !== "" && fetchWeatherData(inputLocation) }} />
@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
     borderColor: Constants.colorWhite,
     marginHorizontal: 10,
     width: 100,
-    textAlign:'center'
+    textAlign: 'center'
   },
   modalBtnText: {
     fontFamily: Constants.fontPrimary,
