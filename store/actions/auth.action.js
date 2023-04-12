@@ -43,7 +43,7 @@ export const signUp = (email, password, displayName, setEmailError, setModalVisi
             dispatch(setSettingsFirebase(settings, data.localId))
             dispatch(setListItems(data.localId, []))
             dispatch(setMemoScore(data.localId, "-"))
-            
+
             /* seteo modal */
             setAccountEmail(`${data.email}`)
             setAccountCreatedModal(true)
@@ -108,7 +108,7 @@ export const logIn = (email, password, setLogInError, setModalVisible, setLogInL
 
             setAccountEmail(`${data.displayName.slice(2).toLocaleUpperCase()}\n${[...data.displayName][0]}`)
             setLogInSuccess(true);
-            
+
             dispatch({
                 type: LOG_IN,
                 token: data.idToken,

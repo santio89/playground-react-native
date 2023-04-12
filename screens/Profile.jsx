@@ -17,7 +17,7 @@ const Profile = ({ navigation }) => {
 
     const email = useSelector(state => state.auth.email)
     const displayName = useSelector(state => state.auth.displayName)
-    const avatar = useSelector(state=>state.auth.avatar)
+    const avatar = useSelector(state => state.auth.avatar)
 
     const userId = useSelector(state => state.auth.userId)
 
@@ -53,7 +53,7 @@ const Profile = ({ navigation }) => {
                                 <Text style={[styles.profileItemText]}>{displayName?.toLocaleUpperCase()}</Text>
                             </View>
                             <View style={styles.profileItem}>
-                                <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.avatar}: </Text></Text>                           
+                                <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.avatar}: </Text></Text>
                                 <TouchableOpacity><Text style={[styles.profileItemAvatar, altColorTheme && styles.altProfileItemAvatar]}>{avatar}</Text></TouchableOpacity>
                             </View>
                             <View style={styles.profileItem}>
@@ -71,7 +71,7 @@ const Profile = ({ navigation }) => {
                     }
                 </View>
             </ScrollView>
-            
+
             <Modal visible={logOutSuccess} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
@@ -80,8 +80,8 @@ const Profile = ({ navigation }) => {
                             <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{text.userLoggedOut}</Text>
                         </Text>
                         <View style={styles.modalBtnContainer}>
-                            <TouchableOpacity style={styles.modalBtn}>
-                                <Text style={[styles.modalBtnText, altColorTheme && styles.altModalBtnText]} onPress={() => { setLogOutSuccess(false); navigation.navigate("AppsHome") }}>OK</Text>
+                            <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]}>
+                                <Text style={[styles.modalBtnText]} onPress={() => { setLogOutSuccess(false); navigation.navigate("AppsHome") }}>OK</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -227,17 +227,21 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         maxWidth: '100%'
     },
-    modalBtnText: {
-        fontFamily: Constants.fontPrimary,
-        fontSize: Constants.fontMd,
+    modalBtn: {
         padding: 8,
         borderWidth: 1,
         borderRadius: 4,
         borderStyle: 'solid',
         backgroundColor: Constants.colorPrimaryDark,
         borderColor: Constants.colorWhite,
-        color: Constants.colorWhite,
         marginHorizontal: 10,
+        width: 100,
+        textAlign: 'center'
+    },
+    modalBtnText: {
+        fontFamily: Constants.fontPrimary,
+        fontSize: Constants.fontMd,
+        color: Constants.colorWhite,
     },
     modalBorderDark: {
         borderColor: Constants.colorDark,
@@ -267,7 +271,7 @@ const styles = StyleSheet.create({
         backgroundColor: Constants.colorSecondary,
 
     },
-    altModalBtnText: {
+    altModalBtn: {
         backgroundColor: Constants.colorSecondaryDark,
     },
     altModalText: {

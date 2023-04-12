@@ -18,7 +18,7 @@ export default function ListItem({ items, setItems, item, modalVisible, setModal
             <TouchableOpacity style={[styles.listItem, itemComplete && styles.listItemComplete, altColorTheme && styles.altListItem, itemComplete && altColorTheme && styles.altListItemComplete]} onPress={() => setItemComplete(itemComplete => !itemComplete)}>
 
                 <Text style={[styles.listItemText, itemComplete && styles.grayScale]}> <Text style={[styles.listItemIndicator, altColorTheme && styles.altListItemIndicator, itemComplete && styles.grayScale]}>●&nbsp;</Text> <Text style={itemComplete && [styles.lineThrough, styles.grayScale]}>{item.text}</Text></Text>
-                <TouchableOpacity onPress={() => setModalVisible({active: true, id: item.id})}>
+                <TouchableOpacity onPress={() => setModalVisible({ active: true, id: item.id })}>
                     <Text style={styles.listItemDelete}>X</Text>
                 </TouchableOpacity>
 
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         color: Constants.colorWhite,
         wordBreak: 'break-word',
         fontFamily: Constants.fontPrimary
-    }, 
+    },
     listItemDelete: {
         fontWeight: 'bold',
         color: Constants.colorRed,
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     grayScale: {
         color: 'darkgray',
         filter: 'grayscale(1)'
-    },  
+    },
     /* for alt color theme */
     altListItem: {
         backgroundColor: Constants.colorSecondary,

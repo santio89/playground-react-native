@@ -23,7 +23,7 @@ export const selectColorTheme = (altColorTheme) => ({
 export const setSettingsFirebase = (settings, userId) => {
 
     return async dispatch => {
-        
+
         try {
             await fetch(`${URL_API}settings/${userId}.json?auth=${userId}`, {
                 method: 'PUT',
@@ -48,12 +48,12 @@ export const setSettingsFirebase = (settings, userId) => {
 export const getSettingsFirebase = (userId) => {
 
     return async dispatch => {
-        
+
         try {
             const response = await fetch(`${URL_API}settings/${userId}.json?auth=${userId}`)
             const data = await response.json()
-            
-            
+
+
             data && dispatch({
                 type: SET_SETTINGS,
                 settings: data

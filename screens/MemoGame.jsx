@@ -357,7 +357,7 @@ const styles = StyleSheet.create({
     },
     cardsWrapper: {
         flex: 1,
-        justifyContent: 'center', 
+        justifyContent: 'center',
         alignItems: 'center',
 
     },
