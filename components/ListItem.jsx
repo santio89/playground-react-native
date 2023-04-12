@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: Constants.fontMd,
         color: Constants.colorWhite,
-        wordBreak: 'break-word',
+        maxWidth: '90%',
         fontFamily: Constants.fontPrimary
     },
     listItemDelete: {

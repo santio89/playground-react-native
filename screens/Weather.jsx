@@ -345,7 +345,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     marginTop: 20,
-    wordBreak: 'break-word',
     textAlign: 'center'
   },
   modalBtnContainer: {
