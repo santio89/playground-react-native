@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl, Image, Dimensions, TouchableOpacity, Modal } from 'react-native'
+import { StyleSheet, Text, TextInput, View, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl, Image, Dimensions, TouchableOpacity, Modal } from 'react-native'
 import * as Location from 'expo-location'
 /* import MapView from 'react-native-maps' */
 import { Entypo } from '@expo/vector-icons'
@@ -9,7 +9,6 @@ import { WEATHER_API_KEY } from '../constants/Database.js'
 import { MAPS_API_KEY } from '../constants/Database.js'
 import Alert from '../utils/Alert'
 import { useSelector } from 'react-redux'
-import { TextInput } from 'react-native-web'
 
 const Weather = ({ navigation }) => {
   const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&appid=${WEATHER_API_KEY}`
@@ -35,7 +34,6 @@ const Weather = ({ navigation }) => {
   }
 
   const loadLocation = async () => {
-    setRefreshing(true);
     const { status } = await Location.requestForegroundPermissionsAsync();
 
     if (status !== 'granted') {
@@ -47,18 +45,18 @@ const Weather = ({ navigation }) => {
           enableHighAccuracy: true,
           timeout: 5000
         })
-
+        
         setLocation(loc)
 
       } catch (e) {
         console.log("error getting geo position: ", e)
       }
-
-      setRefreshing(false)
     }
   }
 
   const fetchWeatherData = async (input) => {
+    setRefreshing(true);
+
     try {
       const response = await fetch(`${url}${input ? `&q=${input}` : `&lat=${location.coords.latitude}&lon=${location.coords.longitude}`}`)
       const data = await response.json()
@@ -92,7 +90,7 @@ const Weather = ({ navigation }) => {
       console.log("error fetching weather data: ", e)
     }
 
-
+    setRefreshing(false)
   }
 
 
