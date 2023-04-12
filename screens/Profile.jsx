@@ -171,7 +171,8 @@ const styles = StyleSheet.create({
         fontFamily: Constants.fontPrimary,
         fontSize: Constants.fontMd,
         color: Constants.colorWhite,
-        maxWidth: '100%'
+        maxWidth: '100%',
+        textAlign: 'center'
     },
     modal: {
         flex: 1,
