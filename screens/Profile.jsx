@@ -64,9 +64,7 @@ const Profile = ({ navigation }) => {
                             </View>
                         </> :
                         <View style={[styles.profileItem, { justifyContent: "center", alignItems: "center", marginTop: 10 }]}>
-                            <Text style={[styles.profileItemLabel]}>
-                                <TouchableOpacity style={[styles.settingsItemTextButton, { padding: 16 }, altColorTheme && styles.altSettingsItemTextButton]} onPress={() => { navigation.navigate("Auth") }}><Text style={[styles.settingsItemText, { fontFamily: Constants.fontPrimaryBold, fontSize: Constants.fontLg }]}>{text.logInProfile}</Text></TouchableOpacity>
-                            </Text>
+                            <TouchableOpacity style={[styles.settingsItemTextButton, { padding: 16 }, altColorTheme && styles.altSettingsItemTextButton]} onPress={() => { navigation.navigate("Auth") }}><Text style={[styles.settingsItemText, { fontFamily: Constants.fontPrimaryBold, fontSize: Constants.fontLg }]}>{text.logInProfile}</Text></TouchableOpacity>
                         </View>
                     }
                 </View>
@@ -167,12 +165,13 @@ const styles = StyleSheet.create({
         marginInline: '1%',
         padding: 8,
         color: Constants.colorWhite,
-        maxWidth: '100%'
+        maxWidth: '100%',
     },
     settingsItemText: {
         fontFamily: Constants.fontPrimary,
         fontSize: Constants.fontMd,
         color: Constants.colorWhite,
+        maxWidth: '100%'
     },
     modal: {
         flex: 1,
