@@ -17,7 +17,7 @@ const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
     whitelist: ["settings", "auth"],
-    timeout: null
+    timeout: 0
 }
 
 const PersistedReducer = persistReducer(persistConfig, RootReducer)
