@@ -124,11 +124,11 @@ const Weather = ({ navigation }) => {
 
   return (
     <>
-      <ScrollView contentContainerStyle={[styles.weatherAppWrapper, !darkMode && styles.altWeatherAppWrapper]}>
+      <View style={[styles.weatherAppWrapper, !darkMode && styles.altWeatherAppWrapper]}>
         <View style={styles.weatherAppContainer} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => loadLocation()} />} >
 
 
-          <View style={styles.weatherData}>
+          <ScrollView contentContainerStyle={styles.weatherData}>
             {
               !forecast || !spForecast ?
                 <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
@@ -175,15 +175,16 @@ const Weather = ({ navigation }) => {
                   </View>
                 </>
             }
-          </View>
+          </ScrollView>
         </View>
-      </ScrollView >
+      </View >
       <Modal visible={modalVisible} transparent={true} animationType='fade'>
         <SafeAreaView style={styles.modal}>
           <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
             <Text style={[styles.modalTitle]}>
               <Text style={searchError && { color: Constants.colorRed }}>{searchError ? searchError : text.inputLocation}</Text>
               <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
+                
                 <TextInput style={[styles.inputLocation, altColorTheme && styles.altInputLocation]} autoCapitalize='none' placeholder={forecast?.name.toLocaleUpperCase()}
                   placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} value={inputLocation} onChangeText={location => setInputLocation(location.toLocaleUpperCase())} onSubmitEditing={() => { location !== "" && fetchWeatherData(inputLocation) }} />
 
@@ -377,7 +378,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     paddingVertical: 16,
     backgroundColor: 'transparent',
-    outlineStyle: 'none',
     borderBottomWidth: 2,
     borderBottomColor: Constants.colorPrimary,
   },
