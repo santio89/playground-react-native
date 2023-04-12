@@ -74,7 +74,6 @@ const TabNavigator = () => {
                     tabBarButton: () => null,
                     tabBarVisible: false,
                 }} />
-
         </BottomTabs.Navigator>
     )
 }
