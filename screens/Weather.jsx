@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl, Image, Dimensions, TouchableOpacity, Modal } from 'react-native'
+import { StyleSheet, Text, TextInput, View, SafeAreaView, KeyboardAvoidingView, ScrollView, ActivityIndicator, RefreshControl, Image, Dimensions, TouchableOpacity, Modal } from 'react-native'
 import * as Location from 'expo-location'
 /* import MapView from 'react-native-maps' */
 import { Entypo } from '@expo/vector-icons'
@@ -183,13 +183,13 @@ const Weather = ({ navigation }) => {
           <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
             <Text style={[styles.modalTitle]}>
               <Text style={searchError && { color: Constants.colorRed }}>{searchError ? searchError : text.inputLocation}</Text>
-              <View style={[styles.modalText, altColorTheme && styles.altModalText]}>
+              <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
                 <TextInput style={[styles.inputLocation, altColorTheme && styles.altInputLocation]} autoCapitalize='none' placeholder={forecast?.name.toLocaleUpperCase()}
                   placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} value={inputLocation} onChangeText={location => setInputLocation(location.toLocaleUpperCase())} onSubmitEditing={() => { location !== "" && fetchWeatherData(inputLocation) }} />
 
                 {/*    <MapView initialRegion={{latitude: 0, longitude: 0, latitudeDelta: 0, longitudeDelta: 0}}/> */}
 
-              </View>
+              </KeyboardAvoidingView>
             </Text>
             <View style={styles.modalBtnContainer}>
               <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setModalVisible(false); setInputLocation(""); setSearchError(null) }}>
