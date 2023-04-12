@@ -1,11 +1,10 @@
 import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity, Modal, SafeAreaView, ActivityIndicator, KeyboardAvoidingView } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
-import { useSelector } from 'react-redux/es/exports'
+import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect, useCallback } from 'react'
 import Header from '../components/Header'
 import Constants from '../constants/Styles.js'
 import { LANGS } from '../constants/Langs'
-import { useDispatch } from 'react-redux/es/exports'
 import { signUp } from '../store/actions/auth.action'
 import { setSettingsFirebase } from '../store/actions/settings.action'
 import { setListItems, setMemoScore } from '../store/actions/apps.action'
@@ -97,36 +96,38 @@ const SignUp = ({ navigation }) => {
     return (
         <>
             <Header navigation={navigation} />
-            <ScrollView contentContainerStyle={[styles.profileContainer, !darkMode && styles.colorDark, !darkMode && styles.backgroundWhite]}>
+            <View style={[styles.profileContainer, !darkMode && styles.colorDark, !darkMode && styles.backgroundWhite]}>
                 <KeyboardAvoidingView style={[styles.itemsContainer, altColorTheme && styles.altItemsContainer]}>
-                    <View style={styles.profileItem}>
-                        <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator, !validEmail && { color: Constants.colorRed }]}>●&nbsp;</Text><Text style={!validEmail && { color: Constants.colorRed }}>{text.email}: </Text></Text>
-                        <TextInput keyboardType='email-address' autoCapitalize='none' style={[styles.textInput, altColorTheme && styles.altTextInput, !validEmail && { borderBottomColor: Constants.colorRed }]} value={email} onChangeText={email => setEmail(email)} onSubmitEditing={validInputs && handleSignUp} placeholder={text.minEmail} placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} />
-                    </View>
-                    <View style={styles.profileItem}>
-                        <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator, !validPassword && { color: Constants.colorRed }]}>●&nbsp;</Text><Text style={!validPassword && { color: Constants.colorRed }}>{text.password}: </Text></Text>
-                        <TextInput style={[styles.textInput, altColorTheme && styles.altTextInput, !validPassword && { borderBottomColor: Constants.colorRed }]} autoCapitalize='none' secureTextEntry={true} placeholder={text.minPassword}
-                            placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} value={password} onChangeText={password => setPassword(password)} onSubmitEditing={validInputs && handleSignUp} />
-                    </View>
-                    <View style={styles.profileItem}>
-                        <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator, !validName && { color: Constants.colorRed }]}>●&nbsp;</Text><Text style={!validName && { color: Constants.colorRed }}>{text.name}: </Text></Text>
-                        <TextInput style={[styles.textInput, altColorTheme && styles.altTextInput, !validName && { borderBottomColor: Constants.colorRed }]} autoCapitalize='none' placeholder={text.minName}
-                            placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} value={displayName} onChangeText={displayName => setDisplayName(displayName)} onSubmitEditing={validInputs && handleSignUp} />
-                    </View>
-                    <View style={styles.profileItem}>
-                        <View style={styles.authItemTextWrapper}>
-                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInputs && { borderColor: 'darkgray' }, { height: 44 }]} disabled={!validInputs} onPress={handleSignUp}>
-                                {signUpLoading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Text style={[styles.authItemText, !validInputs && { color: 'darkgray' }]}>{text.signUp}</Text>}
-
-                            </TouchableOpacity>
-
-                            <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, styles.authItemTextButtonRegister]} onPress={() => navigation.navigate("LogIn")}>
-                                <Text style={[styles.authItemText, styles.authItemTextRegister]}>{text.logIn}</Text>
-                            </TouchableOpacity>
+                    <ScrollView>
+                        <View style={styles.profileItem}>
+                            <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator, !validEmail && { color: Constants.colorRed }]}>●&nbsp;</Text><Text style={!validEmail && { color: Constants.colorRed }}>{text.email}: </Text></Text>
+                            <TextInput keyboardType='email-address' autoCapitalize='none' style={[styles.textInput, altColorTheme && styles.altTextInput, !validEmail && { borderBottomColor: Constants.colorRed }]} value={email} onChangeText={email => setEmail(email)} onSubmitEditing={() => validInputs && handleSignUp} placeholder={text.minEmail} placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} />
                         </View>
-                    </View>
+                        <View style={styles.profileItem}>
+                            <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator, !validPassword && { color: Constants.colorRed }]}>●&nbsp;</Text><Text style={!validPassword && { color: Constants.colorRed }}>{text.password}: </Text></Text>
+                            <TextInput style={[styles.textInput, altColorTheme && styles.altTextInput, !validPassword && { borderBottomColor: Constants.colorRed }]} autoCapitalize='none' secureTextEntry={true} placeholder={text.minPassword}
+                                placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} value={password} onChangeText={password => setPassword(password)} onSubmitEditing={() => validInputs && handleSignUp} />
+                        </View>
+                        <View style={styles.profileItem}>
+                            <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator, !validName && { color: Constants.colorRed }]}>●&nbsp;</Text><Text style={!validName && { color: Constants.colorRed }}>{text.name}: </Text></Text>
+                            <TextInput style={[styles.textInput, altColorTheme && styles.altTextInput, !validName && { borderBottomColor: Constants.colorRed }]} autoCapitalize='none' placeholder={text.minName}
+                                placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} value={displayName} onChangeText={displayName => setDisplayName(displayName)} onSubmitEditing={() => validInputs && handleSignUp} />
+                        </View>
+                        <View style={styles.profileItem}>
+                            <View style={styles.authItemTextWrapper}>
+                                <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInputs && { borderColor: 'darkgray' }, { height: 44 }]} disabled={!validInputs} onPress={handleSignUp}>
+                                    {signUpLoading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Text style={[styles.authItemText, !validInputs && { color: 'darkgray' }]}>{text.signUp}</Text>}
+
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, styles.authItemTextButtonRegister]} onPress={() => navigation.navigate("LogIn")}>
+                                    <Text style={[styles.authItemText, styles.authItemTextRegister]}>{text.logIn}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </ScrollView>
                 </KeyboardAvoidingView>
-            </ScrollView>
+            </View>
             <Modal visible={modalVisible} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>

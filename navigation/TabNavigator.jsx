@@ -93,7 +93,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         fontFamily: Constants.fontPrimary,
-        color: Constants.colorDark
+        color: Constants.colorDark,
+        minWidth: 80
     },
     itemFocused: {
         color: Constants.colorWhite

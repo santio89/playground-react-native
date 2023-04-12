@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { FlatList, Text, TextInput, View, SafeAreaView, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Modal, Platform } from 'react-native'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import 'react-native-get-random-values'; /* for uuid */
 import { v4 as uuidv4 } from 'uuid';
 import ListItem from '../components/ListItem';
@@ -8,7 +8,6 @@ import { storageSetItem } from '../utils/AsyncStorage';
 import Constants from '../constants/Styles';
 import { LANGS } from '../constants/Langs';
 import { setListItems } from '../store/actions/apps.action';
-import { useDispatch } from 'react-redux/es/exports';
 
 export default function ToDoList({ navigation }) {
     const dispatch = useDispatch()

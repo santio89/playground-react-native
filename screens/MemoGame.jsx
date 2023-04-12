@@ -1,6 +1,6 @@
 import { StyleSheet, Text, ScrollView, View, TouchableOpacity, FlatList, Dimensions } from 'react-native'
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import 'react-native-get-random-values'; /* for uuid */
 import { v4 as uuidv4 } from 'uuid';
 import Constants from '../constants/Styles.js';
@@ -9,7 +9,6 @@ import Card from '../components/Card';
 import emojis from '../constants/Emojis.js';
 import { storageSetItem } from '../utils/AsyncStorage.js';
 import { setMemoScore } from '../store/actions/apps.action.js';
-import { useDispatch } from 'react-redux/es/exports.js';
 
 const MemoGame = ({ navigation }) => {
     const dispatch = useDispatch()

@@ -1,11 +1,10 @@
 import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Modal, SafeAreaView } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { LANGS } from '../constants/Langs.js'
 import Constants from '../constants/Styles.js'
 import Header from '../components/Header'
 import { logOut } from '../store/actions/auth.action.js'
-import { useDispatch } from 'react-redux'
 
 const Profile = ({ navigation }) => {
     const dispatch = useDispatch();
