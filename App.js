@@ -35,7 +35,7 @@ export default function App() {
         </SafeAreaView >
       </PersistGate>
     </Provider >
-  );
+  )
 }
 
 
