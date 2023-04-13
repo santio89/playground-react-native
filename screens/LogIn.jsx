@@ -294,6 +294,7 @@ const styles = StyleSheet.create({
         fontFamily: Constants.fontPrimary,
         fontSize: Constants.fontMd,
         color: Constants.colorWhite,
+        textAlign: 'center'
     },
     modalBorderDark: {
         borderColor: Constants.colorDark,
