@@ -56,8 +56,7 @@ const TabNavigator = () => {
                             <Ionicons name="person" size={Constants.fontLg} color={focused ? Constants.colorWhite : Constants.colorDark} />
                             <Text style={[styles.itemText, focused && styles.itemTextFocused, windowWidth <= 800 && styles.itemTextMobile]}>{text.profile}</Text>
                         </View>
-                    ),
-                    title: 'PROFILE | PLAYGROUND'
+                    )
                 }} />
             <BottomTabs.Screen name='Settings' component={Settings}
                 options={{

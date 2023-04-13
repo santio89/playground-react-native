@@ -10,8 +10,8 @@ export default function Header({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={[styles.headerContainer, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder]}>
-        <TouchableOpacity onPress={() => navigation.navigate("Apps")}><Text style={styles.header}>PLAYGROUND</Text></TouchableOpacity>
-        <TouchableOpacity style={[styles.loginContainer, altColorTheme && styles.altLoginContainer]} onPress={() => avatar ? navigation.navigate("Profile") : navigation.navigate("Auth")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Apps", {screen: "AppsHome"})}><Text style={styles.header}>PLAYGROUND</Text></TouchableOpacity>
+        <TouchableOpacity style={[styles.loginContainer, altColorTheme && styles.altLoginContainer]} onPress={() => avatar ? navigation.navigate("Profile") : navigation.navigate("Auth", {screen: "LogIn"})}>
           <View>
             {avatar ?
               <Text style={styles.avatar}>{avatar}</Text> :

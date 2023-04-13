@@ -63,7 +63,7 @@ const Profile = ({ navigation }) => {
                             </View>
                         </> :
                         <View style={[styles.profileItem, { justifyContent: "center", alignItems: "center", marginTop: 10 }]}>
-                            <TouchableOpacity style={[styles.settingsItemTextButton, { padding: 16 }, altColorTheme && styles.altSettingsItemTextButton]} onPress={() => { navigation.navigate("Auth") }}><Text style={[styles.settingsItemText, { fontFamily: Constants.fontPrimaryBold, fontSize: Constants.fontLg }]}>{text.logInProfile}</Text></TouchableOpacity>
+                            <TouchableOpacity style={[styles.settingsItemTextButton, { padding: 16 }, altColorTheme && styles.altSettingsItemTextButton]} onPress={() => { navigation.navigate("Auth", {screen: "LogIn"}) }}><Text style={[styles.settingsItemText, { fontFamily: Constants.fontPrimaryBold, fontSize: Constants.fontLg }]}>{text.logInProfile}</Text></TouchableOpacity>
                         </View>
                     }
                 </View>
@@ -78,7 +78,7 @@ const Profile = ({ navigation }) => {
                         </Text>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]}>
-                                <Text style={[styles.modalBtnText]} onPress={() => { setLogOutSuccess(false); navigation.navigate("AppsHome") }}>OK</Text>
+                                <Text style={[styles.modalBtnText]} onPress={() => { setLogOutSuccess(false); navigation.navigate("Apps", {screen: "AppsHome"}) }}>OK</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

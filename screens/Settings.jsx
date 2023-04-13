@@ -39,6 +39,13 @@ const Settings = ({ navigation }) => {
         setConfig({ lang: language.selected, darkMode, altColorTheme })
     }, [language.selected, altColorTheme, darkMode])
 
+    useEffect(() => {
+        navigation.setOptions({
+            title: `${text.config} | PLAYGROUND`,
+            headerShown: false
+        })
+    }, [text])
+
     return (
         <>
             <Header navigation={navigation} />

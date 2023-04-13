@@ -151,7 +151,7 @@ const SignUp = ({ navigation }) => {
                             <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{accountEmail.toLocaleUpperCase()}</Text>
                         </Text>
                         <View style={styles.modalBtnContainer}>
-                            <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setAccountCreatedModal(false); navigation.navigate("LogIn"); navigation.navigate("AppsHome") }}>
+                            <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setAccountCreatedModal(false); navigation.navigate("Auth", {screen: "LogIn"}); navigation.navigate("AppsHome") }}>
                                 <Text style={[styles.modalBtnText]}>OK</Text>
                             </TouchableOpacity>
                         </View>

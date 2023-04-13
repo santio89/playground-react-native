@@ -31,6 +31,14 @@ const MainMenu = ({ navigation }) => {
         setText(LANGS.find(lang => lang.lang === languageSelected).text)
     }, [languageSelected])
 
+    useEffect(() => {
+        navigation.setOptions({
+            title: `${text.apps} | PLAYGROUND`,
+            headerShown: false
+        })
+    }, [text])
+
+
     return (
         <>
             <Header navigation={navigation} />

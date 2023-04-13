@@ -77,7 +77,7 @@ const LogIn = ({ navigation }) => {
                                 <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInput && { borderColor: 'darkgray' }, { height: 44 }]} disabled={!validInput} onPress={handleLogIn}>
                                     {logInLoading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Text style={[styles.authItemText, !validInput && { color: 'darkgray' }]}>{text.logIn}</Text>}
                                 </TouchableOpacity>
-                                <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, styles.authItemTextButtonRegister]} onPress={() => navigation.navigate("SignUp")}>
+                                <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, styles.authItemTextButtonRegister]} onPress={() => navigation.navigate("Auth", {screen: "SignUp"})}>
                                     <Text style={[styles.authItemText, styles.authItemTextRegister]}>{text.signUp}</Text>
                                 </TouchableOpacity>
                             </View>
