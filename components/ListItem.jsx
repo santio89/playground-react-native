@@ -14,15 +14,13 @@ export default function ListItem({ items, setItems, item, modalVisible, setModal
     }, [itemComplete])
 
     return (
-        <View style={[styles.listItemContainer, modalVisible.active && modalVisible.id === item.id && styles.grayScale]}>
-            <TouchableOpacity style={[styles.listItem, itemComplete && styles.listItemComplete, altColorTheme && styles.altListItem, itemComplete && altColorTheme && styles.altListItemComplete]} onPress={() => setItemComplete(itemComplete => !itemComplete)}>
+        <View style={styles.listItemContainer}>
+            <TouchableOpacity style={[styles.listItem, itemComplete && styles.listItemComplete, altColorTheme && styles.altListItem, itemComplete && altColorTheme && styles.altListItemComplete, modalVisible.active && modalVisible.id === item.id && styles.listItemModalSelected]} onPress={() => setItemComplete(itemComplete => !itemComplete)}>
 
-                <Text style={[styles.listItemText, itemComplete && styles.grayScale]}> <Text style={[styles.listItemIndicator, altColorTheme && styles.altListItemIndicator, itemComplete && styles.grayScale]}>●&nbsp;</Text> <Text style={itemComplete && [styles.lineThrough, styles.grayScale]}>{item.text}</Text></Text>
+                <Text style={[styles.listItemText, itemComplete && {color: 'darkgray'}]}> <Text style={[styles.listItemIndicator, altColorTheme && styles.altListItemIndicator, itemComplete && {color: 'darkgray'}, modalVisible.active && modalVisible.id === item.id && {color: 'dimgray'}]}>●&nbsp;</Text> <Text style={[itemComplete && [styles.lineThrough, {color: 'darkgray'}], modalVisible.active && modalVisible.id === item.id  && {color: 'lightgray'}]}>{item.text}</Text></Text>
                 <TouchableOpacity onPress={() => setModalVisible({ active: true, id: item.id })}>
-                    <Text style={styles.listItemDelete}>X</Text>
+                    <Text style={[styles.listItemDelete, modalVisible.active && modalVisible.id === item.id && {color: 'dimgray'}]}>X</Text>
                 </TouchableOpacity>
-
-
             </TouchableOpacity>
         </View>
     )
@@ -34,19 +32,23 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     listItem: {
-        color: Constants.colorWhite,
         fontSize: 40,
         marginBottom: 10,
+        color: Constants.colorWhite,
         backgroundColor: Constants.colorPrimary,
+        borderColor: Constants.colorPrimaryDark,
         borderRadius: 4,
         padding: 8,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        borderColor: Constants.colorPrimaryDark,
         borderStyle: 'solid',
         borderWidth: 2,
         width: '100%',
+    },
+    listItemModalSelected: {
+        backgroundColor: 'gray',
+        borderColor: 'dimgray',
     },
     listItemComplete: {
         borderStyle: 'dotted',
@@ -76,10 +78,6 @@ const styles = StyleSheet.create({
     },
     lineThrough: {
         textDecorationLine: 'line-through',
-    },
-    grayScale: {
-        color: 'darkgray',
-        filter: 'grayscale(1)'
     },
     /* for alt color theme */
     altListItem: {

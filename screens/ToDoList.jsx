@@ -64,7 +64,7 @@ export default function ToDoList({ navigation }) {
                         <TextInput value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuid.v4(), text: input }); setInput('') }} placeholder={text.newTask} placeholderTextColor="#808080" style={[styles.input, !darkMode && styles.colorDark, altColorTheme && styles.altInput]} />
 
                         <TouchableOpacity disabled={btnDisabled} onPress={() => { addItem({ id: uuid.v4(), text: input, completed: false }); setInput('') }} style={[styles.buttonAddContainer, altColorTheme && styles.buttonAddContainer, altColorTheme && styles.altButtonAddContainer, btnDisabled && styles.buttonDisabled]}>
-                            <Text style={styles.buttonAdd}>
+                            <Text style={[styles.buttonAdd, , btnDisabled && {color: 'lightgray'}]}>
                                 {text.add}
                             </Text>
                         </TouchableOpacity>
