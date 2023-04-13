@@ -382,6 +382,13 @@ const styles = StyleSheet.create({
         borderColor: Constants.colorSecondaryDark,
         backgroundColor: Constants.colorSecondary,
         shadowColor: Constants.colorSecondary,
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 16.00,
+        elevation: 24,
     },
     altWinnerButtonsText: {
         borderColor: Constants.colorSecondaryDark,
