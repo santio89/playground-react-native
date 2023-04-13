@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import { FlatList, Text, TextInput, View, SafeAreaView, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Modal, Platform } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux';
-import 'react-native-get-random-values'; /* for uuid */
-import { v4 as uuidv4 } from 'uuid';
+import uuid from 'react-native-uuid';
 import ListItem from '../components/ListItem';
 import { storageSetItem } from '../utils/AsyncStorage';
 import Constants from '../constants/Styles';
@@ -62,9 +61,9 @@ export default function ToDoList({ navigation }) {
             <View style={[styles.todoListContainer, !darkMode && styles.backgroundWhite]}>
                 <View style={styles.listContainer}>
                     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.inputContainer}>
-                        <TextInput value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuidv4(), text: input }); setInput('') }} placeholder={text.newTask} placeholderTextColor="#808080" style={[styles.input, !darkMode && styles.colorDark, altColorTheme && styles.altInput]} />
+                        <TextInput value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuid.v4(), text: input }); setInput('') }} placeholder={text.newTask} placeholderTextColor="#808080" style={[styles.input, !darkMode && styles.colorDark, altColorTheme && styles.altInput]} />
 
-                        <TouchableOpacity disabled={btnDisabled} onPress={() => { addItem({ id: uuidv4(), text: input, completed: false }); setInput('') }} style={[styles.buttonAddContainer, altColorTheme && styles.buttonAddContainer, altColorTheme && styles.altButtonAddContainer, btnDisabled && styles.buttonDisabled]}>
+                        <TouchableOpacity disabled={btnDisabled} onPress={() => { addItem({ id: uuid.v4(), text: input, completed: false }); setInput('') }} style={[styles.buttonAddContainer, altColorTheme && styles.buttonAddContainer, altColorTheme && styles.altButtonAddContainer, btnDisabled && styles.buttonDisabled]}>
                             <Text style={styles.buttonAdd}>
                                 {text.add}
                             </Text>

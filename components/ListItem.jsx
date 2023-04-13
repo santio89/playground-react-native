@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         color: Constants.colorRed,
         fontSize: Constants.fontMd,
         padding: 8,
-        scale: 1.4,
+        transform: [{scale: 1.4}],
         fontFamily: Constants.fontPrimaryBold
     },
     lineThrough: {

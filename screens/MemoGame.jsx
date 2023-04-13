@@ -1,8 +1,7 @@
 import { StyleSheet, Text, ScrollView, View, TouchableOpacity, FlatList, Dimensions } from 'react-native'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import 'react-native-get-random-values'; /* for uuid */
-import { v4 as uuidv4 } from 'uuid';
+import uuid from 'react-native-uuid';
 import Constants from '../constants/Styles.js';
 import { LANGS } from '../constants/Langs.js';
 import Card from '../components/Card';
@@ -62,7 +61,7 @@ const MemoGame = ({ navigation }) => {
             /* mezclo al azar con sort */
             .sort(() => Math.random() - 0.5)
             /* retorno un array con ids unicas */
-            .map(card => ({ ...card, id: uuidv4() }))
+            .map(card => ({ ...card, id: uuid.v4() }))
 
         setStartState(true)
         setWinner(false)
