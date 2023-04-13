@@ -101,17 +101,17 @@ const SignUp = ({ navigation }) => {
                     <ScrollView>
                         <View style={styles.profileItem}>
                             <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator, !validEmail && { color: Constants.colorRed }]}>●&nbsp;</Text><Text style={!validEmail && { color: Constants.colorRed }}>{text.email}: </Text></Text>
-                            <TextInput keyboardType='email-address' autoCapitalize='none' style={[styles.textInput, altColorTheme && styles.altTextInput, !validEmail && { borderBottomColor: Constants.colorRed }]} value={email} onChangeText={email => setEmail(email)} onSubmitEditing={() => validInputs && handleSignUp} placeholder={text.minEmail} placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} />
+                            <TextInput keyboardType='email-address' autoCapitalize='none' style={[styles.textInput, altColorTheme && styles.altTextInput, !validEmail && { borderBottomColor: Constants.colorRed }]} value={email} onChangeText={email => setEmail(email)} onSubmitEditing={() => validInputs && handleSignUp()} placeholder={text.minEmail} placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} />
                         </View>
                         <View style={styles.profileItem}>
                             <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator, !validPassword && { color: Constants.colorRed }]}>●&nbsp;</Text><Text style={!validPassword && { color: Constants.colorRed }}>{text.password}: </Text></Text>
                             <TextInput style={[styles.textInput, altColorTheme && styles.altTextInput, !validPassword && { borderBottomColor: Constants.colorRed }]} autoCapitalize='none' secureTextEntry={true} placeholder={text.minPassword}
-                                placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} value={password} onChangeText={password => setPassword(password)} onSubmitEditing={() => validInputs && handleSignUp} />
+                                placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} value={password} onChangeText={password => setPassword(password)} onSubmitEditing={() => validInputs && handleSignUp()} />
                         </View>
                         <View style={styles.profileItem}>
                             <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator, !validName && { color: Constants.colorRed }]}>●&nbsp;</Text><Text style={!validName && { color: Constants.colorRed }}>{text.name}: </Text></Text>
                             <TextInput style={[styles.textInput, altColorTheme && styles.altTextInput, !validName && { borderBottomColor: Constants.colorRed }]} autoCapitalize='none' placeholder={text.minName}
-                                placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} value={displayName} onChangeText={displayName => setDisplayName(displayName)} onSubmitEditing={() => validInputs && handleSignUp} />
+                                placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} value={displayName} onChangeText={displayName => setDisplayName(displayName)} onSubmitEditing={() => validInputs && handleSignUp()} />
                         </View>
                         <View style={styles.profileItem}>
                             <View style={styles.authItemTextWrapper}>

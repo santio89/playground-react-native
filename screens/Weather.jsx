@@ -381,6 +381,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderBottomWidth: 2,
     borderBottomColor: Constants.colorPrimary,
+    textAlign: 'center'
   },
   /* for dark mode off */
   altWeatherAppWrapper: {
