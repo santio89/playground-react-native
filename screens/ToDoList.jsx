@@ -145,7 +145,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonDisabled: {
-        filter: 'grayscale(1)'
+        backgroundColor: 'gray',
+        borderColor: 'dimgray',
     },
     buttonAdd: {
         fontWeight: 'bold',
