@@ -243,7 +243,6 @@ const styles = StyleSheet.create({
     bestScore: {
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 10,
     },
     bestScoreText: {
         fontSize: Constants.fontMd,
