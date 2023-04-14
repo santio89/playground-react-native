@@ -386,7 +386,7 @@ const styles = StyleSheet.create({
     },
     altProfileItemButton: {
         backgroundColor: Constants.colorSecondaryDark,
-        borderColor: Constants.colorSecondaryDark,
+        borderColor: Constants.colorSecondary,
     },
     altSettingsItemTextButton: {
         backgroundColor: Constants.colorSecondaryDark,
