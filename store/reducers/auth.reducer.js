@@ -1,6 +1,8 @@
 import { SIGN_UP } from "../actions/auth.action";
 import { LOG_IN } from "../actions/auth.action";
 import { LOG_OUT } from "../actions/auth.action";
+import { UPDATE_USERNAME } from "../actions/auth.action";
+import { UPDATE_AVATAR } from "../actions/auth.action";
 
 const initialState = {
     token: null,
@@ -44,6 +46,16 @@ const AuthReducer = (state = initialState, action) => {
                 displayName: "",
                 email: "",
                 avatar: ""
+            }
+        case UPDATE_USERNAME: 
+            return {
+                ...state,
+                displayName: action.displayName
+            }
+        case UPDATE_AVATAR:
+            return {
+                ...state,
+                avatar: action.avatar
             }
         default:
             return state
