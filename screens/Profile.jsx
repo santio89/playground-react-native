@@ -358,7 +358,6 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         width: 60,
         textAlign: 'center',
-        lineHeight: 0,
     },
     avatarSelected: {
         outlineWidth: 1,
