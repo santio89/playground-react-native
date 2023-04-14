@@ -1,4 +1,4 @@
-import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Modal, SafeAreaView, TextInput, KeyboardAvoidingView, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Modal, SafeAreaView, TextInput, KeyboardAvoidingView, ActivityIndicator, FlatList } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { LANGS } from '../constants/Langs.js'
