@@ -187,8 +187,8 @@ export const updateUsername = (token, username, setUpdateUsernameLoading, setUse
     }
 }
 
-export const updateAvatar = (token, username, setValidAvatars, setAvatarModal ) => {
-    setValidAvatars(false)
+export const updateAvatar = (token, username, setAvatarModal, setUpdateAvatarLoading ) => {
+    setUpdateAvatarLoading(true)
 
     return async dispatch => {
         try {
@@ -226,7 +226,7 @@ export const updateAvatar = (token, username, setValidAvatars, setAvatarModal ) 
             console.log("error updating user: ", e)
         } finally {
             setAvatarModal(false)
-            setValidAvatars(true)
+            setUpdateAvatarLoading(false)
         }
 
     }

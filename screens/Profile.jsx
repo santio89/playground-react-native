@@ -31,8 +31,8 @@ const Profile = ({ navigation }) => {
     const [updateUsernameLoading, setUpdateUsernameLoading] = useState(false)
 
     const [selectedAvatar, setSelectedAvatar] = useState(null)
-    const [validAvatars, setValidAvatars] = useState(true)
     const [avatarModal, setAvatarModal] = useState(false)
+    const [updateAvatarLoading, setUpdateAvatarLoading] = useState(false)
 
     const validateName = (name) => {
         var re = /[^ ]{4,16}/;
@@ -140,8 +140,17 @@ const Profile = ({ navigation }) => {
                         <Text style={styles.modalTitle}>
                             <Text>{text.inputAvatar}</Text>
                             <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
-                               
-                            </KeyboardAvoidingView>
+                                <FlatList style={styles.avatarContainer}
+                                                        data={[...Emojis]}
+                                                        horizontal = {true}
+                                                        renderItem={({ item }) => (
+                                                            <TouchableOpacity onPress={()=>setSelectedAvatar(item)}>
+                                                                <Text style={[styles.avatarItem, item === selectedAvatar && styles.avatarSelected]}>{item}</Text>
+                                                            </TouchableOpacity>
+                                                        )}
+                                                        keyExtractor={item => item}
+                                                    />
+                                </KeyboardAvoidingView>
                         </Text>
 
                         <View style={styles.modalBtnContainer}>
@@ -149,8 +158,8 @@ const Profile = ({ navigation }) => {
                                 <Text style={[styles.modalBtnText]} onPress={() => { setAvatarModal(false) }}>{text.cancel}</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity disabled={selectedAvatar === avatar || !validAvatars} style={[styles.modalBtn, altColorTheme && styles.altModalBtn, selectedAvatar === avatar && { borderColor: 'darkgray' }]}>
-                            {updateUsernameLoading?<ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />:<Text style={[styles.modalBtnText,  selectedAvatar === avatar && { color: 'darkgray' }]} onPress={() => { selectedAvatar != avatar && dispatch(updateAvatar(token, selectedAvatar+displayName, setValidAvatars, setAvatarModal)) }}>OK</Text>}
+                            <TouchableOpacity disabled={selectedAvatar === avatar || updateAvatarLoading} style={[styles.modalBtn, altColorTheme && styles.altModalBtn, selectedAvatar === avatar && { borderColor: 'darkgray' }]}>
+                            {updateAvatarLoading?<ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />:<Text style={[styles.modalBtnText,  selectedAvatar === avatar && { color: 'darkgray' }]} onPress={() => { selectedAvatar != avatar && dispatch(updateAvatar(token, selectedAvatar+displayName, setAvatarModal, setUpdateAvatarLoading)) }}>OK</Text>}
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -284,7 +293,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
     },
     modalText: {
         fontFamily: Constants.fontPrimary,
@@ -335,6 +344,25 @@ const styles = StyleSheet.create({
         borderBottomWidth: 4,
         borderBottomColor: Constants.colorPrimary,
         textAlign: 'center',
+    },
+    avatarContainer: {
+        width: '100%',
+        overflow: 'hidden',
+        padding: 10
+    },
+    avatarItem: {
+        fontSize: Constants.fontXl,
+        padding: 4,
+        backgroundColor: Constants.colorPrimary,
+        marginInline: 4,
+        borderRadius: 4,
+        width: 60,
+        textAlign: 'center'
+    },
+    avatarSelected: {
+        outlineWidth: 1,
+        outlineStyle: 'solid',
+        outlineColor: Constants.colorWhite
     },
     /* for dark mode off */
     backgroundWhite: {
