@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     },
     cardText: {
         fontSize: Constants.fontXxl,
+        lineHeight: 0,
     },
     cardBackWrapper: {
         width: 130,

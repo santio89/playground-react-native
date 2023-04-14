@@ -12,7 +12,7 @@ export default function Header({ navigation }) {
       <View style={[styles.headerContainer, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder]}>
         <TouchableOpacity onPress={() => navigation.navigate("Apps", {screen: "AppsHome"})}><Text style={styles.header}>PLAYGROUND</Text></TouchableOpacity>
         <TouchableOpacity style={[styles.loginContainer, altColorTheme && styles.altLoginContainer]} onPress={() => avatar ? navigation.navigate("Profile") : navigation.navigate("Auth", {screen: "LogIn"})}>
-          <View>
+          <View style={styles.headerButton}>
             {avatar ?
               <Text style={styles.avatar}>{avatar}</Text> :
               <Entypo name="login" size={28} color={Constants.colorWhite} />}
@@ -62,6 +62,9 @@ const styles = StyleSheet.create({
     color: Constants.colorWhite,
     fontFamily: Constants.fontPrimaryBold,
     fontSize: Constants.fontLg
+  },
+  headerButton: {
+    lineHeight: 0
   },
   /* for alt color theme */
   altBackground: {
