@@ -74,7 +74,7 @@ const LogIn = ({ navigation }) => {
                         </View>
                         <View style={styles.profileItem}>
                             <View style={styles.authItemTextWrapper}>
-                                <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInput && { borderColor: 'darkgray' }, { height: 44 }]} disabled={!validInput} onPress={handleLogIn}>
+                                <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInput && { borderColor: 'darkgray' }, { height: 44 }]} disabled={!validInput || logInLoading} onPress={handleLogIn}>
                                     {logInLoading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Text style={[styles.authItemText, !validInput && { color: 'darkgray' }]}>{text.logIn}</Text>}
                                 </TouchableOpacity>
                                 <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, styles.authItemTextButtonRegister]} onPress={() => navigation.navigate("Auth", {screen: "SignUp"})}>
@@ -208,6 +208,8 @@ const styles = StyleSheet.create({
         padding: 8,
         color: Constants.colorDark,
         width: 180,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     altAuthItemTextButton: {
         backgroundColor: Constants.colorSecondaryDark,
@@ -288,7 +290,9 @@ const styles = StyleSheet.create({
         borderColor: Constants.colorWhite,
         marginHorizontal: 10,
         width: 100,
-        textAlign: 'center'
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     modalBtnText: {
         fontFamily: Constants.fontPrimary,

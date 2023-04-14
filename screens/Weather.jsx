@@ -196,8 +196,8 @@ const Weather = ({ navigation }) => {
               <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setModalVisible(false); setInputLocation(""); setSearchError(null) }}>
                 <Text style={[styles.modalBtnText]}>{text.close}</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { location !== "" && fetchWeatherData(inputLocation) }}>
-                <Text style={[styles.modalBtnText]}>{text.search}</Text>
+              <TouchableOpacity disabled={refreshing} style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { location !== "" && fetchWeatherData(inputLocation) }}>
+                {refreshing?<ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />: <Text style={[styles.modalBtnText]}>{text.search}</Text>}
               </TouchableOpacity>
             </View>
           </View>
@@ -361,13 +361,15 @@ const styles = StyleSheet.create({
     borderColor: Constants.colorWhite,
     marginHorizontal: 10,
     width: 100,
-    textAlign: 'center'
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   modalBtnText: {
     fontFamily: Constants.fontPrimary,
     fontSize: Constants.fontMd,
     color: Constants.colorWhite,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   modalBorderDark: {
     borderColor: Constants.colorDark,
@@ -379,7 +381,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     paddingVertical: 16,
     backgroundColor: 'transparent',
-    borderBottomWidth: 2,
+    borderBottomWidth: 4,
     borderBottomColor: Constants.colorPrimary,
     textAlign: 'center'
   },

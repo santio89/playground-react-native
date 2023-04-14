@@ -115,7 +115,7 @@ const SignUp = ({ navigation }) => {
                         </View>
                         <View style={styles.profileItem}>
                             <View style={styles.authItemTextWrapper}>
-                                <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInputs && { borderColor: 'darkgray' }, { height: 44 }]} disabled={!validInputs} onPress={handleSignUp}>
+                                <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInputs && { borderColor: 'darkgray' }, { height: 44 }]} disabled={!validInputs || signUpLoading} onPress={handleSignUp}>
                                     {signUpLoading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Text style={[styles.authItemText, !validInputs && { color: 'darkgray' }]}>{text.signUp}</Text>}
 
                                 </TouchableOpacity>
@@ -251,6 +251,8 @@ const styles = StyleSheet.create({
         padding: 8,
         color: Constants.colorDark,
         width: 180,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     altAuthItemTextButton: {
         backgroundColor: Constants.colorSecondaryDark,
@@ -331,7 +333,9 @@ const styles = StyleSheet.create({
         borderColor: Constants.colorWhite,
         marginHorizontal: 10,
         width: 100,
-        textAlign: 'center'
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     modalBtnText: {
         fontFamily: Constants.fontPrimary,

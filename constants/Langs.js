@@ -52,7 +52,9 @@ export const LANGS = [{
         inputLocation: "ENTER LOCATION",
         close: "CLOSE",
         search: "SEARCH",
-        searchError: "LOCATION NOT FOUND"
+        searchError: "LOCATION NOT FOUND",
+        inputUsername: "ENTER USERNAME",
+        inputAvatar: "SELECT AVATAR"
     }
 }, {
     id: 2, lang: "spanish", text: {
@@ -108,6 +110,8 @@ export const LANGS = [{
         inputLocation: "INGRESE UBICACIÓN",
         close: "CERRAR",
         search: "BUSCAR",
-        searchError: "UBICACIÓN NO ENCONTRADA"
+        searchError: "UBICACIÓN NO ENCONTRADA",
+        inputUsername: "INGRESE NOMBRE",
+        inputAvatar: "SELECCIONE AVATAR"
     }
 }]

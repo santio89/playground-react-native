@@ -142,9 +142,8 @@ export const logOut = () => {
     }
 }
 
-export const updateUsername = (username, updateUsernameLoading) => {
-    updateUsernameLoading(true)
-    userValidInput(false)
+export const updateUsername = (token, username, setUpdateUsernameLoading, setUsernameModal) => {
+    setUpdateUsernameLoading(true)
 
     return async dispatch => {
         try {
@@ -154,6 +153,52 @@ export const updateUsername = (username, updateUsernameLoading) => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
+                    idToken: token,
+                    displayName: username
+                })
+            })
+           
+            if (!response.ok) {
+                const errorResData = await response.json();
+                const errorId = errorResData.error.message;
+                let message = 'cant_update_user';
+
+                if (errorId === 'INVALID_ID_TOKEN') {
+                    message = 'invalid_id_token';
+                }
+                throw new Error(message);
+            }
+
+            const data = await response.json()
+           
+            dispatch({
+                type: UPDATE_USERNAME,
+                displayName: data.displayName.slice(2),
+            })
+
+
+        } catch (e) {
+            console.log("error updating user: ", e)
+        } finally {
+            setUpdateUsernameLoading(false)
+            setUsernameModal(false)
+        }
+
+    }
+}
+
+export const updateAvatar = (token, username, setValidAvatars, setAvatarModal ) => {
+    setValidAvatars(false)
+
+    return async dispatch => {
+        try {
+            const response = await fetch(URL_AUTH_UPDATE, {
+                method: 'POST',
+                header: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    idToken: token,
                     displayName: username
                 })
             })
@@ -171,78 +216,18 @@ export const updateUsername = (username, updateUsernameLoading) => {
 
             const data = await response.json()
 
-            setAccountEmail(`${data.displayName.slice(2).toLocaleUpperCase()}\n${[...data.displayName][0]}`)
-            setLogInSuccess(true);
-
             dispatch({
-                type: LOG_IN,
-                token: data.idToken,
-                refreshToken: data.refreshToken,
-                userId: data.localId,
-                displayName: data.displayName.slice(2),
+                type: UPDATE_AVATAR,
                 avatar: [...data.displayName][0],
-                email: data.email
             })
 
 
         } catch (e) {
             console.log("error updating user: ", e)
         } finally {
-            updateUsernameLoading(false)
-            userValidInput(true)
+            setAvatarModal(false)
+            setValidAvatars(true)
         }
 
-    }
-}
-
-export const updateAvatar = (avatar, updateAvatarLoading) => {
-    updateAvatarLoading(true)
-    avatarValidInputs(false)
-
-    return async dispatch => {
-        try {
-            const response = await fetch(URL_AUTH_UPDATE, {
-                method: 'POST',
-                header: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    displayName: avatar
-                })
-            })
-
-            if (!response.ok) {
-                const errorResData = await response.json();
-                const errorId = errorResData.error.message;
-                let message = 'cant_update_user';
-
-                if (errorId === 'INVALID_ID_TOKEN') {
-                    message = 'invalid_id_token';
-                }
-                throw new Error(message);
-            }
-
-            const data = await response.json()
-
-            setAccountEmail(`${data.displayName.slice(2).toLocaleUpperCase()}\n${[...data.displayName][0]}`)
-            setLogInSuccess(true);
-
-            dispatch({
-                type: LOG_IN,
-                token: data.idToken,
-                refreshToken: data.refreshToken,
-                userId: data.localId,
-                displayName: data.displayName.slice(2),
-                avatar: [...data.displayName][0],
-                email: data.email
-            })
-
-
-        } catch (e) {
-            console.log("error updating user: ", e)
-        } finally {
-            updateUsernameLoading(false)
-            userValidInput(true)
-        }
     }
 }

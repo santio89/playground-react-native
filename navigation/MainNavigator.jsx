@@ -1,3 +1,4 @@
+import {StatusBar} from 'react-native'
 import { NavigationContainer } from "@react-navigation/native";
 import TabNavigator from './TabNavigator';
 import Constants from '../constants/Styles.js'
@@ -42,6 +43,7 @@ const MainNavigator = () => {
 
     return (
         <NavigationContainer theme={MyTheme}>
+            <StatusBar barStyle = {darkMode?"light-content":"dark-content"} hidden = {false} backgroundColor = {altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} translucent = {true}/>
             <TabNavigator />
         </NavigationContainer>
     )

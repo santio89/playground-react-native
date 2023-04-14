@@ -1,19 +1,20 @@
-import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Modal, SafeAreaView } from 'react-native'
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Modal, SafeAreaView, TextInput, KeyboardAvoidingView, ActivityIndicator } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { LANGS } from '../constants/Langs.js'
 import Constants from '../constants/Styles.js'
 import Header from '../components/Header'
-import { logOut } from '../store/actions/auth.action.js'
+import { logOut, updateAvatar, updateUsername } from '../store/actions/auth.action.js'
+import Emojis from '../constants/Emojis.js'
 
 const Profile = ({ navigation }) => {
     const dispatch = useDispatch();
 
-
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
     const { selected: languageSelected } = useSelector(state => state.settings.language)
-
+    
+    const token = useSelector(state=>state.auth.token)
     const email = useSelector(state => state.auth.email)
     const displayName = useSelector(state => state.auth.displayName)
     const avatar = useSelector(state => state.auth.avatar)
@@ -24,6 +25,23 @@ const Profile = ({ navigation }) => {
 
     const [logOutSuccess, setLogOutSuccess] = useState(false)
 
+    const [inputUsername, setInputUsername] = useState("")
+    const [usernameModal, setUsernameModal] = useState(false)
+    const [usernameValidInput, setUsernameValidInput] = useState(false)
+    const [updateUsernameLoading, setUpdateUsernameLoading] = useState(false)
+
+    const [selectedAvatar, setSelectedAvatar] = useState(null)
+    const [validAvatars, setValidAvatars] = useState(true)
+    const [avatarModal, setAvatarModal] = useState(false)
+
+    const validateName = (name) => {
+        var re = /[^ ]{4,16}/;
+        return re.test(name);
+    };
+
+    useEffect(() => {
+        validateName(inputUsername) ? setUsernameValidInput(true) : setUsernameValidInput(false)
+    }, [inputUsername])
 
     useEffect(() => {
         setText(LANGS.find(lang => lang.lang === languageSelected).text)
@@ -36,6 +54,10 @@ const Profile = ({ navigation }) => {
         })
     }, [text])
 
+    useEffect(()=>{
+        setSelectedAvatar(avatar)
+    }, [avatar])
+
     return (
         <>
             <Header navigation={navigation} />
@@ -45,30 +67,32 @@ const Profile = ({ navigation }) => {
                         <>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.email}: </Text></Text>
-                                <Text style={[styles.profileItemText]}>{email?.toLocaleUpperCase()}</Text>
+                                <View style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton, { borderStyle: 'solid' }]}><Text style={[styles.profileItemText]}>{email?.toLocaleUpperCase()}</Text></View>
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.name}: </Text></Text>
-                                <Text style={[styles.profileItemText]}>{displayName?.toLocaleUpperCase()}</Text>
+                                <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton]} onPress={() => {setInputUsername(""), setUsernameModal(true)}}><Text style={[styles.profileItemText]}>{displayName?.toLocaleUpperCase()}</Text></TouchableOpacity>
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.avatar}: </Text></Text>
-                                <TouchableOpacity><Text style={[styles.profileItemAvatar, altColorTheme && styles.altProfileItemAvatar]}>{avatar}</Text></TouchableOpacity>
+                                <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton]}><Text style={styles.profileItemAvatar} onPress={()=>setAvatarModal(true)}>{avatar}</Text></TouchableOpacity>
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}>
                                     <Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text>
-                                    <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton]} onPress={() => { dispatch(logOut()); setLogOutSuccess(true) }}><Text style={[styles.settingsItemText]}>{text.logOut}</Text></TouchableOpacity>
+                                    <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton, { borderStyle: 'solid' }]} onPress={() => { dispatch(logOut()); setLogOutSuccess(true) }}><Text style={[styles.settingsItemText, { fontWeight: 'bold' }]}>{text.logOut}</Text></TouchableOpacity>
                                 </Text>
                             </View>
                         </> :
                         <View style={[styles.profileItem, { justifyContent: "center", alignItems: "center", marginTop: 10 }]}>
-                            <TouchableOpacity style={[styles.settingsItemTextButton, { padding: 16 }, altColorTheme && styles.altSettingsItemTextButton]} onPress={() => { navigation.navigate("Auth", {screen: "LogIn"}) }}><Text style={[styles.settingsItemText, { fontFamily: Constants.fontPrimaryBold, fontSize: Constants.fontLg }]}>{text.logInProfile}</Text></TouchableOpacity>
+                            <TouchableOpacity style={[styles.settingsItemTextButton, { padding: 16 }, altColorTheme && styles.altSettingsItemTextButton]} onPress={() => { navigation.navigate("Auth", { screen: "LogIn" }) }}><Text style={[styles.settingsItemText, { fontFamily: Constants.fontPrimaryBold, fontSize: Constants.fontLg }]}>{text.logInProfile}</Text></TouchableOpacity>
                         </View>
                     }
                 </View>
             </ScrollView>
 
+
+            {/* log out modal */}
             <Modal visible={logOutSuccess} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
@@ -78,7 +102,55 @@ const Profile = ({ navigation }) => {
                         </Text>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]}>
-                                <Text style={[styles.modalBtnText]} onPress={() => { setLogOutSuccess(false); navigation.navigate("Apps", {screen: "AppsHome"}) }}>OK</Text>
+                                <Text style={[styles.modalBtnText]} onPress={() => { setLogOutSuccess(false); navigation.navigate("Apps", { screen: "AppsHome" }) }}>OK</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </SafeAreaView>
+            </Modal>
+
+            {/* username modal */}
+            <Modal visible={usernameModal} transparent={true} animationType='fade'>
+                <SafeAreaView style={styles.modal}>
+                    <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
+                        <Text style={styles.modalTitle}>
+                            <Text>{text.inputUsername}</Text>
+                            <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
+                                <TextInput style={[styles.inputUsername, altColorTheme && styles.altInputUsername, (inputUsername != "" && !usernameValidInput) && { borderBottomColor: Constants.colorRed }]} autoCapitalize='none' placeholder={text.minName} placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} value={inputUsername} onChangeText={(inputUsername) => { setInputUsername(inputUsername.toLocaleUpperCase()) }} onSubmitEditing={() => { usernameValidInput && dispatch(updateUsername(token, avatar+inputUsername.trim(), setUpdateUsernameLoading, setUsernameModal)) }} />
+                            </KeyboardAvoidingView>
+                        </Text>
+
+                        <View style={styles.modalBtnContainer}>
+                            <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]}>
+                                <Text style={[styles.modalBtnText]} onPress={() => { setUsernameModal(false); setInputUsername("") }}>{text.cancel}</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity disabled={!usernameValidInput || inputUsername === "" || updateUsernameLoading} style={[styles.modalBtn, altColorTheme && styles.altModalBtn, !usernameValidInput && { borderColor: 'darkgray' }]}>
+                            {updateUsernameLoading?<ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />:<Text style={[styles.modalBtnText, !usernameValidInput && { color: 'darkgray' }]} onPress={() => { usernameValidInput && dispatch(updateUsername(token, avatar+inputUsername.trim(), setUpdateUsernameLoading, setUsernameModal)) }}>OK</Text>}
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </SafeAreaView>
+            </Modal>
+
+            {/* avatar modal */}
+             <Modal visible={avatarModal} transparent={true} animationType='fade'>
+             <SafeAreaView style={styles.modal}>
+                    <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
+                        <Text style={styles.modalTitle}>
+                            <Text>{text.inputAvatar}</Text>
+                            <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
+                               
+                            </KeyboardAvoidingView>
+                        </Text>
+
+                        <View style={styles.modalBtnContainer}>
+                            <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]}>
+                                <Text style={[styles.modalBtnText]} onPress={() => { setAvatarModal(false) }}>{text.cancel}</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity disabled={selectedAvatar === avatar || !validAvatars} style={[styles.modalBtn, altColorTheme && styles.altModalBtn, selectedAvatar === avatar && { borderColor: 'darkgray' }]}>
+                            {updateUsernameLoading?<ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />:<Text style={[styles.modalBtnText,  selectedAvatar === avatar && { color: 'darkgray' }]} onPress={() => { selectedAvatar != avatar && dispatch(updateAvatar(token, selectedAvatar+displayName, setValidAvatars, setAvatarModal)) }}>OK</Text>}
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -125,7 +197,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     profileItemLabel: {
-        fontFamily: Constants.fontPrimary,
+        fontFamily: Constants.fontPrimaryBold,
         fontSize: Constants.fontMd,
         color: Constants.colorWhite,
         display: 'flex',
@@ -134,9 +206,9 @@ const styles = StyleSheet.create({
         marginBottom: 4,
     },
     profileItemText: {
-        fontFamily: Constants.fontPrimaryBold,
+        fontFamily: Constants.fontPrimary,
         fontSize: Constants.fontMd,
-        color: Constants.colorDark,
+        color: Constants.colorWhite,
     },
     profileItemImage: {
         width: 80,
@@ -145,15 +217,21 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         marginTop: 8
     },
-    profileItemAvatar: {
-        fontSize: Constants.fontXll,
+    profileItemButton: {
         backgroundColor: Constants.colorPrimaryDark,
         padding: 8,
         borderRadius: 4,
-        marginTop: 8,
+        marginTop: 2,
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderWidth: 2,
+        borderColor: Constants.colorPrimary,
+        borderStyle: 'dashed'
+    },
+    profileItemAvatar: {
+        fontSize: Constants.fontXll,
+        textAlign: 'center'
     },
     settingsItemTextButton: {
         borderWidth: 1,
@@ -234,16 +312,29 @@ const styles = StyleSheet.create({
         borderColor: Constants.colorWhite,
         marginHorizontal: 10,
         width: 100,
-        textAlign: 'center'
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     modalBtnText: {
         fontFamily: Constants.fontPrimary,
         fontSize: Constants.fontMd,
         color: Constants.colorWhite,
-        textAlign: 'center'
+        textAlign: 'center',
     },
     modalBorderDark: {
         borderColor: Constants.colorDark,
+    },
+    inputUsername: {
+        width: '100%',
+        fontSize: Constants.fontLg,
+        color: Constants.colorWhite,
+        paddingHorizontal: 4,
+        paddingVertical: 16,
+        backgroundColor: 'transparent',
+        borderBottomWidth: 4,
+        borderBottomColor: Constants.colorPrimary,
+        textAlign: 'center',
     },
     /* for dark mode off */
     backgroundWhite: {
@@ -260,7 +351,7 @@ const styles = StyleSheet.create({
     altProfileItemIndicator: {
         color: Constants.colorSecondaryDark,
     },
-    altProfileItemAvatar: {
+    altProfileItemButton: {
         backgroundColor: Constants.colorSecondaryDark,
     },
     altSettingsItemTextButton: {
@@ -275,5 +366,8 @@ const styles = StyleSheet.create({
     },
     altModalText: {
         backgroundColor: Constants.colorSecondaryDark,
+    },
+    altInputUsername: {
+        borderBottomColor: Constants.colorSecondary,
     },
 })

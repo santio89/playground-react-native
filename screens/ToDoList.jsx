@@ -204,7 +204,9 @@ const styles = StyleSheet.create({
         borderColor: Constants.colorWhite,
         marginHorizontal: 10,
         width: 100,
-        textAlign: 'center'
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     modalBtnText: {
         fontFamily: Constants.fontPrimary,
