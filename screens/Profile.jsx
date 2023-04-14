@@ -160,7 +160,7 @@ const Profile = ({ navigation }) => {
 
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]}>
-                                <Text style={[styles.modalBtnText]} onPress={() => { setAvatarModal(false) }}>{text.close}</Text>
+                                <Text style={[styles.modalBtnText]} onPress={() => { setAvatarModal(false); setSelectedAvatar(avatar) }}>{text.close}</Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity disabled={selectedAvatar === avatar || updateAvatarLoading} style={[styles.modalBtn, altColorTheme && styles.altModalBtn, selectedAvatar === avatar && { borderColor: 'darkgray' }]}>
