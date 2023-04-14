@@ -122,7 +122,7 @@ const Profile = ({ navigation }) => {
 
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]}>
-                                <Text style={[styles.modalBtnText]} onPress={() => { setUsernameModal(false); setInputUsername("") }}>{text.cancel}</Text>
+                                <Text style={[styles.modalBtnText]} onPress={() => { setUsernameModal(false); setInputUsername("") }}>{text.close}</Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity disabled={!usernameValidInput || inputUsername === "" || updateUsernameLoading} style={[styles.modalBtn, altColorTheme && styles.altModalBtn, !usernameValidInput && { borderColor: 'darkgray' }]}>
