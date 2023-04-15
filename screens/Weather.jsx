@@ -133,9 +133,9 @@ const Weather = ({ navigation }) => {
               !forecast || !spForecast ?
                 <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
                 :
-                <>
+                <> 
+                  <Text style={[styles.weatherTitle, altColorTheme && styles.altWeatherTitle]}>{forecast.name.toLocaleUpperCase()}</Text>
                   <View style={styles.weatherHeader}>
-                    <Text style={[styles.weatherTitle, altColorTheme && styles.altWeatherTitle]}>{forecast.name.toLocaleUpperCase()}</Text>
                     <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setModalVisible(true) }} ><Entypo name="location-pin" size={Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
                   </View>
 
@@ -226,16 +226,19 @@ const styles = StyleSheet.create({
   },
   weatherHeader: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     flexWrap: 'wrap',
-    marginBottom: 20,
+    marginBottom: 20
   },
   weatherPinLocation: {
     paddingHorizontal: 10,
     borderWidth: 1,
     borderRadius: 4,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
     borderColor: Constants.colorPrimaryDark,
+    borderTopColor: Constants.colorPrimary,
     backgroundColor: Constants.colorPrimary
   },
   weatherData: {
@@ -258,6 +261,9 @@ const styles = StyleSheet.create({
     fontFamily: Constants.fontPrimaryBold,
     color: Constants.colorPrimary,
     fontSize: Constants.fontXl,
+    borderBottomColor: Constants.colorPrimary,
+    borderBottomWidth: 2,
+    borderStyle: 'dashed'
   },
   weatherTitleLocation:
   {
@@ -396,6 +402,7 @@ const styles = StyleSheet.create({
   },
   altWeatherTitle: {
     color: Constants.colorSecondary,
+    borderBottomColor: Constants.colorSecondary,
   },
 
   altModalInner: {
@@ -413,7 +420,8 @@ const styles = StyleSheet.create({
   },
   altWeatherPinLocation: {
     borderColor: Constants.colorSecondaryDark,
-    backgroundColor: Constants.colorSecondary
+    borderTopColor: Constants.colorSecondary,
+    backgroundColor: Constants.colorSecondary,
   },
   altInputLocation: {
     borderBottomColor: Constants.colorSecondary,
