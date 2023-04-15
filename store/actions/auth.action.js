@@ -181,7 +181,7 @@ export const refreshToken = (refresh_token) => {
     }
 }
 
-export const updateUsername = (token, username, setUpdateUsernameLoading, setUsernameModal, dispatchRefreshToken) => {
+export const updateUsername = (token, username, setUpdateUsernameLoading, setUsernameModal, dispatchRefreshToken, getAuthToken) => {
 
     return async dispatch => {
         setUpdateUsernameLoading(true)
@@ -209,7 +209,7 @@ export const updateUsername = (token, username, setUpdateUsernameLoading, setUse
 
                     if (errorId === 'INVALID_ID_TOKEN') {
                         dispatchRefreshToken()
-                        tok = useSelector(state => state.auth.token)
+                        tok = getAuthToken()
                     } else {
                         throw new Error(message + errorId);
                     }
@@ -236,7 +236,7 @@ export const updateUsername = (token, username, setUpdateUsernameLoading, setUse
     }
 }
 
-export const updateAvatar = (token, username, setAvatarModal, setUpdateAvatarLoading, dispatchRefreshToken, useSelector) => {
+export const updateAvatar = (token, username, setAvatarModal, setUpdateAvatarLoading, dispatchRefreshToken, getAuthToken) => {
 
     return async dispatch => {
         setUpdateAvatarLoading(true)
@@ -264,7 +264,7 @@ export const updateAvatar = (token, username, setAvatarModal, setUpdateAvatarLoa
 
                     if (errorId === 'INVALID_ID_TOKEN') {
                         dispatchRefreshToken()
-                        tok = useSelector(state => state.auth.token)
+                        tok = getAuthToken()
                     } else {
                         throw new Error(message, e);
                     }
