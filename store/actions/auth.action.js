@@ -161,7 +161,7 @@ export const refreshToken = (refresh_token) => {
                 throw new Error(message + errorId);
             } else {
                 const data = await response.json()
-                
+                console.log("refresh: ",data)
                 dispatch({
                     type: REFRESH_TOKEN,
                     token: data.id_token,

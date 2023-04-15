@@ -36,6 +36,7 @@ const Profile = ({ navigation }) => {
     const [updateAvatarLoading, setUpdateAvatarLoading] = useState(false)
 
     const dispatchRefreshToken = () => {
+        console.log("dispathing refresh")
         dispatch(refreshToken(refresh_token))
     }
 
@@ -76,11 +77,11 @@ const Profile = ({ navigation }) => {
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.name}: </Text></Text>
-                                <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton]} onPress={() => { dispatchRefreshToken(), setInputUsername(""), setUsernameModal(true) }}><Text style={[styles.profileItemText]}>{displayName?.toLocaleUpperCase()}</Text></TouchableOpacity>
+                                <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton]} onPress={() => { setInputUsername(""), setUsernameModal(true) }}><Text style={[styles.profileItemText]}>{displayName?.toLocaleUpperCase()}</Text></TouchableOpacity>
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.avatar}: </Text></Text>
-                                <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton]}><Text style={styles.profileItemAvatar} onPress={() => {dispatchRefreshToken(), setAvatarModal(true)}}>{avatar}</Text></TouchableOpacity>
+                                <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton]}><Text style={styles.profileItemAvatar} onPress={() => {setAvatarModal(true)}}>{avatar}</Text></TouchableOpacity>
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}>
@@ -121,7 +122,7 @@ const Profile = ({ navigation }) => {
                         <Text style={styles.modalTitle}>
                             <Text>{text.inputUsername}</Text>
                             <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
-                                <TextInput style={[styles.inputUsername, altColorTheme && styles.altInputUsername, (inputUsername != "" && !usernameValidInput) && { borderBottomColor: Constants.colorRed }]} autoCapitalize='none' placeholder={text.minName} placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} value={inputUsername} onChangeText={(inputUsername) => { setInputUsername(inputUsername.toLocaleUpperCase()) }} onSubmitEditing={() => { usernameValidInput && dispatch(updateUsername(token, avatar + inputUsername.trim(), setUpdateUsernameLoading, setUsernameModal, dispatchRefreshToken)) }} />
+                                <TextInput style={[styles.inputUsername, altColorTheme && styles.altInputUsername, (inputUsername != "" && !usernameValidInput) && { borderBottomColor: Constants.colorRed }]} autoCapitalize='none' placeholder={text.minName} placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} value={inputUsername} onChangeText={(inputUsername) => { setInputUsername(inputUsername.toLocaleUpperCase()) }} onSubmitEditing={() => { usernameValidInput && setUpdateUsernameLoading(true), usernameValidInput && dispatchRefreshToken(), usernameValidInput && dispatch(updateUsername(token, avatar + inputUsername.trim(), setUpdateUsernameLoading, setUsernameModal, dispatchRefreshToken)) }} />
                             </KeyboardAvoidingView>
                         </Text>
 
@@ -130,7 +131,7 @@ const Profile = ({ navigation }) => {
                                 <Text style={[styles.modalBtnText]}>{text.close}</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity disabled={!usernameValidInput || inputUsername === "" || updateUsernameLoading} style={[styles.modalBtn, altColorTheme && styles.altModalBtn, !usernameValidInput && { borderColor: 'darkgray' }]} onPress={() => { usernameValidInput && dispatch(updateUsername(token, avatar + inputUsername.trim(), setUpdateUsernameLoading, setUsernameModal, dispatchRefreshToken)) }}>
+                            <TouchableOpacity disabled={!usernameValidInput || inputUsername === "" || updateUsernameLoading} style={[styles.modalBtn, altColorTheme && styles.altModalBtn, !usernameValidInput && { borderColor: 'darkgray' }]} onPress={() => { usernameValidInput && setUpdateUsernameLoading(true), usernameValidInput && dispatchRefreshToken(),usernameValidInput && dispatch(updateUsername(token, avatar + inputUsername.trim(), setUpdateUsernameLoading, setUsernameModal, dispatchRefreshToken)) }}>
                                 {updateUsernameLoading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Text style={[styles.modalBtnText, !usernameValidInput && { color: 'darkgray' }]}>OK</Text>}
                             </TouchableOpacity>
                         </View>
@@ -163,7 +164,7 @@ const Profile = ({ navigation }) => {
                                 <Text style={[styles.modalBtnText]}>{text.close}</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity disabled={selectedAvatar === avatar || updateAvatarLoading} style={[styles.modalBtn, altColorTheme && styles.altModalBtn, selectedAvatar === avatar && { borderColor: 'darkgray' }]} onPress={() => { selectedAvatar != avatar && dispatch(updateAvatar(token, selectedAvatar + displayName, setAvatarModal, setUpdateAvatarLoading, dispatchRefreshToken)) }}>
+                            <TouchableOpacity disabled={selectedAvatar === avatar || updateAvatarLoading} style={[styles.modalBtn, altColorTheme && styles.altModalBtn, selectedAvatar === avatar && { borderColor: 'darkgray' }]} onPress={() => { selectedAvatar != avatar && setUpdateAvatarLoading(true), selectedAvatar != avatar && dispatchRefreshToken(), selectedAvatar != avatar && dispatch(updateAvatar(token, selectedAvatar + displayName, setAvatarModal, setUpdateAvatarLoading, dispatchRefreshToken)) }}>
                                 {updateAvatarLoading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Text style={[styles.modalBtnText, selectedAvatar === avatar && { color: 'darkgray' }]}>OK</Text>}
                             </TouchableOpacity>
                         </View>
