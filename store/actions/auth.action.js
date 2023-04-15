@@ -222,8 +222,8 @@ export const updateUsername = (token, username, setUpdateUsernameLoading, setUse
 }
 
 export const updateAvatar = (token, username, setAvatarModal, setUpdateAvatarLoading, dispatchRefreshToken) => {
-
-    return async dispatch => {
+    
+    return async dispatch => {  
         setUpdateAvatarLoading(true)
 
         try {
