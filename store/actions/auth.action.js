@@ -287,7 +287,6 @@ export const updateAvatar = (token, username, setAvatarModal, setUpdateAvatarLoa
             setAvatarModal(false)
             setUpdateAvatarLoading(false)
         }
-
     }
 }
 
