@@ -189,6 +189,7 @@ export const updateUsername = (token, username, setUpdateUsernameLoading, setUse
         try {
             let flag = true
             let response = null
+            let tok = token
             while (flag) {
                 response = await fetch(URL_AUTH_UPDATE, {
                     method: 'POST',
@@ -196,7 +197,7 @@ export const updateUsername = (token, username, setUpdateUsernameLoading, setUse
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        idToken: token,
+                        idToken: tok,
                         displayName: username
                     })
                 })
@@ -208,8 +209,10 @@ export const updateUsername = (token, username, setUpdateUsernameLoading, setUse
 
                     if (errorId === 'INVALID_ID_TOKEN') {
                         dispatchRefreshToken()
+                        tok = useSelector(state => state.auth.token)
+                    } else {
+                        throw new Error(message + errorId);
                     }
-                    throw new Error(message + errorId);
                 } else {
                     flag = false
                 }
@@ -233,7 +236,7 @@ export const updateUsername = (token, username, setUpdateUsernameLoading, setUse
     }
 }
 
-export const updateAvatar = (token, username, setAvatarModal, setUpdateAvatarLoading, dispatchRefreshToken) => {
+export const updateAvatar = (token, username, setAvatarModal, setUpdateAvatarLoading, dispatchRefreshToken, useSelector) => {
 
     return async dispatch => {
         setUpdateAvatarLoading(true)
@@ -241,6 +244,7 @@ export const updateAvatar = (token, username, setAvatarModal, setUpdateAvatarLoa
         try {
             let flag = true
             let response = null
+            let tok = token
             while (flag) {
                 response = await fetch(URL_AUTH_UPDATE, {
                     method: 'POST',
@@ -248,7 +252,7 @@ export const updateAvatar = (token, username, setAvatarModal, setUpdateAvatarLoa
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        idToken: token,
+                        idToken: tok,
                         displayName: username
                     })
                 })
@@ -256,12 +260,14 @@ export const updateAvatar = (token, username, setAvatarModal, setUpdateAvatarLoa
                 if (!response.ok) {
                     const errorResData = await response.json();
                     const errorId = errorResData.error.message;
-                    let message = 'cant_update_user';
+                    let message = 'cant_update_user__';
 
                     if (errorId === 'INVALID_ID_TOKEN') {
                         dispatchRefreshToken()
+                        tok = useSelector(state => state.auth.token)
+                    } else {
+                        throw new Error(message, e);
                     }
-                    throw new Error(message);
                 } else {
                     flag = false
                 }

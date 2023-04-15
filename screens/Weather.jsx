@@ -28,6 +28,8 @@ const Weather = ({ navigation }) => {
   const [location, setLocation] = useState(null)
   const [inputLocation, setInputLocation] = useState("")
 
+  const [validInput, setValidInput] = useState(false)
+
   const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
   const updateWindowWidth = () => {
     setWindowWidth(Dimensions.get('window').width)
@@ -116,6 +118,10 @@ const Weather = ({ navigation }) => {
     location !== null && fetchWeatherData()
   }, [location])
 
+  useEffect(()=>{
+    inputLocation.trim().length > 0 ? setValidInput(true) : setValidInput(false)
+  }, [inputLocation])
+
 
   useEffect(() => {
     loadLocation()
@@ -186,7 +192,7 @@ const Weather = ({ navigation }) => {
               <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
                 
                 <TextInput style={[styles.inputLocation, altColorTheme && styles.altInputLocation]} autoCapitalize='none' placeholder={forecast?.name.toLocaleUpperCase()}
-                  placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} value={inputLocation} onChangeText={location => setInputLocation(location.toLocaleUpperCase())} onSubmitEditing={() => { location !== "" && fetchWeatherData(inputLocation) }} />
+                  placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} value={inputLocation} onChangeText={location => setInputLocation(location.toLocaleUpperCase())} onSubmitEditing={() => { location !== "" && fetchWeatherData(inputLocation.trim()) }} />
 
                 {/*    <MapView initialRegion={{latitude: 0, longitude: 0, latitudeDelta: 0, longitudeDelta: 0}}/> */}
 
@@ -196,8 +202,8 @@ const Weather = ({ navigation }) => {
               <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setModalVisible(false); setInputLocation(""); setSearchError(null) }}>
                 <Text style={[styles.modalBtnText]}>{text.close}</Text>
               </TouchableOpacity>
-              <TouchableOpacity disabled={refreshing} style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { location !== "" && fetchWeatherData(inputLocation) }}>
-                {refreshing?<ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />: <Text style={[styles.modalBtnText]}>{text.search}</Text>}
+              <TouchableOpacity disabled={refreshing || !validInput} style={[styles.modalBtn, altColorTheme && styles.altModalBtn, !validInput && styles.modalBtnDisabled]} onPress={() => { location !== "" && fetchWeatherData(inputLocation.trim()) }}>
+                {refreshing?<ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />: <Text style={[styles.modalBtnText, !validInput && styles.modalBtnTextDisabled]}>{text.search}</Text>}
               </TouchableOpacity>
             </View>
           </View>
@@ -371,11 +377,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  modalBtnDisabled: {
+    borderColor: 'darkgray',
+  },
   modalBtnText: {
     fontFamily: Constants.fontPrimary,
     fontSize: Constants.fontMd,
     color: Constants.colorWhite,
     textAlign: 'center',
+  },
+  modalBtnTextDisabled: {
+    color: 'darkgray'
   },
   modalBorderDark: {
     borderColor: Constants.colorDark,
