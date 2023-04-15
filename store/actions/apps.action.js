@@ -100,7 +100,7 @@ export const getAppsData = (userId, storageGetItem) => {
                     appsData: data
                 })
             } catch(e) {
-                console.log("appsDataException")
+                console.log("appsDataException-",e)
             }
         }
     } else {
