@@ -37,30 +37,28 @@ export const signUp = (email, password, displayName, setEmailError, setModalVisi
                     message = 'blocked_requests'
                 }
                 throw new Error(message);
+            } else {
+                const data = await response.json()
+
+                /* envio a firebase configs default de usuario */
+                dispatch(setSettingsFirebase(settings, data.localId))
+                dispatch(setListItems(data.localId, []))
+                dispatch(setMemoScore(data.localId, "-"))
+
+                /* seteo modal */
+                setAccountEmail(`${data.email}`)
+                setAccountCreatedModal(true)
+
+                dispatch({
+                    type: SIGN_UP,
+                    token: data.idToken,
+                    refreshToken: data.refreshToken,
+                    userId: data.localId,
+                    displayName: data.displayName.slice(2),
+                    avatar: [...data.displayName][0],
+                    email: data.email,
+                })
             }
-
-            const data = await response.json()
-
-            /* envio a firebase configs default de usuario */
-            dispatch(setSettingsFirebase(settings, data.localId))
-            dispatch(setListItems(data.localId, []))
-            dispatch(setMemoScore(data.localId, "-"))
-
-            /* seteo modal */
-            setAccountEmail(`${data.email}`)
-            setAccountCreatedModal(true)
-
-            dispatch({
-                type: SIGN_UP,
-                token: data.idToken,
-                refreshToken: data.refreshToken,
-                userId: data.localId,
-                displayName: data.displayName.slice(2),
-                avatar: [...data.displayName][0],
-                email: data.email,
-            })
-
-
         } catch (e) {
             if (e.message === 'email_exists') {
                 setEmailError('email_exists');
@@ -104,24 +102,22 @@ export const logIn = (email, password, setLogInError, setModalVisible, setLogInL
                     message = 'wrong_credentials';
                 }
                 throw new Error(message);
+            } else {
+                const data = await response.json()
+
+                setAccountEmail(`${data.displayName.slice(2).toLocaleUpperCase()}\n${[...data.displayName][0]}`)
+                setLogInSuccess(true);
+
+                dispatch({
+                    type: LOG_IN,
+                    token: data.idToken,
+                    refreshToken: data.refreshToken,
+                    userId: data.localId,
+                    displayName: data.displayName.slice(2),
+                    avatar: [...data.displayName][0],
+                    email: data.email
+                })
             }
-
-            const data = await response.json()
-
-            setAccountEmail(`${data.displayName.slice(2).toLocaleUpperCase()}\n${[...data.displayName][0]}`)
-            setLogInSuccess(true);
-
-            dispatch({
-                type: LOG_IN,
-                token: data.idToken,
-                refreshToken: data.refreshToken,
-                userId: data.localId,
-                displayName: data.displayName.slice(2),
-                avatar: [...data.displayName][0],
-                email: data.email
-            })
-
-
         } catch (e) {
             if (e.message === 'wrong_credentials') {
                 setLogInError('wrong_credentials');
@@ -163,69 +159,58 @@ export const refreshToken = (refresh_token) => {
                 let message = 'cant_refresh__';
 
                 throw new Error(message + errorId);
+            } else {
+                const data = await response.json()
+
+                console.log("refresh data: ", data)
+                dispatch({
+                    type: REFRESH_TOKEN,
+                    token: data.id_token,
+                    refreshToken: data.refresh_token,
+                })
             }
-
-            const data = await response.json()
-
-
-            dispatch({
-                type: REFRESH_TOKEN,
-                token: data.id_token,
-                refreshToken: data.refresh_token,
-            })
-
-
         } catch (e) {
             console.log("error refreshing token: ", e)
         }
     }
 }
 
-export const updateUsername = (token, username, setUpdateUsernameLoading, setUsernameModal, dispatchRefreshToken, getAuthToken) => {
+export const updateUsername = (token, username, setUpdateUsernameLoading, setUsernameModal, dispatchRefreshToken) => {
 
     return async dispatch => {
         setUpdateUsernameLoading(true)
 
         try {
-            let flag = true
-            let response = null
-            let tok = token
-            while (flag) {
-                response = await fetch(URL_AUTH_UPDATE, {
-                    method: 'POST',
-                    header: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        idToken: tok,
-                        displayName: username
-                    })
+            const response = await fetch(URL_AUTH_UPDATE, {
+                method: 'POST',
+                header: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    idToken: token,
+                    displayName: username
                 })
-
-                if (!response.ok) {
-                    const errorResData = await response.json();
-                    const errorId = errorResData.error.message;
-                    let message = 'cant_update_user__';
-
-                    if (errorId === 'INVALID_ID_TOKEN') {
-                        dispatchRefreshToken()
-                        tok = getAuthToken()
-                    } else {
-                        throw new Error(message + errorId);
-                    }
-                } else {
-                    flag = false
-                }
-            }
-
-            const data = await response.json()
-
-            dispatch({
-                type: UPDATE_USERNAME,
-                displayName: data.displayName.slice(2),
             })
 
+            if (!response.ok) {
+                const errorResData = await response.json();
+                const errorId = errorResData.error.message;
+                let message = 'cant_update_user__';
 
+                if (errorId === 'INVALID_ID_TOKEN') {
+                    dispatchRefreshToken()
+                    updateUsername(token, username, setUpdateUsernameLoading, setUsernameModal, dispatchRefreshToken)
+                } else {
+                    throw new Error(message + errorId);
+                }
+            } else {
+                const data = await response.json()
+
+                dispatch({
+                    type: UPDATE_USERNAME,
+                    displayName: data.displayName.slice(2),
+                })
+            }
         } catch (e) {
             console.log("error updating user: ", e)
         } finally {
@@ -236,51 +221,42 @@ export const updateUsername = (token, username, setUpdateUsernameLoading, setUse
     }
 }
 
-export const updateAvatar = (token, username, setAvatarModal, setUpdateAvatarLoading, dispatchRefreshToken, getAuthToken) => {
+export const updateAvatar = (token, username, setAvatarModal, setUpdateAvatarLoading, dispatchRefreshToken) => {
 
     return async dispatch => {
         setUpdateAvatarLoading(true)
 
         try {
-            let flag = true
-            let response = null
-            let tok = token
-            while (flag) {
-                response = await fetch(URL_AUTH_UPDATE, {
-                    method: 'POST',
-                    header: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        idToken: tok,
-                        displayName: username
-                    })
+            const response = await fetch(URL_AUTH_UPDATE, {
+                method: 'POST',
+                header: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    idToken: token,
+                    displayName: username
                 })
-
-                if (!response.ok) {
-                    const errorResData = await response.json();
-                    const errorId = errorResData.error.message;
-                    let message = 'cant_update_user__';
-
-                    if (errorId === 'INVALID_ID_TOKEN') {
-                        dispatchRefreshToken()
-                        tok = getAuthToken()
-                    } else {
-                        throw new Error(message, e);
-                    }
-                } else {
-                    flag = false
-                }
-            }
-
-            const data = await response.json()
-
-            dispatch({
-                type: UPDATE_AVATAR,
-                avatar: [...data.displayName][0],
             })
 
+            if (!response.ok) {
+                const errorResData = await response.json();
+                const errorId = errorResData.error.message;
+                let message = 'cant_update_user__';
 
+                if (errorId === 'INVALID_ID_TOKEN') {
+                    dispatchRefreshToken()
+                } else {
+                    throw new Error(message, e);
+                }
+            } else {
+
+                const data = await response.json()
+
+                dispatch({
+                    type: UPDATE_AVATAR,
+                    avatar: [...data.displayName][0],
+                })
+            }
         } catch (e) {
             console.log("error updating user: ", e)
         } finally {

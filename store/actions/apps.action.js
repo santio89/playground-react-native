@@ -23,8 +23,8 @@ export const setMemoScore = (userId, bestScore, storageSetItem) => {
                     type: SET_MEMO_SCORE,
                     bestScore
                 })
-            } catch {
-                console.log("error setting memo score")
+            } catch(e) {
+                console.log("error setting memo score: ", e)
             }
         }
     } else {
@@ -37,7 +37,7 @@ export const setMemoScore = (userId, bestScore, storageSetItem) => {
                     bestScore
                 })
             } catch (error) {
-                console.log("error saving data to storage")
+                console.log("error saving data to storage: ", error)
             }
         }
     }
@@ -63,8 +63,8 @@ export const setListItems = (userId, items, storageSetItem) => {
                     type: SET_LIST_ITEMS,
                     items
                 })
-            } catch {
-                console.log("error setting list items")
+            } catch(e) {
+                console.log("error setting list items: ", e)
             }
         }
     } else {
@@ -76,8 +76,8 @@ export const setListItems = (userId, items, storageSetItem) => {
                     type: SET_LIST_ITEMS,
                     items
                 })
-            } catch (error) {
-                console.log("error saving data to storage")
+            } catch (e) {
+                console.log("error saving data to storage: ", e)
             }
         }
     }
@@ -100,7 +100,7 @@ export const getAppsData = (userId, storageGetItem) => {
                     appsData: data
                 })
             } catch(e) {
-                console.log("appsData-exception")
+                console.log("appsDataException")
             }
         }
     } else {
@@ -143,8 +143,8 @@ export const getAppsData = (userId, storageGetItem) => {
                         }
                     }
                 })
-            } catch (error) {
-                console.log("error retrieving data from storage")
+            } catch (e) {
+                console.log("error retrieving data from storage: ", e)
             }
         }
     }

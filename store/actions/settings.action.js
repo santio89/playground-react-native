@@ -53,7 +53,6 @@ export const getSettingsFirebase = (userId) => {
             const response = await fetch(`${URL_API}settings/${userId}.json?auth=${userId}`)
             const data = await response.json()
 
-
             data && dispatch({
                 type: SET_SETTINGS,
                 settings: data
