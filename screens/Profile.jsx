@@ -107,8 +107,8 @@ const Profile = ({ navigation }) => {
                             <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{text.userLoggedOut}</Text>
                         </Text>
                         <View style={styles.modalBtnContainer}>
-                            <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]}>
-                                <Text style={[styles.modalBtnText]} onPress={() => { setLogOutSuccess(false); navigation.navigate("Apps", { screen: "AppsHome" }) }}>OK</Text>
+                            <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setLogOutSuccess(false); navigation.navigate("Apps", { screen: "AppsHome" }) }}>
+                                <Text style={[styles.modalBtnText]}>OK</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
