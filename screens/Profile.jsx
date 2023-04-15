@@ -39,7 +39,6 @@ const Profile = ({ navigation }) => {
         dispatch(refreshToken(refresh_token))
     }
 
-
     const validateName = (name) => {
         var re = /[^ ]{4,16}/;
         return re.test(name);
@@ -77,11 +76,11 @@ const Profile = ({ navigation }) => {
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.name}: </Text></Text>
-                                <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton]} onPress={() => { setInputUsername(""), setUsernameModal(true) }}><Text style={[styles.profileItemText]}>{displayName?.toLocaleUpperCase()}</Text></TouchableOpacity>
+                                <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton]} onPress={() => { dispatchRefreshToken(), setInputUsername(""), setUsernameModal(true) }}><Text style={[styles.profileItemText]}>{displayName?.toLocaleUpperCase()}</Text></TouchableOpacity>
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.avatar}: </Text></Text>
-                                <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton]}><Text style={styles.profileItemAvatar} onPress={() => setAvatarModal(true)}>{avatar}</Text></TouchableOpacity>
+                                <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton]}><Text style={styles.profileItemAvatar} onPress={() => {dispatchRefreshToken(), setAvatarModal(true)}}>{avatar}</Text></TouchableOpacity>
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}>

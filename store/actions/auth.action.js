@@ -161,8 +161,7 @@ export const refreshToken = (refresh_token) => {
                 throw new Error(message + errorId);
             } else {
                 const data = await response.json()
-
-                console.log("refresh data: ", data)
+                
                 dispatch({
                     type: REFRESH_TOKEN,
                     token: data.id_token,
@@ -222,10 +221,10 @@ export const updateUsername = (token, username, setUpdateUsernameLoading, setUse
 }
 
 export const updateAvatar = (token, username, setAvatarModal, setUpdateAvatarLoading, dispatchRefreshToken) => {
-    
+
     return async dispatch => {  
         setUpdateAvatarLoading(true)
-
+       
         try {
             const response = await fetch(URL_AUTH_UPDATE, {
                 method: 'POST',
@@ -245,6 +244,7 @@ export const updateAvatar = (token, username, setAvatarModal, setUpdateAvatarLoa
 
                 if (errorId === 'INVALID_ID_TOKEN') {
                     dispatchRefreshToken()
+                    updateAvatar(token, username, setUpdateAvatarLoading, dispatchRefreshToken)
                 } else {
                     throw new Error(message, e);
                 }
