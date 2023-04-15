@@ -36,7 +36,6 @@ const Profile = ({ navigation }) => {
     const [updateAvatarLoading, setUpdateAvatarLoading] = useState(false)
 
     const dispatchRefreshToken = () => {
-        console.log("dispathing refresh")
         dispatch(refreshToken(refresh_token))
     }
 
