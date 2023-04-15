@@ -233,8 +233,8 @@ const styles = StyleSheet.create({
   },
   weatherPinLocation: {
     paddingHorizontal: 10,
-    borderWidth: 1,
-    borderRadius: 4,
+    borderWidth: 2,
+    borderRadius: 8,
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
     borderColor: Constants.colorPrimaryDark,
