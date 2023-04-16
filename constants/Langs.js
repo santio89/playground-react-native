@@ -54,7 +54,8 @@ export const LANGS = [{
         search: "SEARCH",
         searchError: "LOCATION NOT FOUND",
         inputUsername: "ENTER USERNAME",
-        inputAvatar: "SELECT AVATAR"
+        inputAvatar: "SELECT AVATAR",
+        forecast: "FORECAST"
     }
 }, {
     id: 2, lang: "spanish", text: {
@@ -112,6 +113,7 @@ export const LANGS = [{
         search: "BUSCAR",
         searchError: "UBICACIÓN NO ENCONTRADA",
         inputUsername: "INGRESE NOMBRE",
-        inputAvatar: "SELECCIONE AVATAR"
+        inputAvatar: "SELECCIONE AVATAR",
+        forecast: "PRONÓSTICO"
     }
 }]

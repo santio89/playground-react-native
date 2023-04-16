@@ -143,7 +143,7 @@ const MemoGame = ({ navigation }) => {
         })
     }, [text])
 
-    
+
     return (
         <View style={[styles.memoGameContainer, !darkMode && styles.backgroundWhite]}>
             <View style={[styles.gameContainer, !darkMode && styles.backgroundWhite]}>
@@ -223,7 +223,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         color: Constants.colorWhite,
         width: '100%',
-        padding: 10
+        padding: 10,
+        paddingTop: 0
     },
     gameContainer: {
         width: '100%',

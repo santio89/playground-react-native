@@ -25,6 +25,8 @@ const Weather = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [searchError, setSearchError] = useState(null)
 
+  const [calendarModal, setCalendarModal] = useState(false)
+
   const [location, setLocation] = useState(null)
   const [inputLocation, setInputLocation] = useState("")
 
@@ -47,7 +49,7 @@ const Weather = ({ navigation }) => {
           enableHighAccuracy: true,
           timeout: 5000
         })
-        
+
         setLocation(loc)
 
       } catch (e) {
@@ -118,7 +120,7 @@ const Weather = ({ navigation }) => {
     location !== null && fetchWeatherData()
   }, [location])
 
-  useEffect(()=>{
+  useEffect(() => {
     inputLocation.trim().length > 0 ? setValidInput(true) : setValidInput(false)
   }, [inputLocation])
 
@@ -139,9 +141,11 @@ const Weather = ({ navigation }) => {
               !forecast || !spForecast ?
                 <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
                 :
-                <> 
+                <>
                   <Text style={[styles.weatherTitle, altColorTheme && styles.altWeatherTitle]}>{forecast.name.toLocaleUpperCase()}</Text>
                   <View style={styles.weatherHeader}>
+                    <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setCalendarModal(true) }} ><Entypo name="calendar" size={Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
+
                     <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setModalVisible(true) }} ><Entypo name="location-pin" size={Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
                   </View>
 
@@ -184,13 +188,15 @@ const Weather = ({ navigation }) => {
           </ScrollView>
         </View>
       </View >
+
+      {/* location modal */}
       <Modal visible={modalVisible} transparent={true} animationType='fade'>
         <SafeAreaView style={styles.modal}>
           <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
             <Text style={[styles.modalTitle]}>
               <Text style={searchError && { color: Constants.colorRed }}>{searchError ? searchError : text.inputLocation}</Text>
               <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
-                
+
                 <TextInput style={[styles.inputLocation, altColorTheme && styles.altInputLocation]} autoCapitalize='none' placeholder={forecast?.name.toLocaleUpperCase()}
                   placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} value={inputLocation} onChangeText={location => setInputLocation(location.toLocaleUpperCase())} onSubmitEditing={() => { location !== "" && fetchWeatherData(inputLocation.trim()) }} />
 
@@ -203,12 +209,40 @@ const Weather = ({ navigation }) => {
                 <Text style={[styles.modalBtnText]}>{text.close}</Text>
               </TouchableOpacity>
               <TouchableOpacity disabled={refreshing || !validInput} style={[styles.modalBtn, altColorTheme && styles.altModalBtn, !validInput && styles.modalBtnDisabled]} onPress={() => { location !== "" && fetchWeatherData(inputLocation.trim()) }}>
-                {refreshing?<ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />: <Text style={[styles.modalBtnText, !validInput && styles.modalBtnTextDisabled]}>{text.search}</Text>}
+                {refreshing ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Text style={[styles.modalBtnText, !validInput && styles.modalBtnTextDisabled]}>{text.search}</Text>}
               </TouchableOpacity>
             </View>
           </View>
         </SafeAreaView>
       </Modal>
+
+      {/* calendar modal */}
+      <Modal visible={calendarModal} transparent={true} animationType='fade'>
+                <SafeAreaView style={styles.modal}>
+                    <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
+                        <Text style={styles.modalTitle}>
+                            <Text>{text.forecast}</Text>
+                            <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
+                              {/*   <FlatList style={styles.calendarContainer}
+                                    data={}
+                                    horizontal={true}
+                                    renderItem={({ item }) => (
+                                        
+                                    )}
+                                    keyExtractor={item => item}
+                                /> */}
+                            </KeyboardAvoidingView>
+                        </Text>
+
+                        <View style={styles.modalBtnContainer}>
+                            <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setCalendarModal(false) }}>
+                                <Text style={[styles.modalBtnText]}>{text.close}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </SafeAreaView>
+            </Modal>
+
     </>
   )
 }
@@ -245,7 +279,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 0,
     borderColor: Constants.colorPrimaryDark,
     borderTopColor: Constants.colorPrimary,
-    backgroundColor: Constants.colorPrimary
+    backgroundColor: Constants.colorPrimary,
+    marginLeft: 10
   },
   weatherData: {
     flexGrow: 1,
@@ -403,6 +438,11 @@ const styles = StyleSheet.create({
     borderBottomColor: Constants.colorPrimary,
     textAlign: 'center'
   },
+  calendarContainer: {
+    width: '100%',
+    overflow: 'hidden',
+    padding: 10
+},
   /* for dark mode off */
   altWeatherAppWrapper: {
     backgroundColor: Constants.colorWhite,
