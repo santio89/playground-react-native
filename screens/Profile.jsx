@@ -63,6 +63,10 @@ const Profile = ({ navigation }) => {
         setSelectedAvatar(avatar)
     }, [avatar])
 
+    useEffect(()=>{
+        dispatchRefreshToken()
+    }, [])
+
     return (
         <>
             <Header navigation={navigation} />
