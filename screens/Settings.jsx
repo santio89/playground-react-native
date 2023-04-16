@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectLang, selectDarkMode, selectColorTheme } from '../store/actions/settings.action.js';
+import { selectLang, selectDarkMode, selectColorTheme, getSettingsFirebase } from '../store/actions/settings.action.js';
 import Constants from '../constants/Styles'
 import { LANGS } from '../constants/Langs.js';
 import Header from '../components/Header'
@@ -10,6 +10,7 @@ const Settings = ({ navigation }) => {
 
     const dispatch = useDispatch()
 
+    const userId = useSelector(state => state.auth.userId)
     const { language } = useSelector(state => state.settings)
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
@@ -18,6 +19,9 @@ const Settings = ({ navigation }) => {
 
     const [config, setConfig] = useState({ lang: language.selected, darkMode, altColorTheme });
 
+    const dispatchGetSettingsFirebase = () => {
+        dispatch(getSettingsFirebase(userId));
+    }
 
     useEffect(() => {
         dispatch(selectLang(config.lang))
@@ -45,6 +49,10 @@ const Settings = ({ navigation }) => {
             headerShown: false
         })
     }, [text])
+
+    useEffect(() => {
+        userId && dispatchGetSettingsFirebase()
+    }, [])
 
     return (
         <>
