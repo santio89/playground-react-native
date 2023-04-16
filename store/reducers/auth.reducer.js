@@ -1,9 +1,4 @@
-import { SIGN_UP } from "../actions/auth.action";
-import { LOG_IN } from "../actions/auth.action";
-import { LOG_OUT } from "../actions/auth.action";
-import { REFRESH_TOKEN } from "../actions/auth.action";
-import { UPDATE_USERNAME } from "../actions/auth.action";
-import { UPDATE_AVATAR } from "../actions/auth.action";
+import { SIGN_UP, LOG_IN, LOG_OUT, REFRESH_TOKEN, UPDATE_USERNAME, UPDATE_AVATAR, GET_USER_DATA  } from "../actions/auth.action";
 
 const initialState = {
     token: null,
@@ -53,6 +48,11 @@ const AuthReducer = (state = initialState, action) => {
                 ...state,
                 token: action.token,
                 refreshToken: action.refreshToken,
+            }
+        case GET_USER_DATA: 
+            return {
+                ...state,
+                ...action
             }
         case UPDATE_USERNAME: 
             return {

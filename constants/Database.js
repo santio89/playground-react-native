@@ -3,5 +3,6 @@ export const URL_AUTH_SIGNUP = "https://identitytoolkit.googleapis.com/v1/accoun
 export const URL_AUTH_LOGIN = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyB4ZsGKWtQ1d4K0RMYwi2MelPqw9PaW_nM"
 export const URL_AUTH_UPDATE = "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyB4ZsGKWtQ1d4K0RMYwi2MelPqw9PaW_nM"
 export const URL_AUTH_REFRESH = "https://securetoken.googleapis.com/v1/token?key=AIzaSyB4ZsGKWtQ1d4K0RMYwi2MelPqw9PaW_nM"
+export const URL_AUTH_GET_USER_DATA = "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyB4ZsGKWtQ1d4K0RMYwi2MelPqw9PaW_nM"
 export const WEATHER_API_KEY = "c5034d6402f21dc560e70f188336bd4e"
 export const MAPS_API_KEY = "Ai3W2wyCb9HrGVbwV7SG5qqbWi3Jy4-fmHbmsLV4GBM8CdnfvoLJGz6lADDC5wR1"

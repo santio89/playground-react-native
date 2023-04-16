@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { LANGS } from '../constants/Langs.js'
 import Constants from '../constants/Styles.js'
 import Header from '../components/Header'
-import { logOut, refreshToken, updateAvatar, updateUsername } from '../store/actions/auth.action.js'
+import { logOut, refreshToken, getUserData,updateAvatar, updateUsername } from '../store/actions/auth.action.js'
 import Emojis from '../constants/Emojis.js'
 
 const Profile = ({ navigation }) => {
@@ -14,13 +14,13 @@ const Profile = ({ navigation }) => {
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
     const { selected: languageSelected } = useSelector(state => state.settings.language)
 
+    const userId = useSelector(state => state.auth.userId)
+    const id_token = useSelector(state => state.auth.token)
     const refresh_token = useSelector(state => state.auth.refreshToken)
     const token = useSelector(state => state.auth.token)
     const email = useSelector(state => state.auth.email)
     const displayName = useSelector(state => state.auth.displayName)
     const avatar = useSelector(state => state.auth.avatar)
-
-    const userId = useSelector(state => state.auth.userId)
 
     const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
@@ -37,6 +37,10 @@ const Profile = ({ navigation }) => {
 
     const dispatchRefreshToken = () => {
         dispatch(refreshToken(refresh_token))
+    }
+
+    const dispatchGetUserData = () => {
+        dispatch(getUserData(id_token))
     }
 
     const validateName = (name) => {
@@ -64,7 +68,8 @@ const Profile = ({ navigation }) => {
     }, [avatar])
 
     useEffect(()=>{
-        dispatchRefreshToken()
+        userId && dispatchRefreshToken()
+        userId && dispatchGetUserData()
     }, [])
 
     return (

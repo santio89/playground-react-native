@@ -1,10 +1,12 @@
+import { URL_AUTH_SIGNUP, URL_AUTH_LOGIN, URL_AUTH_UPDATE, URL_AUTH_REFRESH, URL_AUTH_GET_USER_DATA } from "../../constants/Database"
+
 export const SIGN_UP = "SIGN_UP"
 export const LOG_IN = "LOG_IN"
 export const LOG_OUT = "LOG_OUT"
 export const REFRESH_TOKEN = "REFRESH_TOKEN"
 export const UPDATE_USERNAME = "UPDATE_USERNAME"
 export const UPDATE_AVATAR = "UPDATE_AVATAR"
-import { URL_AUTH_SIGNUP, URL_AUTH_LOGIN, URL_AUTH_UPDATE, URL_AUTH_REFRESH } from "../../constants/Database"
+export const GET_USER_DATA = "GET_USER_DATA"
 
 export const signUp = (email, password, displayName, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings, setSettingsFirebase, setListItems, setMemoScore) => {
 
@@ -166,6 +168,44 @@ export const refreshToken = (refresh_token) => {
                     type: REFRESH_TOKEN,
                     token: data.id_token,
                     refreshToken: data.refresh_token,
+                })
+            }
+        } catch (e) {
+            console.log("error refreshing token: ", e)
+        }
+    }
+}
+
+export const getUserData = (idToken)=>{
+
+    return async dispatch => {
+        try {
+            const response = await fetch(URL_AUTH_GET_USER_DATA, {
+                method: 'POST',
+                header: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    idToken
+                })
+            })
+
+            if (!response.ok) {
+                const errorResData = await response.json();
+                const errorId = errorResData.error.message;
+                let message = 'cant_get_user_data__';
+
+                throw new Error(message + errorId);
+            } else {
+                const dat = await response.json()
+                const data = dat.users[0]
+                
+                dispatch({
+                    type: GET_USER_DATA,
+                    userId: data.localId,
+                    email: data.email,
+                    displayName: data.displayName.slice(2),
+                    avatar: [...data.displayName][0],
                 })
             }
         } catch (e) {

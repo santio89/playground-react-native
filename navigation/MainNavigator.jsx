@@ -1,4 +1,4 @@
-import {StatusBar} from 'react-native'
+import { StatusBar } from 'react-native'
 import { NavigationContainer } from "@react-navigation/native";
 import TabNavigator from './TabNavigator';
 import Constants from '../constants/Styles.js'
@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from "react";
 import { getSettingsFirebase, setSettingsFirebase } from "../store/actions/settings.action";
 import { getAppsData } from "../store/actions/apps.action";
+import { refreshToken, getUserData } from '../store/actions/auth.action';
 import { storageGetItem } from "../utils/AsyncStorage";
 
 const MainNavigator = () => {
@@ -15,7 +16,8 @@ const MainNavigator = () => {
     const settings = useSelector(state => state.settings)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
-
+    const id_token = useSelector(state => state.auth.token)
+    const refresh_token = useSelector(state => state.auth.refreshToken)
 
     const MyTheme = {
         dark: darkMode ? true : false,
@@ -29,21 +31,27 @@ const MainNavigator = () => {
         },
     };
 
-
-
+    /* cambio settings instantaneamente y en el background se envian a firebase */
     useEffect(() => {
         userId && dispatch(setSettingsFirebase(settings, userId))
     }, [settings])
 
+    /* cuando se cambia user se trae data de apps/settings */
     useEffect(() => {
         dispatch(getAppsData(userId, storageGetItem));
         userId && dispatch(getSettingsFirebase(userId));
     }, [userId])
 
+    /* al iniciar app se refresca token y se trae data de user (por si se actualizo) */
+    useEffect(() => {
+        userId && dispatch(refreshToken(refresh_token))
+        userId && dispatch(getUserData(id_token))
+    }, [])
+
 
     return (
         <NavigationContainer theme={MyTheme}>
-            <StatusBar barStyle = {darkMode?"light-content":"dark-content"} hidden = {false} backgroundColor = {altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} translucent = {true}/>
+            <StatusBar barStyle={darkMode ? "light-content" : "dark-content"} hidden={false} backgroundColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} translucent={true} />
             <TabNavigator />
         </NavigationContainer>
     )
