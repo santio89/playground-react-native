@@ -6,7 +6,8 @@ import ListItem from '../components/ListItem';
 import { storageSetItem } from '../utils/AsyncStorage';
 import Constants from '../constants/Styles';
 import { LANGS } from '../constants/Langs';
-import { setListItems } from '../store/actions/apps.action';
+import { setListItems, getAppsData } from '../store/actions/apps.action';
+import { storageGetItem } from '../utils/AsyncStorage';
 
 export default function ToDoList({ navigation }) {
     const dispatch = useDispatch()
@@ -25,6 +26,10 @@ export default function ToDoList({ navigation }) {
 
     const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
+    /* dispatch para traer data actualizada */
+    const dispatchGetAppsData = () => {
+        dispatch(getAppsData(userId, storageGetItem));
+    }
 
     const addItem = (item) => {
         if (item.text === "") { return }
@@ -36,6 +41,11 @@ export default function ToDoList({ navigation }) {
         setItems((oldItems) => oldItems.filter(item => item.id != id))
     }
 
+
+    useEffect(() => {
+        dispatchGetAppsData()
+        setItems(listItems)
+    }, [])
 
     useEffect(() => {
         input != '' ? setBtnDisabled(false) : setBtnDisabled(true)
@@ -64,7 +74,7 @@ export default function ToDoList({ navigation }) {
                         <TextInput value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuid.v4(), text: input }); setInput('') }} placeholder={text.newTask} placeholderTextColor="#808080" style={[styles.input, !darkMode && styles.colorDark, altColorTheme && styles.altInput]} />
 
                         <TouchableOpacity disabled={btnDisabled} onPress={() => { addItem({ id: uuid.v4(), text: input, completed: false }); setInput('') }} style={[styles.buttonAddContainer, altColorTheme && styles.buttonAddContainer, altColorTheme && styles.altButtonAddContainer, btnDisabled && styles.buttonDisabled]}>
-                            <Text style={[styles.buttonAdd, , btnDisabled && {color: 'lightgray'}]}>
+                            <Text style={[styles.buttonAdd, , btnDisabled && { color: 'lightgray' }]}>
                                 {text.add}
                             </Text>
                         </TouchableOpacity>

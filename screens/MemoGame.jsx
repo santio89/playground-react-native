@@ -1,4 +1,4 @@
-import { StyleSheet, Text, ScrollView, View, TouchableOpacity, FlatList, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions } from 'react-native'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import uuid from 'react-native-uuid';
@@ -6,8 +6,8 @@ import Constants from '../constants/Styles.js';
 import { LANGS } from '../constants/Langs.js';
 import Card from '../components/Card';
 import emojis from '../constants/Emojis.js';
-import { storageSetItem } from '../utils/AsyncStorage.js';
-import { setMemoScore } from '../store/actions/apps.action.js';
+import { storageSetItem, storageGetItem } from '../utils/AsyncStorage.js';
+import { setMemoScore, getAppsData } from '../store/actions/apps.action.js';
 
 const MemoGame = ({ navigation }) => {
     const dispatch = useDispatch()
@@ -32,6 +32,10 @@ const MemoGame = ({ navigation }) => {
 
     const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
+    /* dispatch para traer data actualizada */
+    const dispatchGetAppsData = () => {
+        dispatch(getAppsData(userId, storageGetItem));
+    }
 
     /* elijo emojis al azar */
     const selectEmojis = () => {
@@ -89,6 +93,11 @@ const MemoGame = ({ navigation }) => {
 
 
     useEffect(() => {
+        dispatchGetAppsData()
+        selectEmojis()
+    }, [])
+
+    useEffect(() => {
         if (choiceOne && choiceTwo) {
             setDisabled(true)
             if (choiceOne.front === choiceTwo.front) {
@@ -113,10 +122,6 @@ const MemoGame = ({ navigation }) => {
     }, [cards])
 
     useEffect(() => {
-        selectEmojis()
-    }, [])
-
-    useEffect(() => {
         dispatch(setMemoScore(userId, bestScore, storageSetItem))
     }, [bestScore])
 
@@ -138,6 +143,7 @@ const MemoGame = ({ navigation }) => {
         })
     }, [text])
 
+    
     return (
         <View style={[styles.memoGameContainer, !darkMode && styles.backgroundWhite]}>
             <View style={[styles.gameContainer, !darkMode && styles.backgroundWhite]}>
