@@ -8,6 +8,7 @@ import { getSettingsFirebase, setSettingsFirebase } from "../store/actions/setti
 import { getAppsData } from "../store/actions/apps.action";
 import { refreshToken, getUserData } from '../store/actions/auth.action';
 import { storageGetItem } from "../utils/AsyncStorage";
+import { useState } from 'react';
 
 const MainNavigator = () => {
     const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const MainNavigator = () => {
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const id_token = useSelector(state => state.auth.token)
     const refresh_token = useSelector(state => state.auth.refreshToken)
+    const [firstToken, setFirstToken] = useState(true)
 
     const MyTheme = {
         dark: darkMode ? true : false,
@@ -49,7 +51,7 @@ const MainNavigator = () => {
     }, [userId])
 
     useEffect(()=>{
-        userId && dispatch(getUserData(id_token))
+        firstToken?setFirstToken(false):dispatch(getUserData(id_token))
     }, [id_token])
 
     return (

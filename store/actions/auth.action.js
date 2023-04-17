@@ -209,7 +209,7 @@ export const getUserData = (idToken)=>{
                 })
             }
         } catch (e) {
-            console.log("error refreshing token: ", e)
+            console.log("error getting user data: ", e)
         }
     }
 }
