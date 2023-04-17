@@ -369,7 +369,6 @@ const styles = StyleSheet.create({
     fontSize: Constants.fontXl,
     borderBottomColor: Constants.colorPrimary,
     borderBottomWidth: 2,
-    borderStyle: 'dashed'
   },
   weatherTitleLocation:
   {
