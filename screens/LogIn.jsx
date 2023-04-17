@@ -270,12 +270,8 @@ const styles = StyleSheet.create({
         padding: 8,
         borderRadius: 4,
         width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
         textAlign: 'center',
         marginTop: 20,
-        textAlign: 'center'
     },
     modalBtnContainer: {
         flexDirection: 'row',

@@ -232,6 +232,7 @@ const styles = StyleSheet.create({
         fontFamily: Constants.fontPrimary,
         fontSize: Constants.fontMd,
         color: Constants.colorWhite,
+        maxWidth: '100%'
     },
     profileItemImage: {
         width: 80,
@@ -250,7 +251,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 2,
         borderColor: Constants.colorPrimary,
-        borderStyle: 'dashed'
+        borderStyle: 'dashed',
+        maxWidth: '100%'
     },
     profileItemAvatar: {
         fontSize: Constants.fontXll,
