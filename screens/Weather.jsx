@@ -274,7 +274,7 @@ const Weather = ({ navigation }) => {
                       const dt = new Date(item.dt * 1000)
                       return (
                         <View style={[styles.calendarItem, altColorTheme && styles.altCalendarItem]}>
-                          <Text style={[styles.calendarItemDate, altColorTheme && styles.altCalendarItemDate]}>{dt.toLocaleDateString(languageSelected === 'spanish' ? 'es-MX' : 'en-GB', { weekday: 'short', month: '2-digit', day: '2-digit' }).toLocaleUpperCase()}, {dt.toLocaleTimeString(['en-GB'], { hour: '2-digit', minute: '2-digit' })}</Text>
+                          <Text style={[styles.calendarItemDate, altColorTheme && styles.altCalendarItemDate]}>{dt.toLocaleDateString(languageSelected === 'spanish' ? 'es-ES' : 'en-GB', { weekday: 'short', month: '2-digit', day: '2-digit' }).toLocaleUpperCase()}, {dt.toLocaleTimeString(['en-GB'], { hour: '2-digit', minute: '2-digit' })}</Text>
                           <Text style={styles.calendarItemTemp}>{`${Math.trunc(Number(item.main.temp))} °C | ${Math.trunc((Number(forecast.main.temp) * (9 / 5)) + 32)} °F`}</Text>
                           <Image style={styles.calendarItemImg} source={{ uri: `http://openweathermap.org/img/wn/${item?.weather[0].icon}@4x.png` }} />
                           <Text style={styles.calendarForecast}>{item.weather[0].description.toLocaleUpperCase()}</Text>
