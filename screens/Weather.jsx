@@ -262,8 +262,8 @@ const Weather = ({ navigation }) => {
       <Modal visible={calendarModal} transparent={true} animationType='fade'>
         <SafeAreaView style={styles.modal}>
           <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
-            <Text style={styles.modalTitle}>
-              <Text>{text.forecast}: {forecast?.name?.toLocaleUpperCase()}</Text>
+            <View style={styles.modalTitle}>
+              <Text style={styles.modalTitleText}>{text.forecast}: {forecast?.name?.toLocaleUpperCase()}</Text>
               <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText, { minHeight: 340 }]}>
                 {fetchingExtendedForecast ?
                   <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> :
@@ -285,7 +285,7 @@ const Weather = ({ navigation }) => {
                   />
                 }
               </KeyboardAvoidingView>
-            </Text>
+            </View>
 
             <View style={styles.modalBtnContainer}>
               <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setCalendarModal(false) }}>
@@ -434,10 +434,6 @@ const styles = StyleSheet.create({
     minHeight: 300,
   },
   modalTitle: {
-    fontSize: Constants.fontLg,
-    fontWeight: 'bold',
-    fontFamily: Constants.fontPrimaryBold,
-    color: Constants.colorWhite,
     marginBottom: 40,
     width: '100%',
     display: 'flex',
@@ -445,6 +441,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center'
+  },
+  modalTitleText: {
+    fontSize: Constants.fontLg,
+    fontWeight: 'bold',
+    fontFamily: Constants.fontPrimaryBold,
+    color: Constants.colorWhite,
   },
   modalText: {
     fontFamily: Constants.fontPrimary,
