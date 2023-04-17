@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, SafeAreaView, KeyboardAvoidingView, ScrollView, ActivityIndicator, RefreshControl, Image, Dimensions, TouchableOpacity, Modal } from 'react-native'
+import { StyleSheet, Text, TextInput, View, SafeAreaView, KeyboardAvoidingView, ScrollView, FlatList, ActivityIndicator, RefreshControl, Image, Dimensions, TouchableOpacity, Modal } from 'react-native'
 import * as Location from 'expo-location'
 /* import MapView from 'react-native-maps' */
 import { Entypo } from '@expo/vector-icons'
@@ -13,9 +13,15 @@ import { useSelector } from 'react-redux'
 const Weather = ({ navigation }) => {
   const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&appid=${WEATHER_API_KEY}`
 
+  const urlExtended = `https://api.openweathermap.org/data/2.5/forecast?units=metric&appid=${WEATHER_API_KEY}`
+
   const [forecast, setForecast] = useState(null)
   const [spForecast, setSpForecast] = useState(null)
   const [refreshing, setRefreshing] = useState(false)
+
+  const [extendedForecast, setExtendedForecast] = useState(null)
+  const [spExtendedForecast, setSpExtendedForecast] = useState(null)
+  const [fetchingExtendedForecast, setFetchingExtendedForecast] = useState(false)
 
   const darkMode = useSelector(state => state.settings.darkMode.enabled)
   const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
@@ -72,6 +78,7 @@ const Weather = ({ navigation }) => {
         setModalVisible(false)
         setInputLocation("")
         setSearchError(null)
+        setLocation({ coords: { latitude: data.coord.lat, longitude: data.coord.lat } })
       }
     } catch (e) {
       console.log("error fetching weather data: ", e)
@@ -97,6 +104,39 @@ const Weather = ({ navigation }) => {
     setRefreshing(false)
   }
 
+  const fetchExtendedForecast = async () => {
+    setFetchingExtendedForecast(true);
+
+    try {
+      const response = await fetch(`${urlExtended}&lat=${location.coords.latitude}&lon=${location.coords.longitude}`)
+      const data = await response.json()
+
+      if (!response.ok) {
+        console.log("error fetching extended weather report ")
+      } else {
+        setExtendedForecast(data)
+      }
+    } catch (e) {
+      console.log("error fetching weather data: ", e)
+    }
+
+    /* fetch para otro idioma */
+    try {
+      const response = await fetch(`${urlExtended}&lat=${location.coords.latitude}&lon=${location.coords.longitude}&lang=sp`)
+      const data = await response.json()
+
+      if (!response.ok) {
+        console.log("error fetching extended weather report ")
+      } else {
+        setSpExtendedForecast(data)
+      }
+    } catch (e) {
+      console.log("error fetching weather data: ", e)
+    }
+
+    setFetchingExtendedForecast(false)
+  }
+
 
   useEffect(() => {
     const dimensionsHandler = Dimensions.addEventListener("change", updateWindowWidth)
@@ -117,7 +157,7 @@ const Weather = ({ navigation }) => {
   }, [text])
 
   useEffect(() => {
-    location !== null && fetchWeatherData()
+    location !== null && location.timestamp && fetchWeatherData()
   }, [location])
 
   useEffect(() => {
@@ -144,7 +184,9 @@ const Weather = ({ navigation }) => {
                 <>
                   <Text style={[styles.weatherTitle, altColorTheme && styles.altWeatherTitle]}>{forecast.name.toLocaleUpperCase()}</Text>
                   <View style={styles.weatherHeader}>
-                    <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setCalendarModal(true) }} ><Entypo name="calendar" size={Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
+                    <View style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation, styles.weatherDateView]} ><Text style={styles.weatherDateText}>{(new Date(forecast.dt * 1000)).toLocaleDateString(languageSelected === 'spanish' ? 'es-ES' : 'en-GB', { weekday: 'short', month: 'numeric', day: 'numeric' }).toLocaleUpperCase()}, {(new Date(forecast.dt * 1000)).toLocaleTimeString(['en-GB'], { hour: '2-digit', minute: '2-digit' })}</Text></View>
+
+                    <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setCalendarModal(true); fetchExtendedForecast() }} ><Entypo name="calendar" size={Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
 
                     <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setModalVisible(true) }} ><Entypo name="location-pin" size={Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
                   </View>
@@ -168,7 +210,7 @@ const Weather = ({ navigation }) => {
                       <View style={styles.weatherTitleContent}>
                         <View style={styles.weatherTitleImgWrapper}>
                           <Image style={[styles.weatherTitleImg, { maxWidth: 100 }]} source={require('../assets/img/feels.png')} />
-                          <Text style={[styles.weatherTitleTemp, { padding: 20 }]}>{`${Math.trunc(Number(forecast.main.feels_like))} °C\n${Math.trunc((Number(forecast.main.feels_like) * (9 / 5)) + 32)} °F`}</Text>
+                          <Text style={[styles.weatherTitleTemp, { fontFamily: Constants.fontPrimary }, { padding: 20 }]}>{`${Math.trunc(Number(forecast.main.feels_like))} °C\n${Math.trunc((Number(forecast.main.feels_like) * (9 / 5)) + 32)} °F`}</Text>
                         </View>
                       </View>
                     </View>
@@ -178,7 +220,7 @@ const Weather = ({ navigation }) => {
                       <View style={styles.weatherTitleContent}>
                         <View style={styles.weatherTitleImgWrapper}>
                           <Image style={[styles.weatherTitleImg, { maxWidth: 100 }]} source={require('../assets/img/humidity.png')} />
-                          <Text style={[styles.weatherTitleTemp, { padding: 20 }]}>{`${forecast.main.humidity}%`}</Text>
+                          <Text style={[styles.weatherTitleTemp, { fontFamily: Constants.fontPrimary }, { padding: 20 }]}>{`${forecast.main.humidity}%`}</Text>
                         </View>
                       </View>
                     </View>
@@ -218,30 +260,41 @@ const Weather = ({ navigation }) => {
 
       {/* calendar modal */}
       <Modal visible={calendarModal} transparent={true} animationType='fade'>
-                <SafeAreaView style={styles.modal}>
-                    <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
-                        <Text style={styles.modalTitle}>
-                            <Text>{text.forecast}</Text>
-                            <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
-                              {/*   <FlatList style={styles.calendarContainer}
-                                    data={}
-                                    horizontal={true}
-                                    renderItem={({ item }) => (
-                                        
-                                    )}
-                                    keyExtractor={item => item}
-                                /> */}
-                            </KeyboardAvoidingView>
-                        </Text>
-
-                        <View style={styles.modalBtnContainer}>
-                            <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setCalendarModal(false) }}>
-                                <Text style={[styles.modalBtnText]}>{text.close}</Text>
-                            </TouchableOpacity>
+        <SafeAreaView style={styles.modal}>
+          <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
+            <Text style={styles.modalTitle}>
+              <Text>{text.forecast}: {forecast?.name?.toLocaleUpperCase()}</Text>
+              <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText, { minHeight: 340 }]}>
+                {fetchingExtendedForecast ?
+                  <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> :
+                  <FlatList style={styles.calendarContainer}
+                    data={languageSelected === 'spanish' ? spExtendedForecast?.list : extendedForecast?.list}
+                    horizontal={true}
+                    renderItem={({ item }) => {
+                      const dt = new Date(item.dt * 1000)
+                      return (
+                        <View style={[styles.calendarItem, altColorTheme && styles.altCalendarItem]}>
+                          <Text style={[styles.calendarItemDate, altColorTheme && styles.altCalendarItemDate]}>{dt.toLocaleDateString(languageSelected === 'spanish' ? 'es-ES' : 'en-GB', { weekday: 'short', month: 'numeric', day: 'numeric' }).toLocaleUpperCase()}, {dt.toLocaleTimeString(['en-GB'], { hour: '2-digit', minute: '2-digit' })}</Text>
+                          <Text style={styles.calendarItemTemp}>{`${Math.trunc(Number(item.main.temp))} °C | ${Math.trunc((Number(forecast.main.temp) * (9 / 5)) + 32)} °F`}</Text>
+                          <Image style={styles.calendarItemImg} source={{ uri: `http://openweathermap.org/img/wn/${item?.weather[0].icon}@4x.png` }} />
+                          <Text style={styles.calendarForecast}>{item.weather[0].description.toLocaleUpperCase()}</Text>
                         </View>
-                    </View>
-                </SafeAreaView>
-            </Modal>
+                      )
+                    }}
+                    keyExtractor={(item, index) => index}
+                  />
+                }
+              </KeyboardAvoidingView>
+            </Text>
+
+            <View style={styles.modalBtnContainer}>
+              <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setCalendarModal(false) }}>
+                <Text style={[styles.modalBtnText]}>{text.close}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </SafeAreaView>
+      </Modal>
 
     </>
   )
@@ -270,6 +323,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
     marginBottom: 20
+  },
+  weatherDateView: {
+    alignSelf: 'flex-start',
+    marginRight: 'auto',
+    marginLeft: 0,
+  },
+  weatherDateText: {
+    color: Constants.colorWhite,
+    fontSize: Constants.fontMd,
+    fontFamily: Constants.fontPrimary
   },
   weatherPinLocation: {
     paddingHorizontal: 10,
@@ -332,7 +395,7 @@ const styles = StyleSheet.create({
   weatherTitleTemp: {
     color: Constants.colorWhite,
     fontSize: Constants.fontLg,
-    fontFamily: Constants.fontPrimary,
+    fontFamily: Constants.fontPrimaryBold,
   },
   weatherTitleInfo: {
     color: Constants.colorWhite,
@@ -355,7 +418,7 @@ const styles = StyleSheet.create({
     width: '80%',
     minWidth: 300,
     maxWidth: 600,
-    height: 300,
+    minHeight: 300,
   },
   modalInner: {
     backgroundColor: Constants.colorPrimary,
@@ -367,7 +430,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    height: 300,
+    minHeight: 300,
   },
   modalTitle: {
     fontSize: Constants.fontLg,
@@ -441,8 +504,47 @@ const styles = StyleSheet.create({
   calendarContainer: {
     width: '100%',
     overflow: 'hidden',
-    padding: 10
-},
+    padding: 10,
+  },
+  calendarItem: {
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: Constants.colorWhite,
+    backgroundColor: Constants.colorPrimary,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    marginInline: 8,
+    justifyContent: 'start',
+    alignItems: 'center',
+    width: 200,
+    minWidth: 200,
+    maxWidth: 200
+  },
+  calendarItemImg: {
+    width: '100%',
+    maxWidth: 200,
+    aspectRatio: 1,
+  },
+  calendarItemDate: {
+    fontSize: Constants.fontSm,
+    fontFamily: Constants.fontPrimary,
+    color: Constants.colorPrimaryDark,
+    width: '100%',
+    textAlign: 'left'
+  },
+  calendarItemTemp: {
+    fontSize: Constants.fontLg,
+    fontFamily: Constants.fontPrimaryBold,
+    color: Constants.colorWhite,
+    width: '100%',
+    textAlign: 'center'
+  },
+  calendarForecast: {
+    fontSize: Constants.fontMd,
+    fontFamily: Constants.fontPrimary,
+    color: Constants.colorWhite,
+    textAlign: 'center'
+  },
   /* for dark mode off */
   altWeatherAppWrapper: {
     backgroundColor: Constants.colorWhite,
@@ -477,5 +579,11 @@ const styles = StyleSheet.create({
   },
   altInputLocation: {
     borderBottomColor: Constants.colorSecondary,
+  },
+  altCalendarItem: {
+    backgroundColor: Constants.colorSecondary,
+  },
+  altCalendarItemDate: {
+    color: Constants.colorSecondaryDark
   },
 })

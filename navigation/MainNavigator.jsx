@@ -31,6 +31,12 @@ const MainNavigator = () => {
         },
     };
 
+    
+    /* al iniciar app se refresca token y se trae data de user (por si se actualizo) */
+    useEffect(() => {
+        userId && dispatch(refreshToken(refresh_token))
+    }, [])
+
     /* cambio settings instantaneamente y en el background se envian a firebase */
     useEffect(() => {
         userId && dispatch(setSettingsFirebase(settings, userId))
@@ -42,12 +48,9 @@ const MainNavigator = () => {
         userId && dispatch(getSettingsFirebase(userId));
     }, [userId])
 
-    /* al iniciar app se refresca token y se trae data de user (por si se actualizo) */
-    useEffect(() => {
-        userId && dispatch(refreshToken(refresh_token))
+    useEffect(()=>{
         userId && dispatch(getUserData(id_token))
-    }, [])
-
+    }, [id_token])
 
     return (
         <NavigationContainer theme={MyTheme}>

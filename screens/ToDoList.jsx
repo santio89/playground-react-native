@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
         width: '80%',
         minWidth: 300,
         maxWidth: 600,
-        height: 300,
+        minHeight: 300,
     },
     modalInner: {
         backgroundColor: Constants.colorPrimary,
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-        height: 300,
+        minHeight: 300,
     },
     modalTitle: {
         fontSize: Constants.fontLg,
