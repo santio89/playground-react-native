@@ -57,7 +57,7 @@ const MainNavigator = () => {
 
     return (
         <NavigationContainer theme={MyTheme}>
-            <StatusBar barStyle={darkMode ? "light-content" : "dark-content"} hidden={false} backgroundColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} translucent={true} />
+            <StatusBar barStyle={"light-content"} hidden={false} backgroundColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} translucent={true} />
             <TabNavigator />
         </NavigationContainer>
     )
