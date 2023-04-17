@@ -235,8 +235,8 @@ const Weather = ({ navigation }) => {
       <Modal visible={modalVisible} transparent={true} animationType='fade'>
         <SafeAreaView style={styles.modal}>
           <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
-            <Text style={[styles.modalTitle]}>
-              <Text style={searchError && { color: Constants.colorRed }}>{searchError ? searchError : text.inputLocation}</Text>
+            <View style={[styles.modalTitle]}>
+              <Text style={[styles.modalTitleText, searchError && { color: Constants.colorRed }]}>{searchError ? searchError : text.inputLocation}</Text>
               <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
 
                 <TextInput style={[styles.inputLocation, altColorTheme && styles.altInputLocation]} autoCapitalize='none' placeholder={forecast?.name.toLocaleUpperCase()}
@@ -245,7 +245,7 @@ const Weather = ({ navigation }) => {
                 {/*    <MapView initialRegion={{latitude: 0, longitude: 0, latitudeDelta: 0, longitudeDelta: 0}}/> */}
 
               </KeyboardAvoidingView>
-            </Text>
+            </View>
             <View style={styles.modalBtnContainer}>
               <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setModalVisible(false); setInputLocation(""); setSearchError(null) }}>
                 <Text style={[styles.modalBtnText]}>{text.close}</Text>
