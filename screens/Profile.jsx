@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { LANGS } from '../constants/Langs.js'
 import Constants from '../constants/Styles.js'
 import Header from '../components/Header'
-import { logOut, refreshToken, getUserData,updateAvatar, updateUsername } from '../store/actions/auth.action.js'
+import { logOut, refreshToken, getUserData, updateAvatar, updateUsername } from '../store/actions/auth.action.js'
 import Emojis from '../constants/Emojis.js'
 
 const Profile = ({ navigation }) => {
@@ -67,7 +67,7 @@ const Profile = ({ navigation }) => {
         setSelectedAvatar(avatar)
     }, [avatar])
 
-    useEffect(()=>{
+    useEffect(() => {
         userId && dispatchRefreshToken()
         userId && dispatchGetUserData()
     }, [])
@@ -89,7 +89,7 @@ const Profile = ({ navigation }) => {
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.avatar}: </Text></Text>
-                                <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton]}><Text style={styles.profileItemAvatar} onPress={() => {setAvatarModal(true)}}>{avatar}</Text></TouchableOpacity>
+                                <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton]}><Text style={styles.profileItemAvatar} onPress={() => { setAvatarModal(true) }}>{avatar}</Text></TouchableOpacity>
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}>
@@ -127,19 +127,19 @@ const Profile = ({ navigation }) => {
             <Modal visible={usernameModal} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
-                        <Text style={styles.modalTitle}>
-                            <Text>{text.inputUsername}</Text>
+                        <View style={styles.modalTitle}>
+                            <Text style={styles.modalTitleText}>{text.inputUsername}</Text>
                             <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
                                 <TextInput style={[styles.inputUsername, altColorTheme && styles.altInputUsername, (inputUsername != "" && !usernameValidInput) && { borderBottomColor: Constants.colorRed }]} autoCapitalize='none' placeholder={text.minName} placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} value={inputUsername} onChangeText={(inputUsername) => { setInputUsername(inputUsername.toLocaleUpperCase()) }} onSubmitEditing={() => { usernameValidInput && setUpdateUsernameLoading(true), usernameValidInput && dispatchRefreshToken(), usernameValidInput && dispatch(updateUsername(token, avatar + inputUsername.trim(), setUpdateUsernameLoading, setUsernameModal, dispatchRefreshToken)) }} />
                             </KeyboardAvoidingView>
-                        </Text>
+                        </View>
 
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setUsernameModal(false); setInputUsername("") }}>
                                 <Text style={[styles.modalBtnText]}>{text.close}</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity disabled={!usernameValidInput || inputUsername === "" || updateUsernameLoading} style={[styles.modalBtn, altColorTheme && styles.altModalBtn, !usernameValidInput && { borderColor: 'darkgray' }]} onPress={() => { usernameValidInput && setUpdateUsernameLoading(true), usernameValidInput && dispatchRefreshToken(),usernameValidInput && dispatch(updateUsername(token, avatar + inputUsername.trim(), setUpdateUsernameLoading, setUsernameModal, dispatchRefreshToken)) }}>
+                            <TouchableOpacity disabled={!usernameValidInput || inputUsername === "" || updateUsernameLoading} style={[styles.modalBtn, altColorTheme && styles.altModalBtn, !usernameValidInput && { borderColor: 'darkgray' }]} onPress={() => { usernameValidInput && setUpdateUsernameLoading(true), usernameValidInput && dispatchRefreshToken(), usernameValidInput && dispatch(updateUsername(token, avatar + inputUsername.trim(), setUpdateUsernameLoading, setUsernameModal, dispatchRefreshToken)) }}>
                                 {updateUsernameLoading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Text style={[styles.modalBtnText, !usernameValidInput && { color: 'darkgray' }]}>OK</Text>}
                             </TouchableOpacity>
                         </View>
@@ -151,21 +151,21 @@ const Profile = ({ navigation }) => {
             <Modal visible={avatarModal} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
-                        <Text style={styles.modalTitle}>
-                            <Text>{text.inputAvatar}</Text>
+                        <View style={styles.modalTitle}>
+                            <Text style={styles.modalTitleText}>{text.inputAvatar}</Text>
                             <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
                                 <FlatList style={styles.avatarContainer}
                                     data={[...Emojis]}
                                     horizontal={true}
                                     renderItem={({ item }) => (
-                                        <TouchableOpacity onPress={() => setSelectedAvatar(item)}>
-                                            <Text style={[styles.avatarItem, altColorTheme && styles.altAvatarItem, item === selectedAvatar && styles.avatarSelected]}>{item}</Text>
+                                        <TouchableOpacity  style={[styles.avatarItem, altColorTheme && styles.altAvatarItem, item === selectedAvatar && styles.avatarSelected]} onPress={() => setSelectedAvatar(item)}>
+                                            <Text style={styles.avatarItemText}>{item}</Text>
                                         </TouchableOpacity>
                                     )}
                                     keyExtractor={item => item}
                                 />
                             </KeyboardAvoidingView>
-                        </Text>
+                        </View>
 
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setAvatarModal(false); setSelectedAvatar(avatar) }}>
@@ -264,7 +264,8 @@ const styles = StyleSheet.create({
         borderColor: Constants.colorWhite,
         backgroundColor: Constants.colorPrimaryDark,
         textAlign: 'center',
-        marginInline: '1%',
+        marginLeft: '1%',
+        marginRight: '1%',
         padding: 8,
         color: Constants.colorWhite,
         maxWidth: '100%',
@@ -299,10 +300,6 @@ const styles = StyleSheet.create({
         minHeight: 300,
     },
     modalTitle: {
-        fontSize: Constants.fontLg,
-        fontWeight: 'bold',
-        fontFamily: Constants.fontPrimaryBold,
-        color: Constants.colorWhite,
         marginBottom: 40,
         width: '100%',
         display: 'flex',
@@ -310,6 +307,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
+    },
+    modalTitleText: {
+        fontSize: Constants.fontLg,
+        fontWeight: 'bold',
+        fontFamily: Constants.fontPrimaryBold,
+        color: Constants.colorWhite,
     },
     modalText: {
         fontFamily: Constants.fontPrimary,
@@ -364,21 +367,25 @@ const styles = StyleSheet.create({
     avatarContainer: {
         width: '100%',
         overflow: 'hidden',
-        padding: 10
+        padding: 10,
+        maxWidth: '100%'
     },
     avatarItem: {
-        fontSize: Constants.fontXl,
-        padding: 4,
-        backgroundColor: Constants.colorPrimary,
-        marginInline: 4,
-        borderRadius: 4,
         width: 60,
+        padding: 4,
+        marginRight: 4,
+        marginLeft: 4,
+        borderRadius: 4,
+        backgroundColor: Constants.colorPrimary,
+    },
+    avatarItemText: {
+        fontSize: Constants.fontXl,
         textAlign: 'center',
     },
     avatarSelected: {
-        outlineWidth: 1,
-        outlineStyle: 'solid',
-        outlineColor: Constants.colorWhite
+        borderColor: Constants.colorWhite,
+        borderStyle: 'solid',
+        borderWidth: 1,
     },
     /* for dark mode off */
     backgroundWhite: {

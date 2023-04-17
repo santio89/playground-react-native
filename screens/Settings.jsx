@@ -144,7 +144,8 @@ const styles = StyleSheet.create({
         borderColor: 'darkgray',
         backgroundColor: Constants.colorPrimaryDark,
         textAlign: 'center',
-        marginInline: '1%',
+        marginLeft: '1%',
+        marginRight: '1%',
         padding: 8,
         color: Constants.colorDark,
         maxWidth: '100%'

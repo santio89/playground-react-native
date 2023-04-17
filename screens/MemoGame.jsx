@@ -336,7 +336,8 @@ const styles = StyleSheet.create({
         borderColor: Constants.colorPrimaryDark,
         backgroundColor: Constants.colorPrimary,
         marginVertical: 10,
-        marginInline: '2%',
+        marginLeft: '2%',
+        marginRight: '2%',
         padding: 10,
         flex: 1
     },
