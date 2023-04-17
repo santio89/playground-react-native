@@ -184,7 +184,7 @@ const Weather = ({ navigation }) => {
                 <>
                   <Text style={[styles.weatherTitle, altColorTheme && styles.altWeatherTitle]}>{forecast.name.toLocaleUpperCase()}</Text>
                   <View style={styles.weatherHeader}>
-                    <View style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation, styles.weatherDateView]} ><Text style={styles.weatherDateText}>{(new Date(forecast.dt * 1000)).toLocaleDateString(languageSelected === 'spanish' ? 'es-ES' : 'en-GB', { weekday: 'short', month: 'numeric', day: 'numeric' }).toLocaleUpperCase()}, {(new Date(forecast.dt * 1000)).toLocaleTimeString(['en-GB'], { hour: '2-digit', minute: '2-digit' })}</Text></View>
+                    <View style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation, styles.weatherDateView]} ><Text style={styles.weatherDateText}>{(new Date(forecast.dt * 1000)).toLocaleDateString(languageSelected === 'spanish' ? 'es-ES' : 'en-GB', { month: 'numeric', day: 'numeric' }).toLocaleUpperCase()}, {(new Date(forecast.dt * 1000)).toLocaleTimeString(['en-GB'], { hour: '2-digit', minute: '2-digit' })}</Text></View>
 
                     <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setCalendarModal(true); fetchExtendedForecast() }} ><Entypo name="calendar" size={Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
 
@@ -328,6 +328,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginRight: 'auto',
     marginLeft: 0,
+    paddingVertical: 4
   },
   weatherDateText: {
     color: Constants.colorWhite,
@@ -336,6 +337,7 @@ const styles = StyleSheet.create({
   },
   weatherPinLocation: {
     paddingHorizontal: 10,
+    paddingVertical: 2,
     borderWidth: 2,
     borderRadius: 8,
     borderTopLeftRadius: 0,
