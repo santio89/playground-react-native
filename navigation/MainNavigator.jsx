@@ -50,6 +50,7 @@ const MainNavigator = () => {
         userId && dispatch(getSettingsFirebase(userId));
     }, [userId])
 
+    /* la primer token va a ser desde el storage y posible expirada, entonces hago el dispatch con el siguiente token (del refresh) */
     useEffect(()=>{
         firstToken?setFirstToken(false):dispatch(getUserData(id_token))
     }, [id_token])
