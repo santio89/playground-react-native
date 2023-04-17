@@ -281,7 +281,7 @@ const Weather = ({ navigation }) => {
                         </View>
                       )
                     }}
-                    keyExtractor={(item, index) => index}
+                    keyExtractor={(_, index) => index}
                   />
                 }
               </KeyboardAvoidingView>
