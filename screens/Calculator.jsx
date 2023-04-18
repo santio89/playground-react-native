@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import Constants from '../constants/Styles'
 import { LANGS } from '../constants/Langs.js';
+import CalcKeyboard from '../components/CalcButtonKeyboard';
 
 const Calculator = ({ navigation }) => {
     const { language } = useSelector(state => state.settings)
@@ -24,7 +25,10 @@ const Calculator = ({ navigation }) => {
 
     return (
         <>
-           <Text>CALC</Text>
+            <View style={[styles.calcAppContainer, !darkMode && styles.altCalcAppContainer]}>
+                <View style={styles.calcAppWrapper}>
+                </View>
+            </View>
         </>
     )
 }
@@ -32,4 +36,23 @@ const Calculator = ({ navigation }) => {
 export default Calculator
 
 const styles = StyleSheet.create({
+    calcAppContainer: {
+        flex: 1,
+        backgroundColor: Constants.colorDark,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        padding: 10,
+        width: '100%'
+    },
+    calcAppWrapper: {
+      width: '100%',
+      minWidth: 300,
+      maxWidth: 800,
+      flex: 1,
+    },
+    
+  /* for dark mode off */
+  altCalcAppContainer: {
+    backgroundColor: Constants.colorWhite,
+  },
 })
