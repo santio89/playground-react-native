@@ -55,7 +55,8 @@ export const LANGS = [{
         searchError: "LOCATION NOT FOUND",
         inputUsername: "ENTER USERNAME",
         inputAvatar: "SELECT AVATAR",
-        forecast: "FORECAST"
+        forecast: "FORECAST",
+        calculator: "CALCULATOR"
     }
 }, {
     id: 2, lang: "spanish", text: {
@@ -114,6 +115,7 @@ export const LANGS = [{
         searchError: "UBICACIÓN NO ENCONTRADA",
         inputUsername: "INGRESE NOMBRE",
         inputAvatar: "SELECCIONE AVATAR",
-        forecast: "PRONÓSTICO"
+        forecast: "PRONÓSTICO",
+        calculator: "CALCULADORA"
     }
 }]
