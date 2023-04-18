@@ -224,7 +224,6 @@ const styles = StyleSheet.create({
         color: Constants.colorWhite,
         width: '100%',
         padding: 10,
-        paddingTop: 0
     },
     gameContainer: {
         width: '100%',

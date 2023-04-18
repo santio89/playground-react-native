@@ -172,8 +172,8 @@ const Weather = ({ navigation }) => {
 
   return (
     <>
-      <View style={[styles.weatherAppWrapper, !darkMode && styles.altWeatherAppWrapper]}>
-        <View style={styles.weatherAppContainer} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => loadLocation()} />} >
+      <View style={[styles.weatherAppContainer, !darkMode && styles.altWeatherAppContainer]}>
+        <View style={styles.weatherAppWrapper} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => loadLocation()} />} >
 
 
           <ScrollView contentContainerStyle={styles.weatherData}>
@@ -303,7 +303,7 @@ const Weather = ({ navigation }) => {
 export default Weather
 
 const styles = StyleSheet.create({
-  weatherAppWrapper: {
+  weatherAppContainer: {
     flex: 1,
     backgroundColor: Constants.colorDark,
     justifyContent: 'flex-start',
@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
     padding: 10,
     width: '100%'
   },
-  weatherAppContainer: {
+  weatherAppWrapper: {
     width: '100%',
     minWidth: 300,
     maxWidth: 800,
@@ -550,7 +550,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   /* for dark mode off */
-  altWeatherAppWrapper: {
+  altWeatherAppContainer: {
     backgroundColor: Constants.colorWhite,
   },
   /* for alt color mode */
