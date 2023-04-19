@@ -7,7 +7,6 @@ import CalcButton from './CalcButton'
 
 const CalcKeyboard = () => {
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
-    const darkMode = useSelector(state => state.settings.darkMode.enabled)
 
     const [firstNumber, setFirstNumber] = useState("")
     const [secondNumber, setSecondNumber] = useState("")
@@ -22,13 +21,13 @@ const CalcKeyboard = () => {
 
     const handleOperationPress = (btnVal) => {
         setOperation(btnVal)
-        if (result){
+        if (result) {
             setSecondNumber(result > 999999999999 ? result?.toExponential(2) : result)
             setResult(null)
         } else {
-            if (secondNumber){
+            if (secondNumber) {
                 getResult()
-            } else{
+            } else {
                 setSecondNumber(firstNumber)
                 setFirstNumber("")
             }
@@ -42,8 +41,8 @@ const CalcKeyboard = () => {
         setResult(null)
     }
 
-    const handleInvert = ()=>{
-            result?setResult((-1)*Number(result)):(setFirstNumber((-1*Number(firstNumber)).toString()))
+    const handleInvert = () => {
+        result ? setResult((-1) * Number(result)) : (setFirstNumber((-1 * Number(firstNumber)).toString()))
     }
 
     const getResult = () => {
@@ -73,7 +72,7 @@ const CalcKeyboard = () => {
 
     const firstNumberDisplay = () => {
         if (result !== null) {
-            return <Text style={[styles.screenFirstNumber, {fontFamily: Constants.fontPrimaryBold, color: altColorTheme?Constants.colorSecondaryDark:Constants.colorPrimaryDark}, result.toString().length > 7 && {fontSize: 40}, result.toString().length > 10 && {fontSize: 34}, result.toString().length > 12 && {fontSize: 30}, result.toString().length > 14 && {fontSize: 28}, result > 999999999999 && {fontSize: 40}]}>{result > 999999999999 ? result?.toExponential(2).toLocaleString('en-US', 8) : result?.toLocaleString('en-US', 8)}</Text>;
+            return <Text style={[styles.screenFirstNumber, { fontFamily: Constants.fontPrimaryBold, color: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark }, result.toString().length > 7 && { fontSize: 40 }, result.toString().length > 10 && { fontSize: 34 }, result.toString().length > 12 && { fontSize: 30 }, result.toString().length > 14 && { fontSize: 28 }, result > 999999999999 && { fontSize: 40 }]}>{result > 999999999999 ? result?.toExponential(2).toLocaleString('en-US', 8) : result?.toLocaleString('en-US', 8)}</Text>;
         }
         if (firstNumber && firstNumber.length < 7) {
             return <Text style={styles.screenFirstNumber}>{firstNumber}</Text>;
@@ -103,7 +102,7 @@ const CalcKeyboard = () => {
             <View style={styles.calcScreen}>
                 <Text style={styles.screenSecondNumber}>
                     {secondNumber}
-                    <Text style={{ color: altColorTheme?Constants.colorSecondaryDark:Constants.colorPrimaryDark, marginHorizontal: 4, fontFamily: Constants.fontPrimaryBold, fontSize: Constants.fontXl }}>{operation}</Text>
+                    <Text style={{ color: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, marginHorizontal: 4, fontFamily: Constants.fontPrimaryBold, fontSize: Constants.fontXl }}>{operation}</Text>
                 </Text>
                 {firstNumberDisplay()}
             </View>
@@ -178,7 +177,7 @@ const styles = StyleSheet.create({
         fontFamily: Constants.fontPrimary,
         fontSize: 96,
         fontSize: Constants.fontXll,
-        color: Constants.colorWhite,    
+        color: Constants.colorWhite,
         alignSelf: "flex-end",
         width: '100%',
         textAlign: 'right',
