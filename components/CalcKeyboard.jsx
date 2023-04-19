@@ -69,7 +69,7 @@ const CalcKeyboard = () => {
                 break;
             default:
                 clearScreen()
-                setResult(0)
+                setResult(result?result:(firstNumber?Number(firstNumber):0))
                 break;
         }
     }
