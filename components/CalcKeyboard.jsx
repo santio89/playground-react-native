@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         padding: 8,
         marginBottom: 16,
-        minWidth: 294,
+        minWidth: 292,
         minHeight: 152,
         justifyContent: 'flex-end',
         borderWidth: 1,
