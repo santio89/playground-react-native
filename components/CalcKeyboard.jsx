@@ -14,6 +14,10 @@ const CalcKeyboard = () => {
     const [result, setResult] = useState(null)
 
     const handleNumberPress = (btnVal) => {
+        if (result){
+            return
+        }
+        
         if (firstNumber.length < 10) {
             setFirstNumber(firstNumber + btnVal)
         }
