@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         backgroundColor: Constants.colorDark,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        padding: 10,
+        /* padding: 10, */
         width: '100%'
     },
     calcAppWrapper: {
