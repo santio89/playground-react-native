@@ -43,8 +43,7 @@ const CalcKeyboard = () => {
     }
 
     const handleInvert = ()=>{
-            clearScreen()
-            result?setResult((-1)*Number(result)):(setFirstNumber(-1*Number(firstNumber)))
+            result?setResult((-1)*Number(result)):(setFirstNumber((-1*Number(firstNumber)).toString()))
     }
 
     const getResult = () => {
@@ -110,7 +109,7 @@ const CalcKeyboard = () => {
             </View>
             <View style={styles.calcRow}>
                 <CalcButton title={"C"} onPress={() => clearScreen()} bgColor={"darkgray"} />
-                <CalcButton title={"+/-"} onPress={() => handleInvert()} bgColor={"darkgray"} disabled />
+                <CalcButton title={"+/-"} onPress={() => handleInvert()} bgColor={"darkgray"} />
                 <CalcButton title={"%"} onPress={() => handleOperationPress("%")} bgColor={"darkgray"} disabled />
                 <CalcButton title={"÷"} onPress={() => handleOperationPress("/")} bgColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
             </View>
