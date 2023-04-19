@@ -44,11 +44,10 @@ const CalcKeyboard = () => {
 
     const handleInvert = ()=>{
             clearScreen()
-         
             result?setResult((-1)*Number(result)):(setFirstNumber(-1*Number(firstNumber)))
     }
 
-    const getResult = (keep) => {
+    const getResult = () => {
         switch (operation) {
             case "+":
                 clearScreen()
