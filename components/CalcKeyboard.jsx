@@ -22,8 +22,17 @@ const CalcKeyboard = () => {
 
     const handleOperationPress = (btnVal) => {
         setOperation(btnVal)
-        setSecondNumber(firstNumber)
-        setFirstNumber("")
+        if (result){
+            setSecondNumber(result > 999999999999 ? result?.toExponential(2) : result)
+            setResult(null)
+        } else {
+            if (secondNumber){
+                getResult()
+            } else{
+                setSecondNumber(firstNumber)
+                setFirstNumber("")
+            }
+        }
     }
 
     const clearScreen = () => {
@@ -39,7 +48,7 @@ const CalcKeyboard = () => {
             result?setResult((-1)*Number(result)):(setFirstNumber(-1*Number(firstNumber)))
     }
 
-    const getResult = () => {
+    const getResult = (keep) => {
         switch (operation) {
             case "+":
                 clearScreen()
