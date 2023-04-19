@@ -26,7 +26,7 @@ const CalcKeyboard = () => {
 
         setOperation(btnVal)
         if (result) {
-            setSecondNumber(result > 99999999999 ? result?.toExponential(2).toLocaleString('en-US', 8) : result.toLocaleString('en-US', 8))
+            setSecondNumber(result > 99999999999 ? result?.toExponential(2) : result)
             setResult(null)
         } else {
             if (secondNumber) {
@@ -105,7 +105,7 @@ const CalcKeyboard = () => {
         <View style={[styles.calcKeyboard, altColorTheme && styles.altCalcKeyboard]}>
             <View style={styles.calcScreen}>
                 <Text style={styles.screenSecondNumber}>
-                    {secondNumber}
+                    {secondNumber.toLocaleString('en-US', 8)}
                     <Text style={{ color: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, marginHorizontal: 4, fontFamily: Constants.fontPrimaryBold, fontSize: Constants.fontXl }}>{operation}</Text>
                 </Text>
                 {firstNumberDisplay()}
