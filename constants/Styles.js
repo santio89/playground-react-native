@@ -11,6 +11,7 @@ export default {
   fontXxl: 80,
   fontXll: 60,
   fontXl: 40,
+  fontLgg: 34,
   fontLg: 28,
   fontMd: 20,
   fontSm: 16,
