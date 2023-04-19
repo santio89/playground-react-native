@@ -60,7 +60,7 @@ const CalcKeyboard = () => {
 
     const firstNumberDisplay = () => {
         if (result !== null) {
-            return <Text style={result < 99999 ? [styles.screenFirstNumber, { color: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary }] : [styles.screenFirstNumber, { color: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary }, { fontSize: 40}]}>{result?.toString()}</Text>;
+            return <Text style={result < 99999 ? [styles.screenFirstNumber, {fontFamily: Constants.fontPrimaryBold, color: altColorTheme?Constants.colorSecondaryDark:Constants.colorPrimaryDark}] : [styles.screenFirstNumber, { fontSize: 40, fontFamily: Constants.fontPrimaryBold, color: altColorTheme?Constants.colorSecondaryDark:Constants.colorPrimaryDark}]}>{result?.toString()}</Text>;
         }
         if (firstNumber && firstNumber.length < 7) {
             return <Text style={styles.screenFirstNumber}>{firstNumber}</Text>;
@@ -90,7 +90,7 @@ const CalcKeyboard = () => {
             <View style={styles.calcScreen}>
                 <Text style={styles.screenSecondNumber}>
                     {secondNumber}
-                    <Text style={{ color: altColorTheme?Constants.colorSecondary:Constants.colorPrimary, fontSize: 50, fontFamily: Constants.fontPrimary }}>{operation}</Text>
+                    <Text style={{ color: altColorTheme?Constants.colorSecondaryDark:Constants.colorPrimaryDark, marginHorizontal: 4, fontFamily: Constants.fontPrimaryBold, fontSize: Constants.fontXl }}>{operation}</Text>
                 </Text>
                 {firstNumberDisplay()}
             </View>
