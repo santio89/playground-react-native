@@ -121,7 +121,7 @@ const CalcKeyboard = () => {
             <View style={styles.calcRow}>
                 <CalcButton title={"."} onPress={() => handleNumberPress(".")} bgColor={"dimgray"} />
                 <CalcButton title={"0"} onPress={() => handleNumberPress("0")} bgColor={"dimgray"} />
-                <CalcButton title={"6"} onPress={() => setFirstNumber(firstNumber.slice(0, -1))} bgColor={"dimgray"} />
+                <CalcButton title={"⌫"} onPress={() => setFirstNumber(firstNumber.slice(0, -1))} bgColor={"dimgray"} />
                 <CalcButton title={"="} onPress={() => getResult()} bgColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
             </View>
         </View>
