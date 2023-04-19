@@ -17,7 +17,7 @@ const CalcKeyboard = () => {
         if (result){
             return
         }
-        
+
         if (firstNumber.length < 10) {
             setFirstNumber(firstNumber + btnVal)
         }
@@ -153,7 +153,7 @@ export default CalcKeyboard
 const styles = StyleSheet.create({
     calcKeyboard: {
         width: '100%',
-        maxWidth: 320,
+        maxWidth: 340,
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',
