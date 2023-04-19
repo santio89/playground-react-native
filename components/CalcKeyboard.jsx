@@ -26,7 +26,7 @@ const CalcKeyboard = () => {
 
         setOperation(btnVal)
         if (result) {
-            setSecondNumber(result > 999999999999 ? result?.toExponential(2) : result)
+            setSecondNumber(result > 99999999999 ? result?.toExponential(2).toLocaleString('en-US', 8) : result.toLocaleString('en-US', 8))
             setResult(null)
         } else {
             if (secondNumber) {
@@ -76,7 +76,7 @@ const CalcKeyboard = () => {
 
     const firstNumberDisplay = () => {
         if (result !== null) {
-            return <Text style={[styles.screenFirstNumber, { fontFamily: Constants.fontPrimaryBold, color: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark }, result.toString().length > 7 && { fontSize: 40 }, result.toString().length > 10 && { fontSize: 34 }, result.toString().length > 12 && { fontSize: 30 }, result.toString().length > 14 && { fontSize: 28 }, result > 999999999999 && { fontSize: 40 }]}>{result === Infinity || isNaN(result) ? "ERROR":(result > 999999999999 ? result?.toExponential(2).toLocaleString('en-US', 8) : result?.toLocaleString('en-US', 8))}</Text>;
+            return <Text style={[styles.screenFirstNumber, { fontFamily: Constants.fontPrimaryBold, color: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark }, result.toString().length > 6 && { fontSize: 40 }, result.toString().length > 9 && { fontSize: 34 }, result.toString().length > 11 && { fontSize: 30 }, result.toString().length > 13 && { fontSize: 28 }, result > 999999999999 && { fontSize: 40 }]}>{result === Infinity || isNaN(result) ? "ERROR":(result > 99999999999 ? result?.toExponential(2).toLocaleString('en-US', 8) : result?.toLocaleString('en-US', 8))}</Text>;
         }
         if (firstNumber && firstNumber.length < 7) {
             return <Text style={styles.screenFirstNumber}>{firstNumber}</Text>;
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         padding: 8,
         marginBottom: 16,
-        minWidth: 292,
+        minWidth: 294,
         minHeight: 152,
         justifyContent: 'flex-end',
         borderWidth: 1,
