@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-        padding: 10
+        /* padding: 10 */
     },
     listContainer: {
         flex: 1,

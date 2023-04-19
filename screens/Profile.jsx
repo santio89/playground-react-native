@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         color: Constants.colorWhite,
         width: '100%',
-        padding: 10
+        /* padding: 10 */
     },
     itemsContainer: {
         width: '100%',
