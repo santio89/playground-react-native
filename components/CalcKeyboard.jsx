@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import Constants from '../constants/Styles'
@@ -66,7 +66,7 @@ const CalcKeyboard = () => {
 
     const firstNumberDisplay = () => {
         if (result !== null) {
-            return <Text style={result < 99999 ? [styles.screenFirstNumber, {fontFamily: Constants.fontPrimaryBold, color: altColorTheme?Constants.colorSecondaryDark:Constants.colorPrimaryDark}] : [styles.screenFirstNumber, { fontSize: 40, fontFamily: Constants.fontPrimaryBold, color: altColorTheme?Constants.colorSecondaryDark:Constants.colorPrimaryDark}]}>{result?.toString()}</Text>;
+            return <Text style={[styles.screenFirstNumber, {fontFamily: Constants.fontPrimaryBold, color: altColorTheme?Constants.colorSecondaryDark:Constants.colorPrimaryDark}, result.toString().length > 7 && {fontSize: 40}, result.toString().length > 10 && {fontSize: 34}, result.toString().length > 12 && {fontSize: 30}, result.toString().length > 14 && {fontSize: 28}, result > 999999999999 && {fontSize: 40}]}>{result > 999999999999 ? result?.toExponential(2).toLocaleString('en-US', 8) : result?.toLocaleString('en-US', 8)}</Text>;
         }
         if (firstNumber && firstNumber.length < 7) {
             return <Text style={styles.screenFirstNumber}>{firstNumber}</Text>;
@@ -172,19 +172,17 @@ const styles = StyleSheet.create({
         fontSize: 96,
         fontSize: Constants.fontXll,
         color: Constants.colorWhite,    
-        fontWeight: '200',
         alignSelf: "flex-end",
         width: '100%',
         textAlign: 'right',
         display: 'flex',
         justifyContent: 'flex-end',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     screenSecondNumber: {
         fontFamily: Constants.fontPrimary,
         fontSize: Constants.fontLgg,
         color: Constants.colorWhite,
-        fontWeight: '200',
         alignSelf: "flex-end",
         width: '100%',
         textAlign: 'right',
