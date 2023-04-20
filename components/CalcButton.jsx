@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
             height: 0,
         },
         shadowOpacity: 0.8,
-        shadowRadius: 8.00,
+        shadowRadius: 4.00,
         elevation: 8,
     },
     calcButtonText: {
