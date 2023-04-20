@@ -153,7 +153,8 @@ export default CalcKeyboard
 const styles = StyleSheet.create({
     calcKeyboard: {
         width: '100%',
-        maxWidth: 340,
+        minWidth: 340,
+        maxWidth: 380,
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',
@@ -180,6 +181,15 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         borderWidth: 1,
         borderColor: Constants.colorWhite,
+
+        shadowColor: 'gray',
+        shadowOffset: {
+            width: 0,
+            height: 0,
+        },
+        shadowOpacity: 0.8,
+        shadowRadius: 8.00,
+        elevation: 8,
     },
     screenFirstNumber: {
         fontFamily: Constants.fontPrimary,
