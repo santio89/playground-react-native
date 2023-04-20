@@ -14,21 +14,22 @@ const CalcKeyboard = () => {
     const [result, setResult] = useState(null)
 
     const handleNumberPress = (btnVal) => {
-        if (result){
+        if (result) {
             return
         }
 
-        if (btnVal === "0" && firstNumber === ""){
+        if (btnVal === "0" && firstNumber === "") {
             return
         }
 
         if (firstNumber.length < 10) {
-            setFirstNumber(firstNumber + btnVal)
+            firstNumber === "" || firstNumber === "0" ? setFirstNumber(btnVal) : setFirstNumber(firstNumber + btnVal)
+
         }
     }
 
     const handleOperationPress = (btnVal) => {
-        if ((result === Infinity || isNaN(result))){
+        if ((result === Infinity || isNaN(result))) {
             return
         }
 
@@ -77,14 +78,14 @@ const CalcKeyboard = () => {
                 break;
             default:
                 clearScreen()
-                setResult(result?result:(firstNumber?Number(firstNumber):0))
+                setResult(result ? result : (firstNumber ? Number(firstNumber) : 0))
                 break;
         }
     }
 
     const firstNumberDisplay = () => {
         if (result !== null) {
-            return <Text style={[styles.screenFirstNumber, { fontFamily: Constants.fontPrimaryBold, color: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark }, result.toLocaleString('en-US', 8).length > 6 && { fontSize: 40 }, result.toLocaleString('en-US', 8).length > 12 && { fontSize: 34 }, result.toLocaleString('en-US', 8).length > 14 && { fontSize: 30 }, result > 999999999 && { fontSize: 40 }]}>{result === Infinity || isNaN(result) ? "ERROR":(result > 999999999 ? result?.toExponential(2).toLocaleString('en-US', 8) : result?.toLocaleString('en-US', 8))}</Text>;
+            return <Text style={[styles.screenFirstNumber, { fontFamily: Constants.fontPrimaryBold, color: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark }, result.toLocaleString('en-US', 8).length > 6 && { fontSize: 40 }, result.toLocaleString('en-US', 8).length > 12 && { fontSize: 34 }, result.toLocaleString('en-US', 8).length > 14 && { fontSize: 30 }, result > 999999999 && { fontSize: 40 }]}>{result === Infinity || isNaN(result) ? "ERROR" : (result > 999999999 ? result?.toExponential(2).toLocaleString('en-US', 8) : result?.toLocaleString('en-US', 8))}</Text>;
         }
         if (firstNumber && firstNumber.length < 7) {
             return <Text style={styles.screenFirstNumber}>{firstNumber}</Text>;
@@ -121,7 +122,7 @@ const CalcKeyboard = () => {
             <View style={styles.calcRow}>
                 <CalcButton title={"C"} onPress={() => clearScreen()} bgColor={"darkgray"} />
                 <CalcButton title={"+/-"} onPress={() => handleInvert()} bgColor={"darkgray"} />
-                <CalcButton title={"%"} onPress={() => handleOperationPress("%")} bgColor={"darkgray"} disabled/>
+                <CalcButton title={"%"} onPress={() => handleOperationPress("%")} bgColor={"darkgray"} disabled />
                 <CalcButton opacity={operation !== "" ? .4 : 1} disabled={operation !== "" ? true : false} title={"÷"} onPress={() => handleOperationPress("/")} bgColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
             </View>
             <View style={styles.calcRow}>
