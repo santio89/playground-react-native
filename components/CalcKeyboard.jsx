@@ -18,6 +18,10 @@ const CalcKeyboard = () => {
             return
         }
 
+        if (btnVal === "0" && firstNumber === ""){
+            return
+        }
+
         if (firstNumber.length < 10) {
             setFirstNumber(firstNumber + btnVal)
         }
