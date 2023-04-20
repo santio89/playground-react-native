@@ -182,13 +182,13 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: Constants.colorWhite,
 
-        shadowColor: 'gray',
+        shadowColor: Constants.colorWhite,
         shadowOffset: {
             width: 0,
             height: 0,
         },
         shadowOpacity: 0.8,
-        shadowRadius: 8.00,
+        shadowRadius: 4.00,
         elevation: 8,
     },
     screenFirstNumber: {
