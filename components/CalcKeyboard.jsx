@@ -117,26 +117,26 @@ const CalcKeyboard = () => {
             <View style={styles.calcRow}>
                 <CalcButton title={"C"} onPress={() => clearScreen()} bgColor={"darkgray"} />
                 <CalcButton title={"+/-"} onPress={() => handleInvert()} bgColor={"darkgray"} />
-                <CalcButton title={"%"} onPress={() => handleOperationPress("%")} bgColor={"darkgray"} disabled />
-                <CalcButton title={"÷"} onPress={() => handleOperationPress("/")} bgColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
+                <CalcButton title={"%"} onPress={() => handleOperationPress("%")} bgColor={"darkgray"} disabled/>
+                <CalcButton opacity={operation !== "" ? .4 : 1} disabled={operation !== "" ? true : false} title={"÷"} onPress={() => handleOperationPress("/")} bgColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
             </View>
             <View style={styles.calcRow}>
                 <CalcButton title={"7"} onPress={() => handleNumberPress("7")} bgColor={"dimgray"} />
                 <CalcButton title={"8"} onPress={() => handleNumberPress("8")} bgColor={"dimgray"} />
                 <CalcButton title={"9"} onPress={() => handleNumberPress("9")} bgColor={"dimgray"} />
-                <CalcButton title={"×"} onPress={() => handleOperationPress("*")} bgColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
+                <CalcButton opacity={operation !== "" ? .4 : 1} disabled={operation !== "" ? true : false} title={"×"} onPress={() => handleOperationPress("*")} bgColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
             </View>
             <View style={styles.calcRow}>
                 <CalcButton title={"4"} onPress={() => handleNumberPress("4")} bgColor={"dimgray"} />
                 <CalcButton title={"5"} onPress={() => handleNumberPress("5")} bgColor={"dimgray"} />
                 <CalcButton title={"6"} onPress={() => handleNumberPress("6")} bgColor={"dimgray"} />
-                <CalcButton title={"-"} onPress={() => handleOperationPress("-")} bgColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
+                <CalcButton opacity={operation !== "" ? .4 : 1} disabled={operation !== "" ? true : false} title={"-"} onPress={() => handleOperationPress("-")} bgColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
             </View>
             <View style={styles.calcRow}>
                 <CalcButton title={"1"} onPress={() => handleNumberPress("1")} bgColor={"dimgray"} />
                 <CalcButton title={"2"} onPress={() => handleNumberPress("2")} bgColor={"dimgray"} />
                 <CalcButton title={"3"} onPress={() => handleNumberPress("3")} bgColor={"dimgray"} />
-                <CalcButton title={"+"} onPress={() => handleOperationPress("+")} bgColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
+                <CalcButton opacity={operation !== "" ? .4 : 1} disabled={operation !== "" ? true : false} title={"+"} onPress={() => handleOperationPress("+")} bgColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
             </View>
             <View style={styles.calcRow}>
                 <CalcButton title={"."} onPress={() => handleNumberPress(".")} bgColor={"dimgray"} />

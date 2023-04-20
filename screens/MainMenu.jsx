@@ -44,7 +44,7 @@ const MainMenu = ({ navigation }) => {
             <Header navigation={navigation} />
             <ScrollView contentContainerStyle={[styles.menuWrapper, !darkMode && styles.backgroundWhite]}>
                 <View style={[styles.menuContainer, !darkMode && styles.backgroundWhite, { flexDirection: windowWidth > 800 ? 'row' : 'column' }]}>
-                    <View style={{flex: 1, width: '100%', justifyContent: windowWidth > 800 ? 'center' : 'end', alignItems: windowWidth > 800 ? 'stretch' : 'center'}}>
+                    <View style={{flex: 1, width: '100%', justifyContent: windowWidth > 800 ? 'center' : 'flex-end', alignItems: windowWidth > 800 ? 'stretch' : 'center'}}>
                         <TouchableOpacity style={[styles.menuOption, altColorTheme && styles.altMenuOption, { width: windowWidth > 800 ? 'auto' : (windowWidth > 320 ? 300 : '100%') }]} onPress={() => { navigation.navigate("ToDoList") }}>
                             <Text style={[styles.menuOptionText]}>{text.toDoList}</Text>
                         </TouchableOpacity>
@@ -52,7 +52,7 @@ const MainMenu = ({ navigation }) => {
                             <Text style={[styles.menuOptionText]}>{text.memoGame}</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={{flex: 1, width: '100%', justifyContent: windowWidth > 800 ? 'center' : 'start', alignItems: windowWidth > 800 ? 'stretch' : 'center'}}>
+                    <View style={{flex: 1, width: '100%', justifyContent: windowWidth > 800 ? 'center' : 'flex-start', alignItems: windowWidth > 800 ? 'stretch' : 'center'}}>
                         <TouchableOpacity style={[styles.menuOption, altColorTheme && styles.altMenuOption, { width: windowWidth > 800 ? 'auto' : (windowWidth > 320 ? 300 : '100%') }]} onPress={() => { navigation.navigate("Weather") }}>
                             <Text style={[styles.menuOptionText]}>{text.weather}</Text>
                         </TouchableOpacity>

@@ -8,7 +8,7 @@ const CalcButton = ({title, onPress, bgColor, ...props}) => {
 
 
   return (
-    <TouchableOpacity style={[styles.calcButton, {backgroundColor: bgColor}]} onPress={onPress} disabled={props.disabled}>
+    <TouchableOpacity style={[styles.calcButton, {backgroundColor: bgColor}, {opacity: props.opacity?props.opacity:1}]} onPress={onPress} disabled={props.disabled}>
         <Text style={[styles.calcButtonText]}>{title}</Text>
     </TouchableOpacity>
   )
