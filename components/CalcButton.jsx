@@ -1,17 +1,32 @@
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, Dimensions } from 'react-native'
 import { useSelector } from 'react-redux'
 import Constants from '../constants/Styles'
+import { useState } from 'react'
 
-const CalcButton = ({title, onPress, bgColor, ...props}) => {
+const CalcButton = ({ title, onPress, bgColor, ...props }) => {
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
 
+    const [windowHeight, setWindowHeight] = useState(Dimensions.get('window').height);
 
-  return (
-    <TouchableOpacity style={[styles.calcButton, {backgroundColor: bgColor}, {opacity: props.opacity?props.opacity:1}]} onPress={onPress} disabled={props.disabled}>
-        <Text style={[styles.calcButtonText]}>{title}</Text>
-    </TouchableOpacity>
-  )
+    const updateWindowHeight = () => {
+        setWindowWidth(Dimensions.get('window').height)
+    }
+
+    useEffect(() => {
+        const dimensionsHandler = Dimensions.addEventListener("change", updateWindowHeight)
+
+        return () => {
+            dimensionsHandler.remove()
+        }
+    })
+
+
+    return (
+        <TouchableOpacity style={[styles.calcButton, { backgroundColor: bgColor }, { opacity: props.opacity ? props.opacity : 1 }, windowHeight < 620 && { width: 40 }]} onPress={onPress} disabled={props.disabled}>
+            <Text style={[styles.calcButtonText]}>{title}</Text>
+        </TouchableOpacity>
+    )
 }
 
 export default CalcButton
