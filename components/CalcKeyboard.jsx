@@ -35,7 +35,7 @@ const CalcKeyboard = () => {
     }
 
     const handleOperationPress = (btnVal) => {
-        if ((result === Infinity || isNaN(result))) {
+        if ((result === Infinity || isNaN(result) || operation !== "")) {
             return
         }
 
@@ -44,12 +44,10 @@ const CalcKeyboard = () => {
             setSecondNumber(result > 999999999 ? result?.toExponential(2) : result)
             setResult(null)
         } else {
-            if (secondNumber) {
-                getResult()
-            } else {
+            if (secondNumber === ""){
                 setSecondNumber(firstNumber)
                 setFirstNumber("")
-            }
+            } 
         }
     }
 
@@ -61,15 +59,15 @@ const CalcKeyboard = () => {
     }
 
     const handleInvert = () => {
-        result ? setResult(result=>(-1) * Number(result)) : (setFirstNumber(firstNumber=>(-1 * Number(firstNumber)).toString()))
+        result ? setResult(result => (-1) * Number(result)) : (setFirstNumber(firstNumber => (-1 * Number(firstNumber)).toString()))
     }
 
     const handlePercent = () => {
-        result ? setResult(result=>((1 / 100) * Number(result)).toFixed(2)) : (setFirstNumber(firstNumber=>(((1 / 100) * Number(firstNumber)).toFixed(2)).toString()))
+        result ? setResult(result => ((1 / 100) * Number(result)).toFixed(2)) : (setFirstNumber(firstNumber => (((1 / 100) * Number(firstNumber)).toFixed(2)).toString()))
     }
 
     const handleDelete = () => {
-        setFirstNumber(firstNumber.slice(0, -1))
+        firstNumber !== "" && firstNumber !== "0" ? setFirstNumber(firstNumber => firstNumber.slice(0, -1)) : (operation !== "" && (setOperation("")) /* : (secondNumber !== "" ? setSecondNumber(secondNumber => secondNumber.slice(0, -1)) : console.log("test")) */)
     }
 
     const getResult = () => {
@@ -92,7 +90,7 @@ const CalcKeyboard = () => {
                 break;
             default:
                 clearScreen()
-                setResult(result ? result : (firstNumber ? Number(firstNumber) : 0))
+                setResult(result ? result : (secondNumber ? Number(secondNumber) : (firstNumber ? Number(firstNumber) : 0)))
                 break;
         }
     }
