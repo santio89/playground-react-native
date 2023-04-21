@@ -61,7 +61,10 @@ const CalcKeyboard = () => {
     }
 
     const handleInvert = () => {
-        result ? setResult((-1) * Number(result)) : (setFirstNumber((-1 * Number(firstNumber)).toString()))
+        result ? setResult(result=>(-1) * Number(result)) : (setFirstNumber(firstNumber=>(-1 * Number(firstNumber)).toString()))
+    }
+    const handlePercent = () => {
+        result ? setResult(result=>((1 / 100) * Number(result)).toFixed(2)) : (setFirstNumber(firstNumber=>(((1 / 100) * Number(firstNumber)).toFixed(2)).toString()))
     }
 
     const getResult = () => {
@@ -106,15 +109,22 @@ const CalcKeyboard = () => {
                 </Text>
             );
         }
-        if (firstNumber.length > 7) {
+        if (firstNumber.length > 8 && firstNumber.length < 11) {
             return (
                 <Text style={[styles.screenFirstNumber, { fontSize: 40 }]}>
                     {firstNumber}
                 </Text>
             );
         }
+        if (firstNumber.length > 10) {
+            return (
+                <Text style={[styles.screenFirstNumber, { fontSize: 40 }]}>
+                    {Number(firstNumber).toExponential(2).toLocaleString('en-US', 8)}
+                </Text>
+            );
+        }
     };
-    
+
 
     useEffect(() => {
         const dimensionsHandler = Dimensions.addEventListener("change", updateWindowHeight)
@@ -127,7 +137,7 @@ const CalcKeyboard = () => {
 
 
     return (
-        <View style={[styles.calcKeyboard, altColorTheme && styles.altCalcKeyboard, , windowHeight < 620 && { padding: 6}]}>
+        <View style={[styles.calcKeyboard, altColorTheme && styles.altCalcKeyboard, , windowHeight < 620 && { padding: 6 }]}>
             <View style={styles.calcScreen}>
                 <Text style={styles.screenSecondNumber}>
                     {secondNumber.toLocaleString('en-US', 8)}
@@ -138,7 +148,7 @@ const CalcKeyboard = () => {
             <View style={styles.calcRow}>
                 <CalcButton title={"C"} onPress={() => clearScreen()} bgColor={"darkgray"} />
                 <CalcButton title={"+/-"} onPress={() => handleInvert()} bgColor={"darkgray"} />
-                <CalcButton title={"%"} onPress={() => handleOperationPress("%")} bgColor={"darkgray"} disabled />
+                <CalcButton title={"%"} onPress={() => handlePercent()} bgColor={"darkgray"} />
                 <CalcButton opacity={operation !== "" ? .4 : 1} disabled={operation !== "" ? true : false} title={"÷"} onPress={() => handleOperationPress("/")} bgColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
             </View>
             <View style={styles.calcRow}>
