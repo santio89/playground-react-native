@@ -30,7 +30,6 @@ const CalcKeyboard = () => {
 
         if (firstNumber.length < 10) {
             firstNumber === "" || firstNumber === "0" ? setFirstNumber(btnVal) : setFirstNumber(firstNumber + btnVal)
-
         }
     }
 
@@ -44,10 +43,10 @@ const CalcKeyboard = () => {
             setSecondNumber(result > 999999999 ? result?.toExponential(2) : result.toString())
             setResult(null)
         } else {
-            if (secondNumber === ""){
+            if (secondNumber === "") {
                 setSecondNumber(firstNumber)
                 setFirstNumber("")
-            } 
+            }
         }
     }
 
@@ -67,7 +66,7 @@ const CalcKeyboard = () => {
     }
 
     const handleDelete = () => {
-        if (firstNumber != "" && firstNumber !== ""){
+        if (firstNumber !== "" && firstNumber !== "0") {
             setFirstNumber(firstNumber => firstNumber.slice(0, -1))
         } else if (operation !== "") {
             setOperation("");
@@ -133,7 +132,6 @@ const CalcKeyboard = () => {
             );
         }
     };
-
 
     useEffect(() => {
         const dimensionsHandler = Dimensions.addEventListener("change", updateWindowHeight)
