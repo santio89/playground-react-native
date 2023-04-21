@@ -41,7 +41,7 @@ const CalcKeyboard = () => {
 
         setOperation(btnVal)
         if (result) {
-            setSecondNumber(result > 999999999 ? result?.toExponential(2) : result)
+            setSecondNumber(result > 999999999 ? result?.toExponential(2) : result.toString())
             setResult(null)
         } else {
             if (secondNumber === ""){
@@ -67,7 +67,13 @@ const CalcKeyboard = () => {
     }
 
     const handleDelete = () => {
-        firstNumber !== "" && firstNumber !== "0" ? setFirstNumber(firstNumber => firstNumber.slice(0, -1)) : (operation !== "" && (setOperation("")) /* : (secondNumber !== "" ? setSecondNumber(secondNumber => secondNumber.slice(0, -1)) : console.log("test")) */)
+        if (firstNumber != "" && firstNumber !== ""){
+            setFirstNumber(firstNumber => firstNumber.slice(0, -1))
+        } else if (operation !== "") {
+            setOperation("");
+            setFirstNumber(secondNumber);
+            setSecondNumber("")
+        }
     }
 
     const getResult = () => {
