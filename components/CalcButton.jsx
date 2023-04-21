@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, Dimensions } from 'react-native'
 import { useSelector } from 'react-redux'
 import Constants from '../constants/Styles'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const CalcButton = ({ title, onPress, bgColor, ...props }) => {
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
