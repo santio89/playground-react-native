@@ -39,6 +39,7 @@ const CalcKeyboard = () => {
         }
 
         setOperation(btnVal)
+        
         if (result) {
             setSecondNumber(result > 999999999 ? result?.toExponential(2) : result.toString())
             setResult(null)
