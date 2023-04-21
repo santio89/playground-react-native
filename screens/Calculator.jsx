@@ -26,9 +26,12 @@ const Calculator = ({ navigation }) => {
     return (
         <>
             <View style={[styles.calcAppContainer, !darkMode && styles.altCalcAppContainer]}>
-                <ScrollView contentContainerStyle={styles.calcAppWrapper}>
-                    <CalcKeyboard />
+                <ScrollView contentContainerStyle={styles.calcAppScrollWrapper}>
+                    <View style={styles.calcAppWrapper}>
+                        <CalcKeyboard />
+                    </View>
                 </ScrollView>
+
             </View>
         </>
     )
@@ -40,22 +43,27 @@ const styles = StyleSheet.create({
     calcAppContainer: {
         flex: 1,
         backgroundColor: Constants.colorDark,
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
         /* padding: 10, */
         width: '100%'
     },
-    calcAppWrapper: {
-      width: '100%',
-      minWidth: 300,
-      maxWidth: 800,
-      flexGrow: 1,
-      justifyContent: 'center',
-      alignItems: 'center'
+    calcAppScrollWrapper: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    
-  /* for dark mode off */
-  altCalcAppContainer: {
-    backgroundColor: Constants.colorWhite,
-  },
+    calcAppWrapper: {
+        width: '100%',
+        minWidth: 300,
+        maxWidth: 800,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
+    /* for dark mode off */
+    altCalcAppContainer: {
+        backgroundColor: Constants.colorWhite,
+    },
 })

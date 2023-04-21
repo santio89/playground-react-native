@@ -23,7 +23,7 @@ const CalcButton = ({ title, onPress, bgColor, ...props }) => {
 
 
     return (
-        <TouchableOpacity style={[styles.calcButton, { backgroundColor: bgColor }, { opacity: props.opacity ? props.opacity : 1 }, windowHeight < 620 && { width: 40 }]} onPress={onPress} disabled={props.disabled}>
+        <TouchableOpacity style={[styles.calcButton, { backgroundColor: bgColor }, { opacity: props.opacity ? props.opacity : 1 }, windowHeight < 620 && { width: 44, margin: 2}]} onPress={onPress} disabled={props.disabled}>
             <Text style={[styles.calcButtonText]}>{title}</Text>
         </TouchableOpacity>
     )
