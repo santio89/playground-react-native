@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import Constants from '../constants/Styles'
@@ -12,6 +12,12 @@ const CalcKeyboard = () => {
     const [secondNumber, setSecondNumber] = useState("")
     const [operation, setOperation] = useState("")
     const [result, setResult] = useState(null)
+
+    const [windowHeight, setWindowHeight] = useState(Dimensions.get('window').height);
+
+    const updateWindowHeight = () => {
+        setWindowHeight(Dimensions.get('window').height)
+    }
 
     const handleNumberPress = (btnVal) => {
         if (result) {
@@ -108,10 +114,20 @@ const CalcKeyboard = () => {
             );
         }
     };
+    
+
+    useEffect(() => {
+        const dimensionsHandler = Dimensions.addEventListener("change", updateWindowHeight)
+
+        return () => {
+            dimensionsHandler.remove()
+        }
+    })
+
 
 
     return (
-        <View style={[styles.calcKeyboard, altColorTheme && styles.altCalcKeyboard]}>
+        <View style={[styles.calcKeyboard, altColorTheme && styles.altCalcKeyboard, , windowHeight < 620 && { padding: 6}]}>
             <View style={styles.calcScreen}>
                 <Text style={styles.screenSecondNumber}>
                     {secondNumber.toLocaleString('en-US', 8)}
