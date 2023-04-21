@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import { useSelector } from 'react-redux'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Constants from '../constants/Styles'
 import CalcButton from './CalcButton'
 
