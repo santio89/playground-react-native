@@ -63,8 +63,13 @@ const CalcKeyboard = () => {
     const handleInvert = () => {
         result ? setResult(result=>(-1) * Number(result)) : (setFirstNumber(firstNumber=>(-1 * Number(firstNumber)).toString()))
     }
+
     const handlePercent = () => {
         result ? setResult(result=>((1 / 100) * Number(result)).toFixed(2)) : (setFirstNumber(firstNumber=>(((1 / 100) * Number(firstNumber)).toFixed(2)).toString()))
+    }
+
+    const handleDelete = () => {
+        setFirstNumber(firstNumber.slice(0, -1))
     }
 
     const getResult = () => {
@@ -172,7 +177,7 @@ const CalcKeyboard = () => {
             <View style={styles.calcRow}>
                 <CalcButton title={"."} onPress={() => handleNumberPress(".")} bgColor={"dimgray"} />
                 <CalcButton title={"0"} onPress={() => handleNumberPress("0")} bgColor={"dimgray"} />
-                <CalcButton title={"⌫"} onPress={() => setFirstNumber(firstNumber.slice(0, -1))} bgColor={"dimgray"} />
+                <CalcButton title={"⌫"} onPress={() => handleDelete()} bgColor={"dimgray"} />
                 <CalcButton title={"="} onPress={() => getResult()} bgColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
             </View>
         </View>
