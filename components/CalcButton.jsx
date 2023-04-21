@@ -10,7 +10,7 @@ const CalcButton = ({ title, onPress, bgColor, ...props }) => {
     const [windowHeight, setWindowHeight] = useState(Dimensions.get('window').height);
 
     const updateWindowHeight = () => {
-        setWindowWidth(Dimensions.get('window').height)
+        setWindowHeight(Dimensions.get('window').height)
     }
 
     useEffect(() => {
