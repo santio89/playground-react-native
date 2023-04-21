@@ -39,15 +39,13 @@ const CalcKeyboard = () => {
         }
 
         setOperation(btnVal)
-        
+
         if (result) {
             setSecondNumber(result > 999999999 ? result?.toExponential(2) : result.toString())
             setResult(null)
-        } else {
-            if (secondNumber === "") {
-                setSecondNumber(Number(firstNumber) > 999999999 ? firstNumber.toExponential(2) : firstNumber)
-                setFirstNumber("")
-            }
+        } else if (secondNumber === "") {
+            setSecondNumber(Number(firstNumber) > 999999999 ? firstNumber.toExponential(2) : firstNumber)
+            setFirstNumber("")
         }
     }
 
