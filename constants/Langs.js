@@ -61,7 +61,7 @@ export const LANGS = [{
 }, {
     id: 2, lang: "spanish", text: {
         toDoList: "LISTA DE TAREAS",
-        memoGame: "JUEGO DE MEMORIA",
+        memoGame: "JUEGO MEMO",
         newGame: "NUEVO JUEGO",
         bestScore: "MEJOR RESULTADO",
         completed: "COMPLETADO",
