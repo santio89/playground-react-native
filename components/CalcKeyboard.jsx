@@ -221,7 +221,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         borderWidth: 1,
         borderColor: Constants.colorWhite,
-
         shadowColor: Constants.colorWhite,
         shadowOffset: {
             width: 0,
