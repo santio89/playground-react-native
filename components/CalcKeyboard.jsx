@@ -20,15 +20,15 @@ const CalcKeyboard = () => {
     }
 
     const handleNumberPress = (btnVal) => {
-        if (result) {
-            return
+        if (result){
+            setResult(null)
         }
 
         if (btnVal === "0" && firstNumber === "") {
             return
         }
 
-        if (firstNumber.length < 10) {
+        if (firstNumber.length < 9) {
             firstNumber === "" || firstNumber === "0" ? setFirstNumber(btnVal) : setFirstNumber(firstNumber + btnVal)
         }
     }
@@ -41,10 +41,10 @@ const CalcKeyboard = () => {
         setOperation(btnVal)
 
         if (result) {
-            setSecondNumber(result > 999999999 ? result?.toExponential(2) : result.toString())
+            setSecondNumber(result > 999999999 ? result.toExponential(2).toLocaleString('en-US', { maximumFractionDigits: 4, useGrouping: false }) : result.toLocaleString('en-US', { maximumFractionDigits: 4, useGrouping: false }))
             setResult(null)
         } else if (secondNumber === "") {
-            setSecondNumber(Number(firstNumber) > 999999999 ? firstNumber.toExponential(2) : firstNumber.toLocaleString('en-US', 8))
+            setSecondNumber(firstNumber.toLocaleString('en-US', { maximumFractionDigits: 4, useGrouping: false }))
             setFirstNumber("")
         }
     }
@@ -57,11 +57,11 @@ const CalcKeyboard = () => {
     }
 
     const handleInvert = () => {
-        result ? setResult(result => (-1) * Number(result)) : (setFirstNumber(firstNumber => (-1 * Number(firstNumber)).toString()))
+        result ? setResult(result => (-1) * Number(result)) : (setFirstNumber(firstNumber => (-1 * Number(firstNumber)).toLocaleString('en-US', { maximumFractionDigits: 4, useGrouping: false })))
     }
 
     const handlePercent = () => {
-        result ? setResult(result => ((1 / 100) * Number(result)).toFixed(2)) : (setFirstNumber(firstNumber => (((1 / 100) * Number(firstNumber)).toFixed(2)).toString()))
+        result ? setResult(result => ((1 / 100) * Number(result)).toFixed(2)) : (setFirstNumber(firstNumber => (((1 / 100) * Number(firstNumber)).toFixed(2)).toLocaleString('en-US', { maximumFractionDigits: 4, useGrouping: false })))
     }
 
     const handleDelete = () => {
@@ -69,7 +69,7 @@ const CalcKeyboard = () => {
             setFirstNumber(firstNumber => firstNumber.slice(0, -1))
         } else if (operation !== "") {
             setOperation("")
-            setFirstNumber(secondNumber)
+            setFirstNumber(secondNumber.toLocaleString('en-US', { maximumFractionDigits: 4, useGrouping: false }))
             setSecondNumber("")
         }
     }
@@ -101,7 +101,7 @@ const CalcKeyboard = () => {
 
     const firstNumberDisplay = () => {
         if (result !== null) {
-            return <Text style={[styles.screenFirstNumber, { fontFamily: Constants.fontPrimaryBold, color: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark }, result.toLocaleString('en-US', 8).length > 6 && { fontSize: 40 }, result.toLocaleString('en-US', 8).length > 12 && { fontSize: 34 }, result.toLocaleString('en-US', 8).length > 14 && { fontSize: 30 }, result > 999999999 && { fontSize: 40 }]}>{result === Infinity || isNaN(result) ? "ERROR" : (result > 999999999 ? result?.toExponential(2).toLocaleString('en-US', 8) : result?.toLocaleString('en-US', 8))}</Text>
+            return <Text style={[styles.screenFirstNumber, { fontFamily: Constants.fontPrimaryBold, color: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark }, result.toLocaleString('en-US', { maximumFractionDigits: 4 }).length > 6 && { fontSize: 40 }, result.toLocaleString('en-US', { maximumFractionDigits: 4 }).length > 12 && { fontSize: 34 }, result > 999999999 && { fontSize: 40 }]}>{result === Infinity || isNaN(result) ? "ERROR" : (result > 999999999 ? result?.toExponential(2).toLocaleString('en-US', { maximumFractionDigits: 4 }) : result?.toLocaleString('en-US', { maximumFractionDigits: 4 }))}</Text>
         }
         if (firstNumber && firstNumber.length < 7) {
             return <Text style={styles.screenFirstNumber}>{firstNumber}</Text>
@@ -109,24 +109,24 @@ const CalcKeyboard = () => {
         if (firstNumber === "") {
             return <Text style={styles.screenFirstNumber}>{"0"}</Text>
         }
-        if (firstNumber.length > 6 && firstNumber.length < 9) {
-            return (
-                <Text style={[styles.screenFirstNumber, { fontSize: 50 }]}>
-                    {firstNumber}
-                </Text>
-            )
-        }
-        if (firstNumber.length > 8 && firstNumber.length < 11) {
+        if (firstNumber.length > 6 && firstNumber.length < 13) {
             return (
                 <Text style={[styles.screenFirstNumber, { fontSize: 40 }]}>
                     {firstNumber}
                 </Text>
             )
         }
-        if (firstNumber.length > 10) {
+        if (firstNumber.length > 12 && firstNumber.length < 17) {
+            return (
+                <Text style={[styles.screenFirstNumber, { fontSize: 34 }]}>
+                    {firstNumber}
+                </Text>
+            )
+        }
+        if (Number(firstNumber) > 999999999) {
             return (
                 <Text style={[styles.screenFirstNumber, { fontSize: 40 }]}>
-                    {Number(firstNumber).toExponential(2).toLocaleString('en-US', 8)}
+                    {Number(firstNumber).toExponential(2).toLocaleString('en-US', { maximumFractionDigits: 4 })}
                 </Text>
             )
         }
@@ -143,10 +143,10 @@ const CalcKeyboard = () => {
 
 
     return (
-        <View style={[styles.calcKeyboard, altColorTheme && styles.altCalcKeyboard, , windowHeight < 620 && { padding: 6 }]}>
+        <View style={[styles.calcKeyboard, altColorTheme && styles.altCalcKeyboard, , windowHeight < 620 && { padding: 5 }]}>
             <View style={styles.calcScreen}>
                 <Text style={styles.screenSecondNumber}>
-                    {secondNumber.toLocaleString('en-US', 8)}
+                    {Number(secondNumber) > 999999999 ? Number(secondNumber).toExponential(2) : secondNumber.toLocaleString('en-US', { maximumFractionDigits: 4 })}
                     <Text style={{ color: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, marginHorizontal: 4, fontFamily: Constants.fontPrimaryBold, fontSize: Constants.fontXl }}>{operation}</Text>
                 </Text>
                 {firstNumberDisplay()}
@@ -213,8 +213,8 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         padding: 8,
         marginBottom: 16,
-        minWidth: 292,
-        minHeight: 152,
+        minWidth: 324,
+        minHeight: 150,
         justifyContent: 'flex-end',
         borderWidth: 1,
         borderColor: Constants.colorWhite,
