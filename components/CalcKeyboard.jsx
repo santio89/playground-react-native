@@ -147,7 +147,7 @@ const CalcKeyboard = () => {
 
     return (
         <View style={[styles.calcKeyboard, altColorTheme && styles.altCalcKeyboard, , windowHeight < 620 && { paddingBottom: 6 }]}>
-            <View style={styles.calcScreen}>
+            <View style={[styles.calcScreen, altColorTheme && styles.altCalcScreen]}>
                 <Text style={styles.screenSecondNumber}>
                     {Number(secondNumber) > 999999999 ? Number(secondNumber).toExponential(2) : secondNumber.toLocaleString('en-US', { maximumFractionDigits: 4 })}
                     <Text style={{ color: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, marginHorizontal: 4, fontFamily: Constants.fontPrimaryBold, fontSize: Constants.fontXl }}>{operation}</Text>
@@ -223,13 +223,13 @@ const styles = StyleSheet.create({
         minHeight: 150,
         justifyContent: 'flex-end',
         borderBottomWidth: 2,
-        borderColor: Constants.colorWhite,
-        shadowColor: Constants.colorWhite,
+        borderColor: Constants.colorPrimary,
+        shadowColor: Constants.colorPrimary,
         shadowOffset: {
             width: 0,
             height: 2,
         },
-        shadowOpacity: 0.4,
+        shadowOpacity: 0.8,
         shadowRadius: 8.00,
         elevation: 8,
     },
@@ -260,4 +260,15 @@ const styles = StyleSheet.create({
         backgroundColor: Constants.colorSecondaryDark,
         borderColor: Constants.colorSecondary,
     },
+    altCalcScreen: {
+        borderColor: Constants.colorSecondary,
+        shadowColor: Constants.colorSecondary,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.8,
+        shadowRadius: 8.00,
+        elevation: 8,
+    }
 })
