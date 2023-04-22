@@ -193,7 +193,7 @@ export default CalcKeyboard
 const styles = StyleSheet.create({
     calcKeyboard: {
         width: '100%',
-        minWidth: 340,
+        minWidth: 350,
         maxWidth: 380,
         borderRadius: 8,
         justifyContent: 'center',
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         padding: 8,
         marginBottom: 16,
-        minWidth: 324,
+        minWidth: 348,
         minHeight: 150,
         justifyContent: 'flex-end',
         borderWidth: 1,
