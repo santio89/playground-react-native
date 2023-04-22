@@ -65,7 +65,10 @@ const CalcKeyboard = () => {
     }
 
     const handleDelete = () => {
-        if (firstNumber !== "" && firstNumber !== "0") {
+        if (result){
+            setResult(result=>Number(result.toString().slice(0, -1)))
+        }
+        else if (firstNumber !== "" && firstNumber !== "0") {
             setFirstNumber(firstNumber => firstNumber.slice(0, -1))
         } else if (operation !== "") {
             setOperation("")
