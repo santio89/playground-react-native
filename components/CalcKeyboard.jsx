@@ -146,7 +146,7 @@ const CalcKeyboard = () => {
 
 
     return (
-        <View style={[styles.calcKeyboard, altColorTheme && styles.altCalcKeyboard, , windowHeight < 620 && { padding: 5 }]}>
+        <View style={[styles.calcKeyboard, altColorTheme && styles.altCalcKeyboard, , windowHeight < 620 && { paddingBottom: 6 }]}>
             <View style={styles.calcScreen}>
                 <Text style={styles.screenSecondNumber}>
                     {Number(secondNumber) > 999999999 ? Number(secondNumber).toExponential(2) : secondNumber.toLocaleString('en-US', { maximumFractionDigits: 4 })}
@@ -195,13 +195,13 @@ const styles = StyleSheet.create({
         width: '100%',
         minWidth: 350,
         maxWidth: 380,
-        borderRadius: 8,
+        borderRadius: 12,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 4,
         borderRadius: 12,
         borderColor: Constants.colorPrimary,
-        padding: 12,
+        paddingBottom: 12,
         backgroundColor: Constants.colorPrimaryDark,
     },
     calcRow: {
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
         minWidth: 348,
         minHeight: 150,
         justifyContent: 'flex-end',
-        borderWidth: 1,
+        borderWidth: 2,
         borderColor: Constants.colorWhite,
         shadowColor: Constants.colorWhite,
         shadowOffset: {
