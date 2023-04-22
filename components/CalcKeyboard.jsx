@@ -104,7 +104,14 @@ const CalcKeyboard = () => {
 
     const firstNumberDisplay = () => {
         if (result !== null) {
-            return <Text style={[styles.screenFirstNumber, { fontFamily: Constants.fontPrimaryBold, color: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark }, result.toLocaleString('en-US', { maximumFractionDigits: 4 }).length > 6 && { fontSize: 40 }, result.toLocaleString('en-US', { maximumFractionDigits: 4 }).length > 12 && { fontSize: 34 }, result > 999999999 && { fontSize: 40 }]}>{result === Infinity || isNaN(result) ? "ERROR" : (result > 999999999 ? result?.toExponential(2).toLocaleString('en-US', { maximumFractionDigits: 4 }) : result?.toLocaleString('en-US', { maximumFractionDigits: 4 }))}</Text>
+            return <Text style={[styles.screenFirstNumber, { fontFamily: Constants.fontPrimaryBold, color: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark }, result.toLocaleString('en-US', { maximumFractionDigits: 4 }).length > 6 && { fontSize: 40 }, result.toLocaleString('en-US', { maximumFractionDigits: 4 }).length > 12 && { fontSize: 34 }, result.toLocaleString('en-US', { maximumFractionDigits: 4 }).length > 14 && { fontSize: 34 }, result > 999999999 && { fontSize: 40 }]}>{result === Infinity || isNaN(result) ? "ERROR" : (result > 999999999 ? result?.toExponential(2).toLocaleString('en-US', { maximumFractionDigits: 4 }) : result?.toLocaleString('en-US', { maximumFractionDigits: 4 }))}</Text>
+        }
+        if (Number(firstNumber) > 999999999) {
+            return (
+                <Text style={[styles.screenFirstNumber, { fontSize: 40 }]}>
+                    {Number(firstNumber).toExponential(2).toLocaleString('en-US', { maximumFractionDigits: 4 })}
+                </Text>
+            )
         }
         if (firstNumber && firstNumber.length < 7) {
             return <Text style={styles.screenFirstNumber}>{firstNumber}</Text>
@@ -119,17 +126,10 @@ const CalcKeyboard = () => {
                 </Text>
             )
         }
-        if (firstNumber.length > 12 && firstNumber.length < 17) {
+        if (firstNumber.length > 12) {
             return (
                 <Text style={[styles.screenFirstNumber, { fontSize: 34 }]}>
                     {firstNumber}
-                </Text>
-            )
-        }
-        if (Number(firstNumber) > 999999999) {
-            return (
-                <Text style={[styles.screenFirstNumber, { fontSize: 40 }]}>
-                    {Number(firstNumber).toExponential(2).toLocaleString('en-US', { maximumFractionDigits: 4 })}
                 </Text>
             )
         }
