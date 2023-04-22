@@ -44,7 +44,7 @@ const CalcKeyboard = () => {
             setSecondNumber(result > 999999999 ? result?.toExponential(2) : result.toString())
             setResult(null)
         } else if (secondNumber === "") {
-            setSecondNumber(Number(firstNumber) > 999999999 ? firstNumber.toExponential(2) : firstNumber)
+            setSecondNumber(Number(firstNumber) > 999999999 ? firstNumber.toExponential(2) : firstNumber.toLocaleString('en-US', 8))
             setFirstNumber("")
         }
     }
