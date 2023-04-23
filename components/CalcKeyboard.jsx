@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
         padding: 8,
         marginBottom: 16,
         minWidth: 348,
-        minHeight: 180,
+        minHeight: 160,
         justifyContent: 'flex-end',
         borderBottomWidth: 4,
         borderColor: Constants.colorPrimary,
@@ -253,7 +253,8 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         display: 'flex',
         justifyContent: 'flex-end',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 10
     },
     /* for alt color theme */
     altCalcKeyboard: {
