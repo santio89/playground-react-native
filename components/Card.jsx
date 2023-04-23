@@ -27,13 +27,13 @@ const Card = ({ card, handleChoice, choiceOne, choiceTwo, disabled }) => {
     
 
     return (
-        <Text style={[styles.card, card.matched && styles.cardMatched, card.matched && altColorTheme && styles.altShadow, windowWidth < 1400 && {margin: 6}]}>
+        <Text style={[styles.card, card.matched && styles.cardMatched, card.matched && altColorTheme && styles.altShadow, windowWidth < 1400 && {margin: 8}, windowWidth < 800 && {margin: 6}]}>
             {
                 card.matched || card.id === choiceOne?.id || card.id === choiceTwo?.id ?
-                    <TouchableOpacity style={[styles.cardBackWrapper, styles.cardFront, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder, altColorTheme && styles.altCardFront, windowWidth < 1400 && {width: 80, height: 80}]}>
+                    <TouchableOpacity style={[styles.cardBackWrapper, styles.cardFront, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder, altColorTheme && styles.altCardFront, windowWidth < 1400 && {width: 90, height: 90}, , windowWidth < 800 && {width: 80, height: 80}]}>
                         <Text style={[styles.cardText, windowWidth < 1400 && {fontSize: Constants.fontXll}]}>{card.front}</Text>
                     </TouchableOpacity> :
-                    <TouchableOpacity style={[styles.cardBackWrapper, styles.cardBack, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder, windowWidth < 1400 && {width: 80, height: 80}]} onPress={handleClick}>
+                    <TouchableOpacity style={[styles.cardBackWrapper, styles.cardBack, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder, windowWidth < 1400 && {width: 90, height: 90}, , windowWidth < 800 && {width: 80, height: 80}]} onPress={handleClick}>
                         <Text style={[styles.cardText, windowWidth < 1400 && {fontSize: Constants.fontXll}]}>{card.back}</Text>
                     </TouchableOpacity>
             }
