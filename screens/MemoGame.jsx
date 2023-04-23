@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, FlatList/* , Dimensions */ } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import uuid from 'react-native-uuid';
@@ -87,11 +87,6 @@ const MemoGame = ({ navigation }) => {
         setDisabled(false)
     }
 
-/*     const updateWindowWidth = () => {
-        setWindowWidth(Dimensions.get('window').width)
-    } */
-
-
     useEffect(() => {
         dispatchGetAppsData()
         selectEmojis()
@@ -124,14 +119,6 @@ const MemoGame = ({ navigation }) => {
     useEffect(() => {
         dispatch(setMemoScore(userId, bestScore, storageSetItem))
     }, [bestScore])
-
-/*     useEffect(() => {
-        const dimensionsHandler = Dimensions.addEventListener("change", updateWindowWidth)
-
-        return () => {
-            dimensionsHandler.remove()
-        }
-    }) */
 
     useEffect(() => {
         setText(LANGS.find(lang => lang.lang === languageSelected).text)
@@ -183,7 +170,6 @@ const MemoGame = ({ navigation }) => {
                                     </View>
                                     <View style={styles.cardsWrapper}>
                                         {
-                                           /*  windowWidth > 800 ? */
                                                 <FlatList contentContainerStyle={styles.cardsContainer}
                                                     data={cards}
                                                     numColumns={4}
@@ -193,15 +179,6 @@ const MemoGame = ({ navigation }) => {
                                                     key={'-'}
                                                     keyExtractor={card => ("-" + card.id)}
                                                 />
-                                              /*   : <FlatList contentContainerStyle={styles.cardsContainer}
-                                                    data={cards}
-                                                    numColumns={2}
-                                                    renderItem={({ item }) => (
-                                                        <Card card={item} handleChoice={handleChoice} choiceOne={choiceOne} choiceTwo={choiceTwo} disabled={disabled} />
-                                                    )}
-                                                    key={'#'}
-                                                    keyExtractor={card => ("#" + card.id)}
-                                                /> */
                                         }
                                     </View>
                                 </>}
