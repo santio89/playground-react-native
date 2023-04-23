@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
         padding: 8,
         marginBottom: 16,
         minWidth: 348,
-        minHeight: 150,
+        minHeight: 180,
         justifyContent: 'flex-end',
         borderBottomWidth: 4,
         borderColor: Constants.colorPrimary,
