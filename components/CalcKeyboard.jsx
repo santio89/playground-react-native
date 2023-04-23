@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 4,
+        borderWidth: 6,
         borderRadius: 12,
         borderColor: Constants.colorPrimary,
         paddingBottom: 12,
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
         minWidth: 348,
         minHeight: 180,
         justifyContent: 'flex-end',
-        borderBottomWidth: 4,
+        borderBottomWidth: 6,
         borderColor: Constants.colorPrimary,
         shadowColor: Constants.colorPrimary,
         shadowOffset: {
