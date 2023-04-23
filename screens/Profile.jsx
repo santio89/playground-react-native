@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
         maxWidth: '100%'
     },
     profileItemAvatar: {
-        fontSize: Constants.fontXll,
+        fontSize: Constants.fontXlll,
         textAlign: 'center'
     },
     settingsItemTextButton: {

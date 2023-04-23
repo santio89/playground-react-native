@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     },
     screenFirstNumber: {
         fontFamily: Constants.fontPrimary,
-        fontSize: Constants.fontXll,
+        fontSize: Constants.fontXlll,
         color: Constants.colorWhite,
         alignSelf: "flex-end",
         width: '100%',

@@ -1,25 +1,40 @@
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, Dimensions } from 'react-native'
 import Constants from '../constants/Styles'
 import { useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
 
 const Card = ({ card, handleChoice, choiceOne, choiceTwo, disabled }) => {
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
+
+    const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
 
     const handleClick = () => {
         if (disabled) { return }
         handleChoice(card)
     }
+
+    const updateWindowWidth = () => {
+        setWindowWidth(Dimensions.get('window').width)
+    }
+
+    useEffect(() => {
+        const dimensionsHandler = Dimensions.addEventListener("change", updateWindowWidth)
+
+        return () => {
+            dimensionsHandler.remove()
+        }
+    })
     
 
     return (
-        <Text style={[styles.card, card.matched && styles.cardMatched, card.matched && altColorTheme && styles.altShadow]}>
+        <Text style={[styles.card, card.matched && styles.cardMatched, card.matched && altColorTheme && styles.altShadow, windowWidth < 1400 && {margin: 6}]}>
             {
                 card.matched || card.id === choiceOne?.id || card.id === choiceTwo?.id ?
-                    <TouchableOpacity style={[styles.cardBackWrapper, styles.cardFront, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder, altColorTheme && styles.altCardFront]}>
-                        <Text style={styles.cardText}>{card.front}</Text>
+                    <TouchableOpacity style={[styles.cardBackWrapper, styles.cardFront, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder, altColorTheme && styles.altCardFront, windowWidth < 1400 && {width: 80, height: 80}]}>
+                        <Text style={[styles.cardText, windowWidth < 1400 && {fontSize: Constants.fontXll}]}>{card.front}</Text>
                     </TouchableOpacity> :
-                    <TouchableOpacity style={[styles.cardBackWrapper, styles.cardBack, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder]} onPress={handleClick}>
-                        <Text style={styles.cardText}>{card.back}</Text>
+                    <TouchableOpacity style={[styles.cardBackWrapper, styles.cardBack, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder, windowWidth < 1400 && {width: 80, height: 80}]} onPress={handleClick}>
+                        <Text style={[styles.cardText, windowWidth < 1400 && {fontSize: Constants.fontXll}]}>{card.back}</Text>
                     </TouchableOpacity>
             }
         </Text>
@@ -58,9 +73,9 @@ const styles = StyleSheet.create({
         fontSize: Constants.fontXxl,
     },
     cardBackWrapper: {
-        width: 130,
+        width: 120,
         aspectRatio: 1,
-        height: 130,
+        height: 120,
         backgroundColor: Constants.colorPrimaryDark,
         borderColor: Constants.colorPrimary,
         borderRadius: 8,

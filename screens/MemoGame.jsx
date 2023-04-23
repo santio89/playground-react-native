@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList/* , Dimensions */ } from 'react-native'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import uuid from 'react-native-uuid';
@@ -23,7 +23,7 @@ const MemoGame = ({ navigation }) => {
     const memoScore = useSelector(state => state.apps.memoGame.bestScore)
     const [bestScore, setBestScore] = useState(memoScore);
 
-    const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
+/*     const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width); */
 
     const userId = useSelector(state => state.auth.userId)
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
@@ -87,9 +87,9 @@ const MemoGame = ({ navigation }) => {
         setDisabled(false)
     }
 
-    const updateWindowWidth = () => {
+/*     const updateWindowWidth = () => {
         setWindowWidth(Dimensions.get('window').width)
-    }
+    } */
 
 
     useEffect(() => {
@@ -125,13 +125,13 @@ const MemoGame = ({ navigation }) => {
         dispatch(setMemoScore(userId, bestScore, storageSetItem))
     }, [bestScore])
 
-    useEffect(() => {
+/*     useEffect(() => {
         const dimensionsHandler = Dimensions.addEventListener("change", updateWindowWidth)
 
         return () => {
             dimensionsHandler.remove()
         }
-    })
+    }) */
 
     useEffect(() => {
         setText(LANGS.find(lang => lang.lang === languageSelected).text)
@@ -183,7 +183,7 @@ const MemoGame = ({ navigation }) => {
                                     </View>
                                     <View style={styles.cardsWrapper}>
                                         {
-                                            windowWidth > 800 ?
+                                           /*  windowWidth > 800 ? */
                                                 <FlatList contentContainerStyle={styles.cardsContainer}
                                                     data={cards}
                                                     numColumns={4}
@@ -193,7 +193,7 @@ const MemoGame = ({ navigation }) => {
                                                     key={'-'}
                                                     keyExtractor={card => ("-" + card.id)}
                                                 />
-                                                : <FlatList contentContainerStyle={styles.cardsContainer}
+                                              /*   : <FlatList contentContainerStyle={styles.cardsContainer}
                                                     data={cards}
                                                     numColumns={2}
                                                     renderItem={({ item }) => (
@@ -201,7 +201,7 @@ const MemoGame = ({ navigation }) => {
                                                     )}
                                                     key={'#'}
                                                     keyExtractor={card => ("#" + card.id)}
-                                                />
+                                                /> */
                                         }
                                     </View>
                                 </>}
@@ -334,11 +334,12 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: Constants.colorPrimaryDark,
         backgroundColor: Constants.colorPrimary,
-        marginVertical: 10,
+        marginVertical: 4,
         marginLeft: '2%',
         marginRight: '2%',
-        padding: 10,
-        flex: 1
+        padding: 4,
+        flex: 1,
+        maxWidth: 140
     },
     turnsText: {
         color: Constants.colorWhite,
