@@ -33,7 +33,7 @@ export default CalcButton
 
 const styles = StyleSheet.create({
     calcButton: {
-        width: 50,
+        width: 48,
         aspectRatio: 1,
         backgroundColor: Constants.colorDark,
         justifyContent: 'center',
