@@ -115,7 +115,7 @@ const Profile = ({ navigation }) => {
                             <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{text.userLoggedOut}</Text>
                         </Text>
                         <View style={styles.modalBtnContainer}>
-                            <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setLogOutSuccess(false); navigation.navigate("Apps", { screen: "AppsHome" }) }}>
+                            <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setLogOutSuccess(false); navigation.navigate("AppsHome") }}>
                                 <Text style={[styles.modalBtnText]}>OK</Text>
                             </TouchableOpacity>
                         </View>
@@ -158,7 +158,7 @@ const Profile = ({ navigation }) => {
                                     data={[...Emojis]}
                                     horizontal={true}
                                     renderItem={({ item }) => (
-                                        <TouchableOpacity  style={[styles.avatarItem, altColorTheme && styles.altAvatarItem, item === selectedAvatar && styles.avatarSelected]} onPress={() => setSelectedAvatar(item)}>
+                                        <TouchableOpacity style={[styles.avatarItem, altColorTheme && styles.altAvatarItem, item === selectedAvatar && styles.avatarSelected]} onPress={() => setSelectedAvatar(item)}>
                                             <Text style={styles.avatarItemText}>{item}</Text>
                                         </TouchableOpacity>
                                     )}
@@ -300,19 +300,17 @@ const styles = StyleSheet.create({
         minHeight: 300,
     },
     modalTitle: {
+        fontSize: Constants.fontLg,
+        fontWeight: 'bold',
+        fontFamily: Constants.fontPrimaryBold,
+        color: Constants.colorWhite,
         marginBottom: 40,
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        textAlign: 'center',
-    },
-    modalTitleText: {
-        fontSize: Constants.fontLg,
-        fontWeight: 'bold',
-        fontFamily: Constants.fontPrimaryBold,
-        color: Constants.colorWhite,
+        textAlign: 'center'
     },
     modalText: {
         fontFamily: Constants.fontPrimary,
@@ -320,12 +318,8 @@ const styles = StyleSheet.create({
         padding: 8,
         borderRadius: 4,
         width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
         textAlign: 'center',
         marginTop: 20,
-        textAlign: 'center'
     },
     modalBtnContainer: {
         flexDirection: 'row',
@@ -339,7 +333,7 @@ const styles = StyleSheet.create({
         backgroundColor: Constants.colorPrimaryDark,
         borderColor: Constants.colorWhite,
         marginHorizontal: 10,
-        width: 100,
+        width: 120,
         textAlign: 'center',
         justifyContent: 'center',
         alignItems: 'center'
@@ -348,7 +342,7 @@ const styles = StyleSheet.create({
         fontFamily: Constants.fontPrimary,
         fontSize: Constants.fontMd,
         color: Constants.colorWhite,
-        textAlign: 'center',
+        textAlign: 'center'
     },
     modalBorderDark: {
         borderColor: Constants.colorDark,

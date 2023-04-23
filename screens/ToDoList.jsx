@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
         backgroundColor: Constants.colorPrimaryDark,
         borderColor: Constants.colorWhite,
         marginHorizontal: 10,
-        width: 100,
+        width: 120,
         textAlign: 'center',
         justifyContent: 'center',
         alignItems: 'center'
