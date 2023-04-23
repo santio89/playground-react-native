@@ -128,7 +128,7 @@ const Profile = ({ navigation }) => {
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
                         <View style={styles.modalTitle}>
-                            <Text style={styles.modalTitleText}>{text.inputUsername}</Text>
+                            <Text style={[styles.modalTitle, {marginBottom: 0}]}>{text.inputUsername}</Text>
                             <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
                                 <TextInput style={[styles.inputUsername, altColorTheme && styles.altInputUsername, (inputUsername != "" && !usernameValidInput) && { borderBottomColor: Constants.colorRed }]} autoCapitalize='none' placeholder={text.minName} placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} value={inputUsername} onChangeText={(inputUsername) => { setInputUsername(inputUsername.toLocaleUpperCase()) }} onSubmitEditing={() => { usernameValidInput && setUpdateUsernameLoading(true), usernameValidInput && dispatchRefreshToken(), usernameValidInput && dispatch(updateUsername(token, avatar + inputUsername.trim(), setUpdateUsernameLoading, setUsernameModal, dispatchRefreshToken)) }} />
                             </KeyboardAvoidingView>
@@ -152,7 +152,7 @@ const Profile = ({ navigation }) => {
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
                         <View style={styles.modalTitle}>
-                            <Text style={styles.modalTitleText}>{text.inputAvatar}</Text>
+                            <Text  style={[styles.modalTitle, {marginBottom: 0}]}>{text.inputAvatar}</Text>
                             <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
                                 <FlatList style={styles.avatarContainer}
                                     data={[...Emojis]}
