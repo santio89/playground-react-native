@@ -20,7 +20,7 @@ const CalcKeyboard = () => {
     }
 
     const handleNumberPress = (btnVal) => {
-        if (result){
+        if (result != null){
             setResult(null)
         }
 
@@ -39,12 +39,12 @@ const CalcKeyboard = () => {
         }
 
         setOperation(btnVal)
-
-        if (result) {
-            setSecondNumber(result > 999999999 ? result.toExponential(2).toLocaleString('en-US', { maximumFractionDigits: 4, useGrouping: false }) : result.toLocaleString('en-US', { maximumFractionDigits: 4, useGrouping: false }))
+        
+        if (result != null) {
+            setSecondNumber(result > 999999999 ? result.toExponential(2).toLocaleString('en-US', { maximumFractionDigits: 4, useGrouping: false }) : (Number(result).toLocaleString('en-US', { maximumFractionDigits: 4, useGrouping: false })))
             setResult(null)
         } else if (secondNumber === "") {
-            setSecondNumber(firstNumber.toLocaleString('en-US', { maximumFractionDigits: 4, useGrouping: false }))
+            setSecondNumber(firstNumber != '' ? firstNumber.toLocaleString('en-US', { maximumFractionDigits: 4, useGrouping: false }) : '0')
             setFirstNumber("")
         }
     }
@@ -57,10 +57,16 @@ const CalcKeyboard = () => {
     }
 
     const handleInvert = () => {
+        if (result == 0){
+            return
+        }
         result ? setResult(result => (-1) * Number(result)) : (setFirstNumber(firstNumber => (-1 * Number(firstNumber)).toLocaleString('en-US', { maximumFractionDigits: 4, useGrouping: false })))
     }
 
     const handlePercent = () => {
+        if (result == 0){
+            return
+        }
         result ? setResult(result => ((1 / 100) * Number(result)).toFixed(2)) : (setFirstNumber(firstNumber => (((1 / 100) * Number(firstNumber)).toFixed(2)).toLocaleString('en-US', { maximumFractionDigits: 4, useGrouping: false })))
     }
 
@@ -97,7 +103,7 @@ const CalcKeyboard = () => {
                 break;
             default:
                 clearScreen()
-                setResult(result ? result : (secondNumber ? Number(secondNumber) : (firstNumber ? Number(firstNumber) : 0)))
+                setResult(result ? result : (secondNumber ? Number(secondNumber) : (firstNumber && firstNumber != '-0' ? Number(firstNumber) : 0)))
                 break;
         }
     }
