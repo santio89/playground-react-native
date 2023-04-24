@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontFamily: Constants.fontPrimaryBold,
         color: Constants.colorWhite,
-        marginBottom: 40,
+        marginBottom: 20,
         width: '100%',
         display: 'flex',
         flexDirection: 'column',

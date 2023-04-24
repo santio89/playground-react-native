@@ -205,7 +205,7 @@ const Weather = ({ navigation }) => {
                   </View>
 
                   <View style={[styles.rowItems, windowWidth > 800 && { flexDirection: 'row' }]}>
-                    <View style={[styles.weatherTitleContainer, { height: 200, minHeight: 200, maxHeight: 200 }, windowWidth > 800 && { marginRight: 10, flex: 1 }, altColorTheme && styles.altWeatherTitleContainer]}>
+                    <View style={[styles.weatherTitleContainer, { height: 200, minHeight: 200, maxHeight: 200 }, windowWidth > 800 && { marginRight: 8, flex: 1 }, altColorTheme && styles.altWeatherTitleContainer]}>
                       <Text style={styles.weatherTitleLocation}>{text.feels}</Text>
                       <View style={styles.weatherTitleContent}>
                         <View style={styles.weatherTitleImgWrapper}>
@@ -215,7 +215,7 @@ const Weather = ({ navigation }) => {
                       </View>
                     </View>
 
-                    <View style={[styles.weatherTitleContainer, { height: 200, minHeight: 200, maxHeight: 200 }, windowWidth > 800 && { marginLeft: 10, flex: 1 }, altColorTheme && styles.altWeatherTitleContainer]}>
+                    <View style={[styles.weatherTitleContainer, { height: 200, minHeight: 200, maxHeight: 200 }, windowWidth > 800 && { marginLeft: 8, flex: 1 }, altColorTheme && styles.altWeatherTitleContainer]}>
                       <Text style={[styles.weatherTitleLocation]}>{text.humidity}</Text>
                       <View style={styles.weatherTitleContent}>
                         <View style={styles.weatherTitleImgWrapper}>
@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     flexWrap: 'wrap',
-    marginBottom: 20
+    marginBottom: 16
   },
   weatherDateView: {
     alignSelf: 'flex-start',
@@ -345,7 +345,7 @@ const styles = StyleSheet.create({
     borderColor: Constants.colorPrimaryDark,
     borderTopColor: Constants.colorPrimary,
     backgroundColor: Constants.colorPrimary,
-    marginLeft: 10
+    marginLeft: 8
   },
   weatherData: {
     flexGrow: 1,
@@ -357,10 +357,10 @@ const styles = StyleSheet.create({
     borderColor: Constants.colorPrimaryDark,
     backgroundColor: Constants.colorPrimary,
     padding: 10,
-    height: 300,
-    minHeight: 300,
-    maxHeight: 300,
-    marginBottom: 20,
+    height: 280,
+    minHeight: 280,
+    maxHeight: 280,
+    marginBottom: 16,
   },
   weatherTitle:
   {
@@ -434,7 +434,7 @@ const styles = StyleSheet.create({
     minHeight: 300,
   },
   modalTitle: {
-    marginBottom: 40,
+    marginBottom: 20,
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
