@@ -24,12 +24,12 @@ const CalcKeyboard = () => {
             setResult(null)
         }
 
-        if (btnVal === "0" && firstNumber === "") {
+        if (btnVal === "0" && (firstNumber === "" || firstNumber === "0" || firstNumber === "-0")) {
             return
         }
 
         if (firstNumber.length < 9) {
-            firstNumber === "" || firstNumber === "0" ? setFirstNumber(btnVal) : setFirstNumber(firstNumber + btnVal)
+            firstNumber === "" || firstNumber === "0" ? setFirstNumber(btnVal) : (firstNumber === '-0' ? setFirstNumber('-'+btnVal) : setFirstNumber(firstNumber + btnVal))
         }
     }
 
