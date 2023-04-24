@@ -20,7 +20,7 @@ const CalcKeyboard = () => {
     }
 
     const handleNumberPress = (btnVal) => {
-        if (result != null){
+        if (result != null) {
             setResult(null)
         }
 
@@ -28,8 +28,12 @@ const CalcKeyboard = () => {
             return
         }
 
+        if (btnVal === '.' && firstNumber.includes('.')) {
+            return
+        }
+
         if (firstNumber.length < 9) {
-            firstNumber === "" || firstNumber === "0" ? setFirstNumber(btnVal) : (firstNumber === '-0' ? setFirstNumber('-'+btnVal) : setFirstNumber(firstNumber + btnVal))
+            firstNumber === "" || firstNumber === "0" ? (btnVal === '.' ? setFirstNumber('0' + btnVal) : setFirstNumber(btnVal)) : (firstNumber === '-0' ? (btnVal === '.' ? setFirstNumber('-0' + btnVal) : setFirstNumber('-' + btnVal) ) : setFirstNumber(firstNumber + btnVal))
         }
     }
 
@@ -39,7 +43,7 @@ const CalcKeyboard = () => {
         }
 
         setOperation(btnVal)
-        
+
         if (result != null) {
             setSecondNumber(result > 999999999 ? result.toExponential(2).toLocaleString('en-US', { maximumFractionDigits: 4, useGrouping: false }) : (Number(result).toLocaleString('en-US', { maximumFractionDigits: 4, useGrouping: false })))
             setResult(null)
@@ -57,22 +61,22 @@ const CalcKeyboard = () => {
     }
 
     const handleInvert = () => {
-        if (result == 0){
+        if (result == 0) {
             return
         }
         result ? setResult(result => (-1) * Number(result)) : (setFirstNumber(firstNumber => (-1 * Number(firstNumber)).toLocaleString('en-US', { maximumFractionDigits: 4, useGrouping: false })))
     }
 
     const handlePercent = () => {
-        if (result == 0){
+        if (result == 0) {
             return
         }
         result ? setResult(result => ((1 / 100) * Number(result)).toFixed(2)) : (setFirstNumber(firstNumber => (((1 / 100) * Number(firstNumber)).toFixed(2)).toLocaleString('en-US', { maximumFractionDigits: 4, useGrouping: false })))
     }
 
     const handleDelete = () => {
-        if (result){
-            setResult(result=>Number(result.toString().slice(0, -1)))
+        if (result) {
+            setResult(result => Number(result.toString().slice(0, -1)))
         }
         else if (firstNumber !== "" && firstNumber !== "0") {
             setFirstNumber(firstNumber => firstNumber.slice(0, -1))
