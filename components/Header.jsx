@@ -2,6 +2,7 @@ import { Text, View, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, Key
 import Constants from '../constants/Styles';
 import { useSelector } from 'react-redux';
 import { Entypo } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Header({ navigation }) {
   const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
@@ -10,8 +11,14 @@ export default function Header({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={[styles.headerContainer, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder]}>
-        <TouchableOpacity onPress={() => navigation.navigate("Apps", {screen: "AppsHome"})}><Text style={styles.header}>PLAYGROUND</Text></TouchableOpacity>
-        <TouchableOpacity style={[styles.loginContainer, altColorTheme && styles.altLoginContainer]} onPress={() => avatar ? navigation.navigate("Profile") : navigation.navigate("Auth", {screen: "LogIn"})}>
+        <LinearGradient
+          colors={altColorTheme?[Constants.colorSecondary, Constants.colorPrimary, Constants.colorSecondary, Constants.colorPrimary, Constants.colorSecondary]:[Constants.colorPrimary, Constants.colorSecondary, Constants.colorPrimary, Constants.colorSecondary, Constants.colorPrimary]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0.5, y: 0.5 }}
+          style={{position: 'absolute', left: 0, right: 0, top: 0, bottom: 0}}
+        />
+        <TouchableOpacity onPress={() => navigation.navigate("Apps", { screen: "AppsHome" })}><Text style={styles.header}>PLAYGROUND</Text></TouchableOpacity>
+        <TouchableOpacity style={[styles.loginContainer, altColorTheme && styles.altLoginContainer]} onPress={() => avatar ? navigation.navigate("Profile") : navigation.navigate("Auth", { screen: "LogIn" })}>
           <View>
             {avatar ?
               <Text style={styles.avatar}>{avatar}</Text> :
