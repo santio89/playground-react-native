@@ -11,12 +11,12 @@ export default function Header({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={[styles.headerContainer, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder]}>
-        <LinearGradient
-          colors={altColorTheme ? [Constants.colorSecondary, Constants.colorPrimary, Constants.colorSecondary, Constants.colorPrimary, Constants.colorSecondary] : [Constants.colorPrimary, Constants.colorSecondary, Constants.colorPrimary, Constants.colorSecondary, Constants.colorPrimary]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: -0.5, y: -0.5 }}
-          style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-        />
+      <LinearGradient
+            colors={altColorTheme ? [Constants.colorSecondary, Constants.colorSecondaryDark, Constants.colorSecondary] : [Constants.colorPrimary, Constants.colorPrimaryDark, Constants.colorPrimary]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0.5, y: 0.5 }}
+            style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4 }}
+          />
         <TouchableOpacity onPress={() => navigation.navigate("Apps", { screen: "AppsHome" })}><Text style={styles.header}>PLAYGROUND</Text></TouchableOpacity>
         <TouchableOpacity style={[styles.loginContainer, altColorTheme && styles.altLoginContainer]} onPress={() => avatar ? navigation.navigate("Profile") : navigation.navigate("Auth", { screen: "LogIn" })}>
           <LinearGradient
