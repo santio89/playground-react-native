@@ -5,6 +5,7 @@ import { selectLang, selectDarkMode, selectColorTheme, getSettingsFirebase } fro
 import Constants from '../constants/Styles'
 import { LANGS } from '../constants/Langs.js';
 import Header from '../components/Header'
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Settings = ({ navigation }) => {
 
@@ -62,23 +63,85 @@ const Settings = ({ navigation }) => {
                     <View style={styles.settingsItem}>
                         <Text style={[styles.settingsItemLabel]}><Text style={[styles.settingsItemIndicator, altColorTheme && styles.altSettingsItemIndicator]}>●&nbsp;</Text><Text>{text.language}: </Text></Text>
                         <View style={styles.settingsItemTextWrapper}>
-                            <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, config.lang === "english" && styles.itemSelected]} onPress={() => { setConfig(config => ({ ...config, lang: "english" })) }}><Text style={[styles.settingsItemText, config.lang === "english" && styles.itemSelected]}>{text.english}</Text></TouchableOpacity>
-                            <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, config.lang === "spanish" && styles.itemSelected]} onPress={() => { setConfig(config => ({ ...config, lang: "spanish" })) }}><Text style={[styles.settingsItemText, config.lang === "spanish" && styles.itemSelected]}>{text.spanish}</Text></TouchableOpacity>
+                            <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, config.lang === "english" && styles.itemSelected]} onPress={() => { setConfig(config => ({ ...config, lang: "english" })) }}>
+                                {config.lang === "english" &&
+                                    <LinearGradient
+                                        colors={[altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark]}
+                                        start={{ x: 0, y: 0 }}
+                                        end={{ x: -0.5, y: -0.5 }}
+                                        style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1 }}
+                                    />
+                                }
+                                <Text style={[styles.settingsItemText, config.lang === "english" && styles.itemSelected]}>{text.english}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, config.lang === "spanish" && styles.itemSelected]} onPress={() => { setConfig(config => ({ ...config, lang: "spanish" })) }}>
+                                {config.lang === "spanish" &&
+                                    <LinearGradient
+                                        colors={[altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark]}
+                                        start={{ x: 0, y: 0 }}
+                                        end={{ x: -0.5, y: -0.5 }}
+                                        style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1 }}
+                                    />
+                                }
+                                <Text style={[styles.settingsItemText, config.lang === "spanish" && styles.itemSelected]}>{text.spanish}</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                     <View style={styles.settingsItem}>
                         <Text style={[styles.settingsItemLabel]}><Text style={[styles.settingsItemIndicator, altColorTheme && styles.altSettingsItemIndicator]}>●&nbsp;</Text><Text>{text.darkMode}: </Text></Text>
                         <View style={styles.settingsItemTextWrapper}>
-                            <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, !config.darkMode && styles.itemSelected]} onPress={() => { setConfig(config => ({ ...config, darkMode: false })) }}><Text style={[styles.settingsItemText, !config.darkMode && styles.itemSelected]}>{text.inactive}</Text></TouchableOpacity>
-                            <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, config.darkMode && styles.itemSelected]} onPress={() => { setConfig(config => ({ ...config, darkMode: true })) }}><Text style={[styles.settingsItemText, config.darkMode && styles.itemSelected]}>{text.active}</Text></TouchableOpacity>
+                            <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, !config.darkMode && styles.itemSelected]} onPress={() => { setConfig(config => ({ ...config, darkMode: false })) }}>
+                                {!config.darkMode &&
+                                    <LinearGradient
+                                        colors={[altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark]}
+                                        start={{ x: 0, y: 0 }}
+                                        end={{ x: -0.5, y: -0.5 }}
+                                        style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1 }}
+                                    />
+                                }
+                                <Text style={[styles.settingsItemText, !config.darkMode && styles.itemSelected]}>{text.inactive}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, config.darkMode && styles.itemSelected]} onPress={() => { setConfig(config => ({ ...config, darkMode: true })) }}>
+                                {config.darkMode &&
+                                    <LinearGradient
+                                        colors={[altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark]}
+                                        start={{ x: 0, y: 0 }}
+                                        end={{ x: -0.5, y: -0.5 }}
+                                        style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1 }}
+                                    />
+                                }
+                                <Text style={[styles.settingsItemText, config.darkMode && styles.itemSelected]}>{text.active}</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                     <View style={styles.settingsItem}>
                         <Text style={[styles.settingsItemLabel]}><Text style={[styles.settingsItemIndicator, altColorTheme && styles.altSettingsItemIndicator]}>●&nbsp;</Text><Text>{text.colorTheme}: </Text></Text>
                         <View style={styles.settingsItemTextWrapper}>
-                            <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, config.altColorTheme === false && styles.itemSelected, styles.backgroundPrimary]} onPress={() => { setConfig(config => ({ ...config, altColorTheme: false })) }}><Text style={[styles.settingsItemText, config.altColorTheme === false && styles.itemSelected]}>{text.purple}</Text></TouchableOpacity>
+                            <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, config.altColorTheme === false && styles.itemSelected, styles.backgroundPrimary]} onPress={() => { setConfig(config => ({ ...config, altColorTheme: false })) }}>
+                                {config.altColorTheme === false &&
+                                    <LinearGradient
+                                        colors={[Constants.colorPrimaryDark, Constants.colorPrimary, Constants.colorPrimaryDark]}
+                                        start={{ x: 0, y: 0 }}
+                                        end={{ x: -0.5, y: -0.5 }}
+                                        style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1 }}
+                                    />
+                                }
+                                <Text style={[styles.settingsItemText, config.altColorTheme === false && styles.itemSelected]}>{text.purple}
+                                </Text>
+                            </TouchableOpacity>
 
-                            <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, config.altColorTheme === true && styles.itemSelected, styles.backgroundSecondary]} onPress={() => { setConfig(config => ({ ...config, altColorTheme: true })) }}><Text style={[styles.settingsItemText, config.altColorTheme === true && styles.itemSelected]}>{text.orange}</Text></TouchableOpacity>
+                            <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, config.altColorTheme === true && styles.itemSelected, styles.backgroundSecondary]} onPress={() => { setConfig(config => ({ ...config, altColorTheme: true })) }}>
+                                {config.altColorTheme === true &&
+                                    <LinearGradient
+                                        colors={[Constants.colorSecondaryDark, Constants.colorSecondary, Constants.colorSecondaryDark]}
+                                        start={{ x: 0, y: 0 }}
+                                        end={{ x: -0.5, y: -0.5 }}
+                                        style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1 }}
+                                    />
+                                }
+                                <Text style={[styles.settingsItemText, config.altColorTheme === true && styles.itemSelected]}>{text.orange}
+                                </Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View>
