@@ -12,13 +12,19 @@ export default function Header({ navigation }) {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={[styles.headerContainer, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder]}>
         <LinearGradient
-          colors={altColorTheme?[Constants.colorSecondary, Constants.colorPrimary, Constants.colorSecondary, Constants.colorPrimary, Constants.colorSecondary]:[Constants.colorPrimary, Constants.colorSecondary, Constants.colorPrimary, Constants.colorSecondary, Constants.colorPrimary]}
+          colors={altColorTheme ? [Constants.colorSecondary, Constants.colorPrimary, Constants.colorSecondary, Constants.colorPrimary, Constants.colorSecondary] : [Constants.colorPrimary, Constants.colorSecondary, Constants.colorPrimary, Constants.colorSecondary, Constants.colorPrimary]}
           start={{ x: 0, y: 0 }}
-          end={{ x: 0.5, y: 0.5 }}
-          style={{position: 'absolute', left: 0, right: 0, top: 0, bottom: 0}}
+          end={{ x: -0.5, y: -0.5 }}
+          style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
         />
         <TouchableOpacity onPress={() => navigation.navigate("Apps", { screen: "AppsHome" })}><Text style={styles.header}>PLAYGROUND</Text></TouchableOpacity>
         <TouchableOpacity style={[styles.loginContainer, altColorTheme && styles.altLoginContainer]} onPress={() => avatar ? navigation.navigate("Profile") : navigation.navigate("Auth", { screen: "LogIn" })}>
+          <LinearGradient
+            colors={altColorTheme ? [Constants.colorSecondaryDark, Constants.colorSecondary, Constants.colorSecondaryDark] : [Constants.colorPrimaryDark, Constants.colorPrimary, Constants.colorPrimaryDark]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: -0.5, y: -0.5 }}
+            style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4 }}
+          />
           <View>
             {avatar ?
               <Text style={styles.avatar}>{avatar}</Text> :
@@ -62,15 +68,15 @@ const styles = StyleSheet.create({
     borderColor: Constants.colorWhite,
     borderWidth: 1,
   },
-  altLoginContainer: {
-    backgroundColor: Constants.colorSecondaryDark,
-  },
   avatar: {
     color: Constants.colorWhite,
     fontFamily: Constants.fontPrimaryBold,
     fontSize: Constants.fontLg
   },
   /* for alt color theme */
+  altLoginContainer: {
+    backgroundColor: Constants.colorSecondaryDark,
+  },
   altBackground: {
     backgroundColor: Constants.colorSecondary
   },
