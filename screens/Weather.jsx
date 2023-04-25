@@ -189,45 +189,45 @@ const Weather = ({ navigation }) => {
                 <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
                 :
                 <>
-                  <Text style={[styles.weatherTitle, altColorTheme && styles.altWeatherTitle, windowWidth < 800 || windowHeight < 740 && { fontSize: Constants.fontLgg }]}>{forecast.name.toLocaleUpperCase()}</Text>
+                  <Text style={[styles.weatherTitle, altColorTheme && styles.altWeatherTitle, (windowWidth < 800 || windowHeight < 740) && { fontSize: Constants.fontLgg }]}>{forecast.name.toLocaleUpperCase()}</Text>
                   <View style={styles.weatherHeader}>
-                    <View style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation, styles.weatherDateView]} ><Text style={[styles.weatherDateText, windowWidth < 800 || windowHeight < 740 && { fontSize: Constants.fontSm }]}>{(new Date(forecast.dt * 1000)).toLocaleDateString('en-GB', { month: '2-digit', day: '2-digit' }).toLocaleUpperCase()}, {(new Date(forecast.dt * 1000)).toLocaleTimeString(['en-GB'], { hour: '2-digit', minute: '2-digit' })}</Text></View>
+                    <View style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation, styles.weatherDateView]} ><Text style={[styles.weatherDateText, (windowWidth < 800 || windowHeight < 740) && { fontSize: Constants.fontSm }]}>{(new Date(forecast.dt * 1000)).toLocaleDateString('en-GB', { month: '2-digit', day: '2-digit' }).toLocaleUpperCase()}, {(new Date(forecast.dt * 1000)).toLocaleTimeString(['en-GB'], { hour: '2-digit', minute: '2-digit' })}</Text></View>
 
-                    <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setCalendarModal(true); fetchExtendedForecast() }} ><Entypo name="calendar" size={windowWidth < 800 || windowHeight < 740 ? Constants.fontLgg : Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
+                    <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setCalendarModal(true); fetchExtendedForecast() }} ><Entypo name="calendar" size={(windowWidth < 800 || windowHeight < 740) ? Constants.fontLgg : Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
 
-                    <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setModalVisible(true) }} ><Entypo name="location-pin" size={windowWidth < 800 || windowHeight < 740 ? Constants.fontLgg : Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
+                    <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setModalVisible(true) }} ><Entypo name="location-pin" size={(windowWidth < 800 || windowHeight < 740) ? Constants.fontLgg : Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
                   </View>
 
-                  <View style={[styles.weatherTitleContainer, altColorTheme && styles.altWeatherTitleContainer, windowWidth < 800 || windowHeight < 740 && { height: 220, minHeight: 220, maxHeight: 220 }]}>
-                    <Text style={[styles.weatherTitleLocation, windowWidth < 800 || windowHeight < 740 && { fontSize: Constants.fontMd }]}>{text.weather}</Text>
+                  <View style={[styles.weatherTitleContainer, altColorTheme && styles.altWeatherTitleContainer, (windowWidth < 800 || windowHeight < 740) && { height: 220, minHeight: 220, maxHeight: 220 }]}>
+                    <Text style={[styles.weatherTitleLocation, (windowWidth < 800 || windowHeight < 740) && { fontSize: Constants.fontMd }]}>{text.weather}</Text>
                     <View style={styles.weatherTitleContent}>
                       <View style={styles.weatherTitleImgWrapper}>
-                        <Image style={[styles.weatherTitleImg, windowWidth < 800 || windowHeight < 740 && { maxWidth: 160 }]} source={{ uri: `http://openweathermap.org/img/wn/${forecast?.weather[0].icon}@4x.png` }} />
-                        <Text style={[styles.weatherTitleTemp, windowWidth < 800 || windowHeight < 740 && { fontSize: Constants.fontMd }]}>{`${Math.trunc(Number(forecast.main.temp))} °C\n${Math.trunc((Number(forecast.main.temp) * (9 / 5)) + 32)} °F`}</Text>
+                        <Image style={[styles.weatherTitleImg, (windowWidth < 800 || windowHeight < 740) && { maxWidth: 160 }]} source={{ uri: `http://openweathermap.org/img/wn/${forecast?.weather[0].icon}@4x.png` }} />
+                        <Text style={[styles.weatherTitleTemp, (windowWidth < 800 || windowHeight < 740) && { fontSize: Constants.fontMd }]}>{`${Math.trunc(Number(forecast.main.temp))} °C\n${Math.trunc((Number(forecast.main.temp) * (9 / 5)) + 32)} °F`}</Text>
                       </View>
-                      <Text style={[styles.weatherTitleInfo, windowWidth < 800 || windowHeight < 740 && { fontSize: Constants.fontMd }, {marginBottom: 20}]}>
+                      <Text style={[styles.weatherTitleInfo, (windowWidth < 800 || windowHeight < 740) && { fontSize: Constants.fontMd }, {marginBottom: 20}]}>
                         {languageSelected === "spanish" ? spForecast?.weather[0].description.toLocaleUpperCase() : forecast?.weather[0].description.toLocaleUpperCase()}
                       </Text>
                     </View>
                   </View>
 
                   <View style={[styles.rowItems, windowWidth > 800 && { flexDirection: 'row' }]}>
-                    <View style={[styles.weatherTitleContainer, { height: 200, minHeight: 200, maxHeight: 200 }, windowWidth > 800 && { marginRight: 8, flex: 1 }, altColorTheme && styles.altWeatherTitleContainer, windowWidth < 800 || windowHeight < 740 && { height: 130, minHeight: 130, maxHeight: 130 }]}>
-                      <Text style={[styles.weatherTitleLocation, windowWidth < 800 || windowHeight < 740 && { fontSize: Constants.fontMd }]}>{text.feels}</Text>
+                    <View style={[styles.weatherTitleContainer, { height: 200, minHeight: 200, maxHeight: 200 }, windowWidth > 800 && { marginRight: 8, flex: 1 }, altColorTheme && styles.altWeatherTitleContainer, (windowWidth < 800 || windowHeight < 740) && { height: 130, minHeight: 130, maxHeight: 130 }]}>
+                      <Text style={[styles.weatherTitleLocation, (windowWidth < 800 || windowHeight < 740) && { fontSize: Constants.fontMd }]}>{text.feels}</Text>
                       <View style={styles.weatherTitleContent}>
                         <View style={styles.weatherTitleImgWrapper}>
-                          <Image style={[styles.weatherTitleImg, { maxWidth: 100 }, windowWidth < 800 || windowHeight < 740 && { maxWidth: 80 }]} source={require('../assets/img/feels.png')} />
-                          <Text style={[styles.weatherTitleTemp, { fontFamily: Constants.fontPrimary }, { padding: 20 }, windowWidth < 800 || windowHeight < 740 && { fontSize: Constants.fontMd }]}>{`${Math.trunc(Number(forecast.main.feels_like))} °C\n${Math.trunc((Number(forecast.main.feels_like) * (9 / 5)) + 32)} °F`}</Text>
+                          <Image style={[styles.weatherTitleImg, { maxWidth: 100 }, (windowWidth < 800 || windowHeight < 740) && { maxWidth: 80 }]} source={require('../assets/img/feels.png')} />
+                          <Text style={[styles.weatherTitleTemp, { fontFamily: Constants.fontPrimary }, { padding: 20 }, (windowWidth < 800 || windowHeight < 740) && { fontSize: Constants.fontMd }]}>{`${Math.trunc(Number(forecast.main.feels_like))} °C\n${Math.trunc((Number(forecast.main.feels_like) * (9 / 5)) + 32)} °F`}</Text>
                         </View>
                       </View>
                     </View>
 
-                    <View style={[styles.weatherTitleContainer, { height: 200, minHeight: 200, maxHeight: 200 }, windowWidth > 800 && { marginLeft: 8, flex: 1 }, altColorTheme && styles.altWeatherTitleContainer, windowWidth < 800 || windowHeight < 740 && { height: 130, minHeight: 130, maxHeight: 130 }]}>
-                      <Text style={[styles.weatherTitleLocation, windowWidth < 800 || windowHeight < 740 && { fontSize: Constants.fontMd }]}>{text.humidity}</Text>
+                    <View style={[styles.weatherTitleContainer, { height: 200, minHeight: 200, maxHeight: 200 }, windowWidth > 800 && { marginLeft: 8, flex: 1 }, altColorTheme && styles.altWeatherTitleContainer, (windowWidth < 800 || windowHeight < 740) && { height: 130, minHeight: 130, maxHeight: 130 }]}>
+                      <Text style={[styles.weatherTitleLocation, (windowWidth < 800 || windowHeight < 740) && { fontSize: Constants.fontMd }]}>{text.humidity}</Text>
                       <View style={styles.weatherTitleContent}>
                         <View style={styles.weatherTitleImgWrapper}>
-                          <Image style={[styles.weatherTitleImg, { maxWidth: 100 }, windowWidth < 800 || windowHeight < 740 && { maxWidth: 80 }]} source={require('../assets/img/humidity.png')} />
-                          <Text style={[styles.weatherTitleTemp, { fontFamily: Constants.fontPrimary }, { padding: 20 }, windowWidth < 800 || windowHeight < 740 && { fontSize: Constants.fontMd }]}>{`${forecast.main.humidity}%`}</Text>
+                          <Image style={[styles.weatherTitleImg, { maxWidth: 100 }, (windowWidth < 800 || windowHeight < 740) && { maxWidth: 80 }]} source={require('../assets/img/humidity.png')} />
+                          <Text style={[styles.weatherTitleTemp, { fontFamily: Constants.fontPrimary }, { padding: 20 }, (windowWidth < 800 || windowHeight < 740) && { fontSize: Constants.fontMd }]}>{`${forecast.main.humidity}%`}</Text>
                         </View>
                       </View>
                     </View>
