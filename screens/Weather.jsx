@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TextInput, View, SafeAreaView, KeyboardAvoidingView, ScrollView, FlatList, ActivityIndicator, RefreshControl, Image, Dimensions, TouchableOpacity, Modal } from 'react-native'
 import * as Location from 'expo-location'
 import { Entypo } from '@expo/vector-icons'
+import { Foundation } from '@expo/vector-icons';
 import { useState, useEffect } from 'react'
 import Constants from '../constants/Styles.js'
 import { LANGS } from '../constants/Langs.js'
@@ -16,6 +17,7 @@ const Weather = ({ navigation }) => {
   const [forecast, setForecast] = useState(null)
   const [spForecast, setSpForecast] = useState(null)
   const [refreshing, setRefreshing] = useState(false)
+  const [reloading, setReloading] = useState(false)
 
   const [extendedForecast, setExtendedForecast] = useState(null)
   const [spExtendedForecast, setSpExtendedForecast] = useState(null)
@@ -104,6 +106,7 @@ const Weather = ({ navigation }) => {
     }
 
     setRefreshing(false)
+    reloading && setReloading(false)
   }
 
   const fetchExtendedForecast = async () => {
@@ -137,6 +140,11 @@ const Weather = ({ navigation }) => {
     }
 
     setFetchingExtendedForecast(false)
+  }
+
+  const reloadWeather = async () =>{
+    setReloading(true);
+    await loadLocation()
   }
 
 
@@ -183,7 +191,7 @@ const Weather = ({ navigation }) => {
 
           <ScrollView contentContainerStyle={styles.weatherData}>
             {
-              !forecast || !spForecast ?
+              !forecast || !spForecast || reloading ?
                 <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
                 :
                 <>
@@ -191,6 +199,8 @@ const Weather = ({ navigation }) => {
                   <View style={styles.weatherHeader}>
                     <View style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation, styles.weatherDateView]} ><Text style={[styles.weatherDateText, (windowWidth < 800 || windowHeight < 740) && { fontSize: Constants.fontSm }]}>{(new Date(forecast.dt * 1000)).toLocaleDateString('en-GB', { month: '2-digit', day: '2-digit' }).toLocaleUpperCase()}, {(new Date(forecast.dt * 1000)).toLocaleTimeString(['en-GB'], { hour: '2-digit', minute: '2-digit' })}</Text></View>
 
+                    <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { reloadWeather() }} ><Foundation  name="refresh" size={(windowWidth < 800 || windowHeight < 740) ? Constants.fontLgg : Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
+                    
                     <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setModalVisible(true) }} ><Entypo name="location-pin" size={(windowWidth < 800 || windowHeight < 740) ? Constants.fontLgg : Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
 
                     <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setCalendarModal(true); fetchExtendedForecast() }} ><Entypo name="calendar" size={(windowWidth < 800 || windowHeight < 740) ? Constants.fontLgg : Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
