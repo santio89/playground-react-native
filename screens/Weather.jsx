@@ -193,9 +193,9 @@ const Weather = ({ navigation }) => {
                   <View style={styles.weatherHeader}>
                     <View style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation, styles.weatherDateView]} ><Text style={[styles.weatherDateText, (windowWidth < 800 || windowHeight < 740) && { fontSize: Constants.fontSm }]}>{(new Date(forecast.dt * 1000)).toLocaleDateString('en-GB', { month: '2-digit', day: '2-digit' }).toLocaleUpperCase()}, {(new Date(forecast.dt * 1000)).toLocaleTimeString(['en-GB'], { hour: '2-digit', minute: '2-digit' })}</Text></View>
 
-                    <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setCalendarModal(true); fetchExtendedForecast() }} ><Entypo name="calendar" size={(windowWidth < 800 || windowHeight < 740) ? Constants.fontLgg : Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
-
                     <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setModalVisible(true) }} ><Entypo name="location-pin" size={(windowWidth < 800 || windowHeight < 740) ? Constants.fontLgg : Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
+
+                    <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setCalendarModal(true); fetchExtendedForecast() }} ><Entypo name="calendar" size={(windowWidth < 800 || windowHeight < 740) ? Constants.fontLgg : Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
                   </View>
 
                   <View style={[styles.weatherTitleContainer, altColorTheme && styles.altWeatherTitleContainer, (windowWidth < 800 || windowHeight < 740) && { height: 220, minHeight: 220, maxHeight: 220 }]}>
