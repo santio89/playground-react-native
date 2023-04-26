@@ -1,6 +1,5 @@
 import { StyleSheet, Text, TextInput, View, SafeAreaView, KeyboardAvoidingView, ScrollView, FlatList, ActivityIndicator, RefreshControl, Image, Dimensions, TouchableOpacity, Modal } from 'react-native'
 import * as Location from 'expo-location'
-/* import MapView from 'react-native-maps' */
 import { Entypo } from '@expo/vector-icons'
 import { useState, useEffect } from 'react'
 import Constants from '../constants/Styles.js'
