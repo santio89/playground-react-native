@@ -32,6 +32,7 @@ export default function ToDoList({ navigation }) {
     }
 
     const addItem = (item) => {
+        item.text = item.text.trim()
         if (item.text === "") { return }
 
         setItems((oldItems) => [item, ...oldItems])
@@ -48,7 +49,7 @@ export default function ToDoList({ navigation }) {
     }, [])
 
     useEffect(() => {
-        input != '' ? setBtnDisabled(false) : setBtnDisabled(true)
+        input.trim() != '' ? setBtnDisabled(false) : setBtnDisabled(true)
     }, [input])
 
     useEffect(() => {

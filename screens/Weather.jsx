@@ -69,6 +69,11 @@ const Weather = ({ navigation }) => {
   }
 
   const fetchWeatherData = async (input) => {
+    input = input?.trim();
+    if (input === ""){
+      return
+    }
+    
     setRefreshing(true);
 
     try {
