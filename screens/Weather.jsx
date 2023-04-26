@@ -6,7 +6,6 @@ import { useState, useEffect } from 'react'
 import Constants from '../constants/Styles.js'
 import { LANGS } from '../constants/Langs.js'
 import { WEATHER_API_KEY } from '../constants/Database.js'
-import { MAPS_API_KEY } from '../constants/Database.js'
 import Alert from '../utils/Alert'
 import { useSelector } from 'react-redux'
 
@@ -248,8 +247,6 @@ const Weather = ({ navigation }) => {
 
                 <TextInput style={[styles.inputLocation, altColorTheme && styles.altInputLocation]} autoCapitalize='none' placeholder={forecast?.name.toLocaleUpperCase()}
                   placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} value={inputLocation} onChangeText={location => setInputLocation(location.toLocaleUpperCase())} onSubmitEditing={() => { location !== "" && fetchWeatherData(inputLocation.trim()) }} />
-
-                {/*    <MapView initialRegion={{latitude: 0, longitude: 0, latitudeDelta: 0, longitudeDelta: 0}}/> */}
 
               </KeyboardAvoidingView>
             </View>
