@@ -393,6 +393,7 @@ const styles = StyleSheet.create({
     fontSize: Constants.fontXl,
     borderBottomColor: Constants.colorPrimary,
     borderBottomWidth: 2,
+    paddingHorizontal: 10
   },
   weatherTitleLocation:
   {
