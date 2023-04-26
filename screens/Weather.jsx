@@ -355,7 +355,7 @@ const styles = StyleSheet.create({
     fontFamily: Constants.fontPrimary
   },
   weatherPinLocation: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 8,
     paddingVertical: 2,
     borderWidth: 2,
     borderRadius: 8,
