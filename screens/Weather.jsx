@@ -341,7 +341,8 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginRight: 'auto',
     marginLeft: 0,
-    paddingVertical: 4
+    paddingVertical: 4,
+    width: 'auto'
   },
   weatherDateText: {
     color: Constants.colorWhite,
@@ -358,7 +359,12 @@ const styles = StyleSheet.create({
     borderColor: Constants.colorPrimaryDark,
     borderTopColor: Constants.colorPrimary,
     backgroundColor: Constants.colorPrimary,
-    marginLeft: 8
+    marginLeft: 8,
+    width: 56,
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   weatherData: {
     flexGrow: 1,
