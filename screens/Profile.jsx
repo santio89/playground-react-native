@@ -82,13 +82,25 @@ const Profile = ({ navigation }) => {
                         <>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.email}: </Text></Text>
-                                <View style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton, { borderStyle: 'solid' }]}>
+                                <View style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton]}>
+                                    <LinearGradient
+                                        colors={altColorTheme ? [Constants.colorSecondaryDark, Constants.colorSecondary, Constants.colorSecondaryDark] : [Constants.colorPrimaryDark, Constants.colorPrimary, Constants.colorPrimaryDark]}
+                                        start={{ x: 0, y: 0 }}
+                                        end={{ x: 1, y: 1 }}
+                                        style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1, }}
+                                    />
                                     <Text style={[styles.profileItemText]}>{email?.toLocaleUpperCase()}</Text>
                                 </View>
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.name}: </Text></Text>
                                 <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton]} onPress={() => { setInputUsername(""), setUsernameModal(true) }}>
+                                    <LinearGradient
+                                        colors={altColorTheme ? [Constants.colorSecondaryDark, Constants.colorSecondary, Constants.colorSecondaryDark] : [Constants.colorPrimaryDark, Constants.colorPrimary, Constants.colorPrimaryDark]}
+                                        start={{ x: 0, y: 0 }}
+                                        end={{ x: 1, y: 1 }}
+                                        style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1, }}
+                                    />
                                     <Text style={[styles.profileItemText]}>{displayName?.toLocaleUpperCase()}</Text>
                                 </TouchableOpacity>
                             </View>
@@ -107,8 +119,8 @@ const Profile = ({ navigation }) => {
                             <View style={styles.profileItem}>
                                 <View style={[styles.profileItemLabel]}>
                                     <Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text>
-                                    <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton, { borderStyle: 'solid' }]} onPress={() => { dispatch(logOut()); setLogOutSuccess(true) }}>
-                                        <Text style={[styles.settingsItemText, { fontWeight: 'bold' }]}>{text.logOut}</Text>
+                                    <TouchableOpacity style={{ marginTop: 2, display: 'flex', justifyContent: 'center', alignItems: 'center', maxWidth: '100%' }} onPress={() => { dispatch(logOut()); setLogOutSuccess(true) }}>
+                                        <Text style={[styles.settingsItemText, { fontFamily: Constants.fontPrimaryBold }]}>{text.logOut}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -270,9 +282,9 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        borderStyle: 'dashed',
+        borderStyle: 'solid',
         borderWidth: 2,
-        borderColor: Constants.colorPrimary,
+        borderColor: Constants.colorPrimaryDark,
         maxWidth: '100%'
     },
     profileItemAvatar: {
@@ -421,7 +433,7 @@ const styles = StyleSheet.create({
     },
     altProfileItemButton: {
         backgroundColor: Constants.colorSecondaryDark,
-        borderColor: Constants.colorSecondary,
+        borderColor: Constants.colorSecondaryDark,
     },
     altSettingsItemTextButton: {
         backgroundColor: Constants.colorSecondaryDark,
