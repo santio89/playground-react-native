@@ -105,12 +105,12 @@ const Profile = ({ navigation }) => {
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.profileItem}>
-                                <Text style={[styles.profileItemLabel]}>
+                                <View style={[styles.profileItemLabel]}>
                                     <Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text>
                                     <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton, { borderStyle: 'solid' }]} onPress={() => { dispatch(logOut()); setLogOutSuccess(true) }}>
                                         <Text style={[styles.settingsItemText, { fontWeight: 'bold' }]}>{text.logOut}</Text>
                                     </TouchableOpacity>
-                                </Text>
+                                </View>
                             </View>
                         </> :
                         <View style={[styles.profileItem, { justifyContent: "center", alignItems: "center", marginTop: 10 }]}>
@@ -244,6 +244,7 @@ const styles = StyleSheet.create({
         fontSize: Constants.fontMd,
         color: Constants.colorWhite,
         display: 'flex',
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 4,
