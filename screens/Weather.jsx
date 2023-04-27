@@ -225,7 +225,7 @@ const Weather = ({ navigation }) => {
                     <Text style={[styles.weatherTitleLocation, (windowWidth < 800 || windowHeight < 768) && { fontSize: Constants.fontMd }]}>{text.weather}</Text>
                     <View style={styles.weatherTitleContent}>
                       <View style={styles.weatherTitleImgWrapper}>
-                        <Image style={[styles.weatherTitleImg, (windowWidth < 800 || windowHeight < 768) && { maxWidth: 160 }]} source={{ uri: `http://openweathermap.org/img/wn/${forecast?.weather[0].icon}@4x.png` }} />
+                        <Image style={[styles.weatherTitleImg, (windowWidth < 800 || windowHeight < 768) && { maxWidth: 180 }]} source={{ uri: `http://openweathermap.org/img/wn/${forecast?.weather[0].icon}@4x.png` }} />
                         <Text style={[styles.weatherTitleTemp, (windowWidth < 800 || windowHeight < 768) && { fontSize: Constants.fontMd }]}>{`${Math.trunc(Number(forecast.main.temp))} °C\n${Math.trunc((Number(forecast.main.temp) * (9 / 5)) + 32)} °F`}</Text>
                       </View>
                       <Text style={[styles.weatherTitleInfo, (windowWidth < 800 || windowHeight < 768) && { fontSize: Constants.fontMd }, {marginBottom: 20}]}>
