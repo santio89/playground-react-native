@@ -297,7 +297,10 @@ const Weather = ({ navigation }) => {
                   <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> :
                   <FlatList style={styles.calendarContainer}
                     data={languageSelected === 'spanish' ? spExtendedForecast?.list : extendedForecast?.list}
-                    horizontal={true}
+                    horizontal
+                    pagingEnabled
+                    snapToAlignment="start"
+                    decelerationRate="fast"
                     renderItem={({ item }) => {
                       const dt = new Date(item.dt * 1000)
                       return (
