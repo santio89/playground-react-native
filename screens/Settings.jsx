@@ -119,7 +119,6 @@ const Settings = ({ navigation }) => {
                                 <Text style={[styles.settingsItemText, config.altColorTheme === false && styles.itemSelected]}>{text.purple}
                                 </Text>
                             </TouchableOpacity>
-
                             <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, config.altColorTheme === true && styles.itemSelected, styles.backgroundSecondary]} onPress={() => { setConfig(config => ({ ...config, altColorTheme: true })) }}>
                                     <LinearGradient
                                         colors={[Constants.colorSecondaryDark, config.altColorTheme === true ? Constants.colorSecondary : Constants.colorSecondaryDark, Constants.colorSecondaryDark]}
