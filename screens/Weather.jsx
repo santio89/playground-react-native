@@ -494,10 +494,9 @@ const styles = StyleSheet.create({
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
+    marginTop: 20,
     alignItems: 'center',
     textAlign: 'center',
-    marginTop: 20,
-    textAlign: 'center'
   },
   modalBtnContainer: {
     flexDirection: 'row',
@@ -560,7 +559,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 200,
     minWidth: 200,
-    maxWidth: 200
+    maxWidth: 200,
+    height: 294,
+    minHeight: 294,
+    maxHeight: 294
   },
   calendarItemImg: {
     width: '100%',
