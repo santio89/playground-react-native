@@ -174,6 +174,9 @@ const Profile = ({ navigation }) => {
                                 <FlatList style={styles.avatarContainer}
                                     data={[...Emojis]}
                                     horizontal={true}
+                                    pagingEnabled
+                                    snapToAlignment="start"
+                                    decelerationRate={"fast"}
                                     renderItem={({ item }) => (
                                         <TouchableOpacity style={[styles.avatarItem, altColorTheme && styles.altAvatarItem, item === selectedAvatar && styles.avatarSelected]} onPress={() => setSelectedAvatar(item)}>
                                             <Text style={styles.avatarItemText}>{item}</Text>
@@ -337,6 +340,8 @@ const styles = StyleSheet.create({
         width: '100%',
         textAlign: 'center',
         marginTop: 20,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     modalBtnContainer: {
         flexDirection: 'row',
@@ -377,9 +382,9 @@ const styles = StyleSheet.create({
     },
     avatarContainer: {
         width: '100%',
+        maxWidth: '100%',
         overflow: 'hidden',
         padding: 10,
-        maxWidth: '100%'
     },
     avatarItem: {
         width: 60,
