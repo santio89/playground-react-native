@@ -260,7 +260,7 @@ const Weather = ({ navigation }) => {
               <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
 
                 <TextInput style={[styles.inputLocation, altColorTheme && styles.altInputLocation]} autoCapitalize='none' placeholder={forecast?.name.toLocaleUpperCase()}
-                  placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} value={inputLocation} onChangeText={location => setInputLocation(location.toLocaleUpperCase())} onSubmitEditing={() => { location !== "" && fetchWeatherData(inputLocation.trim()) }} />
+                  placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} value={inputLocation} onChangeText={location => setInputLocation(location.toLocaleUpperCase())} onSubmitEditing={() => { location !== "" && fetchWeatherData(inputLocation.trim()); setInputLocation("") }} />
 
               </KeyboardAvoidingView>
             </View>
@@ -268,7 +268,7 @@ const Weather = ({ navigation }) => {
               <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setModalVisible(false); setInputLocation(""); setSearchError(null) }}>
                 <Text style={[styles.modalBtnText]}>{text.close}</Text>
               </TouchableOpacity>
-              <TouchableOpacity disabled={refreshing || !validInput} style={[styles.modalBtn, altColorTheme && styles.altModalBtn, !validInput && styles.modalBtnDisabled]} onPress={() => { location !== "" && fetchWeatherData(inputLocation.trim()) }}>
+              <TouchableOpacity disabled={refreshing || !validInput} style={[styles.modalBtn, altColorTheme && styles.altModalBtn, !validInput && styles.modalBtnDisabled]} onPress={() => { location !== "" && fetchWeatherData(inputLocation.trim()); setInputLocation("") }}>
                 {refreshing ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Text style={[styles.modalBtnText, !validInput && styles.modalBtnTextDisabled]}>{text.search}</Text>}
               </TouchableOpacity>
             </View>
