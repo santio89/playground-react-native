@@ -98,8 +98,8 @@ const Profile = ({ navigation }) => {
                                     <LinearGradient
                                         colors={altColorTheme ? [Constants.colorSecondaryDark, Constants.colorSecondary, Constants.colorSecondaryDark] : [Constants.colorPrimaryDark, Constants.colorPrimary, Constants.colorPrimaryDark]}
                                         start={{ x: 0, y: 0 }}
-                                        end={{ x: -0.5, y: -0.5 }}
-                                        style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1 }}
+                                        end={{ x: 1, y: 1 }}
+                                        style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1, }}
                                     />
                                     <Text style={styles.profileItemAvatar} onPress={() => { setAvatarModal(true) }}>{avatar}</Text>
                                 </TouchableOpacity>
@@ -269,9 +269,9 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        borderStyle: 'dashed',
         borderWidth: 2,
         borderColor: Constants.colorPrimary,
-        borderStyle: 'dashed',
         maxWidth: '100%'
     },
     profileItemAvatar: {

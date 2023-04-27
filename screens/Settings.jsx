@@ -67,7 +67,7 @@ const Settings = ({ navigation }) => {
                                 <LinearGradient
                                     colors={[altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, altColorTheme ? (config.lang === "english" ? Constants.colorSecondary : Constants.colorSecondaryDark) : (config.lang === "english" ? Constants.colorPrimary : Constants.colorPrimaryDark), altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark]}
                                     start={{ x: 0, y: 0 }}
-                                    end={{ x: -0.5, y: -0.5 }}
+                                    end={{ x: 1, y: 1 }}
                                     style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1 }}
                                 />
                                 <Text style={[styles.settingsItemText, config.lang === "english" && styles.itemSelected]}>{text.english}</Text>
@@ -76,7 +76,7 @@ const Settings = ({ navigation }) => {
                                 <LinearGradient
                                     colors={[altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, altColorTheme ? (config.lang === "spanish" ? Constants.colorSecondary : Constants.colorSecondaryDark) : (config.lang === "spanish" ? Constants.colorPrimary : Constants.colorPrimaryDark), altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark]}
                                     start={{ x: 0, y: 0 }}
-                                    end={{ x: -0.5, y: -0.5 }}
+                                    end={{ x: 1, y: 1 }}
                                     style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1 }}
                                 />
                                 <Text style={[styles.settingsItemText, config.lang === "spanish" && styles.itemSelected]}>{text.spanish}</Text>
@@ -90,7 +90,7 @@ const Settings = ({ navigation }) => {
                                 <LinearGradient
                                     colors={[altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, altColorTheme ? (!config.darkMode ? Constants.colorSecondary : Constants.colorSecondaryDark) : (!config.darkMode ? Constants.colorPrimary : Constants.colorPrimaryDark), altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark]}
                                     start={{ x: 0, y: 0 }}
-                                    end={{ x: -0.5, y: -0.5 }}
+                                    end={{ x: 1, y: 1 }}
                                     style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1 }}
                                 />
                                 <Text style={[styles.settingsItemText, !config.darkMode && styles.itemSelected]}>{text.inactive}</Text>
@@ -99,7 +99,7 @@ const Settings = ({ navigation }) => {
                                 <LinearGradient
                                     colors={[altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, altColorTheme ? (config.darkMode ? Constants.colorSecondary : Constants.colorSecondaryDark) : (config.darkMode ? Constants.colorPrimary : Constants.colorPrimaryDark), altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark]}
                                     start={{ x: 0, y: 0 }}
-                                    end={{ x: -0.5, y: -0.5 }}
+                                    end={{ x: 1, y: 1 }}
                                     style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1 }}
                                 />
                                 <Text style={[styles.settingsItemText, config.darkMode && styles.itemSelected]}>{text.active}</Text>
@@ -113,7 +113,7 @@ const Settings = ({ navigation }) => {
                                 <LinearGradient
                                     colors={[Constants.colorPrimaryDark, config.altColorTheme === false ? Constants.colorPrimary : Constants.colorPrimaryDark, Constants.colorPrimaryDark]}
                                     start={{ x: 0, y: 0 }}
-                                    end={{ x: -0.5, y: -0.5 }}
+                                    end={{ x: 1, y: 1 }}
                                     style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1 }}
                                 />
                                 <Text style={[styles.settingsItemText, config.altColorTheme === false && styles.itemSelected]}>{text.purple}
@@ -123,7 +123,7 @@ const Settings = ({ navigation }) => {
                                     <LinearGradient
                                         colors={[Constants.colorSecondaryDark, config.altColorTheme === true ? Constants.colorSecondary : Constants.colorSecondaryDark, Constants.colorSecondaryDark]}
                                         start={{ x: 0, y: 0 }}
-                                        end={{ x: -0.5, y: -0.5 }}
+                                        end={{ x: 1, y: 1 }}
                                         style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1 }}
                                     />
                                 <Text style={[styles.settingsItemText, config.altColorTheme === true && styles.itemSelected]}>{text.orange}
@@ -204,6 +204,7 @@ const styles = StyleSheet.create({
         fontFamily: Constants.fontPrimaryBold,
         fontSize: Constants.fontMd,
         color: Constants.colorDark,
+        textAlign: 'center'
     },
     itemSelected: {
         color: Constants.colorWhite,

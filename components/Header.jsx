@@ -16,7 +16,7 @@ export default function Header({ navigation }) {
           <LinearGradient
             colors={altColorTheme ? [Constants.colorSecondaryDark, Constants.colorSecondary, Constants.colorSecondaryDark] : [Constants.colorPrimaryDark, Constants.colorPrimary, Constants.colorPrimaryDark]}
             start={{ x: 0, y: 0 }}
-            end={{ x: -0.5, y: -0.5 }}
+            end={{ x: 1, y: 1 }}
             style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4 }}
           />
           <View>
