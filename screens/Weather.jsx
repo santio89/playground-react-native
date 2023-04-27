@@ -181,6 +181,16 @@ const Weather = ({ navigation }) => {
     inputLocation.trim().length > 0 ? setValidInput(true) : setValidInput(false)
   }, [inputLocation])
 
+  useEffect(()=>{
+    let timeout = null;
+    if (searchError){
+      timeout = setTimeout(()=>{
+        setSearchError(null)
+      }, 3000)
+    }
+
+    return ()=>{timeout && clearTimeout(timeout)}
+  }, [searchError])
 
   useEffect(() => {
     loadLocation()
