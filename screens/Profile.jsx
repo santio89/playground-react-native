@@ -173,10 +173,10 @@ const Profile = ({ navigation }) => {
                             <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
                                 <FlatList style={styles.avatarContainer}
                                     data={[...Emojis]}
-                                    horizontal={true}
+                                    horizontal
                                     pagingEnabled
                                     snapToAlignment="start"
-                                    decelerationRate={"fast"}
+                                    decelerationRate="fast"
                                     renderItem={({ item }) => (
                                         <TouchableOpacity style={[styles.avatarItem, altColorTheme && styles.altAvatarItem, item === selectedAvatar && styles.avatarSelected]} onPress={() => setSelectedAvatar(item)}>
                                             <Text style={styles.avatarItemText}>{item}</Text>
