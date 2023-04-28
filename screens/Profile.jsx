@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderStyle: 'solid',
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: Constants.colorPrimaryDark,
         maxWidth: '100%'
     },
