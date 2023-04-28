@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, Dimensions } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, Dimensions, View } from 'react-native'
 import Constants from '../constants/Styles'
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
@@ -27,7 +27,7 @@ const Card = ({ card, handleChoice, choiceOne, choiceTwo, disabled }) => {
     
 
     return (
-        <Text style={[styles.card, card.matched && styles.cardMatched, card.matched && altColorTheme && styles.altShadow, windowWidth < 1400 && {margin: 8}, windowWidth < 800 && {margin: 6}]}>
+        <View style={[styles.card, card.matched && styles.cardMatched, card.matched && altColorTheme && styles.altShadow, windowWidth < 1400 && {margin: 8}, windowWidth < 800 && {margin: 4}]}>
             {
                 card.matched || card.id === choiceOne?.id || card.id === choiceTwo?.id ?
                     <TouchableOpacity style={[styles.cardBackWrapper, styles.cardFront, altColorTheme && styles.altBackground, altColorTheme && styles.altBorder, altColorTheme && styles.altCardFront, windowWidth < 1400 && {width: 90, height: 90}, , windowWidth < 800 && {width: 80, height: 80}]}>
@@ -37,7 +37,7 @@ const Card = ({ card, handleChoice, choiceOne, choiceTwo, disabled }) => {
                         <Text style={[styles.cardText, windowWidth < 1400 && {fontSize: Constants.fontXll}]}>{card.back}</Text>
                     </TouchableOpacity>
             }
-        </Text>
+        </View>
     )
 }
 
@@ -50,23 +50,23 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 8,
-        shadowColor: "#000",
+        shadowColor: 'black',
         shadowOffset: {
             width: 0,
-            height: 6,
+            height: 0,
         },
-        shadowOpacity: 0.58,
-        shadowRadius: 16.00,
+        shadowOpacity: 0.6,
+        shadowRadius: 12.00,
         elevation: 24,
     },
     cardMatched: {
         shadowColor: Constants.colorPrimary,
         shadowOffset: {
             width: 0,
-            height: 6,
+            height: 0,
         },
-        shadowOpacity: 0.58,
-        shadowRadius: 16.00,
+        shadowOpacity: 0.6,
+        shadowRadius: 12.00,
         elevation: 24,
     },
     cardText: {
@@ -99,10 +99,10 @@ const styles = StyleSheet.create({
         shadowColor: Constants.colorSecondary,
         shadowOffset: {
             width: 0,
-            height: 6,
+            height: 0,
         },
-        shadowOpacity: 0.58,
-        shadowRadius: 16.00,
+        shadowOpacity: 0.6,
+        shadowRadius: 12.00,
         elevation: 24,
     },
     altBackground: {

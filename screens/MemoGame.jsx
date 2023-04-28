@@ -145,11 +145,11 @@ const MemoGame = ({ navigation }) => {
                         <>
                             {winner === true ?
                                 <>
-                                    <Text style={[styles.winner, altColorTheme && styles.altWinner]}>
-                                        <Text>🔥</Text>
+                                    <View style={[styles.winner, altColorTheme && styles.altWinner]}>
+                                        <Text style={{fontSize: Constants.fontLg}}>🔥</Text>
                                         <Text style={styles.winnerText}>{text.completed}</Text>
                                         <View><Text style={styles.winnerButtonsTurns}>{text.turns}: {turns}</Text></View>
-                                    </Text>
+                                    </View>
                                     <View style={styles.winnerButtons}>
                                         <TouchableOpacity onPress={shuffleCards} style={styles.winnerButtonsWrapper}>
                                             <Text style={[styles.winnerButtonsText, altColorTheme && styles.altWinnerButtonsText]}>{text.newGame}</Text>
@@ -239,15 +239,12 @@ const styles = StyleSheet.create({
         fontSize: Constants.fontXl
     },
     winner: {
-        fontSize: Constants.fontLg,
         padding: 10,
         borderRadius: 4,
         borderWidth: 8,
         borderColor: Constants.colorPrimaryDark,
         backgroundColor: Constants.colorPrimary,
-        color: Constants.colorWhite,
         margin: 40,
-        fontFamily: Constants.fontPrimaryBold,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -256,9 +253,9 @@ const styles = StyleSheet.create({
         shadowColor: Constants.colorPrimary,
         shadowOffset: {
             width: 0,
-            height: 6,
+            height: 0,
         },
-        shadowOpacity: 0.58,
+        shadowOpacity: 0.8,
         shadowRadius: 16.00,
         elevation: 24,
     },
@@ -266,6 +263,9 @@ const styles = StyleSheet.create({
         display: 'flex',
         marginTop: 20,
         marginBottom: 20,
+        fontSize: Constants.fontLg,
+        color: Constants.colorWhite,
+        fontFamily: Constants.fontPrimaryBold,
     },
     winnerButtons: {
         flexDirection: 'row',
@@ -342,10 +342,10 @@ const styles = StyleSheet.create({
 
     },
     cardsContainer: {
-        padding: 10,
+        display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        flexGrow: 1
+        flex: 1
     },
     /* for dark mode off */
     backgroundWhite: {
