@@ -339,7 +339,6 @@ const styles = StyleSheet.create({
     backgroundColor: Constants.colorDark,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    /* padding: 10, */
     width: '100%'
   },
   weatherAppWrapper: {
@@ -406,7 +405,8 @@ const styles = StyleSheet.create({
     fontSize: Constants.fontXl,
     borderBottomColor: Constants.colorPrimary,
     borderBottomWidth: 2,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    paddingVertical: 2
   },
   weatherTitleLocation:
   {
