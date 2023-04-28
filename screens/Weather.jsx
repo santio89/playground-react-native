@@ -221,7 +221,7 @@ const Weather = ({ navigation }) => {
                     <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setCalendarModal(true); fetchExtendedForecast() }} ><Entypo name="calendar" size={(windowWidth < 800 || windowHeight < 768) ? Constants.fontLgg : Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
                   </View>
 
-                  <View style={[styles.weatherTitleContainer, altColorTheme && styles.altWeatherTitleContainer, (windowWidth < 800 || windowHeight < 768) && { height: 240, minHeight: 240, maxHeight: 240 }]}>
+                  <View style={[styles.weatherTitleContainer, altColorTheme && styles.altWeatherTitleContainer, (windowWidth < 800 || windowHeight < 768) && { height: 220, minHeight: 220, maxHeight: 220 }]}>
                     <Text style={[styles.weatherTitleLocation, (windowWidth < 800 || windowHeight < 768) && { fontSize: Constants.fontMd }]}>{text.weather}</Text>
                     <View style={styles.weatherTitleContent}>
                       <View style={styles.weatherTitleImgWrapper}>
@@ -235,7 +235,7 @@ const Weather = ({ navigation }) => {
                   </View>
 
                   <View style={[styles.rowItems, windowWidth > 800 && { flexDirection: 'row' }]}>
-                    <View style={[styles.weatherTitleContainer, { height: 200, minHeight: 200, maxHeight: 200 }, windowWidth > 800 && { marginRight: 8, flex: 1 }, altColorTheme && styles.altWeatherTitleContainer, (windowWidth < 800 || windowHeight < 768) && { height: 160, minHeight: 160, maxHeight: 160 }]}>
+                    <View style={[styles.weatherTitleContainer, { height: 180, minHeight: 180, maxHeight: 180 }, windowWidth > 800 && { marginRight: 8, flex: 1 }, altColorTheme && styles.altWeatherTitleContainer, (windowWidth < 800 || windowHeight < 768) && { height: 134, minHeight: 134, maxHeight: 134 }]}>
                       <Text style={[styles.weatherTitleLocation, (windowWidth < 800 || windowHeight < 768) && { fontSize: Constants.fontMd }]}>{text.feels}</Text>
                       <View style={styles.weatherTitleContent}>
                         <View style={styles.weatherTitleImgWrapper}>
@@ -245,7 +245,7 @@ const Weather = ({ navigation }) => {
                       </View>
                     </View>
 
-                    <View style={[styles.weatherTitleContainer, { height: 200, minHeight: 200, maxHeight: 200 }, windowWidth > 800 && { marginLeft: 8, flex: 1 }, altColorTheme && styles.altWeatherTitleContainer, (windowWidth < 800 || windowHeight < 768) && { height: 160, minHeight: 160, maxHeight: 160 }]}>
+                    <View style={[styles.weatherTitleContainer, { height: 180, minHeight: 180, maxHeight: 180 }, windowWidth > 800 && { marginLeft: 8, flex: 1 }, altColorTheme && styles.altWeatherTitleContainer, (windowWidth < 800 || windowHeight < 768) && { height: 134, minHeight: 134, maxHeight: 134 }]}>
                       <Text style={[styles.weatherTitleLocation, (windowWidth < 800 || windowHeight < 768) && { fontSize: Constants.fontMd }]}>{text.humidity}</Text>
                       <View style={styles.weatherTitleContent}>
                         <View style={styles.weatherTitleImgWrapper}>
