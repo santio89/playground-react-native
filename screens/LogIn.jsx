@@ -88,10 +88,10 @@ const LogIn = ({ navigation }) => {
             <Modal visible={modalVisible} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
-                        <Text style={styles.modalTitle}>
-                            <Text>{`ERROR: \n`}</Text>
-                            <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{logInError === 'wrong_credentials' ? text.wrongCredentials : text.genericError}</Text>
-                        </Text>
+                        <View style={styles.modalTitle}>
+                            <Text style={{fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite}}>{`ERROR: \n`}</Text>
+                            <Text style={[styles.modalText, altColorTheme && styles.altModalText, {fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite}, Platform.OS !== 'web' && {marginTop: -20}]}>{logInError === 'wrong_credentials' ? text.wrongCredentials : text.genericError}</Text>
+                        </View>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setModalVisible(false) }}>
                                 <Text style={[styles.modalBtnText]}>OK</Text>
@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         color: Constants.colorWhite,
         width: '100%',
-        /* padding: 10, */
         minHeight: 'auto'
     },
     itemsContainer: {
