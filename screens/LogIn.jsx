@@ -103,10 +103,10 @@ const LogIn = ({ navigation }) => {
             <Modal visible={logInSuccess} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
-                        <Text style={styles.modalTitle}>
-                            <Text>{`${text.welcome}\n`}</Text>
-                            <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{accountEmail.toLocaleUpperCase()}</Text>
-                        </Text>
+                        <View style={styles.modalTitle}>
+                            <Text style={{fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite}}>{`${text.welcome}\n`}</Text>
+                            <Text style={[styles.modalText, altColorTheme && styles.altModalText, , {fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite}]}>{accountEmail.toLocaleUpperCase()}</Text>
+                        </View>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setLogInSuccess(false); navigation.navigate("AppsHome") }}>
                                 <Text style={[styles.modalBtnText]}>OK</Text>

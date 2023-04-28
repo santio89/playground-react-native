@@ -139,10 +139,10 @@ const Profile = ({ navigation }) => {
             <Modal visible={logOutSuccess} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
-                        <Text style={styles.modalTitle}>
-                            <Text>{`${text.goodbye}\n`}</Text>
-                            <Text style={[styles.modalText, altColorTheme && styles.altModalText]}>{text.userLoggedOut}</Text>
-                        </Text>
+                        <View style={styles.modalTitle}>
+                            <Text style={{fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite}}>{`${text.goodbye}\n`}</Text>
+                            <Text style={[styles.modalText, altColorTheme && styles.altModalText, {fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite}]}>{text.userLoggedOut}</Text>
+                        </View>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setLogOutSuccess(false); navigation.navigate("AppsHome") }}>
                                 <Text style={[styles.modalBtnText]}>OK</Text>
@@ -341,7 +341,6 @@ const styles = StyleSheet.create({
     },
     modalTitle: {
         fontSize: Constants.fontLg,
-        fontWeight: 'bold',
         fontFamily: Constants.fontPrimaryBold,
         color: Constants.colorWhite,
         marginBottom: 20,
