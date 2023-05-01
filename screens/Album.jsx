@@ -39,6 +39,7 @@ const Album = ({ navigation }) => {
   }
 
   const [uriList, setUriList] = useState(uriListData)
+  
   const verifyPermissions = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync()
 
@@ -49,15 +50,15 @@ const Album = ({ navigation }) => {
     return true
   }
 
-  /*   const verifyPermissionsFile = async () => {
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
-  
-      if (status !== 'granted') {
-        Alert(`${text.cameraPermissionDenied}`)
-        return false
-      }
-      return true
-    } */
+  const verifyPermissionsFile = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
+
+    if (status !== 'granted') {
+      Alert(`${text.cameraPermissionDenied}`)
+      return false
+    }
+    return true
+  }
 
   const handleTakeImage = async () => {
     const isCameraOk = await verifyPermissions();
@@ -74,8 +75,8 @@ const Album = ({ navigation }) => {
   }
 
   const handleUploadImage = async () => {
-    /*     const iFileOk = await verifyPermissionsFile();
-        if (!iFileOk) return; */
+    const iFileOk = await verifyPermissionsFile();
+    if (!iFileOk) return;
 
     const image = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
