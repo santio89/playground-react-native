@@ -33,8 +33,8 @@ const Album = ({ navigation }) => {
   }
 
   /* dispatch para traer data actualizada */
-  const dispatchGetAppsData = async () => {
-    await dispatch(getAppsData(userId, storageGetItem));
+  const dispatchGetAppsData = () => {
+    dispatch(getAppsData(userId, storageGetItem));
   }
 
   const [uriList, setUriList] = useState(uriListData)
@@ -165,7 +165,7 @@ const Album = ({ navigation }) => {
 export default Album
 
 const styles = StyleSheet.create({
-  menuWrapper: {
+  albumWrapper: {
     width: '100%',
     backgroundColor: Constants.colorDark,
     justifyContent: 'center',
