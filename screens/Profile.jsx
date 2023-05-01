@@ -140,8 +140,8 @@ const Profile = ({ navigation }) => {
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
                         <View style={styles.modalTitle}>
-                            <Text style={{fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite}}>{`${text.goodbye}\n`}</Text>
-                            <Text style={[styles.modalText, altColorTheme && styles.altModalText, {fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite}, Platform.OS !== 'web' && {marginTop: -20}]}>{text.userLoggedOut}</Text>
+                            <Text style={{ fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite }}>{`${text.goodbye}\n`}</Text>
+                            <Text style={[styles.modalText, altColorTheme && styles.altModalText, { fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite }, Platform.OS !== 'web' && { marginTop: -20 }]}>{text.userLoggedOut}</Text>
                         </View>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setLogOutSuccess(false); navigation.navigate("AppsHome") }}>
@@ -368,6 +368,7 @@ const styles = StyleSheet.create({
     },
     modalBtn: {
         padding: 8,
+        paddingHorizontal: 2,
         borderWidth: 1,
         borderRadius: 4,
         borderStyle: 'solid',

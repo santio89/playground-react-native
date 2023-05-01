@@ -130,8 +130,8 @@ const SignUp = ({ navigation }) => {
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
                         <View style={styles.modalTitle}>
-                            <Text style={{fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite}}>{`ERROR: \n`}</Text>
-                            <Text style={[styles.modalText, altColorTheme && styles.altModalText, {fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite}, Platform.OS !== 'web' && {marginTop: -20}]}>{emailError === 'email_exists' ? text.emailExists : (emailError === 'blocked_requests' ? text.blockedRequests : text.genericError)}</Text>
+                            <Text style={{ fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite }}>{`ERROR: \n`}</Text>
+                            <Text style={[styles.modalText, altColorTheme && styles.altModalText, { fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite }, Platform.OS !== 'web' && { marginTop: -20 }]}>{emailError === 'email_exists' ? text.emailExists : (emailError === 'blocked_requests' ? text.blockedRequests : text.genericError)}</Text>
                         </View>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setModalVisible(false) }}>
@@ -145,11 +145,11 @@ const SignUp = ({ navigation }) => {
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
                         <View style={[styles.modalTitle]}>
-                            <Text style={{fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite}}>{`${text.createdAccount}: \n`}</Text>
-                            <Text style={[styles.modalText, altColorTheme && styles.altModalText, {fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite}, Platform.OS !== 'web' && {marginTop: -20}]}>{accountEmail.toLocaleUpperCase()}</Text>
+                            <Text style={{ fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite }}>{`${text.createdAccount}: \n`}</Text>
+                            <Text style={[styles.modalText, altColorTheme && styles.altModalText, { fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite }, Platform.OS !== 'web' && { marginTop: -20 }]}>{accountEmail.toLocaleUpperCase()}</Text>
                         </View>
                         <View style={styles.modalBtnContainer}>
-                            <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setAccountCreatedModal(false); navigation.navigate("Auth", {screen: "LogIn"}); navigation.navigate("AppsHome") }}>
+                            <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setAccountCreatedModal(false); navigation.navigate("Auth", { screen: "LogIn" }); navigation.navigate("AppsHome") }}>
                                 <Text style={[styles.modalBtnText]}>OK</Text>
                             </TouchableOpacity>
                         </View>
@@ -321,6 +321,7 @@ const styles = StyleSheet.create({
     },
     modalBtn: {
         padding: 8,
+        paddingHorizontal: 2,
         borderWidth: 1,
         borderRadius: 4,
         borderStyle: 'solid',

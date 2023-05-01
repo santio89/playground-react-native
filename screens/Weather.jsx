@@ -70,10 +70,10 @@ const Weather = ({ navigation }) => {
 
   const fetchWeatherData = async (input) => {
     input = input?.trim();
-    if (input === ""){
+    if (input === "") {
       return
     }
-    
+
     setRefreshing(true);
 
     try {
@@ -147,7 +147,7 @@ const Weather = ({ navigation }) => {
     setFetchingExtendedForecast(false)
   }
 
-  const reloadWeather = async () =>{
+  const reloadWeather = async () => {
     setReloading(true);
     await loadLocation()
   }
@@ -181,15 +181,15 @@ const Weather = ({ navigation }) => {
     inputLocation.trim().length > 0 ? setValidInput(true) : setValidInput(false)
   }, [inputLocation])
 
-  useEffect(()=>{
+  useEffect(() => {
     let timeout = null;
-    if (searchError){
-      timeout = setTimeout(()=>{
+    if (searchError) {
+      timeout = setTimeout(() => {
         setSearchError(null)
       }, 3000)
     }
 
-    return ()=>{timeout && clearTimeout(timeout)}
+    return () => { timeout && clearTimeout(timeout) }
   }, [searchError])
 
   useEffect(() => {
@@ -214,8 +214,8 @@ const Weather = ({ navigation }) => {
                   <View style={styles.weatherHeader}>
                     <View style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation, styles.weatherDateView]} ><Text style={[styles.weatherDateText, (windowWidth < 800 || windowHeight < 768) && { fontSize: Constants.fontSm }]}>{(new Date(forecast.dt * 1000)).toLocaleDateString('en-GB', { month: '2-digit', day: '2-digit' }).toLocaleUpperCase()}, {(new Date(forecast.dt * 1000)).toLocaleTimeString(['en-GB'], { hour: '2-digit', minute: '2-digit' })}</Text></View>
 
-                    <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { reloadWeather() }} ><Foundation  name="refresh" size={(windowWidth < 800 || windowHeight < 768) ? Constants.fontLgg : Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
-                    
+                    <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { reloadWeather() }} ><Foundation name="refresh" size={(windowWidth < 800 || windowHeight < 768) ? Constants.fontLgg : Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
+
                     <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setModalVisible(true) }} ><Entypo name="location-pin" size={(windowWidth < 800 || windowHeight < 768) ? Constants.fontLgg : Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
 
                     <TouchableOpacity style={[styles.weatherPinLocation, altColorTheme && styles.altWeatherPinLocation]} onPress={() => { setCalendarModal(true); fetchExtendedForecast() }} ><Entypo name="calendar" size={(windowWidth < 800 || windowHeight < 768) ? Constants.fontLgg : Constants.fontXl} color={Constants.colorWhite} /></TouchableOpacity>
@@ -228,7 +228,7 @@ const Weather = ({ navigation }) => {
                         <Image style={[styles.weatherTitleImg, (windowWidth < 800 || windowHeight < 768) && { maxWidth: 180 }]} source={{ uri: `http://openweathermap.org/img/wn/${forecast?.weather[0].icon}@4x.png` }} />
                         <Text style={[styles.weatherTitleTemp, (windowWidth < 800 || windowHeight < 768) && { fontSize: Constants.fontMd }]}>{`${Math.trunc(Number(forecast.main.temp))} °C\n${Math.trunc((Number(forecast.main.temp) * (9 / 5)) + 32)} °F`}</Text>
                       </View>
-                      <Text style={[styles.weatherTitleInfo, (windowWidth < 800 || windowHeight < 768) && { fontSize: Constants.fontMd }, {marginBottom: 20}]}>
+                      <Text style={[styles.weatherTitleInfo, (windowWidth < 800 || windowHeight < 768) && { fontSize: Constants.fontMd }, { marginBottom: 20 }]}>
                         {languageSelected === "spanish" ? spForecast?.weather[0].description.toLocaleUpperCase() : forecast?.weather[0].description.toLocaleUpperCase()}
                       </Text>
                     </View>
@@ -504,6 +504,7 @@ const styles = StyleSheet.create({
   },
   modalBtn: {
     padding: 8,
+    paddingHorizontal: 2,
     borderWidth: 1,
     borderRadius: 4,
     borderStyle: 'solid',

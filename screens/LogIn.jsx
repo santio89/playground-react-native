@@ -77,7 +77,7 @@ const LogIn = ({ navigation }) => {
                                 <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, !validInput && { borderColor: 'darkgray' }, { height: 44 }]} disabled={!validInput || logInLoading} onPress={handleLogIn}>
                                     {logInLoading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Text style={[styles.authItemText, !validInput && { color: 'darkgray' }]}>{text.logIn}</Text>}
                                 </TouchableOpacity>
-                                <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, styles.authItemTextButtonRegister]} onPress={() => navigation.navigate("Auth", {screen: "SignUp"})}>
+                                <TouchableOpacity style={[styles.authItemTextButton, altColorTheme && styles.altAuthItemTextButton, styles.authItemTextButtonRegister]} onPress={() => navigation.navigate("Auth", { screen: "SignUp" })}>
                                     <Text style={[styles.authItemText, styles.authItemTextRegister]}>{text.signUp}</Text>
                                 </TouchableOpacity>
                             </View>
@@ -89,8 +89,8 @@ const LogIn = ({ navigation }) => {
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
                         <View style={styles.modalTitle}>
-                            <Text style={{fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite}}>{`ERROR: \n`}</Text>
-                            <Text style={[styles.modalText, altColorTheme && styles.altModalText, {fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite}, Platform.OS !== 'web' && {marginTop: -20}]}>{logInError === 'wrong_credentials' ? text.wrongCredentials : text.genericError}</Text>
+                            <Text style={{ fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite }}>{`ERROR: \n`}</Text>
+                            <Text style={[styles.modalText, altColorTheme && styles.altModalText, { fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite }, Platform.OS !== 'web' && { marginTop: -20 }]}>{logInError === 'wrong_credentials' ? text.wrongCredentials : text.genericError}</Text>
                         </View>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setModalVisible(false) }}>
@@ -104,8 +104,8 @@ const LogIn = ({ navigation }) => {
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
                         <View style={styles.modalTitle}>
-                            <Text style={{fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite}}>{`${text.welcome}\n`}</Text>
-                            <Text style={[styles.modalText, altColorTheme && styles.altModalText, {fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite}, Platform.OS !== 'web' && {marginTop: -20}]}>{accountEmail.toLocaleUpperCase()}</Text>
+                            <Text style={{ fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite }}>{`${text.welcome}\n`}</Text>
+                            <Text style={[styles.modalText, altColorTheme && styles.altModalText, { fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite }, Platform.OS !== 'web' && { marginTop: -20 }]}>{accountEmail.toLocaleUpperCase()}</Text>
                         </View>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setLogInSuccess(false); navigation.navigate("AppsHome") }}>
@@ -279,6 +279,7 @@ const styles = StyleSheet.create({
     },
     modalBtn: {
         padding: 8,
+        paddingHorizontal: 2,
         borderWidth: 1,
         borderRadius: 4,
         borderStyle: 'solid',

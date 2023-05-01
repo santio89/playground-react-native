@@ -27,8 +27,8 @@ export default function ToDoList({ navigation }) {
     const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
     /* dispatch para traer data actualizada */
-    const dispatchGetAppsData = () => {
-        dispatch(getAppsData(userId, storageGetItem));
+    const dispatchGetAppsData = async () => {
+        await dispatch(getAppsData(userId, storageGetItem));
     }
 
     const addItem = (item) => {
@@ -208,6 +208,7 @@ const styles = StyleSheet.create({
     },
     modalBtn: {
         padding: 8,
+        paddingHorizontal: 2,
         borderWidth: 1,
         borderRadius: 4,
         borderStyle: 'solid',

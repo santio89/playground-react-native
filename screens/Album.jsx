@@ -33,8 +33,8 @@ const Album = ({ navigation }) => {
   }
 
   /* dispatch para traer data actualizada */
-  const dispatchGetAppsData = () => {
-    dispatch(getAppsData(userId, storageGetItem));
+  const dispatchGetAppsData = async () => {
+    await dispatch(getAppsData(userId, storageGetItem));
   }
 
   const [uriList, setUriList] = useState(uriListData)
@@ -87,7 +87,7 @@ const Album = ({ navigation }) => {
 
   const deleteItem = (id) => {
     setUriList((oldItems) => oldItems.filter(item => item.id != id))
-}
+  }
 
 
   useEffect(() => {
@@ -132,7 +132,7 @@ const Album = ({ navigation }) => {
 
         <ScrollView contentContainerStyle={[styles.albumImgContainer, altColorTheme && styles.altAlbumImgContainer]}>
           {uriList.map((item) => (
-            <TouchableOpacity key={item.id} style={[styles.albumImgBtn, Platform.OS === 'web' && modalVisible.active && modalVisible.id === item.id && {filter: 'grayscale(1)'}]}>
+            <TouchableOpacity key={item.id} style={[styles.albumImgBtn, Platform.OS === 'web' && modalVisible.active && modalVisible.id === item.id && { filter: 'grayscale(1)' }]}>
               <Image style={styles.albumImg} source={{ uri: item.uri }} />
               <TouchableOpacity style={{ position: 'absolute', bottom: -16, right: -16 }} onPress={() => setModalVisible({ active: true, id: item.id })}>
                 <View style={{ padding: 4, justifyContent: 'center', alignItems: 'center' }}><MaterialIcons name="delete" size={Constants.fontLgg} color={modalVisible.active && modalVisible.id === item.id ? 'dimgray' : Constants.colorRed} /></View>
@@ -221,6 +221,7 @@ const styles = StyleSheet.create({
     minWidth: 200,
     minHeight: 200,
     padding: 8,
+    marginBottom: 32
   },
   albumImg: {
     borderRadius: 8,
@@ -274,6 +275,7 @@ const styles = StyleSheet.create({
   },
   modalBtn: {
     padding: 8,
+    paddingHorizontal: 2,
     borderWidth: 1,
     borderRadius: 4,
     borderStyle: 'solid',
