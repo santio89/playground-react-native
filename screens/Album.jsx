@@ -212,7 +212,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 20,
+    marginTop: 8,
+    marginBottom: 16,
   },
   albumBtn: {
     backgroundColor: Constants.colorPrimary,
