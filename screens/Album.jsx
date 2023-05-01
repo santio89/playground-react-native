@@ -89,7 +89,6 @@ const Album = ({ navigation }) => {
     setUriList((oldItems) => oldItems.filter(item => item.id != id))
   }
 
-
   useEffect(() => {
     dispatchGetAppsData()
     setUriList(uriListData)
@@ -130,7 +129,7 @@ const Album = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <ScrollView contentContainerStyle={[styles.albumImgContainer, altColorTheme && styles.altAlbumImgContainer]}>
+        <ScrollView contentContainerStyle={[styles.albumImgContainer, altColorTheme && styles.altAlbumImgContainer, windowWidth < 400 && {flexDirection: 'column', flexWrap: 'nowrap'}]}>
           {uriList.map((item) => (
             <TouchableOpacity key={item.id} style={[styles.albumImgBtn, Platform.OS === 'web' && modalVisible.active && modalVisible.id === item.id && { filter: 'grayscale(1)' }]}>
               <Image style={styles.albumImg} source={{ uri: item.uri }} />
@@ -167,6 +166,7 @@ export default Album
 const styles = StyleSheet.create({
   albumWrapper: {
     width: '100%',
+    maxWidth: '100%',
     backgroundColor: Constants.colorDark,
     justifyContent: 'center',
     alignItems: 'center',
@@ -218,6 +218,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     backgroundColor: Constants.colorPrimary,
     width: '100%',
+    maxWidth: '100%',
     minWidth: 200,
     minHeight: 200,
     padding: 8,
