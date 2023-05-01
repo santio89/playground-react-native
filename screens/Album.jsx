@@ -222,7 +222,10 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
   },
   albumImgBtn: {
-    margin: 10
+    margin: 10,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   /* for dark mode off */
   backgroundWhite: {
