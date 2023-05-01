@@ -11,11 +11,7 @@ import { storageGetItem } from '../utils/AsyncStorage';
 
 export default function ToDoList({ navigation }) {
     const dispatch = useDispatch()
-    const [btnDisabled, setBtnDisabled] = useState(true)
-    const [input, setInput] = useState("")
-    const [modalVisible, setModalVisible] = useState({ active: false, id: null });
-
-
+   
     const listItems = useSelector(state => state.apps.toDoList.items)
     const [items, setItems] = useState(listItems)
 
@@ -23,6 +19,11 @@ export default function ToDoList({ navigation }) {
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
     const { selected: languageSelected } = useSelector(state => state.settings.language)
+
+    const [btnDisabled, setBtnDisabled] = useState(true)
+    const [input, setInput] = useState("")
+    const [modalVisible, setModalVisible] = useState({ active: false, id: null });
+
 
     const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 

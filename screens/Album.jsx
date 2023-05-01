@@ -15,16 +15,16 @@ import Alert from '../utils/Alert'
 const Album = ({ navigation }) => {
   const dispatch = useDispatch()
 
-  const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
-
+  const uriListData = useSelector(state => state.apps.albumList.items)
   const userId = useSelector(state => state.auth.userId)
   const darkMode = useSelector(state => state.settings.darkMode.enabled)
   const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
   const { selected: languageSelected } = useSelector(state => state.settings.language)
 
+  const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
+
   const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
-  const uriListData = useSelector(state => state.apps.albumList.items)
 
   const [modalVisible, setModalVisible] = useState({ active: false, id: null })
   const [modalImg, setModalImg] = useState({ active: false, id: null, uri: null })
