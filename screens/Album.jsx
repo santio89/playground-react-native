@@ -142,7 +142,7 @@ const Album = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <ScrollView contentContainerStyle={[styles.albumImgContainer, altColorTheme && styles.altAlbumImgContainer, windowWidth < 400 && { flexDirection: 'column', flexWrap: 'nowrap' }]}>
+        <ScrollView contentContainerStyle={[styles.albumImgContainer, altColorTheme && styles.altAlbumImgContainer, windowWidth < 480 && { flexDirection: 'column', flexWrap: 'nowrap' }]}>
           {!uriList || uriList.length === 0 ?
             <View style={{ width: '100%', maxWidth: windowWidth < 800 ? 320 : '100%', justifyContent: 'center', alignItems: 'center' }}>
               <Text style={{ color: Constants.colorWhite, fontFamily: Constants.fontPrimary, fontSize: Constants.fontLg, textAlign: 'center' }}>{text.noImg}
