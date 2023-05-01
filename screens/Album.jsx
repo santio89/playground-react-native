@@ -1,11 +1,13 @@
-import { StyleSheet, Text, View, ScrollView, Dimensions, TouchableOpacity, Image } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, Dimensions, TouchableOpacity, Image, Modal, Platform } from 'react-native'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setAlbumItems, getAppsData } from '../store/actions/apps.action'
 import Constants from '../constants/Styles'
 import { LANGS } from '../constants/Langs'
 import { LinearGradient } from 'expo-linear-gradient'
+import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import uuid from 'react-native-uuid';
 import * as ImagePicker from 'expo-image-picker'
 import { storageSetItem, storageGetItem } from '../utils/AsyncStorage'
 import Alert from '../utils/Alert'
@@ -23,6 +25,8 @@ const Album = ({ navigation }) => {
   const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
   const uriListData = useSelector(state => state.apps.albumList.items)
+
+  const [modalVisible, setModalVisible] = useState({ active: false, id: null })
 
   const updateWindowWidth = () => {
     setWindowWidth(Dimensions.get('window').width)
@@ -64,7 +68,7 @@ const Album = ({ navigation }) => {
       quality: 1,
     })
 
-    setUriList(uriList => ([...uriList, image.assets[0].uri]))
+    setUriList(uriList => ([...uriList, { id: uuid.v4(), uri: image.assets[0].uri }]))
   }
 
   const handleUploadImage = async () => {
@@ -78,8 +82,12 @@ const Album = ({ navigation }) => {
       quality: 1,
     })
 
-    setUriList(uriList => ([...uriList, image.assets[0].uri]))
+    setUriList(uriList => ([...uriList, { id: uuid.v4(), uri: image.assets[0].uri }]))
   }
+
+  const deleteItem = (id) => {
+    setUriList((oldItems) => oldItems.filter(item => item.id != id))
+}
 
 
   useEffect(() => {
@@ -123,14 +131,33 @@ const Album = ({ navigation }) => {
         </View>
 
         <ScrollView contentContainerStyle={[styles.albumImgContainer, altColorTheme && styles.altAlbumImgContainer]}>
-          {uriList.map((item, i) => (
-            <TouchableOpacity key={i} style={styles.albumImgBtn}>
-              <Image style={styles.albumImg} source={{ uri: item }} />
+          {uriList.map((item) => (
+            <TouchableOpacity key={item.id} style={[styles.albumImgBtn, Platform.OS === 'web' && modalVisible.active && modalVisible.id === item.id && {filter: 'grayscale(1)'}]}>
+              <Image style={styles.albumImg} source={{ uri: item.uri }} />
+              <TouchableOpacity style={{ position: 'absolute', bottom: -16, right: -16 }} onPress={() => setModalVisible({ active: true, id: item.id })}>
+                <View style={{ padding: 4, justifyContent: 'center', alignItems: 'center' }}><MaterialIcons name="delete" size={Constants.fontLgg} color={modalVisible.active && modalVisible.id === item.id ? 'dimgray' : Constants.colorRed} /></View>
+              </TouchableOpacity>
             </TouchableOpacity>
           ))}
         </ScrollView>
 
       </ScrollView>
+
+      <Modal visible={modalVisible.active} transparent={true} animationType='fade'>
+        <SafeAreaView style={styles.modal}>
+          <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
+            <Text style={styles.modalTitle}>{text.deletePic}?</Text>
+            <View style={styles.modalBtnContainer}>
+              <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => setModalVisible({ active: false, id: null })}>
+                <Text style={[styles.modalBtnText]} >{text.cancel}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn, styles.borderRed]} onPress={() => { deleteItem(modalVisible.id); setModalVisible({ active: false, id: null }) }}>
+                <Text style={[styles.modalBtnText]}>{text.delete}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </SafeAreaView>
+      </Modal>
     </View>
   )
 }
@@ -201,12 +228,74 @@ const styles = StyleSheet.create({
     minWidth: 140,
     maxWidth: 140,
     aspectRatio: 1,
+    position: 'relative'
   },
   albumImgBtn: {
     margin: 10,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+
+  modal: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    width: '80%',
+    minWidth: 300,
+    maxWidth: 600,
+    minHeight: 300,
+  },
+  modalInner: {
+    backgroundColor: Constants.colorPrimary,
+    borderColor: Constants.colorWhite,
+    borderRadius: 4,
+    borderWidth: 2,
+    padding: 8,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    minHeight: 300,
+  },
+  modalTitle: {
+    fontSize: Constants.fontLg,
+    fontWeight: 'bold',
+    fontFamily: Constants.fontPrimaryBold,
+    color: Constants.colorWhite,
+    marginBottom: 20,
+    width: '100%',
+    textAlign: 'center'
+  },
+  modalBtnContainer: {
+    flexDirection: 'row',
+    maxWidth: '100%'
+  },
+  modalBtn: {
+    padding: 8,
+    borderWidth: 1,
+    borderRadius: 4,
+    borderStyle: 'solid',
+    backgroundColor: Constants.colorPrimaryDark,
+    borderColor: Constants.colorWhite,
+    marginHorizontal: 10,
+    width: 120,
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modalBtnText: {
+    fontFamily: Constants.fontPrimary,
+    fontSize: Constants.fontMd,
+    color: Constants.colorWhite,
+    textAlign: 'center'
+  },
+  modalBorderDark: {
+    borderColor: Constants.colorDark,
+  },
+  borderRed: {
+    borderColor: Constants.colorRed,
   },
   /* for dark mode off */
   backgroundWhite: {
@@ -220,6 +309,13 @@ const styles = StyleSheet.create({
   altAlbumImgContainer: {
     borderColor: Constants.colorSecondaryDark,
     backgroundColor: Constants.colorSecondary,
+  },
+  altModalInner: {
+    backgroundColor: Constants.colorSecondary,
+
+  },
+  altModalBtn: {
+    backgroundColor: Constants.colorSecondaryDark,
   },
 }
 )
