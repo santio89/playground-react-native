@@ -131,15 +131,19 @@ const Album = ({ navigation }) => {
         </View>
 
         <ScrollView contentContainerStyle={[styles.albumImgContainer, altColorTheme && styles.altAlbumImgContainer, windowWidth < 400 && { flexDirection: 'column', flexWrap: 'nowrap' }]}>
-          {!uriList || uriList.length === 0 && <Text style={{color: Constants.colorWhite, fontFamily: Constants.fontPrimary, fontSize: Constants.fontLg}}>{text.noImg}</Text>}
-          {uriList.map((item) => (
-            <TouchableOpacity key={item.id} style={[styles.albumImgBtn, Platform.OS === 'web' && modalVisible.active && modalVisible.id === item.id && { filter: 'grayscale(1)' }]} onPress={() => { setModalImg({ active: true, id: item.id, uri: item.uri }) }}>
-              <Image style={styles.albumImg} source={{ uri: item.uri }} />
-              <TouchableOpacity style={{ position: 'absolute', bottom: -16, right: -16 }} onPress={() => setModalVisible({ active: true, id: item.id })}>
-                <View style={{ padding: 4, justifyContent: 'center', alignItems: 'center' }}><MaterialIcons name="delete" size={Constants.fontLgg} color={modalVisible.active && modalVisible.id === item.id ? 'dimgray' : Constants.colorRed} /></View>
+          {!uriList || uriList.length === 0 ?
+            <View style={{ width: '100%', maxWidth: windowWidth < 800 ? 320 : '100%', justifyContent: 'center', alignItems: 'center' }}>
+              <Text style={{ color: Constants.colorWhite, fontFamily: Constants.fontPrimary, fontSize: Constants.fontLg, textAlign: 'center'}}>{text.noImg}
+              </Text>
+            </View> :
+            uriList.map((item) => (
+              <TouchableOpacity key={item.id} style={[styles.albumImgBtn, Platform.OS === 'web' && modalVisible.active && modalVisible.id === item.id && { filter: 'grayscale(1)' }]} onPress={() => { setModalImg({ active: true, id: item.id, uri: item.uri }) }}>
+                <Image style={styles.albumImg} source={{ uri: item.uri }} />
+                <TouchableOpacity style={{ position: 'absolute', bottom: -16, right: -16 }} onPress={() => setModalVisible({ active: true, id: item.id })}>
+                  <View style={{ padding: 4, justifyContent: 'center', alignItems: 'center' }}><MaterialIcons name="delete" size={Constants.fontLgg} color={modalVisible.active && modalVisible.id === item.id ? 'dimgray' : Constants.colorRed} /></View>
+                </TouchableOpacity>
               </TouchableOpacity>
-            </TouchableOpacity>
-          ))}
+            ))}
         </ScrollView>
 
       </ScrollView>
@@ -160,7 +164,7 @@ const Album = ({ navigation }) => {
         </SafeAreaView>
       </Modal>
       <Modal visible={modalImg.active} transparent={true} animationType='fade'>
-        <ScrollView contentContainerStyle={{flex: 1, backgroundColor: altColorTheme?Constants.colorSecondaryOpacity:Constants.colorPrimaryOpacity, justifyContent: 'center', alignItems: 'center', zIndex: 999}}>
+        <ScrollView contentContainerStyle={{ flex: 1, backgroundColor: altColorTheme ? Constants.colorSecondaryOpacity : Constants.colorPrimaryOpacity, justifyContent: 'center', alignItems: 'center', zIndex: 999 }}>
           <Image style={styles.albumModalImg} source={{ uri: modalImg.uri }} />
 
           <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => setModalImg({ active: false, id: null, uri: null })}>
