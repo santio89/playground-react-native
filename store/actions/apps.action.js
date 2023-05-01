@@ -1,7 +1,9 @@
+import { URL_API } from "../../constants/Database"
+
 export const SET_MEMO_SCORE = "SET_MEMO_SCORE"
 export const SET_LIST_ITEMS = "SET_LIST_ITEMS"
+export const SET_ALBUM_ITEMS = "SET_ALBUM_ITEMS"
 export const GET_APPS_DATA = "GET_APPS_DATA"
-import { URL_API } from "../../constants/Database"
 
 export const setMemoScore = (userId, bestScore, storageSetItem) => {
     if (userId) {
@@ -23,7 +25,7 @@ export const setMemoScore = (userId, bestScore, storageSetItem) => {
                     type: SET_MEMO_SCORE,
                     bestScore
                 })
-            } catch(e) {
+            } catch (e) {
                 console.log("error setting memo score: ", e)
             }
         }
@@ -63,7 +65,7 @@ export const setListItems = (userId, items, storageSetItem) => {
                     type: SET_LIST_ITEMS,
                     items
                 })
-            } catch(e) {
+            } catch (e) {
                 console.log("error setting list items: ", e)
             }
         }
@@ -84,6 +86,46 @@ export const setListItems = (userId, items, storageSetItem) => {
 
 }
 
+export const setAlbumItems = (userId, items, storageSetItem) => {
+    if (userId) {
+        return async dispatch => {
+            try {
+                await fetch(`${URL_API}apps/${userId}.json?auth=${userId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        albumList: {
+                            items
+                        },
+                    })
+                })
+
+                dispatch({
+                    type: SET_ALBUM_ITEMS,
+                    items
+                })
+            } catch (e) {
+                console.log("error setting album items: ", e)
+            }
+        }
+    } else {
+        return async dispatch => {
+            try {
+                await storageSetItem("pg-tdl-album", JSON.stringify(items));
+
+                dispatch({
+                    type: SET_ALBUM_ITEMS,
+                    items
+                })
+            } catch (e) {
+                console.log("error saving data to storage: ", e)
+            }
+        }
+    }
+}
+
 export const getAppsData = (userId, storageGetItem) => {
 
     if (userId) {
@@ -92,57 +134,40 @@ export const getAppsData = (userId, storageGetItem) => {
                 const response = await fetch(`${URL_API}apps/${userId}.json?auth=${userId}`)
 
                 const data = await response.json()
-                
+
                 if (data && !data.toDoList) {
-                    data.toDoList = {'items': []}
+                    data.toDoList = { 'items': [] }
+                }
+                if (data && !data.albumList) {
+                    data.albumList = { 'items': [] }
                 }
                 data && dispatch({
                     type: GET_APPS_DATA,
                     appsData: data
                 })
-            } catch(e) {
-                console.log("appsDataException-",e)
+            } catch (e) {
+                console.log("appsDataException-", e)
             }
         }
     } else {
 
         return async dispatch => {
             try {
-                const valueList = await storageGetItem('pg-tdl-list');
-                const valueMemo = await storageGetItem('pg-mg-score');
+                const valueList = await storageGetItem('pg-tdl-list')
+                const valueMemo = await storageGetItem('pg-mg-score')
+                const valueAlbum = await storageGetItem('pg-tdl-album')
 
-                valueList && !valueMemo && dispatch({
-                    type: GET_APPS_DATA,
-                    appsData: {
-                        toDoList: {
-                            items: JSON.parse(valueList)
-                        },
-                        memoGame: {
-                            bestScore: "-"
-                        }
-                    }
+                valueList && dispatch({
+                    type: SET_LIST_ITEMS,
+                    items: JSON.parse(valueList)
                 })
-                valueMemo && !valueList && dispatch({
-                    type: GET_APPS_DATA,
-                    appsData: {
-                        toDoList: {
-                            items: []
-                        },
-                        memoGame: {
-                            bestScore: JSON.parse(valueMemo)
-                        }
-                    }
+                valueMemo && dispatch({
+                    type: SET_MEMO_SCORE,
+                    bestScore: JSON.parse(valueMemo)
                 })
-                valueList && valueMemo && dispatch({
-                    type: GET_APPS_DATA,
-                    appsData: {
-                        toDoList: {
-                            items: JSON.parse(valueList)
-                        },
-                        memoGame: {
-                            bestScore: JSON.parse(valueMemo)
-                        }
-                    }
+                valueAlbum && dispatch({
+                    type: SET_ALBUM_ITEMS,
+                    items: JSON.parse(valueAlbum)
                 })
             } catch (e) {
                 console.log("error retrieving data from storage: ", e)

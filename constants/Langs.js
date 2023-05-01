@@ -46,6 +46,8 @@ export const LANGS = [{
         userLoggedOut: "USER LOGGED OUT",
         weather: "WEATHER",
         locationPermissionDenied: "PERMISSION TO ACCESS LOCATION DENIED",
+        cameraPermissionDenied: "PERMISSION TO ACCESS CAMERA DENIED",
+        cameraFsError: "ERROR SAVING FILE",
         location: "LOCATION",
         feels: "FEELS",
         humidity: "HUMIDITY",
@@ -56,7 +58,8 @@ export const LANGS = [{
         inputUsername: "ENTER USERNAME",
         inputAvatar: "SELECT AVATAR",
         forecast: "FORECAST",
-        calculator: "CALCULATOR"
+        calculator: "CALCULATOR",
+        album: "ALBUM"
     }
 }, {
     id: 2, lang: "spanish", text: {
@@ -106,6 +109,8 @@ export const LANGS = [{
         userLoggedOut: "USUARIO DESLOGUEADO",
         weather: "CLIMA",
         locationPermissionDenied: "PERMISO PARA ACCEDER A LA LOCACIÓN DENEGADO",
+        cameraPermissionDenied: "PERMISO PARA ACCEDER A LA CÁMARA DENEGADO",
+        cameraFsError: "ERROR GUARDANDO ARCHIVO",
         location: "LOCACIÓN",
         feels: "S.T.",
         humidity: "HUMEDAD",
@@ -116,6 +121,7 @@ export const LANGS = [{
         inputUsername: "INGRESE NOMBRE",
         inputAvatar: "SELECCIONE AVATAR",
         forecast: "PRONÓSTICO",
-        calculator: "CALCULADORA"
+        calculator: "CALCULADORA",
+        album: "ALBUM"
     }
 }]

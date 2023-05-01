@@ -27,8 +27,8 @@ export default function ToDoList({ navigation }) {
     const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
     /* dispatch para traer data actualizada */
-    const dispatchGetAppsData = () => {
-        dispatch(getAppsData(userId, storageGetItem));
+    const dispatchGetAppsData = async () => {
+        await dispatch(getAppsData(userId, storageGetItem));
     }
 
     const addItem = (item) => {

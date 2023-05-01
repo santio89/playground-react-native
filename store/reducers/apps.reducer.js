@@ -1,4 +1,4 @@
-import { SET_MEMO_SCORE, SET_LIST_ITEMS, GET_APPS_DATA } from "../actions/apps.action";
+import { SET_MEMO_SCORE, SET_LIST_ITEMS, SET_ALBUM_ITEMS, GET_APPS_DATA } from "../actions/apps.action";
 
 const initialState = {
     toDoList: {
@@ -6,6 +6,9 @@ const initialState = {
     },
     memoGame: {
         bestScore: "-"
+    },
+    albumList: {
+        items: []
     }
 }
 
@@ -26,6 +29,13 @@ const AppsReducer = (state = initialState, action) => {
                     items: action.items
                 }
             }
+        case SET_ALBUM_ITEMS:
+            return {
+                ...state,
+                albumList: {
+                    items: action.items
+                }
+            }
         case GET_APPS_DATA:
             return {
                 ...state,
@@ -34,6 +44,9 @@ const AppsReducer = (state = initialState, action) => {
                 },
                 memoGame: {
                     bestScore: action.appsData.memoGame.bestScore
+                },
+                albumList: {
+                    items: action.appsData.albumList.items
                 }
             }
         default:

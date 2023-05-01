@@ -4,6 +4,7 @@ import ToDoList from '../screens/ToDoList'
 import MemoGame from '../screens/MemoGame'
 import Weather from '../screens/Weather'
 import Calculator from "../screens/Calculator";
+import Album from "../screens/Album";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ const AppNavigator = () => {
             <Stack.Screen name='MemoGame' component={MemoGame} />
             <Stack.Screen name='Weather' component={Weather} />
             <Stack.Screen name='Calculator' component={Calculator} />
+            <Stack.Screen name='Album' component={Album} />
         </Stack.Navigator>
     )
 }
