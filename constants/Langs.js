@@ -60,7 +60,8 @@ export const LANGS = [{
         inputAvatar: "SELECT AVATAR",
         forecast: "FORECAST",
         calculator: "CALCULATOR",
-        album: "ALBUM"
+        album: "ALBUM",
+        noImg: "NO IMAGES TO DISPLAY"
     }
 }, {
     id: 2, lang: "spanish", text: {
@@ -124,6 +125,7 @@ export const LANGS = [{
         inputAvatar: "SELECCIONE AVATAR",
         forecast: "PRONÓSTICO",
         calculator: "CALCULADORA",
-        album: "ALBUM"
+        album: "ALBUM",
+        noImg: "NO HAY IMÁGENES PARA MOSTRAR"
     }
 }]

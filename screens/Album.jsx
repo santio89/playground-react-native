@@ -27,6 +27,7 @@ const Album = ({ navigation }) => {
   const uriListData = useSelector(state => state.apps.albumList.items)
 
   const [modalVisible, setModalVisible] = useState({ active: false, id: null })
+  const [modalImg, setModalImg] = useState({ active: false, id: null, uri: null })
 
   const updateWindowWidth = () => {
     setWindowWidth(Dimensions.get('window').width)
@@ -129,9 +130,10 @@ const Album = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <ScrollView contentContainerStyle={[styles.albumImgContainer, altColorTheme && styles.altAlbumImgContainer, windowWidth < 400 && {flexDirection: 'column', flexWrap: 'nowrap'}]}>
+        <ScrollView contentContainerStyle={[styles.albumImgContainer, altColorTheme && styles.altAlbumImgContainer, windowWidth < 400 && { flexDirection: 'column', flexWrap: 'nowrap' }]}>
+          {!uriList || uriList.length === 0 && <Text style={{color: Constants.colorWhite, fontFamily: Constants.fontPrimary, fontSize: Constants.fontLg}}>{text.noImg}</Text>}
           {uriList.map((item) => (
-            <TouchableOpacity key={item.id} style={[styles.albumImgBtn, Platform.OS === 'web' && modalVisible.active && modalVisible.id === item.id && { filter: 'grayscale(1)' }]}>
+            <TouchableOpacity key={item.id} style={[styles.albumImgBtn, Platform.OS === 'web' && modalVisible.active && modalVisible.id === item.id && { filter: 'grayscale(1)' }]} onPress={() => { setModalImg({ active: true, id: item.id, uri: item.uri }) }}>
               <Image style={styles.albumImg} source={{ uri: item.uri }} />
               <TouchableOpacity style={{ position: 'absolute', bottom: -16, right: -16 }} onPress={() => setModalVisible({ active: true, id: item.id })}>
                 <View style={{ padding: 4, justifyContent: 'center', alignItems: 'center' }}><MaterialIcons name="delete" size={Constants.fontLgg} color={modalVisible.active && modalVisible.id === item.id ? 'dimgray' : Constants.colorRed} /></View>
@@ -156,6 +158,16 @@ const Album = ({ navigation }) => {
             </View>
           </View>
         </SafeAreaView>
+      </Modal>
+      <Modal visible={modalImg.active} transparent={true} animationType='fade'>
+        <ScrollView contentContainerStyle={{flex: 1, backgroundColor: darkMode?Constants.colorDark:Constants.colorWhite, justifyContent: 'center', alignItems: 'center', zIndex: 999}}>
+          <Image style={styles.albumModalImg} source={{ uri: modalImg.uri }} />
+
+          <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => setModalImg({ active: false, id: null, uri: null })}>
+            <Text style={[styles.modalBtnText]} >{text.close}</Text>
+          </TouchableOpacity>
+        </ScrollView>
+
       </Modal>
     </View>
   )
@@ -231,6 +243,15 @@ const styles = StyleSheet.create({
     maxWidth: 140,
     aspectRatio: 1,
     position: 'relative'
+  },
+  albumModalImg: {
+    borderRadius: 8,
+    width: '80%',
+    minWidth: 280,
+    maxWidth: 500,
+    aspectRatio: 1,
+    position: 'relative',
+    marginVertical: 20
   },
   albumImgBtn: {
     margin: 10,
