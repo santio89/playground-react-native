@@ -29,8 +29,8 @@ const Album = ({ navigation }) => {
   }
 
   /* dispatch para traer data actualizada */
-  const dispatchGetAppsData = async () => {
-    await dispatch(getAppsData(userId, storageGetItem));
+  const dispatchGetAppsData = () => {
+    dispatch(getAppsData(userId, storageGetItem));
   }
 
   const [uriList, setUriList] = useState(uriListData)

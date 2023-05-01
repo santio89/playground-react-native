@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Text, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useSelector } from 'react-redux';
 import Constants from '../constants/Styles'
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function ListItem({ items, setItems, item, modalVisible, setModalVisible }) {
     const [itemComplete, setItemComplete] = useState(item.completed);
@@ -19,7 +20,7 @@ export default function ListItem({ items, setItems, item, modalVisible, setModal
 
                 <Text style={[styles.listItemText, itemComplete && {color: 'darkgray'}]}> <Text style={[styles.listItemIndicator, altColorTheme && styles.altListItemIndicator, itemComplete && {color: 'darkgray'}, modalVisible.active && modalVisible.id === item.id && {color: 'dimgray'}]}>●&nbsp;</Text> <Text style={[itemComplete && [styles.lineThrough, {color: 'darkgray'}], modalVisible.active && modalVisible.id === item.id  && {color: 'lightgray'}]}>{item.text}</Text></Text>
                 <TouchableOpacity onPress={() => setModalVisible({ active: true, id: item.id })}>
-                    <Text style={[styles.listItemDelete, modalVisible.active && modalVisible.id === item.id && {color: 'dimgray'}]}>X</Text>
+                    <View style={{padding: 4, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="delete" size={Constants.fontLgg} color={modalVisible.active && modalVisible.id === item.id?'dimgray':Constants.colorRed} /></View>
                 </TouchableOpacity>
             </TouchableOpacity>
         </View>

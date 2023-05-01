@@ -23,7 +23,7 @@ const MemoGame = ({ navigation }) => {
     const memoScore = useSelector(state => state.apps.memoGame.bestScore)
     const [bestScore, setBestScore] = useState(memoScore);
 
-/*     const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width); */
+    /*     const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width); */
 
     const userId = useSelector(state => state.auth.userId)
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
@@ -33,8 +33,8 @@ const MemoGame = ({ navigation }) => {
     const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
     /* dispatch para traer data actualizada */
-    const dispatchGetAppsData = async () => {
-        await dispatch(getAppsData(userId, storageGetItem));
+    const dispatchGetAppsData = () => {
+        dispatch(getAppsData(userId, storageGetItem));
     }
 
     /* elijo emojis al azar */
@@ -147,7 +147,7 @@ const MemoGame = ({ navigation }) => {
                             {winner === true ?
                                 <>
                                     <View style={[styles.winner, altColorTheme && styles.altWinner]}>
-                                        <Text style={{fontSize: Constants.fontLg}}>🔥</Text>
+                                        <Text style={{ fontSize: Constants.fontLg }}>🔥</Text>
                                         <Text style={styles.winnerText}>{text.completed}</Text>
                                         <View><Text style={styles.winnerButtonsTurns}>{text.turns}: {turns}</Text></View>
                                     </View>
@@ -171,15 +171,15 @@ const MemoGame = ({ navigation }) => {
                                     </View>
                                     <View style={styles.cardsWrapper}>
                                         {
-                                                <FlatList contentContainerStyle={styles.cardsContainer}
-                                                    data={cards}
-                                                    numColumns={4}
-                                                    renderItem={({ item }) => (
-                                                        <Card card={item} handleChoice={handleChoice} choiceOne={choiceOne} choiceTwo={choiceTwo} disabled={disabled} />
-                                                    )}
-                                                    key={'-'}
-                                                    keyExtractor={card => ("-" + card.id)}
-                                                />
+                                            <FlatList contentContainerStyle={styles.cardsContainer}
+                                                data={cards}
+                                                numColumns={4}
+                                                renderItem={({ item }) => (
+                                                    <Card card={item} handleChoice={handleChoice} choiceOne={choiceOne} choiceTwo={choiceTwo} disabled={disabled} />
+                                                )}
+                                                key={'-'}
+                                                keyExtractor={card => ("-" + card.id)}
+                                            />
                                         }
                                     </View>
                                 </>}
