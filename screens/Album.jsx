@@ -98,6 +98,18 @@ const Album = ({ navigation }) => {
     setUriList(uriListData)
   }, [])
 
+
+  /* fix update first time only */
+  let uriListFlag = null
+  useEffect(() => {
+    if (uriListFlag) {
+      return
+    } else {
+      setUriList(uriListData)
+      uriListFlag = 1
+    }
+  }, [uriListData])
+
   useEffect(() => {
     const dimensionsHandler = Dimensions.addEventListener("change", updateWindowWidth)
 
@@ -132,7 +144,7 @@ const Album = ({ navigation }) => {
         <ScrollView contentContainerStyle={[styles.albumImgContainer, altColorTheme && styles.altAlbumImgContainer, windowWidth < 400 && { flexDirection: 'column', flexWrap: 'nowrap' }]}>
           {!uriList || uriList.length === 0 ?
             <View style={{ width: '100%', maxWidth: windowWidth < 800 ? 320 : '100%', justifyContent: 'center', alignItems: 'center' }}>
-              <Text style={{ color: Constants.colorWhite, fontFamily: Constants.fontPrimary, fontSize: Constants.fontLg, textAlign: 'center'}}>{text.noImg}
+              <Text style={{ color: Constants.colorWhite, fontFamily: Constants.fontPrimary, fontSize: Constants.fontLg, textAlign: 'center' }}>{text.noImg}
               </Text>
             </View> :
             uriList.map((item) => (
