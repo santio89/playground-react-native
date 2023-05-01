@@ -70,6 +70,7 @@ const Album = ({ navigation }) => {
     })
 
     setUriList(uriList => ([...uriList, { id: uuid.v4(), uri: image.assets[0].uri }]))
+    dispatch(setAlbumItems(userId, [...uriList, { id: uuid.v4(), uri: image.assets[0].uri }], storageSetItem))
   }
 
   const handleUploadImage = async () => {
@@ -84,20 +85,18 @@ const Album = ({ navigation }) => {
     })
 
     setUriList(uriList => ([...uriList, { id: uuid.v4(), uri: image.assets[0].uri }]))
+    dispatch(setAlbumItems(userId, [...uriList, { id: uuid.v4(), uri: image.assets[0].uri }], storageSetItem))
   }
 
   const deleteItem = (id) => {
     setUriList((oldItems) => oldItems.filter(item => item.id != id))
+    dispatch(setAlbumItems(userId, uriList.filter(item => item.id != id), storageSetItem))
   }
 
   useEffect(() => {
     dispatchGetAppsData()
     setUriList(uriListData)
   }, [])
-
-  useEffect(() => {
-    dispatch(setAlbumItems(userId, uriList, storageSetItem))
-  }, [uriList])
 
   useEffect(() => {
     const dimensionsHandler = Dimensions.addEventListener("change", updateWindowWidth)
