@@ -7,7 +7,6 @@ import { LANGS } from '../constants/Langs'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Entypo } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker'
-import * as FileSystem from 'expo-file-system'
 import { storageSetItem, storageGetItem } from '../utils/AsyncStorage'
 import Alert from '../utils/Alert'
 
@@ -55,22 +54,6 @@ const Album = ({ navigation }) => {
       return true
     } */
 
-  /*   const saveImageFs = async (image) => {
-      const fileName = image.split('/').pop()
-      const Path = FileSystem.documentDirectory + fileName
-  
-      try {
-        FileSystem.moveAsync({
-          from: image,
-          to: Path
-        })
-      }
-      catch (e) {
-        console.log("error saving file: ", e)
-        Alert(`${text.cameraFsError}`)
-      }
-    } */
-
   const handleTakeImage = async () => {
     const isCameraOk = await verifyPermissions();
     if (!isCameraOk) return;
@@ -82,7 +65,6 @@ const Album = ({ navigation }) => {
     })
 
     setUriList(uriList => ([...uriList, image.assets[0].uri]))
-    /* saveImageFs(image) */
   }
 
   const handleUploadImage = async () => {
@@ -97,7 +79,6 @@ const Album = ({ navigation }) => {
     })
 
     setUriList(uriList => ([...uriList, image.assets[0].uri]))
-    /*  saveImageFs(image) */
   }
 
 
