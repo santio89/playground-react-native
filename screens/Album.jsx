@@ -71,7 +71,7 @@ const Album = ({ navigation }) => {
     })
 
     setUriList(uriList => ([{ id: uuid.v4(), uri: image.assets[0].uri }, ...uriList]))
-    dispatch(setAlbumItems(userId, [...uriList, { id: uuid.v4(), uri: image.assets[0].uri }], storageSetItem))
+    dispatch(setAlbumItems(userId, [{ id: uuid.v4(), uri: image.assets[0].uri }, ...uriList], storageSetItem))
   }
 
   const handleUploadImage = async () => {
@@ -85,8 +85,8 @@ const Album = ({ navigation }) => {
       quality: 1,
     })
 
-    setUriList(uriList => ([{ id: uuid.v4(), uri: image.assets[0].uri, ...uriList }]))
-    dispatch(setAlbumItems(userId, [...uriList, { id: uuid.v4(), uri: image.assets[0].uri }], storageSetItem))
+    setUriList(uriList => ([{ id: uuid.v4(), uri: image.assets[0].uri }, ...uriList]))
+    dispatch(setAlbumItems(userId, [{ id: uuid.v4(), uri: image.assets[0].uri }, ...uriList], storageSetItem))
   }
 
   const deleteItem = (id) => {
