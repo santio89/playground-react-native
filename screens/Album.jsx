@@ -136,11 +136,11 @@ const Album = ({ navigation }) => {
   return (
     <View style={[styles.albumWrapper, !darkMode && styles.backgroundWhite]}>
       <ScrollView contentContainerStyle={[styles.albumContainer, !darkMode && styles.backgroundWhite]}>
-        <View style={[styles.btnContainer, windowWidth < 800 && { fontSize: Constants.fontLg }]}>
-          <TouchableOpacity style={[styles.albumBtn, altColorTheme && styles.altAlbumBtn, windowWidth < 480 && { minWidth: 140, maxWidth: 140, width: 140 }]} onPress={handleTakeImage}>
+        <View style={[styles.btnContainer, windowWidth < 800 && { fontSize: Constants.fontLg }, !darkMode && styles.backgroundWhite]}>
+          <TouchableOpacity style={[styles.albumBtn, altColorTheme && styles.altAlbumBtn]} onPress={handleTakeImage}>
             <Text style={[styles.albumText]}><Entypo name="camera" size={Constants.fontXl} color={Constants.colorWhite} /></Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.albumBtn, altColorTheme && styles.altAlbumBtn, windowWidth < 480 && { minWidth: 140, maxWidth: 140, width: 140 }]} onPress={handleUploadImage}>
+          <TouchableOpacity style={[styles.albumBtn, altColorTheme && styles.altAlbumBtn]} onPress={handleUploadImage}>
             <Text style={[styles.albumText]}><Entypo name="upload" size={Constants.fontXl} color={Constants.colorWhite} /></Text>
           </TouchableOpacity>
         </View>
@@ -217,6 +217,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 8,
     marginBottom: 16,
+    backgroundColor: Constants.colorDark,
+    position: 'sticky',
+    top: 0,
+    zIndex: 1
   },
   albumBtn: {
     backgroundColor: Constants.colorPrimary,
@@ -227,12 +231,12 @@ const styles = StyleSheet.create({
     color: Constants.colorWhite,
     textAlign: 'center',
     margin: 10,
-    minWidth: 180,
-    maxWidth: 180,
-    width: 180,
-    height: 72,
-    minHeight: 72,
-    maxHeight: 72,
+    minWidth: 140,
+    maxWidth: 140,
+    width: 140,
+    height: 60,
+    minHeight: 60,
+    maxHeight: 60,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
