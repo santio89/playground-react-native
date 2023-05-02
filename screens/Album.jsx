@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setAlbumItems, getAppsData } from '../store/actions/apps.action'
 import Constants from '../constants/Styles'
 import { LANGS } from '../constants/Langs'
-import { LinearGradient } from 'expo-linear-gradient'
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import uuid from 'react-native-uuid';
@@ -135,16 +134,15 @@ const Album = ({ navigation }) => {
 
   return (
     <View style={[styles.albumWrapper, !darkMode && styles.backgroundWhite]}>
-      <ScrollView contentContainerStyle={[styles.albumContainer, !darkMode && styles.backgroundWhite]}>
-        <View style={[styles.btnContainer, !darkMode && styles.backgroundWhite]}>
-          <TouchableOpacity style={[styles.albumBtn, altColorTheme && styles.altAlbumBtn]} onPress={handleTakeImage}>
-            <Text style={[styles.albumText]}><Entypo name="camera" size={Constants.fontXl} color={Constants.colorWhite} /></Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.albumBtn, altColorTheme && styles.altAlbumBtn]} onPress={handleUploadImage}>
-            <Text style={[styles.albumText]}><Entypo name="upload" size={Constants.fontXl} color={Constants.colorWhite} /></Text>
-          </TouchableOpacity>
-        </View>
-
+      <View style={[styles.btnContainer]}>
+        <TouchableOpacity style={[styles.albumBtn, altColorTheme && styles.altAlbumBtn]} onPress={handleTakeImage}>
+          <Text style={[styles.albumText]}><Entypo name="camera" size={Constants.fontXl} color={Constants.colorWhite} /></Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.albumBtn, altColorTheme && styles.altAlbumBtn]} onPress={handleUploadImage}>
+          <Text style={[styles.albumText]}><Entypo name="upload" size={Constants.fontXl} color={Constants.colorWhite} /></Text>
+        </TouchableOpacity>
+      </View>
+      <View style={[styles.albumContainer, !darkMode && styles.backgroundWhite]}>
         <ScrollView contentContainerStyle={[styles.albumImgContainer, altColorTheme && styles.altAlbumImgContainer, windowWidth < 480 && { flexDirection: 'column', flexWrap: 'nowrap' }]}>
           {!uriList || uriList.length === 0 ?
             <View style={{ width: '100%', maxWidth: windowWidth < 800 ? 320 : '100%', justifyContent: 'center', alignItems: 'center' }}>
@@ -161,7 +159,7 @@ const Album = ({ navigation }) => {
             ))}
         </ScrollView>
 
-      </ScrollView>
+      </View>
 
       <Modal visible={modalVisible.active} transparent={true} animationType='fade'>
         <SafeAreaView style={styles.modal}>
@@ -205,8 +203,9 @@ const styles = StyleSheet.create({
   },
   albumContainer: {
     width: '100%',
+    display: 'flex',
     justifyContent: 'center',
-    flexGrow: 1,
+    flex: 1,
     backgroundColor: Constants.colorDark,
     maxWidth: 800,
     margin: 'auto'
@@ -215,12 +214,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 8,
-    marginBottom: 16,
-    backgroundColor: Constants.colorDark,
-    /* position: 'sticky',
-    top: 0,
-    zIndex: 1 */
+    minWidth: 300,
   },
   albumBtn: {
     backgroundColor: Constants.colorPrimary,
@@ -257,10 +251,10 @@ const styles = StyleSheet.create({
     backgroundColor: Constants.colorPrimary,
     width: '100%',
     maxWidth: '100%',
-    minWidth: 200,
-    minHeight: 200,
+    minWidth: 300,
+    minHeight: 300,
     padding: 8,
-    marginBottom: 32
+    marginVertical: 16
   },
   albumImg: {
     borderRadius: 8,
