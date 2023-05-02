@@ -39,7 +39,7 @@ const Album = ({ navigation }) => {
   }
 
   const [uriList, setUriList] = useState(uriListData)
-  
+
   const verifyPermissions = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync()
 
@@ -70,7 +70,7 @@ const Album = ({ navigation }) => {
       quality: 1,
     })
 
-    setUriList(uriList => ([...uriList, { id: uuid.v4(), uri: image.assets[0].uri }]))
+    setUriList(uriList => ([{ id: uuid.v4(), uri: image.assets[0].uri }, ...uriList]))
     dispatch(setAlbumItems(userId, [...uriList, { id: uuid.v4(), uri: image.assets[0].uri }], storageSetItem))
   }
 
@@ -85,7 +85,7 @@ const Album = ({ navigation }) => {
       quality: 1,
     })
 
-    setUriList(uriList => ([...uriList, { id: uuid.v4(), uri: image.assets[0].uri }]))
+    setUriList(uriList => ([{ id: uuid.v4(), uri: image.assets[0].uri, ...uriList }]))
     dispatch(setAlbumItems(userId, [...uriList, { id: uuid.v4(), uri: image.assets[0].uri }], storageSetItem))
   }
 

@@ -11,7 +11,7 @@ import { storageGetItem } from '../utils/AsyncStorage';
 
 export default function ToDoList({ navigation }) {
     const dispatch = useDispatch()
-   
+
     const listItems = useSelector(state => state.apps.toDoList.items)
     const [items, setItems] = useState(listItems)
 
@@ -85,28 +85,25 @@ export default function ToDoList({ navigation }) {
                     <FlatList contentContainerStyle={styles.listItemsContainer}
                         data={items}
                         renderItem={({ item }) => (
-                            <>
-                                <ListItem items={items} setItems={setItems} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} />
-
-                                <Modal visible={modalVisible.active} transparent={true} animationType='fade'>
-                                    <SafeAreaView style={styles.modal}>
-                                        <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
-                                            <Text style={styles.modalTitle}>{text.deleteTask}?</Text>
-                                            <View style={styles.modalBtnContainer}>
-                                                <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => setModalVisible({ active: false, id: null })}>
-                                                    <Text style={[styles.modalBtnText]} >{text.cancel}</Text>
-                                                </TouchableOpacity>
-                                                <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn, styles.borderRed]} onPress={() => { deleteItem(modalVisible.id); setModalVisible({ active: false, id: null }) }}>
-                                                    <Text style={[styles.modalBtnText]}>{text.delete}</Text>
-                                                </TouchableOpacity>
-                                            </View>
-                                        </View>
-                                    </SafeAreaView>
-                                </Modal>
-                            </>
+                            <ListItem items={items} setItems={setItems} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} />
                         )}
                         keyExtractor={item => item.id}
                     />
+                    <Modal visible={modalVisible.active} transparent={true} animationType='fade'>
+                        <SafeAreaView style={styles.modal}>
+                            <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
+                                <Text style={styles.modalTitle}>{text.deleteTask}?</Text>
+                                <View style={styles.modalBtnContainer}>
+                                    <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => setModalVisible({ active: false, id: null })}>
+                                        <Text style={[styles.modalBtnText]} >{text.cancel}</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn, styles.borderRed]} onPress={() => { deleteItem(modalVisible.id); setModalVisible({ active: false, id: null }) }}>
+                                        <Text style={[styles.modalBtnText]}>{text.delete}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </SafeAreaView>
+                    </Modal>
                 </View>
             </View>
         </>
