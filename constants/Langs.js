@@ -125,7 +125,7 @@ export const LANGS = [{
         inputAvatar: "SELECCIONE AVATAR",
         forecast: "PRONÓSTICO",
         calculator: "CALCULADORA",
-        album: "ALBUM",
+        album: "ÁLBUM",
         noImg: "NO HAY IMÁGENES PARA MOSTRAR"
     }
 }]
