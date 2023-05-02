@@ -230,6 +230,9 @@ const styles = StyleSheet.create({
     minWidth: 180,
     maxWidth: 180,
     width: 180,
+    height: 72,
+    minHeight: 72,
+    maxHeight: 72,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
