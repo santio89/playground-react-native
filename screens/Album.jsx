@@ -218,9 +218,9 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginBottom: 16,
     backgroundColor: Constants.colorDark,
-    position: 'sticky',
+    /* position: 'sticky',
     top: 0,
-    zIndex: 1
+    zIndex: 1 */
   },
   albumBtn: {
     backgroundColor: Constants.colorPrimary,
