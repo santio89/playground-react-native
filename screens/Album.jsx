@@ -136,7 +136,7 @@ const Album = ({ navigation }) => {
   return (
     <View style={[styles.albumWrapper, !darkMode && styles.backgroundWhite]}>
       <ScrollView contentContainerStyle={[styles.albumContainer, !darkMode && styles.backgroundWhite]}>
-        <View style={[styles.btnContainer, windowWidth < 800 && { fontSize: Constants.fontLg }, !darkMode && styles.backgroundWhite]}>
+        <View style={[styles.btnContainer, !darkMode && styles.backgroundWhite]}>
           <TouchableOpacity style={[styles.albumBtn, altColorTheme && styles.altAlbumBtn]} onPress={handleTakeImage}>
             <Text style={[styles.albumText]}><Entypo name="camera" size={Constants.fontXl} color={Constants.colorWhite} /></Text>
           </TouchableOpacity>
