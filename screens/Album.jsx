@@ -65,9 +65,11 @@ const Album = ({ navigation }) => {
     if (!isCameraOk) return;
 
     const image = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      base64: true,
     })
 
     setUriList(uriList => ([{ id: uuid.v4(), uri: image.assets[0].uri }, ...uriList]))
@@ -83,6 +85,7 @@ const Album = ({ navigation }) => {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      base64: true,
     })
 
     setUriList(uriList => ([{ id: uuid.v4(), uri: image.assets[0].uri }, ...uriList]))
