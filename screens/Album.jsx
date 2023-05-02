@@ -241,8 +241,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-    alignContent: 'center',
-    flexGrow: 1,
     borderRadius: 8,
     borderColor: Constants.colorPrimaryDark,
     borderWidth: 2,
