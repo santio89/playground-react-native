@@ -61,7 +61,7 @@ const Settings = ({ navigation }) => {
             <ScrollView contentContainerStyle={[styles.settingsContainer, !darkMode && styles.backgroundWhite, !darkMode && styles.colorDark]}>
                 <View style={[styles.itemsContainer, altColorTheme && styles.altItemsContainer]}>
                     <View style={styles.settingsItem}>
-                        <Text style={[styles.settingsItemLabel]}><Text style={[styles.settingsItemIndicator, altColorTheme && styles.altSettingsItemIndicator]}>●&nbsp;</Text><Text>{text.language}: </Text></Text>
+                        <Text style={[styles.settingsItemLabel]}><Text style={[styles.settingsItemIndicator, altColorTheme && styles.altSettingsItemIndicator]}>•&nbsp;</Text><Text>{text.language}: </Text></Text>
                         <View style={styles.settingsItemTextWrapper}>
                             <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, config.lang === "english" && styles.itemSelected]} onPress={() => { setConfig(config => ({ ...config, lang: "english" })) }}>
                                 <LinearGradient
@@ -84,7 +84,7 @@ const Settings = ({ navigation }) => {
                         </View>
                     </View>
                     <View style={styles.settingsItem}>
-                        <Text style={[styles.settingsItemLabel]}><Text style={[styles.settingsItemIndicator, altColorTheme && styles.altSettingsItemIndicator]}>●&nbsp;</Text><Text>{text.darkMode}: </Text></Text>
+                        <Text style={[styles.settingsItemLabel]}><Text style={[styles.settingsItemIndicator, altColorTheme && styles.altSettingsItemIndicator]}>•&nbsp;</Text><Text>{text.darkMode}: </Text></Text>
                         <View style={styles.settingsItemTextWrapper}>
                             <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, !config.darkMode && styles.itemSelected]} onPress={() => { setConfig(config => ({ ...config, darkMode: false })) }}>
                                 <LinearGradient
@@ -107,7 +107,7 @@ const Settings = ({ navigation }) => {
                         </View>
                     </View>
                     <View style={styles.settingsItem}>
-                        <Text style={[styles.settingsItemLabel]}><Text style={[styles.settingsItemIndicator, altColorTheme && styles.altSettingsItemIndicator]}>●&nbsp;</Text><Text>{text.colorTheme}: </Text></Text>
+                        <Text style={[styles.settingsItemLabel]}><Text style={[styles.settingsItemIndicator, altColorTheme && styles.altSettingsItemIndicator]}>•&nbsp;</Text><Text>{text.colorTheme}: </Text></Text>
                         <View style={styles.settingsItemTextWrapper}>
                             <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, config.altColorTheme === false && styles.itemSelected, styles.backgroundPrimary]} onPress={() => { setConfig(config => ({ ...config, altColorTheme: false })) }}>
                                 <LinearGradient

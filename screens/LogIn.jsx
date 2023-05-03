@@ -65,11 +65,11 @@ const LogIn = ({ navigation }) => {
                 <KeyboardAvoidingView style={[styles.itemsContainer, altColorTheme && styles.altItemsContainer]}>
                     <ScrollView>
                         <View style={styles.profileItem}>
-                            <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.email}: </Text></Text>
+                            <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>•&nbsp;</Text><Text>{text.email}: </Text></Text>
                             <TextInput keyboardType='email-address' autoCapitalize='none' style={[styles.textInput, altColorTheme && styles.altTextInput]} value={email} onChangeText={email => setEmail(email)} onSubmitEditing={() => validInput && handleLogIn()} />
                         </View>
                         <View style={styles.profileItem}>
-                            <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.password}: </Text></Text>
+                            <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>•&nbsp;</Text><Text>{text.password}: </Text></Text>
                             <TextInput secureTextEntry={true} autoCapitalize='none' style={[styles.textInput, altColorTheme && styles.altTextInput]} value={password} onChangeText={password => setPassword(password)} onSubmitEditing={() => validInput && handleLogIn()} />
                         </View>
                         <View style={styles.profileItem}>

@@ -81,7 +81,7 @@ const Profile = ({ navigation }) => {
                     {userId ?
                         <>
                             <View style={styles.profileItem}>
-                                <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.email}: </Text></Text>
+                                <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>•&nbsp;</Text><Text>{text.email}: </Text></Text>
                                 <View style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton]}>
                                     <LinearGradient
                                         colors={altColorTheme ? [Constants.colorSecondaryDark, Constants.colorSecondary, Constants.colorSecondaryDark] : [Constants.colorPrimaryDark, Constants.colorPrimary, Constants.colorPrimaryDark]}
@@ -93,7 +93,7 @@ const Profile = ({ navigation }) => {
                                 </View>
                             </View>
                             <View style={styles.profileItem}>
-                                <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.name}: </Text></Text>
+                                <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>•&nbsp;</Text><Text>{text.name}: </Text></Text>
                                 <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton]} onPress={() => { setInputUsername(""), setUsernameModal(true) }}>
                                     <LinearGradient
                                         colors={altColorTheme ? [Constants.colorSecondaryDark, Constants.colorSecondary, Constants.colorSecondaryDark] : [Constants.colorPrimaryDark, Constants.colorPrimary, Constants.colorPrimaryDark]}
@@ -105,7 +105,7 @@ const Profile = ({ navigation }) => {
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.profileItem}>
-                                <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text><Text>{text.avatar}: </Text></Text>
+                                <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>•&nbsp;</Text><Text>{text.avatar}: </Text></Text>
                                 <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton]}>
                                     <LinearGradient
                                         colors={altColorTheme ? [Constants.colorSecondaryDark, Constants.colorSecondary, Constants.colorSecondaryDark] : [Constants.colorPrimaryDark, Constants.colorPrimary, Constants.colorPrimaryDark]}
@@ -118,7 +118,7 @@ const Profile = ({ navigation }) => {
                             </View>
                             <View style={styles.profileItem}>
                                 <View style={[styles.profileItemLabel]}>
-                                    <Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>●&nbsp;</Text>
+                                    <Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>•&nbsp;</Text>
                                     <TouchableOpacity style={styles.profileItemButtonLogOut} onPress={() => { dispatch(logOut()); setLogOutSuccess(true) }}>
                                         <Text style={[styles.settingsItemText, { fontFamily: Constants.fontPrimaryBold }]}>{text.logOut}</Text>
                                     </TouchableOpacity>
