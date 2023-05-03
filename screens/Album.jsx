@@ -101,23 +101,10 @@ const Album = ({ navigation }) => {
     setLoading(true)
     dispatchGetAppsData()
     setUriList(uriListData)
-  }, [])
-
-
-  /* fix update first time only */
-  let uriListFlag = null
-  useEffect(() => {
-    let timeout = null
-    if (uriListFlag) {
-      return
-    } else {
-      setUriList(uriListData)
-      uriListFlag = 1
-      timeout = setTimeout(() => setLoading(false), 200)
-    }
+    const timeout = setTimeout(() => setLoading(false), 200)
 
     return () => { timeout && clearTimeout(timeout) }
-  }, [uriListData])
+  }, [])
 
   useEffect(() => {
     const dimensionsHandler = Dimensions.addEventListener("change", updateWindowWidth)
