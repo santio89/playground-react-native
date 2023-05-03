@@ -72,12 +72,12 @@ const Album = ({ navigation }) => {
       base64: true,
     })
 
-    if (image.assets === null || undefined) {
+    if (image?.assets === null || undefined) {
       return
     }
 
-    setUriList(uriList => ([{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image.assets[0].base64}` : image.assets[0].uri }, ...uriList]))
-    dispatch(setAlbumItems(userId, [{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image.assets[0].base64}` : image.assets[0].uri }, ...uriList], storageSetItem))
+    setUriList(uriList => ([{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image?.assets[0].base64}` : image?.assets[0].uri }, ...uriList]))
+    dispatch(setAlbumItems(userId, [{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image?.assets[0].base64}` : image?.assets[0].uri }, ...uriList], storageSetItem))
   }
 
   const handleUploadImage = async () => {
@@ -92,12 +92,12 @@ const Album = ({ navigation }) => {
       base64: true,
     })
 
-    if (image.assets === null || undefined) {
+    if (image?.assets === null || undefined) {
       return
     }
 
-    setUriList(uriList => ([{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image.assets[0].base64}` : image.assets[0].uri }, ...uriList]))
-    dispatch(setAlbumItems(userId, [{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image.assets[0].base64}` : image.assets[0].uri }, ...uriList], storageSetItem))
+    setUriList(uriList => ([{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image?.assets[0].base64}` : image?.assets[0].uri }, ...uriList]))
+    dispatch(setAlbumItems(userId, [{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image?.assets[0].base64}` : image?.assets[0].uri }, ...uriList], storageSetItem))
   }
 
   const deleteItem = (id) => {
