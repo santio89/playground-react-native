@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
         backgroundColor: Constants.colorDark,
         justifyContent: 'center',
         alignItems: 'center',
-        /* padding: 10, */
         width: '100%'
     },
     calcAppScrollWrapper: {

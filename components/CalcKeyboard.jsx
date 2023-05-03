@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 4,
-        borderRadius: 12,
+        borderRadius: 16,
         borderColor: Constants.colorPrimary,
         paddingBottom: 12,
         backgroundColor: Constants.colorPrimaryDark,
@@ -224,9 +224,6 @@ const styles = StyleSheet.create({
     calcScreen: {
         backgroundColor: 'gray',
         width: '100%',
-        borderRadius: 8,
-        borderBottomLeftRadius: 0,
-        borderBottomRightRadius: 0,
         padding: 8,
         borderBottomWidth: 4,
         borderColor: Constants.colorPrimary,
