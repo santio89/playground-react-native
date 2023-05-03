@@ -199,7 +199,10 @@ const Profile = ({ navigation }) => {
                                 <FlatList style={styles.avatarContainer}
                                     data={avatarArray}
                                     initialNumToRender={40}
-                                    horizontal pagingEnabled snapToAlignment='start' decelerationRate="fast"
+                                    horizontal
+                                    pagingEnabled
+                                    snapToAlignment='start'
+                                    decelerationRate="fast"
                                     renderItem={({ item }) => (
                                         <View style={{justifyContent: 'center', alignItems: 'center'}}>
                                             <TouchableOpacity style={[styles.avatarItem, altColorTheme && styles.altAvatarItem, item[0] === selectedAvatar && styles.avatarSelected]} onPress={() => setSelectedAvatar(item[0])}>
