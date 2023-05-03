@@ -72,6 +72,10 @@ const Album = ({ navigation }) => {
       base64: true,
     })
 
+    if (image === null || undefined) {
+      return
+    }
+
     setUriList(uriList => ([{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image.assets[0].base64}` : image.assets[0].uri }, ...uriList]))
     dispatch(setAlbumItems(userId, [{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image.assets[0].base64}` : image.assets[0].uri }, ...uriList], storageSetItem))
   }
@@ -87,6 +91,10 @@ const Album = ({ navigation }) => {
       quality: 1,
       base64: true,
     })
+
+    if (image === null || undefined) {
+      return
+    }
 
     setUriList(uriList => ([{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image.assets[0].base64}` : image.assets[0].uri }, ...uriList]))
     dispatch(setAlbumItems(userId, [{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image.assets[0].base64}` : image.assets[0].uri }, ...uriList], storageSetItem))
