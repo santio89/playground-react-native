@@ -183,20 +183,19 @@ const Profile = ({ navigation }) => {
                         <View style={styles.modalTitle}>
                             <Text style={[styles.modalTitle, { marginBottom: 0 }]}>{text.inputAvatar}</Text>
                             <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
-                                <FlatList style={styles.avatarContainer}
-                                    data={[...Emojis]}
-                                    horizontal
-                                    pagingEnabled
-                                    snapToAlignment="start"
-                                    decelerationRate="fast"
-                                    initialNumToRender={80}
-                                    renderItem={({ item }) => (
-                                        <TouchableOpacity style={[styles.avatarItem, altColorTheme && styles.altAvatarItem, item === selectedAvatar && styles.avatarSelected]} onPress={() => setSelectedAvatar(item)}>
-                                            <Text style={styles.avatarItemText}>{item}</Text>
-                                        </TouchableOpacity>
-                                    )}
-                                    keyExtractor={item => item}
-                                />
+                                <ScrollView style={{ width: '100%', maxWidth: '100%' }} horizontal pagingEnabled snapToAlignment='start' snapToInterval={60} decelerationRate="fast" >
+                                    <FlatList style={styles.avatarContainer}
+                                        data={[...Emojis]}
+                                        initialNumToRender={80}
+                                        numColumns={40}
+                                        renderItem={({ item }) => (
+                                            <TouchableOpacity style={[styles.avatarItem, altColorTheme && styles.altAvatarItem, item === selectedAvatar && styles.avatarSelected]} onPress={() => setSelectedAvatar(item)}>
+                                                <Text style={styles.avatarItemText}>{item}</Text>
+                                            </TouchableOpacity>
+                                        )}
+                                        keyExtractor={item => item}
+                                    />
+                                </ScrollView>
                             </KeyboardAvoidingView>
                         </View>
 
@@ -410,9 +409,10 @@ const styles = StyleSheet.create({
     avatarItem: {
         width: 60,
         padding: 4,
-        marginRight: 4,
-        marginLeft: 4,
+        margin: 4,
         borderRadius: 4,
+        borderWidth: 2,
+        borderColor: 'transparent',
         backgroundColor: Constants.colorPrimary,
     },
     avatarItemText: {
