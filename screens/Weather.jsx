@@ -298,9 +298,9 @@ const Weather = ({ navigation }) => {
                   <FlatList style={styles.calendarContainer}
                     data={languageSelected === 'spanish' ? spExtendedForecast?.list : extendedForecast?.list}
                     horizontal
-                    pagingEnabled
+                    /* pagingEnabled
                     snapToAlignment="start"
-                    decelerationRate="fast"
+                    decelerationRate="fast" */
                     renderItem={({ item }) => {
                       const dt = new Date(item.dt * 1000)
                       return (
@@ -544,6 +544,7 @@ const styles = StyleSheet.create({
   },
   calendarContainer: {
     width: '100%',
+    maxWidth: '100%',
     overflow: 'hidden',
     padding: 10,
   },
