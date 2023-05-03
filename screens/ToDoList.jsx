@@ -128,20 +128,19 @@ const styles = StyleSheet.create({
     inputContainer: {
         width: '100%',
         flexDirection: 'row',
-        marginTop: 10,
-        marginBottom: 20,
+        marginVertical: 8,
         justifyContent: 'space-between',
-        padding: 10,
+        padding: 8,
     },
     input: {
         borderBottomColor: Constants.colorPrimary,
         borderBottomWidth: 2,
         color: Constants.colorWhite,
         flex: 1,
-        marginRight: 10,
+        marginRight: 8,
         fontSize: Constants.fontMd,
         padding: 4,
-        minWidth: 10,
+        minWidth: 8,
         fontFamily: Constants.fontPrimary,
     },
     buttonAddContainer: {
@@ -152,6 +151,7 @@ const styles = StyleSheet.create({
         padding: 8,
         justifyContent: 'center',
         alignItems: 'center',
+        width: 114
     },
     buttonDisabled: {
         backgroundColor: 'gray',
@@ -162,9 +162,12 @@ const styles = StyleSheet.create({
         fontFamily: Constants.fontPrimary,
         color: Constants.colorWhite,
         fontSize: Constants.fontMd,
+        width: '100%',
+        textAlign: 'center'
     },
     listItemsContainer: {
-        padding: 10,
+        paddingHorizontal: 8,
+        marginVertical: 8,
         width: '100%',
         justifyContent: 'center',
         alignItems: 'stretch',

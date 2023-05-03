@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     },
     listItem: {
         fontSize: 40,
-        marginBottom: 10,
+        marginBottom: 8,
         color: Constants.colorWhite,
         backgroundColor: Constants.colorPrimary,
         borderColor: Constants.colorPrimaryDark,
