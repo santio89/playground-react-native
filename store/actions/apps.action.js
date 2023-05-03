@@ -128,16 +128,19 @@ export const setAlbumItems = (userId, items, storageSetItem) => {
 }
 
 export const getAppsData = (userId, storageGetItem) => {
-
+    
     if (userId) {
         return async dispatch => {
             try {
                 const response = await fetch(`${URL_API}apps/${userId}.json?auth=${userId}`)
 
                 const data = await response.json()
-
+            
                 if (data && !data.toDoList) {
                     data.toDoList = { 'items': [] }
+                }
+                if (data && !data.memoGame) {
+                    data.memoGame = {'bestScore': "-"}
                 }
                 if (data && !data.albumList) {
                     data.albumList = { 'items': [] }
@@ -158,28 +161,32 @@ export const getAppsData = (userId, storageGetItem) => {
                 const valueMemo = await storageGetItem('pg-mg-score')
                 const valueAlbum = await storageGetItem('pg-tdl-album')
 
-                valueList && dispatch({
+                valueList ? dispatch({
                     type: SET_LIST_ITEMS,
                     items: JSON.parse(valueList)
+                }) : dispatch({
+                    type: SET_LIST_ITEMS,
+                    items: []
                 })
-                valueMemo && dispatch({
+
+                valueMemo ? dispatch({
                     type: SET_MEMO_SCORE,
                     bestScore: JSON.parse(valueMemo)
+                }) : dispatch({
+                    type: SET_MEMO_SCORE,
+                    bestScore: "-"
                 })
-                valueAlbum && dispatch({
+
+                valueAlbum ? dispatch({
                     type: SET_ALBUM_ITEMS,
                     items: JSON.parse(valueAlbum)
+                }) : dispatch({
+                    type: SET_ALBUM_ITEMS,
+                    items: []
                 })
             } catch (e) {
                 console.log("error retrieving data from storage: ", e)
             }
         }
-    }
-
-}
-
-export const logOutApps = ()=>{
-    return dispatch => {
-        dispatch({ type: LOG_OUT_APPS })
     }
 }
