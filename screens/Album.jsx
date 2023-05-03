@@ -20,6 +20,8 @@ const Album = ({ navigation }) => {
   const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
   const { selected: languageSelected } = useSelector(state => state.settings.language)
 
+  const [uriList, setUriList] = useState(uriListData)
+
   const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
 
   const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
@@ -36,8 +38,6 @@ const Album = ({ navigation }) => {
   const dispatchGetAppsData = () => {
     dispatch(getAppsData(userId, storageGetItem));
   }
-
-  const [uriList, setUriList] = useState(uriListData)
 
   const verifyPermissions = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync()
