@@ -21,7 +21,7 @@ ENV_URL_AUTH_LOGIN = firebase rest api url for login
 ENV_URL_AUTH_UPDATE = firebase rest api url for user update
 ENV_URL_AUTH_REFRESH = firebase rest api url for token refresh
 ENV_URL_AUTH_GET_USER_DATA = firebase rest api url for user lookup
-ENV_WEATHER_API_KEY = openweather api key
+ENV_WEATHER_API_KEY = openweather api key for forecast
 
 ```
 
