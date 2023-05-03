@@ -36,6 +36,8 @@ const Profile = ({ navigation }) => {
     const [avatarModal, setAvatarModal] = useState(false)
     const [updateAvatarLoading, setUpdateAvatarLoading] = useState(false)
 
+    const [avatarArray, setAvatarArray] = useState([])
+
     const dispatchRefreshToken = () => {
         dispatch(refreshToken(refresh_token))
     }
@@ -69,6 +71,17 @@ const Profile = ({ navigation }) => {
     }, [avatar])
 
     useEffect(() => {
+        /* avatar array */
+        const split = () => {
+            const arr = []
+            for (let i = 0; i < ([...Emojis].length / 2); i++) {
+                arr.push([[...Emojis][i], [...Emojis].at(-1 - i)])
+            }
+            setAvatarArray(arr)
+        }
+        split()
+
+        /* refresh token and data */
         userId && dispatchRefreshToken()
         userId && dispatchGetUserData()
     }, [])
@@ -183,19 +196,25 @@ const Profile = ({ navigation }) => {
                         <View style={styles.modalTitle}>
                             <Text style={[styles.modalTitle, { marginBottom: 0 }]}>{text.inputAvatar}</Text>
                             <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
-                                <ScrollView style={{ width: '100%', maxWidth: '100%' }} horizontal pagingEnabled snapToAlignment='start' snapToInterval={60} decelerationRate="fast" >
-                                    <FlatList style={styles.avatarContainer}
-                                        data={[...Emojis]}
-                                        initialNumToRender={80}
-                                        numColumns={40}
-                                        renderItem={({ item }) => (
-                                            <TouchableOpacity style={[styles.avatarItem, altColorTheme && styles.altAvatarItem, item === selectedAvatar && styles.avatarSelected]} onPress={() => setSelectedAvatar(item)}>
-                                                <Text style={styles.avatarItemText}>{item}</Text>
+                                <FlatList style={styles.avatarContainer}
+                                    data={avatarArray}
+                                    initialNumToRender={40}
+                                    horizontal pagingEnabled snapToAlignment='start' decelerationRate="fast"
+                                    renderItem={({ item }) => (
+                                        <View>
+                                            <TouchableOpacity style={[styles.avatarItem, altColorTheme && styles.altAvatarItem, item[0] === selectedAvatar && styles.avatarSelected]} onPress={() => setSelectedAvatar(item[0])}>
+                                                <Text style={styles.avatarItemText}>{item[0]}</Text>
                                             </TouchableOpacity>
-                                        )}
-                                        keyExtractor={item => item}
-                                    />
-                                </ScrollView>
+
+                                            <TouchableOpacity style={[styles.avatarItem, altColorTheme && styles.altAvatarItem, item[1] === selectedAvatar && styles.avatarSelected]} onPress={() => setSelectedAvatar(item[1])}>
+                                                <Text style={styles.avatarItemText}>{item[1]}</Text>
+                                            </TouchableOpacity>
+
+                                        </View>
+
+                                    )}
+                                    keyExtractor={item => item}
+                                />
                             </KeyboardAvoidingView>
                         </View>
 
@@ -411,7 +430,7 @@ const styles = StyleSheet.create({
         padding: 4,
         margin: 4,
         borderRadius: 4,
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: 'transparent',
         backgroundColor: Constants.colorPrimary,
     },
