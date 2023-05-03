@@ -103,7 +103,7 @@ const Album = ({ navigation }) => {
   useEffect(() => {
     setLoading(true)
     dispatchGetAppsData()
-    const timeout = setTimeout(() => setLoading(false), 200)
+    const timeout = setTimeout(() => setLoading(false), 240)
 
     return () => { timeout && clearTimeout(timeout) }
   }, [])
