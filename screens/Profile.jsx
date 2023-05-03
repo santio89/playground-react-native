@@ -205,11 +205,9 @@ const Profile = ({ navigation }) => {
                                             <TouchableOpacity style={[styles.avatarItem, altColorTheme && styles.altAvatarItem, item[0] === selectedAvatar && styles.avatarSelected]} onPress={() => setSelectedAvatar(item[0])}>
                                                 <Text style={styles.avatarItemText}>{item[0]}</Text>
                                             </TouchableOpacity>
-
                                             <TouchableOpacity style={[styles.avatarItem, altColorTheme && styles.altAvatarItem, item[1] === selectedAvatar && styles.avatarSelected]} onPress={() => setSelectedAvatar(item[1])}>
                                                 <Text style={styles.avatarItemText}>{item[1]}</Text>
                                             </TouchableOpacity>
-
                                         </View>
 
                                     )}
