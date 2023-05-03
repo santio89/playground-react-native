@@ -201,7 +201,7 @@ const Profile = ({ navigation }) => {
                                     initialNumToRender={40}
                                     horizontal pagingEnabled snapToAlignment='start' decelerationRate="fast"
                                     renderItem={({ item }) => (
-                                        <View>
+                                        <View style={{justifyContent: 'center', alignItems: 'center'}}>
                                             <TouchableOpacity style={[styles.avatarItem, altColorTheme && styles.altAvatarItem, item[0] === selectedAvatar && styles.avatarSelected]} onPress={() => setSelectedAvatar(item[0])}>
                                                 <Text style={styles.avatarItemText}>{item[0]}</Text>
                                             </TouchableOpacity>
