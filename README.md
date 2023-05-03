@@ -1,5 +1,5 @@
 <h1 align="center">PLAYGROUND | REACT NATIVE PROJECT 👋</h1>
-<p>REACT NATIVE / REDUX / FIREBASE</p>
+<p>REACT NATIVE / EXPO / REDUX / FIREBASE</p>
 
 ### 🏠 [Code](https://github.com/santio89/playground-react-native)
 ### ✨ [Demo](https://pg-rn.netlify.app/)
@@ -10,7 +10,6 @@
 git clone https://github.com/santio89/playground-react-native
 cd playground-react-native
 npm install
-npm install -g expo-cli 
 create .env file*
 npm start  ->  android/web
 
