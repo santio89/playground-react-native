@@ -20,6 +20,8 @@ const Album = ({ navigation }) => {
   const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
   const { selected: languageSelected } = useSelector(state => state.settings.language)
 
+  const [uriList, setUriList] = useState(uriListData)
+
   const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
 
   const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
@@ -74,7 +76,8 @@ const Album = ({ navigation }) => {
       return
     }
 
-    dispatch(setAlbumItems(userId, [{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image?.assets[0].base64}` : image?.assets[0].uri }, ...uriListData], storageSetItem))
+    setUriList(uriList => ([{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image?.assets[0].base64}` : image?.assets[0].uri }, ...uriList]))
+    dispatch(setAlbumItems(userId, [{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image?.assets[0].base64}` : image?.assets[0].uri }, ...uriList], storageSetItem))
   }
 
   const handleUploadImage = async () => {
@@ -93,16 +96,19 @@ const Album = ({ navigation }) => {
       return
     }
 
-    dispatch(setAlbumItems(userId, [{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image?.assets[0].base64}` : image?.assets[0].uri }, ...uriListData], storageSetItem))
+    setUriList(uriList => ([{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image?.assets[0].base64}` : image?.assets[0].uri }, ...uriList]))
+    dispatch(setAlbumItems(userId, [{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image?.assets[0].base64}` : image?.assets[0].uri }, ...uriList], storageSetItem))
   }
 
   const deleteItem = (id) => {
-    dispatch(setAlbumItems(userId, uriListData.filter(item => item.id != id), storageSetItem))
+    setUriList((oldItems) => oldItems.filter(item => item.id != id))
+    dispatch(setAlbumItems(userId, uriList.filter(item => item.id != id), storageSetItem))
   }
 
   useEffect(() => {
     setLoading(true)
     dispatchGetAppsData()
+    setUriList(uriListData)
     const timeout = setTimeout(() => setLoading(false), 240)
 
     return () => { timeout && clearTimeout(timeout) }
@@ -140,12 +146,12 @@ const Album = ({ navigation }) => {
       <View style={[styles.albumContainer, !darkMode && styles.backgroundWhite]}>
         <ScrollView contentContainerStyle={[styles.albumImgContainer, altColorTheme && styles.altAlbumImgContainer, windowWidth < 480 && { flexDirection: 'column', flexWrap: 'nowrap' }]}>
           {loading ? <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} /> : (
-            !uriListData || uriListData.length === 0 ?
+            !uriList || uriList.length === 0 ?
               <View style={{ width: '100%', maxWidth: windowWidth < 800 ? 320 : '100%', justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={{ color: Constants.colorWhite, fontFamily: Constants.fontPrimary, fontSize: Constants.fontLg, textAlign: 'center' }}>{text.noImg}
                 </Text>
               </View> :
-              uriListData?.map((item) => (
+              uriList.map((item) => (
                 <TouchableOpacity key={item.id} style={[styles.albumImgBtn, Platform.OS === 'web' && modalVisible.active && modalVisible.id === item.id && { filter: 'grayscale(1)' }]} onPress={() => { setModalImg({ active: true, id: item.id, uri: item.uri }) }}>
                   <Image style={styles.albumImg} source={{ uri: item.uri }} />
                   <TouchableOpacity style={{ position: 'absolute', bottom: -16, right: -16 }} onPress={() => setModalVisible({ active: true, id: item.id })}>
