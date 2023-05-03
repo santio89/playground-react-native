@@ -5,6 +5,7 @@ import { LANGS } from '../constants/Langs.js'
 import Constants from '../constants/Styles.js'
 import Header from '../components/Header'
 import { logOut, refreshToken, getUserData, updateAvatar, updateUsername } from '../store/actions/auth.action.js'
+import { logOutApps } from '../store/actions/apps.action.js'
 import Emojis from '../constants/Emojis.js'
 import { LinearGradient } from 'expo-linear-gradient'
 
@@ -132,7 +133,7 @@ const Profile = ({ navigation }) => {
                             <View style={styles.profileItem}>
                                 <View style={[styles.profileItemLabel]}>
                                     <Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>•&nbsp;</Text>
-                                    <TouchableOpacity style={styles.profileItemButtonLogOut} onPress={() => { dispatch(logOut()); setLogOutSuccess(true) }}>
+                                    <TouchableOpacity style={styles.profileItemButtonLogOut} onPress={() => { dispatch(logOut()); dispatch(logOutApps()); setLogOutSuccess(true) }}>
                                         <Text style={[styles.settingsItemText, { fontFamily: Constants.fontPrimaryBold }]}>{text.logOut}</Text>
                                     </TouchableOpacity>
                                 </View>

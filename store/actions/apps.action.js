@@ -4,6 +4,7 @@ export const SET_MEMO_SCORE = "SET_MEMO_SCORE"
 export const SET_LIST_ITEMS = "SET_LIST_ITEMS"
 export const SET_ALBUM_ITEMS = "SET_ALBUM_ITEMS"
 export const GET_APPS_DATA = "GET_APPS_DATA"
+export const LOG_OUT_APPS = "LOG_OUT_APPS"
 
 export const setMemoScore = (userId, bestScore, storageSetItem) => {
     if (userId) {
@@ -175,4 +176,10 @@ export const getAppsData = (userId, storageGetItem) => {
         }
     }
 
+}
+
+export const logOutApps = ()=>{
+    return dispatch => {
+        dispatch({ type: LOG_OUT_APPS })
+    }
 }

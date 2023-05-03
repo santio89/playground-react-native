@@ -1,4 +1,4 @@
-import { SET_MEMO_SCORE, SET_LIST_ITEMS, SET_ALBUM_ITEMS, GET_APPS_DATA } from "../actions/apps.action";
+import { SET_MEMO_SCORE, SET_LIST_ITEMS, SET_ALBUM_ITEMS, GET_APPS_DATA, LOG_OUT_APPS } from "../actions/apps.action";
 
 const initialState = {
     toDoList: {
@@ -47,6 +47,19 @@ const AppsReducer = (state = initialState, action) => {
                 },
                 albumList: {
                     items: action.appsData.albumList.items
+                }
+            }
+        case LOG_OUT_APPS:
+            return {
+                ...state,
+                toDoList: {
+                    items: []
+                },
+                memoGame: {
+                    bestScore: "-"
+                },
+                albumList: {
+                    items: []
                 }
             }
         default:
