@@ -72,7 +72,7 @@ const Album = ({ navigation }) => {
       base64: true,
     })
 
-    if (image === null || undefined) {
+    if (image.assets === null || undefined) {
       return
     }
 
@@ -92,7 +92,7 @@ const Album = ({ navigation }) => {
       base64: true,
     })
 
-    if (image === null || undefined) {
+    if (image.assets === null || undefined) {
       return
     }
 
