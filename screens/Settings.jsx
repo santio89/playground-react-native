@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Platform } from 'react-native'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectLang, selectDarkMode, selectColorTheme, getSettingsFirebase } from '../store/actions/settings.action.js';
@@ -120,17 +120,34 @@ const Settings = ({ navigation }) => {
                                 </Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, config.altColorTheme === true && styles.itemSelected, styles.backgroundSecondary]} onPress={() => { setConfig(config => ({ ...config, altColorTheme: true })) }}>
-                                    <LinearGradient
-                                        colors={[Constants.colorSecondaryDark, config.altColorTheme === true ? Constants.colorSecondary : Constants.colorSecondaryDark, Constants.colorSecondaryDark]}
-                                        start={{ x: 0, y: 0 }}
-                                        end={{ x: 1, y: 1 }}
-                                        style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1 }}
-                                    />
+                                <LinearGradient
+                                    colors={[Constants.colorSecondaryDark, config.altColorTheme === true ? Constants.colorSecondary : Constants.colorSecondaryDark, Constants.colorSecondaryDark]}
+                                    start={{ x: 0, y: 0 }}
+                                    end={{ x: 1, y: 1 }}
+                                    style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1 }}
+                                />
                                 <Text style={[styles.settingsItemText, config.altColorTheme === true && styles.itemSelected]}>{text.orange}
                                 </Text>
                             </TouchableOpacity>
                         </View>
                     </View>
+                    {Platform.OS === 'web' &&
+                        <View style={styles.settingsItem}>
+                            <Text style={[styles.settingsItemLabel]}><Text style={[styles.settingsItemIndicator, altColorTheme && styles.altSettingsItemIndicator]}>•&nbsp;</Text><Text>{text.tryMobile}: </Text></Text>
+                            <View style={[styles.settingsItemTextWrapper, { justifyContent: 'flex-start' }]}>
+                                <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, styles.itemSelected]} >
+                                    <LinearGradient
+                                        colors={[altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark]}
+                                        start={{ x: 0, y: 0 }}
+                                        end={{ x: 1, y: 1 }}
+                                        style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1 }}
+                                    />
+                                    <a href={"https://drive.google.com/uc?export=download&id=1Faz_FB5PCiyt15uwwoVS3FZkh-wE8Eqm&confirm=t&uuid=898da175-7d39-41f3-97d8-8e20022a32df&at=AKKF8vxEzlAC2pWTdW30n4u-U-O2:1683223554108"} style={{ ...styles.settingsItemText, ...styles.itemSelected }} target="_blank" rel="noopener noreferrer" download>{text.downloadApk}
+                                    </a>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    }
                 </View>
             </ScrollView>
         </>
@@ -198,7 +215,7 @@ const styles = StyleSheet.create({
         marginRight: '1%',
         padding: 8,
         color: Constants.colorDark,
-        maxWidth: '100%'
+        maxWidth: '48%'
     },
     settingsItemText: {
         fontFamily: Constants.fontPrimaryBold,

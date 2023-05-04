@@ -61,7 +61,9 @@ export const LANGS = [{
         forecast: "FORECAST",
         calculator: "CALCULATOR",
         album: "ALBUM",
-        noImg: "NO IMAGES TO DISPLAY"
+        noImg: "NO IMAGES TO DISPLAY",
+        tryMobile: "MOBILE APP",
+        downloadApk: "DOWNLOAD APK"
     }
 }, {
     id: 2, lang: "spanish", text: {
@@ -126,6 +128,8 @@ export const LANGS = [{
         forecast: "PRONÓSTICO",
         calculator: "CALCULADORA",
         album: "ÁLBUM",
-        noImg: "NO HAY IMÁGENES PARA MOSTRAR"
+        noImg: "NO HAY IMÁGENES PARA MOSTRAR",
+        tryMobile: "APP MÓVIL",
+        downloadApk: "DESCARGAR APK"
     }
 }]
