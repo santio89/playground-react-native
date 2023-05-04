@@ -135,9 +135,9 @@ const Settings = ({ navigation }) => {
                     {Platform.OS === 'web' &&
                         <View style={styles.settingsItem}>
                             <Text style={[styles.settingsItemLabel]}><Text style={[styles.settingsItemIndicator, altColorTheme && styles.altSettingsItemIndicator]}>•&nbsp;</Text><Text>{text.tryMobile}: </Text></Text>
-                            <View style={[styles.settingsItemTextWrapper, { justifyContent: 'flex-start' }]}>
-                                <a href={"https://drive.google.com/uc?export=download&id=1Faz_FB5PCiyt15uwwoVS3FZkh-wE8Eqm&confirm=t&uuid=898da175-7d39-41f3-97d8-8e20022a32df&at=AKKF8vxEzlAC2pWTdW30n4u-U-O2:1683223554108"} style={{ flex: 1, maxWidth: '48%', marginLeft: '1%', marginRight: '1%' }} target="_blank" rel="noopener noreferrer" download>
-                                    <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, styles.itemSelected, { marginLeft: 0, marginRight: 0, maxWidth: '100%' }]} >
+                            <View style={[styles.settingsItemTextWrapper]}>
+                                <a href={"https://drive.google.com/uc?export=download&id=1Faz_FB5PCiyt15uwwoVS3FZkh-wE8Eqm&confirm=t&uuid=898da175-7d39-41f3-97d8-8e20022a32df&at=AKKF8vxEzlAC2pWTdW30n4u-U-O2:1683223554108"} style={{ flex: 1, marginLeft: '1%', marginRight: '1%', width: '100%', maxWidth: 370 }} target="_blank" rel="noopener noreferrer" download>
+                                    <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, styles.itemSelected, { marginLeft: 0, marginRight: 0 }]} >
                                         <LinearGradient
                                             colors={[altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark]}
                                             start={{ x: 0, y: 0 }}
@@ -217,7 +217,8 @@ const styles = StyleSheet.create({
         marginRight: '1%',
         padding: 8,
         color: Constants.colorDark,
-        maxWidth: '48%'
+        width: '100%',
+        maxWidth: 370
     },
     settingsItemText: {
         fontFamily: Constants.fontPrimaryBold,
