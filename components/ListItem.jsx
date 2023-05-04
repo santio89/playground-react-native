@@ -23,7 +23,7 @@ export default function ListItem({ index, userId, items, setItems, item, modalVi
 
     return (
         <View style={styles.listItemContainer}>
-            <TouchableOpacity style={[styles.listItem, itemComplete && styles.listItemComplete, altColorTheme && styles.altListItem, itemComplete && altColorTheme && styles.altListItemComplete, modalVisible.active && modalVisible.id === item.id && styles.listItemModalSelected]} onPress={() => toggleItemComplete()}>
+            <TouchableOpacity style={[styles.listItem, itemComplete && styles.listItemComplete, altColorTheme && styles.altListItem, itemComplete && altColorTheme && styles.altListItemComplete, modalVisible.active && modalVisible.id === item.id && styles.listItemModalSelected]} onPress={toggleItemComplete}>
 
                 <Text style={[styles.listItemText, itemComplete && { color: 'darkgray' }]}> <Text style={[styles.listItemIndicator, altColorTheme && styles.altListItemIndicator, itemComplete && { color: 'darkgray' }, modalVisible.active && modalVisible.id === item.id && { color: 'dimgray' }]}>•&nbsp;</Text> <Text style={[itemComplete && [styles.lineThrough, { color: 'darkgray' }], modalVisible.active && modalVisible.id === item.id && { color: 'lightgray' }]}>{item.text}</Text></Text>
                 <TouchableOpacity onPress={() => setModalVisible({ active: true, id: item.id })}>
