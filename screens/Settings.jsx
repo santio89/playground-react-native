@@ -136,16 +136,18 @@ const Settings = ({ navigation }) => {
                         <View style={styles.settingsItem}>
                             <Text style={[styles.settingsItemLabel]}><Text style={[styles.settingsItemIndicator, altColorTheme && styles.altSettingsItemIndicator]}>•&nbsp;</Text><Text>{text.tryMobile}: </Text></Text>
                             <View style={[styles.settingsItemTextWrapper, { justifyContent: 'flex-start' }]}>
-                                <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, styles.itemSelected]} >
-                                    <LinearGradient
-                                        colors={[altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark]}
-                                        start={{ x: 0, y: 0 }}
-                                        end={{ x: 1, y: 1 }}
-                                        style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1 }}
-                                    />
-                                    <a href={"https://drive.google.com/uc?export=download&id=1Faz_FB5PCiyt15uwwoVS3FZkh-wE8Eqm&confirm=t&uuid=898da175-7d39-41f3-97d8-8e20022a32df&at=AKKF8vxEzlAC2pWTdW30n4u-U-O2:1683223554108"} style={{ ...styles.settingsItemText, ...styles.itemSelected }} target="_blank" rel="noopener noreferrer" download>{text.downloadApk}
-                                    </a>
-                                </TouchableOpacity>
+
+                                <a href={"https://drive.google.com/uc?export=download&id=1Faz_FB5PCiyt15uwwoVS3FZkh-wE8Eqm&confirm=t&uuid=898da175-7d39-41f3-97d8-8e20022a32df&at=AKKF8vxEzlAC2pWTdW30n4u-U-O2:1683223554108"} style={{ flex: 1, maxWidth: '48%', marginLeft: '1%', marginRight: '1%' }} target="_blank" rel="noopener noreferrer" download>
+                                    <TouchableOpacity style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, styles.itemSelected, { marginLeft: 0, marginRight: 0, maxWidth: '100%' }]} >
+                                        <LinearGradient
+                                            colors={[altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark]}
+                                            start={{ x: 0, y: 0 }}
+                                            end={{ x: 1, y: 1 }}
+                                            style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1 }}
+                                        />
+                                        <Text style={[styles.settingsItemText, styles.itemSelected]}>{text.downloadApk}</Text>
+                                    </TouchableOpacity>
+                                </a>
                             </View>
                         </View>
                     }
