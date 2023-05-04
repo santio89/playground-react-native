@@ -37,10 +37,12 @@ export default function ToDoList({ navigation }) {
         if (item.text === "") { return }
 
         setItems((oldItems) => [item, ...oldItems])
+        dispatch(setListItems(userId, [item, ...items], storageSetItem))
     }
 
     const deleteItem = (id) => {
         setItems((oldItems) => oldItems.filter(item => item.id != id))
+        dispatch(setListItems(userId, items.filter(item => item.id != id), storageSetItem))
     }
 
 
@@ -53,9 +55,9 @@ export default function ToDoList({ navigation }) {
         input.trim() != '' ? setBtnDisabled(false) : setBtnDisabled(true)
     }, [input])
 
-    useEffect(() => {
-        dispatch(setListItems(userId, items, storageSetItem))
-    }, [items])
+    /*  useEffect(() => {
+         dispatch(setListItems(userId, items, storageSetItem))
+     }, [items]) */
 
     useEffect(() => {
         setText(LANGS.find(lang => lang.lang === languageSelected).text)
@@ -73,9 +75,9 @@ export default function ToDoList({ navigation }) {
             <View style={[styles.todoListContainer, !darkMode && styles.backgroundWhite]}>
                 <View style={styles.listContainer}>
                     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.inputContainer}>
-                        <TextInput value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuid.v4(), text: input }); setInput('') }} placeholder={text.newTask} placeholderTextColor="#808080" style={[styles.input, !darkMode && styles.colorDark, altColorTheme && styles.altInput]} />
+                        <TextInput value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { setInput(''); addItem({ id: uuid.v4(), text: input }) }} placeholder={text.newTask} placeholderTextColor="#808080" style={[styles.input, !darkMode && styles.colorDark, altColorTheme && styles.altInput]} />
 
-                        <TouchableOpacity disabled={btnDisabled} onPress={() => { addItem({ id: uuid.v4(), text: input, completed: false }); setInput('') }} style={[styles.buttonAddContainer, altColorTheme && styles.buttonAddContainer, altColorTheme && styles.altButtonAddContainer, btnDisabled && styles.buttonDisabled]}>
+                        <TouchableOpacity disabled={btnDisabled} onPress={() => { setInput(''); addItem({ id: uuid.v4(), text: input, completed: false }) }} style={[styles.buttonAddContainer, altColorTheme && styles.buttonAddContainer, altColorTheme && styles.altButtonAddContainer, btnDisabled && styles.buttonDisabled]}>
                             <Text style={[styles.buttonAdd, , btnDisabled && { color: 'lightgray' }]}>
                                 {text.add}
                             </Text>
@@ -85,7 +87,7 @@ export default function ToDoList({ navigation }) {
                     <FlatList contentContainerStyle={styles.listItemsContainer}
                         data={items}
                         renderItem={({ item }) => (
-                            <ListItem items={items} setItems={setItems} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} />
+                            <ListItem userId={userId} items={items} setItems={setItems} dispatch={dispatch} setListItems={setListItems} storageSetItem={storageSetItem} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} />
                         )}
                         keyExtractor={item => item.id}
                     />
