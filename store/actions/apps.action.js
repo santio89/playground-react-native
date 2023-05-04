@@ -137,7 +137,6 @@ export const setAlbumItems = (userId, items, storageSetItem) => {
 }
 
 export const getAppsData = (userId, storageGetItem) => {
-
     if (userId) {
         return async dispatch => {
             try {
