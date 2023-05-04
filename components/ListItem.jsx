@@ -8,20 +8,20 @@ export default function ListItem({ userId, items, setItems, dispatch, setListIte
     const [itemComplete, setItemComplete] = useState(item.completed);
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
 
-
-    useEffect(() => {
-        item.completed = itemComplete
+    const toggleItemComplete = () => {
+        setItemComplete(itemComplete => !itemComplete)
+        item.completed = !itemComplete
         setItems(items)
         dispatch(setListItems(userId, items, storageSetItem))
-    }, [itemComplete])
+    }
 
     return (
         <View style={styles.listItemContainer}>
-            <TouchableOpacity style={[styles.listItem, itemComplete && styles.listItemComplete, altColorTheme && styles.altListItem, itemComplete && altColorTheme && styles.altListItemComplete, modalVisible.active && modalVisible.id === item.id && styles.listItemModalSelected]} onPress={() => setItemComplete(itemComplete => !itemComplete)}>
+            <TouchableOpacity style={[styles.listItem, itemComplete && styles.listItemComplete, altColorTheme && styles.altListItem, itemComplete && altColorTheme && styles.altListItemComplete, modalVisible.active && modalVisible.id === item.id && styles.listItemModalSelected]} onPress={() => toggleItemComplete()}>
 
-                <Text style={[styles.listItemText, itemComplete && {color: 'darkgray'}]}> <Text style={[styles.listItemIndicator, altColorTheme && styles.altListItemIndicator, itemComplete && {color: 'darkgray'}, modalVisible.active && modalVisible.id === item.id && {color: 'dimgray'}]}>•&nbsp;</Text> <Text style={[itemComplete && [styles.lineThrough, {color: 'darkgray'}], modalVisible.active && modalVisible.id === item.id  && {color: 'lightgray'}]}>{item.text}</Text></Text>
+                <Text style={[styles.listItemText, itemComplete && { color: 'darkgray' }]}> <Text style={[styles.listItemIndicator, altColorTheme && styles.altListItemIndicator, itemComplete && { color: 'darkgray' }, modalVisible.active && modalVisible.id === item.id && { color: 'dimgray' }]}>•&nbsp;</Text> <Text style={[itemComplete && [styles.lineThrough, { color: 'darkgray' }], modalVisible.active && modalVisible.id === item.id && { color: 'lightgray' }]}>{item.text}</Text></Text>
                 <TouchableOpacity onPress={() => setModalVisible({ active: true, id: item.id })}>
-                    <View style={{padding: 4, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="delete" size={Constants.fontLgg} color={modalVisible.active && modalVisible.id === item.id?'dimgray':Constants.colorRed} /></View>
+                    <View style={{ padding: 4, justifyContent: 'center', alignItems: 'center' }}><MaterialIcons name="delete" size={Constants.fontLgg} color={modalVisible.active && modalVisible.id === item.id ? 'dimgray' : Constants.colorRed} /></View>
                 </TouchableOpacity>
             </TouchableOpacity>
         </View>
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         color: Constants.colorRed,
         fontSize: Constants.fontMd,
         padding: 8,
-        transform: [{scale: 1.4}],
+        transform: [{ scale: 1.4 }],
         fontFamily: Constants.fontPrimaryBold
     },
     lineThrough: {
