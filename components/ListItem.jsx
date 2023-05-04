@@ -9,8 +9,8 @@ export default function ListItem({ userId, items, setItems, dispatch, setListIte
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
 
     const toggleItemComplete = () => {
-        setItemComplete(itemComplete => !itemComplete)
         item.completed = !itemComplete
+        setItemComplete(itemComplete => !itemComplete)
         setItems(items)
         dispatch(setListItems(userId, items, storageSetItem))
     }
