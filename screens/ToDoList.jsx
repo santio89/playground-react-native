@@ -169,6 +169,7 @@ const styles = StyleSheet.create({
     },
     listItemsContainer: {
         paddingHorizontal: 8,
+        paddingBottom: 8,
         marginVertical: 8,
         width: '100%',
         justifyContent: 'center',
