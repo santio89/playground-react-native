@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, Dimensions, TouchableOpacity, Image, Modal, Platform, ActivityIndicator } from 'react-native'
-import { useState, useEffect } from 'react'
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, Dimensions, TouchableOpacity, Image, Modal, Platform } from 'react-native'
+import { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setAlbumItems, getAppsData } from '../store/actions/apps.action'
 import Constants from '../constants/Styles'
@@ -28,8 +28,6 @@ const Album = ({ navigation }) => {
 
   const [modalVisible, setModalVisible] = useState({ active: false, id: null })
   const [modalImg, setModalImg] = useState({ active: false, id: null, uri: null })
-
-  const [loading, setLoading] = useState(false)
 
   const updateWindowWidth = () => {
     setWindowWidth(Dimensions.get('window').width)
@@ -105,13 +103,9 @@ const Album = ({ navigation }) => {
     dispatch(setAlbumItems(userId, uriList.filter(item => item.id != id), storageSetItem))
   }
 
+  
   useEffect(() => {
-    setLoading(true)
     dispatchGetAppsData()
-    setUriList(uriListData)
-    const timeout = setTimeout(() => setLoading(false), 240)
-
-    return () => { timeout && clearTimeout(timeout) }
   }, [])
 
   useEffect(() => {
@@ -145,7 +139,7 @@ const Album = ({ navigation }) => {
       </View>
       <View style={[styles.albumContainer, !darkMode && styles.backgroundWhite]}>
         <ScrollView contentContainerStyle={[styles.albumImgContainer, altColorTheme && styles.altAlbumImgContainer, windowWidth < 480 && { flexDirection: 'column', flexWrap: 'nowrap' }]}>
-          {loading ? <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} /> : (
+          {
             !uriList || uriList.length === 0 ?
               <View style={{ width: '100%', maxWidth: windowWidth < 800 ? 320 : '100%', justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={{ color: Constants.colorWhite, fontFamily: Constants.fontPrimary, fontSize: Constants.fontLg, textAlign: 'center' }}>{text.noImg}
@@ -159,7 +153,7 @@ const Album = ({ navigation }) => {
                   </TouchableOpacity>
                 </TouchableOpacity>
               ))
-          )}
+          }
         </ScrollView>
       </View>
 

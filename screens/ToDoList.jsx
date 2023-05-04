@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { FlatList, Text, TextInput, View, SafeAreaView, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Modal, Platform } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux';
 import uuid from 'react-native-uuid';
@@ -24,9 +24,8 @@ export default function ToDoList({ navigation }) {
     const [input, setInput] = useState("")
     const [modalVisible, setModalVisible] = useState({ active: false, id: null });
 
-
     const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
-
+    
     /* dispatch para traer data actualizada */
     const dispatchGetAppsData = () => {
         dispatch(getAppsData(userId, storageGetItem));
@@ -48,7 +47,6 @@ export default function ToDoList({ navigation }) {
 
     useEffect(() => {
         dispatchGetAppsData()
-        setItems(listItems)
     }, [])
 
     useEffect(() => {
