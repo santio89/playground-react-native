@@ -43,6 +43,7 @@
       height: calc(100% + env(safe-area-inset-top));
     }
 
+    /* scrollbar web */
     html {
       scrollbar-width: thin;
       scrollbar-color: dimgray;
@@ -60,6 +61,7 @@
     html ::-webkit-scrollbar-thumb {
       background: dimgray;
     }
+    /* end scrollbar web */
 
     body {
       display: flex;
@@ -72,11 +74,12 @@
       -ms-overflow-style: scrollbar;
     }
 
+    /* touch buttons hover on web */
     .r-touchAction-1otgn73:hover {
       filter: contrast(120%) brightness(102%);
     }
 
-    /* Enable for apps that support dark-theme */
+    /* Enable for apps that support dark/light-theme */
     @media (prefers-color-scheme: dark) {
       body {
         background-color: '#1a1a1a';
