@@ -143,7 +143,7 @@ export const getAppsData = (userId, storageGetItem) => {
                 if (data && !data.memoGame) {
                     data.memoGame = {'bestScore': "-"}
                 }
-                
+
                 if (data && !data.albumList) {
                     data.albumList = { 'items': [] }
                 }
@@ -157,7 +157,6 @@ export const getAppsData = (userId, storageGetItem) => {
             }
         }
     } else {
-
         return async dispatch => {
             try {
                 const valueList = await storageGetItem('pg-tdl-list')

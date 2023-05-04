@@ -55,10 +55,6 @@ export default function ToDoList({ navigation }) {
         input.trim() != '' ? setBtnDisabled(false) : setBtnDisabled(true)
     }, [input])
 
-    /*  useEffect(() => {
-         dispatch(setListItems(userId, items, storageSetItem))
-     }, [items]) */
-
     useEffect(() => {
         setText(LANGS.find(lang => lang.lang === languageSelected).text)
     }, [languageSelected])
