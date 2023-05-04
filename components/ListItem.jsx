@@ -11,6 +11,7 @@ export default function ListItem({ index, userId, items, setItems, dispatch, set
     const toggleItemComplete = () => {
         item.completed = !itemComplete
         items[index].completed = !itemComplete
+
         setItemComplete(itemComplete => !itemComplete)
         setItems(items)
         dispatch(setListItems(userId, items, storageSetItem))

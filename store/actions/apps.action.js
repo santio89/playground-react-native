@@ -47,6 +47,7 @@ export const setMemoScore = (userId, bestScore, storageSetItem) => {
 }
 
 export const setListItems = (userId, items, storageSetItem) => {
+    console.log(items)
     if (userId) {
         return async dispatch => {
             try {
@@ -135,7 +136,7 @@ export const getAppsData = (userId, storageGetItem) => {
                 const response = await fetch(`${URL_API}apps/${userId}.json?auth=${userId}`)
 
                 const data = await response.json()
-                
+
                 if (data && !data.toDoList) {
                     data.toDoList = { 'items': [] }
                 }
