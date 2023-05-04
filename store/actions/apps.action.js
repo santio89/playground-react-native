@@ -145,6 +145,7 @@ export const getAppsData = (userId, storageGetItem) => {
                 if (data && !data.albumList) {
                     data.albumList = { 'items': [] }
                 }
+                console.log(data)
                 data && dispatch({
                     type: GET_APPS_DATA,
                     appsData: data
