@@ -4,13 +4,14 @@ import { useSelector } from 'react-redux';
 import Constants from '../constants/Styles'
 import { MaterialIcons } from '@expo/vector-icons';
 
-export default function ListItem({ userId, items, setItems, dispatch, setListItems, storageSetItem, item, modalVisible, setModalVisible }) {
+export default function ListItem({ index, userId, items, setItems, dispatch, setListItems, storageSetItem, item, modalVisible, setModalVisible }) {
     const [itemComplete, setItemComplete] = useState(item.completed);
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
 
     const toggleItemComplete = () => {
         item.completed = !itemComplete
         setItemComplete(itemComplete => !itemComplete)
+        items[index].completed = !itemComplete
         setItems(items)
         dispatch(setListItems(userId, items, storageSetItem))
     }

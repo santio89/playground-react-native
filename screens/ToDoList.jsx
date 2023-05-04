@@ -82,8 +82,8 @@ export default function ToDoList({ navigation }) {
 
                     <FlatList contentContainerStyle={styles.listItemsContainer}
                         data={items}
-                        renderItem={({ item }) => (
-                            <ListItem userId={userId} items={items} setItems={setItems} dispatch={dispatch} setListItems={setListItems} storageSetItem={storageSetItem} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} />
+                        renderItem={({ item, index }) => (
+                            <ListItem index={index} userId={userId} items={items} setItems={setItems} dispatch={dispatch} setListItems={setListItems} storageSetItem={storageSetItem} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} />
                         )}
                         keyExtractor={item => item.id}
                     />
