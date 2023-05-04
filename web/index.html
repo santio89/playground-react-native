@@ -76,8 +76,6 @@
     }
 
     /* touch buttons hover on web */
-    a:hover,
-    a:focus-visible,
     .r-touchAction-1otgn73:hover,
     .r-touchAction-1otgn73:focus-visible,
     .r-1otgn73:hover,
@@ -87,6 +85,11 @@
 
     a {
       text-decoration: none;
+    }
+
+    a:hover,
+    a:focus-visible {
+      box-shadow: inset 0 0 100px 100px rgba(0, 0, 0, 0.1)
     }
 
     /* Enable for apps that support dark/light-theme */
