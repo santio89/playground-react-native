@@ -1,10 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Text, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Constants from '../constants/Styles'
 import { MaterialIcons } from '@expo/vector-icons';
+import { setListItems } from '../store/actions/apps.action';
+import { storageSetItem } from '../utils/AsyncStorage';
 
-export default function ListItem({ index, userId, items, setItems, dispatch, setListItems, storageSetItem, item, modalVisible, setModalVisible }) {
+export default function ListItem({ index, userId, items, setItems, item, modalVisible, setModalVisible }) {
+    const dispatch = useDispatch()
+
     const [itemComplete, setItemComplete] = useState(item.completed);
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
 
