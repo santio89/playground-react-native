@@ -119,14 +119,14 @@ const Profile = ({ navigation }) => {
                             </View>
                             <View style={styles.profileItem}>
                                 <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>•&nbsp;</Text><Text>{text.avatar}: </Text></Text>
-                                <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton]}>
+                                <TouchableOpacity style={[styles.profileItemButton, altColorTheme && styles.altProfileItemButton]} onPress={() => { setAvatarModal(true) }}>
                                     <LinearGradient
                                         colors={altColorTheme ? [Constants.colorSecondaryDark, Constants.colorSecondary, Constants.colorSecondaryDark] : [Constants.colorPrimaryDark, Constants.colorPrimary, Constants.colorPrimaryDark]}
                                         start={{ x: 0, y: 0 }}
                                         end={{ x: 1, y: 1 }}
                                         style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1, }}
                                     />
-                                    <Text style={styles.profileItemAvatar} onPress={() => { setAvatarModal(true) }}>{avatar}</Text>
+                                    <Text style={styles.profileItemAvatar}>{avatar}</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.profileItem}>
@@ -204,7 +204,7 @@ const Profile = ({ navigation }) => {
                                     snapToAlignment='start'
                                     decelerationRate="fast"
                                     renderItem={({ item }) => (
-                                        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                                             <TouchableOpacity style={[styles.avatarItem, altColorTheme && styles.altAvatarItem, item[0] === selectedAvatar && styles.avatarSelected]} onPress={() => setSelectedAvatar(item[0])}>
                                                 <Text style={styles.avatarItemText}>{item[0]}</Text>
                                             </TouchableOpacity>
