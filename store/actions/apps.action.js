@@ -139,13 +139,15 @@ export const getAppsData = (userId, storageGetItem) => {
                 if (data && !data.toDoList) {
                     data.toDoList = { 'items': [] }
                 }
+
                 if (data && !data.memoGame) {
                     data.memoGame = {'bestScore': "-"}
                 }
+                
                 if (data && !data.albumList) {
                     data.albumList = { 'items': [] }
                 }
-                console.log(data)
+                
                 data && dispatch({
                     type: GET_APPS_DATA,
                     appsData: data
