@@ -131,6 +131,7 @@ const Settings = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
                     </View>
+                    {/* web-only-apk-download */}
                     {Platform.OS === 'web' &&
                         <View style={styles.settingsItem}>
                             <Text style={[styles.settingsItemLabel]}><Text style={[styles.settingsItemIndicator, altColorTheme && styles.altSettingsItemIndicator]}>•&nbsp;</Text><Text>{text.tryMobile}: </Text></Text>
