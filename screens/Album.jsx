@@ -138,7 +138,7 @@ const Album = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View style={[styles.albumContainer, !darkMode && styles.backgroundWhite]}>
-        <ScrollView contentContainerStyle={[styles.albumImgContainer, altColorTheme && styles.altAlbumImgContainer, windowWidth < 480 && { flexDirection: 'column', flexWrap: 'nowrap' }]}>
+        <ScrollView contentContainerStyle={[styles.albumImgContainer/* , windowWidth < 480 && { flexDirection: 'column', flexWrap: 'nowrap' } */]}>
           {
             !uriList || uriList.length === 0 ?
               <View style={{ width: '100%', maxWidth: windowWidth < 800 ? 320 : '100%', justifyContent: 'center', alignItems: 'center' }}>
@@ -146,7 +146,7 @@ const Album = ({ navigation }) => {
                 </Text>
               </View> :
               uriList.map((item) => (
-                <TouchableOpacity key={item.id} style={[styles.albumImgBtn, Platform.OS === 'web' && modalVisible.active && modalVisible.id === item.id && { filter: 'grayscale(1)' }]} onPress={() => { setModalImg({ active: true, id: item.id, uri: item.uri }) }}>
+                item && <TouchableOpacity key={item.id} style={[styles.albumImgBtn, Platform.OS === 'web' && modalVisible.active && modalVisible.id === item.id && { filter: 'grayscale(1)' }]} onPress={() => { setModalImg({ active: true, id: item.id, uri: item.uri }) }}>
                   <Image style={styles.albumImg} source={item.uri && item.uri !== "" ? { uri: item.uri } : require('../assets/icon.png')} />
                   <TouchableOpacity style={{ position: 'absolute', bottom: -16, right: -16 }} onPress={() => setModalVisible({ active: true, id: item.id })}>
                     <View style={{ padding: 4, justifyContent: 'center', alignItems: 'center' }}><MaterialIcons name="delete" size={Constants.fontLgg} color={modalVisible.active && modalVisible.id === item.id ? 'dimgray' : Constants.colorRed} /></View>
@@ -202,7 +202,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     flex: 1,
-    backgroundColor: Constants.colorDark,
     maxWidth: 800,
     margin: 'auto'
   },
@@ -241,10 +240,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 8,
-    borderColor: Constants.colorPrimaryDark,
-    borderWidth: 2,
-    backgroundColor: Constants.colorPrimary,
     width: '100%',
     maxWidth: '100%',
     minWidth: 300,
@@ -258,7 +253,8 @@ const styles = StyleSheet.create({
     minWidth: 140,
     maxWidth: 140,
     aspectRatio: 1,
-    position: 'relative'
+    position: 'relative',
+    margin: 8
   },
   albumModalImg: {
     borderRadius: 8,
@@ -345,10 +341,6 @@ const styles = StyleSheet.create({
   altAlbumBtn: {
     backgroundColor: Constants.colorSecondary,
     borderColor: Constants.colorSecondaryDark,
-  },
-  altAlbumImgContainer: {
-    borderColor: Constants.colorSecondaryDark,
-    backgroundColor: Constants.colorSecondary,
   },
   altModalInner: {
     backgroundColor: Constants.colorSecondary,
