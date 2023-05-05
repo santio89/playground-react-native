@@ -103,7 +103,7 @@ const Album = ({ navigation }) => {
     dispatch(setAlbumItems(userId, uriList.filter(item => item.id != id), storageSetItem))
   }
 
-  
+
   useEffect(() => {
     dispatchGetAppsData()
   }, [])
@@ -147,7 +147,7 @@ const Album = ({ navigation }) => {
               </View> :
               uriList.map((item) => (
                 <TouchableOpacity key={item.id} style={[styles.albumImgBtn, Platform.OS === 'web' && modalVisible.active && modalVisible.id === item.id && { filter: 'grayscale(1)' }]} onPress={() => { setModalImg({ active: true, id: item.id, uri: item.uri }) }}>
-                  <Image style={styles.albumImg} source={{ uri: item.uri }} />
+                  <Image style={styles.albumImg} source={item.uri && item.uri !== "" ? { uri: item.uri } : require('../assets/icon.png')} />
                   <TouchableOpacity style={{ position: 'absolute', bottom: -16, right: -16 }} onPress={() => setModalVisible({ active: true, id: item.id })}>
                     <View style={{ padding: 4, justifyContent: 'center', alignItems: 'center' }}><MaterialIcons name="delete" size={Constants.fontLgg} color={modalVisible.active && modalVisible.id === item.id ? 'dimgray' : Constants.colorRed} /></View>
                   </TouchableOpacity>
