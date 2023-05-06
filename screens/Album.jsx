@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ScrollView, SafeAreaView, Dimensions, TouchableOpacity, Image, Modal, Platform } from 'react-native'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setAlbumItems, getAppsData } from '../store/actions/apps.action'
 import Constants from '../constants/Styles'
@@ -106,6 +106,7 @@ const Album = ({ navigation }) => {
 
   useEffect(() => {
     dispatchGetAppsData()
+    setUriList(uriListData)
   }, [])
 
   useEffect(() => {

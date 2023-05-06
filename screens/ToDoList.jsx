@@ -25,7 +25,7 @@ export default function ToDoList({ navigation }) {
     const [modalVisible, setModalVisible] = useState({ active: false, id: null });
 
     const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
-    
+
     /* dispatch para traer data actualizada */
     const dispatchGetAppsData = () => {
         dispatch(getAppsData(userId, storageGetItem));
@@ -47,6 +47,7 @@ export default function ToDoList({ navigation }) {
 
     useEffect(() => {
         dispatchGetAppsData()
+        setItems(listItems)
     }, [])
 
     useEffect(() => {

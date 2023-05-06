@@ -52,7 +52,15 @@ const MainNavigator = () => {
 
     /* la primer token va a ser desde el storage y posible expirada, entonces hago el dispatch con el siguiente token (del refresh) */
     useEffect(()=>{
-        id_token && (firstToken?setFirstToken(false):dispatch(getUserData(id_token)))
+        if (id_token){
+            if (firstToken){
+                setFirstToken(false)
+            } else{
+                userId && dispatch(getUserData(id_token))
+                userId && dispatch(getAppsData(userId, storageGetItem));
+                userId && dispatch(setSettingsFirebase(settings, userId))
+            }
+        }
     }, [id_token])
 
     return (
