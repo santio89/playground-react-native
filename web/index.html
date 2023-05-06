@@ -75,21 +75,21 @@
       -ms-overflow-style: scrollbar;
     }
 
+
     /* touch buttons hover on web */
-    .r-touchAction-1otgn73:hover,
-    .r-touchAction-1otgn73:focus-visible,
-    .r-1otgn73:hover,
-    .r-1otgn73:focus-visible {
-      filter: contrast(120%) brightness(101%);
-    }
+    @media (pointer: fine) {
+      .r-touchAction-1otgn73:hover,
+      .r-touchAction-1otgn73:focus-visible,
+      .r-1otgn73:hover,
+      .r-1otgn73:focus-visible {
+        filter: contrast(120%) brightness(101%);
+      }
 
-    a {
-      text-decoration: none;
-    }
+      a:hover *,
+      a:focus-visible * {
+        color: #fAf9f6 !important;
+      }
 
-    a:hover *,
-    a:focus-visible * {
-      color: #fAf9f6 !important;
     }
 
     /* Enable for apps that support dark/light-theme */
