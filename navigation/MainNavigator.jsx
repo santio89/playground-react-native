@@ -33,7 +33,7 @@ const MainNavigator = () => {
         },
     };
 
-    
+
     /* al iniciar app se refresca token y se trae data de user (por si se actualizo) */
     useEffect(() => {
         userId && dispatch(refreshToken(refresh_token))
@@ -48,19 +48,11 @@ const MainNavigator = () => {
     useEffect(() => {
         dispatch(getAppsData(userId, storageGetItem));
         userId && dispatch(getSettingsFirebase(userId));
-    }, [userId])
+    }, [userId, id_token])
 
     /* la primer token va a ser desde el storage y posible expirada, entonces hago el dispatch con el siguiente token (del refresh) */
-    useEffect(()=>{
-        if (id_token){
-            if (firstToken){
-                setFirstToken(false)
-            } else{
-                userId && dispatch(getUserData(id_token))
-                userId && dispatch(getAppsData(userId, storageGetItem));
-                userId && dispatch(setSettingsFirebase(settings, userId))
-            }
-        }
+    useEffect(() => {
+        id_token && (firstToken ? setFirstToken(false) : dispatch(getUserData(id_token)))
     }, [id_token])
 
     return (
