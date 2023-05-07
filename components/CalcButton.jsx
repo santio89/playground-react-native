@@ -23,7 +23,7 @@ const CalcButton = ({ title, onPress, bgColor, ...props }) => {
 
 
     return (
-        <TouchableOpacity style={[styles.calcButton, { backgroundColor: bgColor }, { opacity: props.opacity ? props.opacity : 1 }, windowHeight < 620 && { width: 44, margin: 2}]} onPress={onPress} disabled={props.disabled}>
+        <TouchableOpacity style={[styles.calcButton, { backgroundColor: bgColor }, { opacity: props.opacity ? props.opacity : 1 }, windowHeight < 620 && {maxHeight: 48}]} onPress={onPress} disabled={props.disabled}>
             <Text style={[styles.calcButtonText]}>{title}</Text>
         </TouchableOpacity>
     )
@@ -33,16 +33,12 @@ export default CalcButton
 
 const styles = StyleSheet.create({
     calcButton: {
-        width: 48,
-        aspectRatio: 1,
+        width: '25%',
+        aspectRatio: 3/2,
         backgroundColor: Constants.colorDark,
         justifyContent: 'center',
         alignItems: 'center',
-        margin: 4,
         padding: 4,
-        borderRadius: 8,
-        borderWidth: 1,
-        borderColor: Constants.colorWhite,
         shadowColor: 'gray',
         shadowOffset: {
             width: 0,

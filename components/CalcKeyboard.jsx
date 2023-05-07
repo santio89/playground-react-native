@@ -207,10 +207,9 @@ const styles = StyleSheet.create({
         maxWidth: 380,
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 4,
+        borderWidth: 2,
         borderRadius: 16,
-        borderColor: Constants.colorPrimary,
-        paddingBottom: 12,
+        borderColor: Constants.colorPrimaryDark,
         backgroundColor: Constants.colorPrimaryDark,
         overflow: "hidden"
     },
@@ -224,10 +223,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'gray',
         width: '100%',
         padding: 8,
-        borderBottomWidth: 4,
-        borderColor: Constants.colorPrimary,
-        marginBottom: 12,
-        minWidth: 348,
+        minWidth: 320,
         minHeight: 160,
         justifyContent: 'flex-end',
         shadowColor: Constants.colorPrimary,
@@ -265,7 +261,7 @@ const styles = StyleSheet.create({
     /* for alt color theme */
     altCalcKeyboard: {
         backgroundColor: Constants.colorSecondaryDark,
-        borderColor: Constants.colorSecondary,
+        borderColor: Constants.colorSecondaryDark,
     },
     altCalcScreen: {
         borderColor: Constants.colorSecondary,
