@@ -114,7 +114,7 @@ const CalcKeyboard = () => {
 
     const firstNumberDisplay = () => {
         if (result !== null) {
-            return <Text style={[styles.screenFirstNumber, { fontFamily: Constants.fontPrimaryBold, color: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark }, result.toLocaleString('en-US', { maximumFractionDigits: 4 }).length > 8 && { fontSize: 40 }, result.toLocaleString('en-US', { maximumFractionDigits: 4 }).length > 12 && { fontSize: 34 }, result.toLocaleString('en-US', { maximumFractionDigits: 4 }).length > 14 && { fontSize: 34 }, result > 999999999 && { fontSize: 40 }]}>{result === Infinity || isNaN(result) ? "ERROR" : (result > 999999999 ? result?.toExponential(2).toLocaleString('en-US', { maximumFractionDigits: 4 }) : result?.toLocaleString('en-US', { maximumFractionDigits: 4 }))}</Text>
+            return <Text style={[styles.screenFirstNumber, { fontFamily: Constants.fontPrimaryBold, color: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark }, result.toLocaleString('en-US', { maximumFractionDigits: 4 }).length > 8 && { fontSize: 40 }, result.toLocaleString('en-US', { maximumFractionDigits: 4 }).length > 12 && { fontSize: 34 }, result.toLocaleString('en-US', { maximumFractionDigits: 4 }).length > 14 && { fontSize: 34 }, result > 999999999 && { fontSize: 40 }, (result === Infinity || isNaN(result)) && {fontSize: 60}]}>{result === Infinity || isNaN(result) ? "ERROR" : (result > 999999999 ? result?.toExponential(2).toLocaleString('en-US', { maximumFractionDigits: 4 }) : result?.toLocaleString('en-US', { maximumFractionDigits: 4 }))}</Text>
         }
         if (Number(firstNumber) > 999999999) {
             return (
