@@ -36,8 +36,8 @@ const Album = ({ navigation }) => {
   }
 
   /* dispatch para traer data actualizada */
-  const dispatchGetAppsData = () => {
-    dispatch(getAppsData(userId, storageGetItem));
+  const dispatchGetAppsData = (setDataUpdated) => {
+    dispatch(getAppsData(userId, storageGetItem, setDataUpdated));
   }
 
   const verifyPermissions = async () => {

@@ -29,8 +29,8 @@ export default function ToDoList({ navigation }) {
     const [dataUpdated, setDataUpdated] = useState(false)
 
     /* dispatch para traer data actualizada */
-    const dispatchGetAppsData = () => {
-        dispatch(getAppsData(userId, storageGetItem));
+    const dispatchGetAppsData = (setDataUpdated) => {
+        dispatch(getAppsData(userId, storageGetItem, setDataUpdated));
     }
 
     const addItem = (item) => {
