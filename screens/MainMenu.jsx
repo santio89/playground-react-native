@@ -45,7 +45,7 @@ const MainMenu = ({ navigation }) => {
             <Header navigation={navigation} />
             <View style={[styles.menuWrapper, !darkMode && styles.backgroundWhite]}>
                 <ScrollView contentContainerStyle={[styles.menuContainer, !darkMode && styles.backgroundWhite, { paddingVertical: 16 }]}>
-                    <View style={[{ width: '100%', maxWidth: 800, margin: 'auto', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }, { flexDirection: windowWidth > 800 ? 'row' : 'column' }]}>
+                    <View style={[{ width: '100%', maxWidth: 800, margin: 'auto', justifyContent: 'center', alignItems: 'center' }, { flexDirection: windowWidth > 800 ? 'row' : 'column', flexWrap: windowWidth > 800 ? 'wrap' : 'nowrap' }]}>
                         <View style={[styles.menuOptionWrapper, { margin: windowWidth < 800 ? 10 : 20 }]}>
                             <TouchableOpacity style={[styles.menuOption, altColorTheme && styles.altMenuOption, { width: (windowWidth > 320 ? 320 : 280) }]} onPress={() => { navigation.navigate("ToDoList") }}>
                                 <LinearGradient
@@ -136,8 +136,8 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         maxHeight: 80,
         minHeight: 80,
-        height: 80, 
-        justifyContent: 'center', 
+        height: 80,
+        justifyContent: 'center',
         alignItems: 'center'
     },
     menuOption: {
