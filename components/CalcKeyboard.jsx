@@ -13,10 +13,14 @@ const CalcKeyboard = () => {
     const [operation, setOperation] = useState("")
     const [result, setResult] = useState(null)
 
+    const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width)
     const [windowHeight, setWindowHeight] = useState(Dimensions.get('window').height)
 
     const updateWindowHeight = () => {
         setWindowHeight(Dimensions.get('window').height)
+    }
+    const updateWindowWidth = () => {
+        setWindowWidth(Dimensions.get('window').width)
     }
 
     const handleNumberPress = (btnVal) => {
@@ -147,17 +151,19 @@ const CalcKeyboard = () => {
 
     useEffect(() => {
         const dimensionsHandler = Dimensions.addEventListener("change", updateWindowHeight)
+        const dimensionsHandlerW = Dimensions.addEventListener("change", updateWindowWidth)
 
         return () => {
             dimensionsHandler.remove()
+            dimensionsHandlerW.remove()
         }
     })
 
 
 
     return (
-        <View style={[styles.calcKeyboard, altColorTheme && styles.altCalcKeyboard, , windowHeight < 620 && { paddingBottom: 6 }]}>
-            <View style={[styles.calcScreen, altColorTheme && styles.altCalcScreen]}>
+        <View style={[styles.calcKeyboard, altColorTheme && styles.altCalcKeyboard, windowWidth < 340 && { minWidth: windowWidth, width: windowWidth, maxWidth: windowWidth }]}>
+            <View style={[styles.calcScreen, altColorTheme && styles.altCalcScreen, windowWidth < 340 && { minWidth: windowWidth, width: windowWidth, maxWidth: windowWidth }]}>
                 <Text style={styles.screenSecondNumber}>
                     {Number(secondNumber) > 999999999 ? Number(secondNumber).toExponential(2) : secondNumber.toLocaleString('en-US', { maximumFractionDigits: 4 })}
                     <Text style={{ color: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, marginHorizontal: 4, fontFamily: Constants.fontPrimaryBold, fontSize: Constants.fontXl }}>{operation}</Text>
@@ -203,12 +209,12 @@ export default CalcKeyboard
 const styles = StyleSheet.create({
     calcKeyboard: {
         width: '100%',
-        minWidth: 350,
+        minWidth: 340,
         maxWidth: 380,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 2,
-        borderRadius: 16,
+        borderRadius: 8,
         borderColor: Constants.colorPrimaryDark,
         backgroundColor: Constants.colorPrimaryDark,
         overflow: "hidden"
@@ -223,7 +229,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'gray',
         width: '100%',
         padding: 8,
-        minWidth: 320,
+        minWidth: 340,
         minHeight: 160,
         justifyContent: 'flex-end',
         shadowColor: Constants.colorPrimary,

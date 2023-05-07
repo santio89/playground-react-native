@@ -163,7 +163,7 @@ const MemoGame = ({ navigation }) => {
                                     </View>
                                 </> :
                                 <>
-                                    <View style={[styles.bestScore, { flexDirection: 'row' }]}><Text style={[styles.bestScoreText, { alignSelf: 'center' }, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={[styles.bestScoreText, { fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorPrimary, padding: 4 }, altColorTheme && { color: Constants.colorSecondary }]}>{!dataUpdated ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : bestScore}</Text></View>
+                                    <View style={[styles.bestScore, { flexDirection: 'row' }]}><Text style={[styles.bestScoreText, { alignSelf: 'center' }, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={[styles.bestScoreText, { fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorPrimary, padding: 2 }, altColorTheme && { color: Constants.colorSecondary }]}>{!dataUpdated ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : bestScore}</Text></View>
                                     <View style={styles.turnsButtonsContainer}>
                                         <View style={[styles.turns, altColorTheme && styles.altTurns]}>
                                             <Text style={styles.turnsText}>{text.turns}: {turns}</Text>
@@ -232,18 +232,16 @@ const styles = StyleSheet.create({
     bestScore: {
         justifyContent: 'center',
         alignItems: 'center',
+        marginVertical: 8,
     },
     bestScoreText: {
         fontSize: Constants.fontMd,
         color: Constants.colorWhite,
         fontFamily: Constants.fontPrimary,
         alignSelf: 'flex-end',
-        minHeight: 40,
-        height: 40,
-        maxHeight: 40,
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     bestScoreNumber: {
         fontFamily: Constants.fontPrimaryBold,
