@@ -29,6 +29,8 @@ const Album = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState({ active: false, id: null })
   const [modalImg, setModalImg] = useState({ active: false, id: null, uri: null })
 
+  const [dataUpdated, setDataUpdated] = useState(false)
+
   const updateWindowWidth = () => {
     setWindowWidth(Dimensions.get('window').width)
   }
@@ -105,9 +107,12 @@ const Album = ({ navigation }) => {
 
 
   useEffect(() => {
-    dispatchGetAppsData()
-    setUriList(uriListData)
+    dispatchGetAppsData(setDataUpdated)
   }, [])
+
+  useEffect(() => {
+    dataUpdated && setUriList(uriListData)
+  }, [dataUpdated])
 
   useEffect(() => {
     const dimensionsHandler = Dimensions.addEventListener("change", updateWindowWidth)

@@ -136,7 +136,7 @@ export const setAlbumItems = (userId, items, storageSetItem) => {
     }
 }
 
-export const getAppsData = (userId, storageGetItem) => {
+export const getAppsData = (userId, storageGetItem, setDataUpdated) => {
     if (userId) {
         return async dispatch => {
             try {
@@ -160,6 +160,8 @@ export const getAppsData = (userId, storageGetItem) => {
                     type: GET_APPS_DATA,
                     appsData: data
                 })
+                
+                setDataUpdated && setDataUpdated(true)
             } catch (e) {
                 console.log("appsDataException-", e)
             }
@@ -194,6 +196,8 @@ export const getAppsData = (userId, storageGetItem) => {
                     type: SET_ALBUM_ITEMS,
                     items: []
                 })
+
+                setDataUpdated && setDataUpdated(true)
             } catch (e) {
                 console.log("error retrieving data from storage: ", e)
             }

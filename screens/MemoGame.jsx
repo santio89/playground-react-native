@@ -32,6 +32,8 @@ const MemoGame = ({ navigation }) => {
 
     const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
+    const [dataUpdated, setDataUpdated] = useState(false)
+
     /* dispatch para traer data actualizada */
     const dispatchGetAppsData = () => {
         dispatch(getAppsData(userId, storageGetItem));
@@ -88,10 +90,13 @@ const MemoGame = ({ navigation }) => {
     }
 
     useEffect(() => {
-        dispatchGetAppsData()
-        setBestScore(memoScore)
+        dispatchGetAppsData(setDataUpdated)
         selectEmojis()
     }, [])
+
+    useEffect(() => {
+        dataUpdated && setBestScore(memoScore)
+    }, [dataUpdated])
 
     useEffect(() => {
         if (choiceOne && choiceTwo) {

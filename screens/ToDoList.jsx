@@ -26,6 +26,8 @@ export default function ToDoList({ navigation }) {
 
     const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
+    const [dataUpdated, setDataUpdated] = useState(false)
+
     /* dispatch para traer data actualizada */
     const dispatchGetAppsData = () => {
         dispatch(getAppsData(userId, storageGetItem));
@@ -46,9 +48,12 @@ export default function ToDoList({ navigation }) {
 
 
     useEffect(() => {
-        dispatchGetAppsData()
-        setItems(listItems)
+        dispatchGetAppsData(setDataUpdated)
     }, [])
+
+    useEffect(() => {
+        dataUpdated && setItems(listItems)
+    }, [dataUpdated])
 
     useEffect(() => {
         input.trim() != '' ? setBtnDisabled(false) : setBtnDisabled(true)
