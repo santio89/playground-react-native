@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import uuid from 'react-native-uuid';
@@ -35,8 +35,8 @@ const MemoGame = ({ navigation }) => {
     const [dataUpdated, setDataUpdated] = useState(false)
 
     /* dispatch para traer data actualizada */
-    const dispatchGetAppsData = () => {
-        dispatch(getAppsData(userId, storageGetItem));
+    const dispatchGetAppsData = (setDataUpdated) => {
+        dispatch(getAppsData(userId, storageGetItem, setDataUpdated));
     }
 
     /* elijo emojis al azar */
@@ -146,7 +146,7 @@ const MemoGame = ({ navigation }) => {
                             <TouchableOpacity onPress={shuffleCards}>
                                 <Text style={[styles.newGame, altColorTheme && styles.altNewGame]}>{text.newGame}</Text>
                             </TouchableOpacity>
-                            <View style={styles.bestScore}><Text style={[styles.bestScoreText, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={[styles.bestScoreNumber, altColorTheme && styles.altBestScoreNumber]}>{bestScore}</Text></View>
+                            <View style={styles.bestScore}><Text style={[styles.bestScoreText, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={[styles.bestScoreNumber, altColorTheme && styles.altBestScoreNumber]}>{!dataUpdated ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : bestScore}</Text></View>
                         </> :
                         <>
                             {winner === true ?
@@ -163,7 +163,7 @@ const MemoGame = ({ navigation }) => {
                                     </View>
                                 </> :
                                 <>
-                                    <View style={[styles.bestScore, { flexDirection: 'row' }]}><Text style={[styles.bestScoreText, { alignSelf: 'center' }, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={[styles.bestScoreText, { fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorPrimary, padding: 4 }, altColorTheme && { color: Constants.colorSecondary }]}>{bestScore}</Text></View>
+                                    <View style={[styles.bestScore, { flexDirection: 'row' }]}><Text style={[styles.bestScoreText, { alignSelf: 'center' }, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={[styles.bestScoreText, { fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorPrimary, padding: 4 }, altColorTheme && { color: Constants.colorSecondary }]}>{!dataUpdated ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : bestScore}</Text></View>
                                     <View style={styles.turnsButtonsContainer}>
                                         <View style={[styles.turns, altColorTheme && styles.altTurns]}>
                                             <Text style={styles.turnsText}>{text.turns}: {turns}</Text>

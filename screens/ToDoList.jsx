@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { FlatList, Text, TextInput, View, SafeAreaView, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Modal, Platform } from 'react-native'
+import { FlatList, Text, TextInput, View, SafeAreaView, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Modal, Platform, ActivityIndicator } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux';
 import uuid from 'react-native-uuid';
 import ListItem from '../components/ListItem';
@@ -75,7 +75,7 @@ export default function ToDoList({ navigation }) {
             <View style={[styles.todoListContainer, !darkMode && styles.backgroundWhite]}>
                 <View style={styles.listContainer}>
                     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.inputContainer}>
-                        <TextInput value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuid.v4(), text: input }); setInput('') }} placeholder={text.newTask} placeholderTextColor="#808080" style={[styles.input, !darkMode && styles.colorDark, altColorTheme && styles.altInput]} />
+                        <TextInput disabled={!dataUpdated} value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuid.v4(), text: input }); setInput('') }} placeholder={text.newTask} placeholderTextColor="#808080" style={[styles.input, !darkMode && styles.colorDark, altColorTheme && styles.altInput]} />
 
                         <TouchableOpacity disabled={btnDisabled} onPress={() => { addItem({ id: uuid.v4(), text: input, completed: false }); setInput('') }} style={[styles.buttonAddContainer, altColorTheme && styles.buttonAddContainer, altColorTheme && styles.altButtonAddContainer, btnDisabled && styles.buttonDisabled]}>
                             <Text style={[styles.buttonAdd, , btnDisabled && { color: 'lightgray' }]}>
@@ -83,14 +83,13 @@ export default function ToDoList({ navigation }) {
                             </Text>
                         </TouchableOpacity>
                     </KeyboardAvoidingView>
-
-                    <FlatList contentContainerStyle={styles.listItemsContainer}
+                    {!dataUpdated ? <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <FlatList contentContainerStyle={styles.listItemsContainer}
                         data={items}
                         renderItem={({ item, index }) => (
                             <ListItem index={index} userId={userId} items={items} setItems={setItems} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} />
                         )}
                         keyExtractor={item => item.id}
-                    />
+                    />}
                     <Modal visible={modalVisible.active} transparent={true} animationType='fade'>
                         <SafeAreaView style={styles.modal}>
                             <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
