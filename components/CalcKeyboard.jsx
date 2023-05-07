@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
         width: '100%',
         padding: 8,
         minWidth: 340,
-        minHeight: 160,
+        minHeight: 146,
         justifyContent: 'flex-end',
         shadowColor: Constants.colorPrimary,
         shadowOffset: {
