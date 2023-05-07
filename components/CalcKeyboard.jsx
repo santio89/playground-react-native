@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
         width: '100%',
         padding: 8,
         minWidth: 340,
-        minHeight: 146,
+        minHeight: 136,
         justifyContent: 'flex-end',
         shadowColor: Constants.colorPrimary,
         shadowOffset: {
@@ -262,7 +262,6 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        marginBottom: 10
     },
     /* for alt color theme */
     altCalcKeyboard: {
