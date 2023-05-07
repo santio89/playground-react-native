@@ -238,11 +238,23 @@ const styles = StyleSheet.create({
         color: Constants.colorWhite,
         fontFamily: Constants.fontPrimary,
         alignSelf: 'flex-end',
+        minHeight: 40,
+        height: 40,
+        maxHeight: 40,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     bestScoreNumber: {
         fontFamily: Constants.fontPrimaryBold,
         color: Constants.colorPrimary,
-        fontSize: Constants.fontXl
+        fontSize: Constants.fontXl,
+        minHeight: 48,
+        height: 48,
+        maxHeight: 48,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     winner: {
         padding: 10,
