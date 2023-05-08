@@ -260,15 +260,4 @@ const styles = StyleSheet.create({
         backgroundColor: Constants.colorSecondaryDark,
         borderColor: Constants.colorSecondaryDark,
     },
-    altCalcScreen: {
-        borderColor: Constants.colorSecondary,
-        shadowColor: Constants.colorSecondary,
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.8,
-        shadowRadius: 8.00,
-        elevation: 8,
-    }
 })
