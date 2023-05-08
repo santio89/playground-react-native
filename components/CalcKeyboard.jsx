@@ -232,14 +232,6 @@ const styles = StyleSheet.create({
         minWidth: 340,
         minHeight: 136,
         justifyContent: 'flex-end',
-        shadowColor: Constants.colorPrimary,
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.8,
-        shadowRadius: 8.00,
-        elevation: 8,
     },
     screenFirstNumber: {
         fontFamily: Constants.fontPrimary,
