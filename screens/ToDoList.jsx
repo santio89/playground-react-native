@@ -75,7 +75,7 @@ export default function ToDoList({ navigation }) {
             <View style={[styles.todoListContainer, !darkMode && styles.backgroundWhite]}>
                 <View style={styles.listContainer}>
                     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.inputContainer}>
-                        <TextInput disabled={!dataUpdated} value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuid.v4(), text: input }); setInput('') }} placeholder={text.newTask} placeholderTextColor="#808080" style={[styles.input, !darkMode && styles.colorDark, altColorTheme && styles.altInput]} />
+                        <TextInput disabled={!dataUpdated} value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuid.v4(), text: input }); setInput('') }} placeholder={text.newTask} placeholderTextColor="#808080" style={[styles.input, !darkMode && styles.colorDark, altColorTheme && styles.altInput, !dataUpdated && {borderBottomColor: 'dimgray'}]} />
 
                         <TouchableOpacity disabled={btnDisabled} onPress={() => { addItem({ id: uuid.v4(), text: input, completed: false }); setInput('') }} style={[styles.buttonAddContainer, altColorTheme && styles.buttonAddContainer, altColorTheme && styles.altButtonAddContainer, btnDisabled && styles.buttonDisabled]}>
                             <Text style={[styles.buttonAdd, , btnDisabled && { color: 'lightgray' }]}>

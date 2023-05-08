@@ -143,8 +143,8 @@ const MemoGame = ({ navigation }) => {
                 {
                     !startState ?
                         <>
-                            <TouchableOpacity onPress={shuffleCards}>
-                                <Text style={[styles.newGame, altColorTheme && styles.altNewGame]}>{text.newGame}</Text>
+                            <TouchableOpacity disabled={!dataUpdated} onPress={shuffleCards}>
+                                <Text style={[styles.newGame, altColorTheme && styles.altNewGame, , !dataUpdated && {backgroundColor: 'gray', borderColor: 'dimgray'}]}>{text.newGame}</Text>
                             </TouchableOpacity>
                             <View style={styles.bestScore}><Text style={[styles.bestScoreText, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={[styles.bestScoreNumber, altColorTheme && styles.altBestScoreNumber]}>{!dataUpdated ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : bestScore}</Text></View>
                         </> :

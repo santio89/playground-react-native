@@ -136,10 +136,10 @@ const Album = ({ navigation }) => {
   return (
     <View style={[styles.albumWrapper, !darkMode && styles.backgroundWhite]}>
       <View style={[styles.btnContainer]}>
-        <TouchableOpacity style={[styles.albumBtn, altColorTheme && styles.altAlbumBtn]} onPress={handleTakeImage}>
+        <TouchableOpacity disabled={!dataUpdated} style={[styles.albumBtn, altColorTheme && styles.altAlbumBtn, !dataUpdated && {backgroundColor: 'gray', borderColor: 'dimgray'}]} onPress={handleTakeImage}>
           <Text style={[styles.albumText]}><Entypo name="camera" size={Constants.fontXl} color={Constants.colorWhite} /></Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.albumBtn, altColorTheme && styles.altAlbumBtn]} onPress={handleUploadImage}>
+        <TouchableOpacity disabled={!dataUpdated} style={[styles.albumBtn, altColorTheme && styles.altAlbumBtn, !dataUpdated && {backgroundColor: 'gray', borderColor: 'dimgray'}]} onPress={handleUploadImage}>
           <Text style={[styles.albumText]}><Entypo name="upload" size={Constants.fontXl} color={Constants.colorWhite} /></Text>
         </TouchableOpacity>
       </View>
