@@ -42,10 +42,6 @@ const Profile = ({ navigation }) => {
         dispatch(refreshToken(refresh_token))
     }
 
-    const dispatchGetUserData = () => {
-        dispatch(getUserData(id_token))
-    }
-
     const validateName = (name) => {
         var re = /[^ ]{4,16}/;
         return re.test(name);
@@ -81,9 +77,8 @@ const Profile = ({ navigation }) => {
         }
         split()
 
-        /* refresh token and data */
+        /* refresh token */
         userId && dispatchRefreshToken()
-        userId && dispatchGetUserData()
     }, [])
 
     return (
