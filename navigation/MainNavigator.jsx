@@ -19,7 +19,6 @@ const MainNavigator = () => {
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const id_token = useSelector(state => state.auth.token)
     const refresh_token = useSelector(state => state.auth.refreshToken)
-    const [firstToken, setFirstToken] = useState(true)
 
     const MyTheme = {
         dark: darkMode ? true : false,
@@ -34,7 +33,7 @@ const MainNavigator = () => {
     };
 
 
-    /* al iniciar app se refresca token y se trae data de user (por si se actualizo) */
+    /* al iniciar app se refresca token */
     useEffect(() => {
         userId && dispatch(refreshToken(refresh_token))
     }, [])
@@ -44,16 +43,16 @@ const MainNavigator = () => {
         userId && dispatch(setSettingsFirebase(settings, userId))
     }, [settings])
 
-    /* la primer token va a ser desde el storage y posible expirada, entonces hago el dispatch con el siguiente token (del refresh) */
+    /* dispatch getUserData */
     useEffect(() => {
-        id_token && (firstToken ? setFirstToken(false) : dispatch(getUserData(id_token)))
+        id_token && dispatch(getUserData(id_token))
     }, [id_token])
 
     /* cuando se cambia user se trae data de apps/settings */
     useEffect(() => {
         dispatch(getAppsData(userId, storageGetItem));
         userId && dispatch(getSettingsFirebase(userId));
-    }, [userId, id_token])
+    }, [userId])
 
     return (
         <NavigationContainer theme={MyTheme}>
