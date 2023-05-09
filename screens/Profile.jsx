@@ -224,9 +224,21 @@ const Profile = ({ navigation }) => {
                                     renderItem={({ item }) => (
                                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                                             <TouchableOpacity style={[styles.avatarItem, altColorTheme && styles.altAvatarItem, item[0] === selectedAvatar && styles.avatarSelected]} onPress={() => setSelectedAvatar(item[0])}>
+                                                <LinearGradient
+                                                    colors={altColorTheme ? [Constants.colorSecondaryDark, Constants.colorSecondary, Constants.colorSecondaryDark] : [Constants.colorPrimaryDark, Constants.colorPrimary, Constants.colorPrimaryDark]}
+                                                    start={{ x: 0, y: 0 }}
+                                                    end={{ x: 1, y: 1 }}
+                                                    style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1, }}
+                                                />
                                                 <Text style={styles.avatarItemText}>{item[0]}</Text>
                                             </TouchableOpacity>
                                             <TouchableOpacity style={[styles.avatarItem, altColorTheme && styles.altAvatarItem, item[1] === selectedAvatar && styles.avatarSelected]} onPress={() => setSelectedAvatar(item[1])}>
+                                                <LinearGradient
+                                                    colors={altColorTheme ? [Constants.colorSecondaryDark, Constants.colorSecondary, Constants.colorSecondaryDark] : [Constants.colorPrimaryDark, Constants.colorPrimary, Constants.colorPrimaryDark]}
+                                                    start={{ x: 0, y: 0 }}
+                                                    end={{ x: 1, y: 1 }}
+                                                    style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 4, zIndex: -1, }}
+                                                />
                                                 <Text style={styles.avatarItemText}>{item[1]}</Text>
                                             </TouchableOpacity>
                                         </View>
