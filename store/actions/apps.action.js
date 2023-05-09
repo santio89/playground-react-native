@@ -34,14 +34,11 @@ export const setMemoScore = (userId, bestScore, storageSetItem) => {
     } else {
         return async dispatch => {
             try {
-                const valueMemo = await storageSetItem("pg-mg-score", JSON.stringify(bestScore));
+                await storageSetItem("pg-mg-score", JSON.stringify(bestScore));
 
-                valueMemo ? dispatch({
+                dispatch({
                     type: SET_MEMO_SCORE,
-                    bestScore: JSON.parse(valueMemo)
-                }) : dispatch({
-                    type: SET_MEMO_SCORE,
-                    bestScore: "-"
+                    bestScore
                 })
             } catch (error) {
                 console.log("error saving data to storage: ", error)
@@ -77,14 +74,11 @@ export const setListItems = (userId, items, storageSetItem) => {
     } else {
         return async dispatch => {
             try {
-                const valueList = await storageSetItem("pg-tdl-list", JSON.stringify(items));
+                await storageSetItem("pg-tdl-list", JSON.stringify(items));
 
-                valueList ? dispatch({
+                dispatch({
                     type: SET_LIST_ITEMS,
-                    items: JSON.parse(valueList)
-                }) : dispatch({
-                    type: SET_LIST_ITEMS,
-                    items: []
+                    items
                 })
             } catch (e) {
                 console.log("error saving data to storage: ", e)
@@ -121,14 +115,11 @@ export const setAlbumItems = (userId, items, storageSetItem) => {
     } else {
         return async dispatch => {
             try {
-                const valueAlbum = await storageSetItem("pg-tdl-album", JSON.stringify(items));
+                await storageSetItem("pg-tdl-album", JSON.stringify(items));
 
-                valueAlbum ? dispatch({
+                dispatch({
                     type: SET_ALBUM_ITEMS,
-                    items: JSON.parse(valueAlbum)
-                }) : dispatch({
-                    type: SET_ALBUM_ITEMS,
-                    items: []
+                    items
                 })
             } catch (e) {
                 console.log("error saving data to storage: ", e)
@@ -149,7 +140,7 @@ export const getAppsData = (userId, storageGetItem) => {
                 const response = await fetch(`${URL_API}apps/${userId}.json?auth=${userId}`)
 
                 const data = await response.json()
-                
+
                 if (data && !data.toDoList) {
                     data.toDoList = { 'items': [] }
                 }
@@ -212,7 +203,6 @@ export const getAppsData = (userId, storageGetItem) => {
                     items: []
                 })
 
-                setDataUpdated && setDataUpdated(true)
             } catch (e) {
                 console.log("error retrieving data from storage: ", e)
             } finally {
