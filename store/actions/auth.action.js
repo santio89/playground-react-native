@@ -200,10 +200,8 @@ export const getUserData = (idToken, dispatchRefreshGetUserData) => {
                 if (errorId === 'INVALID_ID_TOKEN') {
                     dispatchRefreshGetUserData()
                 } else {
-                    throw new Error(message, e);
+                    throw new Error(message + errorId);
                 }
-
-                throw new Error(message + errorId);
             } else {
                 const dat = await response.json()
                 const data = dat.users[0]
