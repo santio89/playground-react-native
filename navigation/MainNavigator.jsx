@@ -44,16 +44,16 @@ const MainNavigator = () => {
         userId && dispatch(setSettingsFirebase(settings, userId))
     }, [settings])
 
+    /* la primer token va a ser desde el storage y posible expirada, entonces hago el dispatch con el siguiente token (del refresh) */
+    useEffect(() => {
+        id_token && (firstToken ? setFirstToken(false) : dispatch(getUserData(id_token)))
+    }, [id_token])
+
     /* cuando se cambia user se trae data de apps/settings */
     useEffect(() => {
         dispatch(getAppsData(userId, storageGetItem));
         userId && dispatch(getSettingsFirebase(userId));
     }, [userId, id_token])
-
-    /* la primer token va a ser desde el storage y posible expirada, entonces hago el dispatch con el siguiente token (del refresh) */
-    useEffect(() => {
-        id_token && (firstToken ? setFirstToken(false) : dispatch(getUserData(id_token)))
-    }, [id_token])
 
     return (
         <NavigationContainer theme={MyTheme}>

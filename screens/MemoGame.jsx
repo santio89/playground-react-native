@@ -6,8 +6,8 @@ import Constants from '../constants/Styles.js';
 import { LANGS } from '../constants/Langs.js';
 import Card from '../components/Card';
 import emojis from '../constants/Emojis.js';
-import { storageSetItem, storageGetItem } from '../utils/AsyncStorage.js';
-import { setMemoScore, getAppsData } from '../store/actions/apps.action.js';
+import { storageSetItem } from '../utils/AsyncStorage.js';
+import { setMemoScore } from '../store/actions/apps.action.js';
 
 const MemoGame = ({ navigation }) => {
     const dispatch = useDispatch()
@@ -23,7 +23,6 @@ const MemoGame = ({ navigation }) => {
     const memoScore = useSelector(state => state.apps.memoGame.bestScore)
     const [bestScore, setBestScore] = useState(memoScore);
 
-    /*     const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width); */
 
     const userId = useSelector(state => state.auth.userId)
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
@@ -32,12 +31,7 @@ const MemoGame = ({ navigation }) => {
 
     const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
-    const [dataUpdated, setDataUpdated] = useState(false)
-
-    /* dispatch para traer data actualizada */
-    const dispatchGetAppsData = (setDataUpdated) => {
-        dispatch(getAppsData(userId, storageGetItem, setDataUpdated));
-    }
+    const appLoading = useSelector(state => state.apps.isLoading)
 
     /* elijo emojis al azar */
     const selectEmojis = () => {
@@ -90,13 +84,12 @@ const MemoGame = ({ navigation }) => {
     }
 
     useEffect(() => {
-        dispatchGetAppsData(setDataUpdated)
         selectEmojis()
     }, [])
 
     useEffect(() => {
-        dataUpdated && setBestScore(memoScore)
-    }, [dataUpdated])
+        setBestScore(memoScore)
+    }, [memoScore])
 
     useEffect(() => {
         if (choiceOne && choiceTwo) {
@@ -114,16 +107,18 @@ const MemoGame = ({ navigation }) => {
 
     useEffect(() => {
         const everyMatch = cards.length > 0 && cards.every(card => card.matched === true)
+
         if (everyMatch) {
             setTimeout(() => {
-                bestScore === "-" ? setBestScore(turns) : (turns < bestScore && setBestScore(turns))
+                bestScore === "-" ? dispatch(setMemoScore(userId, turns, storageSetItem)) : (turns < bestScore && dispatch(setMemoScore(userId, turns, storageSetItem)))
+
                 setWinner(true)
             }, 1000)
         }
     }, [cards])
 
     useEffect(() => {
-        dispatch(setMemoScore(userId, bestScore, storageSetItem))
+        bestScore !== "-" && dispatch(setMemoScore(userId, bestScore, storageSetItem))
     }, [bestScore])
 
     useEffect(() => {
@@ -143,10 +138,10 @@ const MemoGame = ({ navigation }) => {
                 {
                     !startState ?
                         <>
-                            <TouchableOpacity disabled={!dataUpdated} onPress={shuffleCards}>
-                                <Text style={[styles.newGame, altColorTheme && styles.altNewGame, , !dataUpdated && {backgroundColor: 'gray', borderColor: 'dimgray'}]}>{text.newGame}</Text>
+                            <TouchableOpacity disabled={appLoading} onPress={shuffleCards}>
+                                <Text style={[styles.newGame, altColorTheme && styles.altNewGame, , appLoading && { backgroundColor: 'gray', borderColor: 'dimgray' }]}>{text.newGame}</Text>
                             </TouchableOpacity>
-                            <View style={styles.bestScore}><Text style={[styles.bestScoreText, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={[styles.bestScoreNumber, altColorTheme && styles.altBestScoreNumber]}>{!dataUpdated ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : bestScore}</Text></View>
+                            <View style={styles.bestScore}><Text style={[styles.bestScoreText, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={[styles.bestScoreNumber, altColorTheme && styles.altBestScoreNumber]}>{appLoading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : bestScore}</Text></View>
                         </> :
                         <>
                             {winner === true ?
@@ -163,7 +158,7 @@ const MemoGame = ({ navigation }) => {
                                     </View>
                                 </> :
                                 <>
-                                    <View style={[styles.bestScore, { flexDirection: 'row' }]}><Text style={[styles.bestScoreText, { alignSelf: 'center' }, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={[styles.bestScoreText, { fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorPrimary, padding: 2 }, altColorTheme && { color: Constants.colorSecondary }]}>{!dataUpdated ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : bestScore}</Text></View>
+                                    <View style={[styles.bestScore, { flexDirection: 'row' }]}><Text style={[styles.bestScoreText, { alignSelf: 'center' }, !darkMode && styles.colorDark]}>{text.bestScore}: </Text><Text style={[styles.bestScoreText, { fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorPrimary, padding: 2 }, altColorTheme && { color: Constants.colorSecondary }]}>{appLoading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : bestScore}</Text></View>
                                     <View style={styles.turnsButtonsContainer}>
                                         <View style={[styles.turns, altColorTheme && styles.altTurns]}>
                                             <Text style={styles.turnsText}>{text.turns}: {turns}</Text>

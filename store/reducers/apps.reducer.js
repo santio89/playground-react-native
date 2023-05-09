@@ -1,4 +1,4 @@
-import { SET_MEMO_SCORE, SET_LIST_ITEMS, SET_ALBUM_ITEMS, GET_APPS_DATA } from "../actions/apps.action";
+import { SET_MEMO_SCORE, SET_LIST_ITEMS, SET_ALBUM_ITEMS, GET_APPS_DATA, SET_LOADING } from "../actions/apps.action";
 
 const initialState = {
     toDoList: {
@@ -9,7 +9,8 @@ const initialState = {
     },
     albumList: {
         items: []
-    }
+    },
+    isLoading: false
 }
 
 const AppsReducer = (state = initialState, action) => {
@@ -48,6 +49,11 @@ const AppsReducer = (state = initialState, action) => {
                 albumList: {
                     items: action.appsData.albumList.items
                 }
+            }
+        case SET_LOADING:
+            return {
+                ...state,
+                isLoading: action.isLoading
             }
         default:
             return state

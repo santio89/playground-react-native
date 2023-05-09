@@ -5,6 +5,7 @@ export const SET_LIST_ITEMS = "SET_LIST_ITEMS"
 export const SET_ALBUM_ITEMS = "SET_ALBUM_ITEMS"
 export const GET_APPS_DATA = "GET_APPS_DATA"
 export const LOG_OUT_APPS = "LOG_OUT_APPS"
+export const SET_LOADING = "SET_LOADING"
 
 export const setMemoScore = (userId, bestScore, storageSetItem) => {
     if (userId) {
@@ -136,14 +137,19 @@ export const setAlbumItems = (userId, items, storageSetItem) => {
     }
 }
 
-export const getAppsData = (userId, storageGetItem, setDataUpdated) => {
+export const getAppsData = (userId, storageGetItem) => {
     if (userId) {
         return async dispatch => {
+            dispatch({
+                type: SET_LOADING,
+                isLoading: true
+            })
+
             try {
                 const response = await fetch(`${URL_API}apps/${userId}.json?auth=${userId}`)
 
                 const data = await response.json()
-
+                
                 if (data && !data.toDoList) {
                     data.toDoList = { 'items': [] }
                 }
@@ -160,14 +166,23 @@ export const getAppsData = (userId, storageGetItem, setDataUpdated) => {
                     type: GET_APPS_DATA,
                     appsData: data
                 })
-                
-                setDataUpdated && setDataUpdated(true)
+
             } catch (e) {
                 console.log("appsDataException-", e)
+            } finally {
+                dispatch({
+                    type: SET_LOADING,
+                    isLoading: false
+                })
             }
         }
     } else {
         return async dispatch => {
+            dispatch({
+                type: SET_LOADING,
+                isLoading: true
+            })
+
             try {
                 const valueList = await storageGetItem('pg-tdl-list')
                 const valueMemo = await storageGetItem('pg-mg-score')
@@ -200,6 +215,11 @@ export const getAppsData = (userId, storageGetItem, setDataUpdated) => {
                 setDataUpdated && setDataUpdated(true)
             } catch (e) {
                 console.log("error retrieving data from storage: ", e)
+            } finally {
+                dispatch({
+                    type: SET_LOADING,
+                    isLoading: false
+                })
             }
         }
     }

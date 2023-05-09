@@ -26,34 +26,28 @@ export default function ToDoList({ navigation }) {
 
     const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
-    const [dataUpdated, setDataUpdated] = useState(false)
+    const appLoading = useSelector(state => state.apps.isLoading)
+    const [loading, setLoading] = useState(false)
 
-    /* dispatch para traer data actualizada */
-    const dispatchGetAppsData = (setDataUpdated) => {
-        dispatch(getAppsData(userId, storageGetItem, setDataUpdated));
-    }
 
     const addItem = (item) => {
         item.text = item.text.trim()
         if (item.text === "") { return }
 
-        setItems((oldItems) => [item, ...oldItems])
+        setLoading(true)
         dispatch(setListItems(userId, [item, ...items], storageSetItem))
     }
 
     const deleteItem = (id) => {
-        setItems((oldItems) => oldItems.filter(item => item.id != id))
+        setLoading(true)
         dispatch(setListItems(userId, items.filter(item => item.id != id), storageSetItem))
     }
 
 
     useEffect(() => {
-        dispatchGetAppsData(setDataUpdated)
-    }, [])
-
-    useEffect(() => {
-        dataUpdated && setItems(listItems)
-    }, [dataUpdated])
+        setItems(listItems)
+        setLoading(false)
+    }, [listItems])
 
     useEffect(() => {
         input.trim() != '' ? setBtnDisabled(false) : setBtnDisabled(true)
@@ -75,15 +69,15 @@ export default function ToDoList({ navigation }) {
             <View style={[styles.todoListContainer, !darkMode && styles.backgroundWhite]}>
                 <View style={styles.listContainer}>
                     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.inputContainer}>
-                        <TextInput disabled={!dataUpdated} value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuid.v4(), text: input }); setInput('') }} placeholder={text.newTask} placeholderTextColor="#808080" style={[styles.input, !darkMode && styles.colorDark, altColorTheme && styles.altInput, !dataUpdated && {borderBottomColor: 'dimgray'}]} />
+                        <TextInput disabled={loading || appLoading} value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuid.v4(), text: input }); setInput('') }} placeholder={text.newTask} placeholderTextColor="#808080" style={[styles.input, !darkMode && styles.colorDark, altColorTheme && styles.altInput, (loading || appLoading) && { borderBottomColor: 'dimgray' }]} />
 
                         <TouchableOpacity disabled={btnDisabled} onPress={() => { addItem({ id: uuid.v4(), text: input, completed: false }); setInput('') }} style={[styles.buttonAddContainer, altColorTheme && styles.buttonAddContainer, altColorTheme && styles.altButtonAddContainer, btnDisabled && styles.buttonDisabled]}>
                             <Text style={[styles.buttonAdd, , btnDisabled && { color: 'lightgray' }]}>
-                                {text.add}
+                                {loading?<ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />:text.add}
                             </Text>
                         </TouchableOpacity>
                     </KeyboardAvoidingView>
-                    {!dataUpdated ? <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <FlatList contentContainerStyle={styles.listItemsContainer}
+                    {appLoading ? <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <FlatList contentContainerStyle={styles.listItemsContainer}
                         data={items}
                         renderItem={({ item, index }) => (
                             <ListItem index={index} userId={userId} items={items} setItems={setItems} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} />
@@ -164,7 +158,13 @@ const styles = StyleSheet.create({
         color: Constants.colorWhite,
         fontSize: Constants.fontMd,
         width: '100%',
-        textAlign: 'center'
+        textAlign: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: 24,
+        height: 24,
+        maxHeight: 24
     },
     listItemsContainer: {
         paddingHorizontal: 8,
