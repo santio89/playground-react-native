@@ -7,7 +7,7 @@ import Constants from '../constants/Styles.js'
 import { LANGS } from '../constants/Langs'
 import { signUp } from '../store/actions/auth.action'
 import { setSettingsFirebase } from '../store/actions/settings.action'
-import { setListItems, setMemoScore } from '../store/actions/apps.action'
+import { setListItems, setMemoScore, setAlbumItems } from '../store/actions/apps.action'
 
 const SignUp = ({ navigation }) => {
     const dispatch = useDispatch()
@@ -53,7 +53,7 @@ const SignUp = ({ navigation }) => {
     };
 
     const handleSignUp = () => {
-        dispatch(signUp(email.trim(), password, `🦊${displayName.trim()}`, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings, setSettingsFirebase, setListItems, setMemoScore))
+        dispatch(signUp(email.trim(), password, `🦊${displayName.trim()}`, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings, setSettingsFirebase, setListItems, setMemoScore, setAlbumItems))
     }
 
     useEffect(() => {
