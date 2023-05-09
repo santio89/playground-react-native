@@ -37,9 +37,6 @@ const Profile = ({ navigation }) => {
 
     const [avatarArray, setAvatarArray] = useState([])
 
-    const dispatchRefreshToken = () => {
-        dispatch(refreshToken(refresh_token))
-    }
 
     const dispatchRefreshUpdateUsername = (inputUsername) => {
         const dispatchUpdateUsername = () => {
@@ -100,8 +97,6 @@ const Profile = ({ navigation }) => {
         }
         split()
 
-        /* refresh token */
-        userId && dispatchRefreshToken()
     }, [])
 
     return (

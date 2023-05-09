@@ -32,20 +32,16 @@ const MainNavigator = () => {
     };
 
 
-    /* dispatchRefreshToken en caso de que la token haya expirado */
-    const dispatchRefreshToken = () => {
-        dispatch(refreshToken(refresh_token))
-    }
-
+    /* dispatchRefresh en caso de que la token haya expirado */
     const dispatchRefreshGetUserData = () => {
         const dispatchGetUserData = () => {
-            dispatch(getUserData(id_token, dispatchRefreshToken))
+            dispatch(getUserData(id_token))
         }
 
         dispatch(refreshToken(refresh_token, dispatchGetUserData))
     }
 
-    /* dispatch getUserData, si existe usuario. envio refresh por si la token expiro */
+    /* dispatch getUserData, si existe usuario. envio refresh por si la token ha expirado */
     useEffect(() => {
         userId && dispatch(getUserData(id_token, dispatchRefreshGetUserData))
     }, [])
@@ -61,7 +57,7 @@ const MainNavigator = () => {
         userId && dispatch(setSettingsFirebase(settings, userId))
     }, [settings])
 
-    
+
     return (
         <NavigationContainer theme={MyTheme}>
             <StatusBar barStyle={"light-content"} hidden={false} backgroundColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} translucent={true} />
