@@ -8,7 +8,6 @@ import { getSettingsFirebase, setSettingsFirebase } from "../store/actions/setti
 import { getAppsData } from "../store/actions/apps.action";
 import { refreshToken, getUserData } from '../store/actions/auth.action';
 import { storageGetItem } from "../utils/AsyncStorage";
-import { useState } from 'react';
 
 const MainNavigator = () => {
     const dispatch = useDispatch();
@@ -33,20 +32,23 @@ const MainNavigator = () => {
     };
 
 
-    /* al iniciar app se refresca token */
+    /* dispatchRefreshToken en caso de que la token haya expirado */
+    const dispatchRefreshToken = () => {
+        dispatch(refreshToken(refresh_token))
+    }
+
+    const dispatchRefreshGetUserData = () => {
+        const dispatchGetUserData = () => {
+            dispatch(getUserData(id_token, dispatchRefreshToken))
+        }
+
+        dispatch(refreshToken(refresh_token, dispatchGetUserData))
+    }
+
+    /* dispatch getUserData, si existe usuario. envio refresh por si la token expiro */
     useEffect(() => {
-        userId && dispatch(refreshToken(refresh_token))
+        userId && dispatch(getUserData(id_token, dispatchRefreshGetUserData))
     }, [])
-
-    /* cambio settings instantaneamente y en el background se envian a firebase */
-    useEffect(() => {
-        userId && dispatch(setSettingsFirebase(settings, userId))
-    }, [settings])
-
-    /* dispatch getUserData */
-    useEffect(() => {
-        id_token && dispatch(getUserData(id_token))
-    }, [id_token])
 
     /* cuando se cambia user se trae data de apps/settings */
     useEffect(() => {
@@ -54,6 +56,12 @@ const MainNavigator = () => {
         userId && dispatch(getSettingsFirebase(userId));
     }, [userId])
 
+    /* cambio settings instantaneamente y en el background se envian a firebase */
+    useEffect(() => {
+        userId && dispatch(setSettingsFirebase(settings, userId))
+    }, [settings])
+
+    
     return (
         <NavigationContainer theme={MyTheme}>
             <StatusBar barStyle={"light-content"} hidden={false} backgroundColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} translucent={true} />
