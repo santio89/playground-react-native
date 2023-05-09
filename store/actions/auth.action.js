@@ -139,7 +139,7 @@ export const logOut = () => {
     }
 }
 
-export const refreshToken = (refresh_token) => {
+export const refreshToken = (refresh_token, callbackFn) => {
 
     return async dispatch => {
 
@@ -163,12 +163,14 @@ export const refreshToken = (refresh_token) => {
                 throw new Error(message + errorId);
             } else {
                 const data = await response.json()
-               
+
                 dispatch({
                     type: REFRESH_TOKEN,
                     token: data.id_token,
                     refreshToken: data.refresh_token,
                 })
+
+                callbackFn && callbackFn()
             }
         } catch (e) {
             console.log("error refreshing token: ", e)
@@ -176,7 +178,7 @@ export const refreshToken = (refresh_token) => {
     }
 }
 
-export const getUserData = (idToken)=>{
+export const getUserData = (idToken) => {
 
     return async dispatch => {
         try {
@@ -199,7 +201,7 @@ export const getUserData = (idToken)=>{
             } else {
                 const dat = await response.json()
                 const data = dat.users[0]
-                
+
                 dispatch({
                     type: GET_USER_DATA,
                     userId: data.localId,
@@ -214,7 +216,7 @@ export const getUserData = (idToken)=>{
     }
 }
 
-export const updateUsername = (token, username, setUpdateUsernameLoading, setUsernameModal, dispatchRefreshToken) => {
+export const updateUsername = (token, username, setUpdateUsernameLoading, setUsernameModal, dispatchRefreshUpdateUsername) => {
 
     return async dispatch => {
         setUpdateUsernameLoading(true)
@@ -237,8 +239,7 @@ export const updateUsername = (token, username, setUpdateUsernameLoading, setUse
                 let message = 'cant_update_user__';
 
                 if (errorId === 'INVALID_ID_TOKEN') {
-                    dispatchRefreshToken()
-                    updateUsername(token, username, setUpdateUsernameLoading, setUsernameModal, dispatchRefreshToken)
+                    dispatchRefreshUpdateUsername()
                 } else {
                     throw new Error(message + errorId);
                 }
@@ -260,11 +261,11 @@ export const updateUsername = (token, username, setUpdateUsernameLoading, setUse
     }
 }
 
-export const updateAvatar = (token, username, setAvatarModal, setUpdateAvatarLoading, dispatchRefreshToken) => {
+export const updateAvatar = (token, username, setAvatarModal, setUpdateAvatarLoading, dispatchRefreshUpdateAvatar) => {
 
-    return async dispatch => {  
+    return async dispatch => {
         setUpdateAvatarLoading(true)
-       
+
         try {
             const response = await fetch(URL_AUTH_UPDATE, {
                 method: 'POST',
@@ -283,8 +284,7 @@ export const updateAvatar = (token, username, setAvatarModal, setUpdateAvatarLoa
                 let message = 'cant_update_user__';
 
                 if (errorId === 'INVALID_ID_TOKEN') {
-                    dispatchRefreshToken()
-                    updateAvatar(token, username, setUpdateAvatarLoading, dispatchRefreshToken)
+                    dispatchRefreshUpdateAvatar()
                 } else {
                     throw new Error(message, e);
                 }
