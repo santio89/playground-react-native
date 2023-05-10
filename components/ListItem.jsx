@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     /* for alt color theme */
     altListItem: {
         backgroundColor: Constants.colorSecondary,
-        borderColor: Constants.colorSecondary
+        borderColor: Constants.colorSecondaryDark
     },
     altListItemComplete: {
         backgroundColor: Constants.colorSecondaryDark,
