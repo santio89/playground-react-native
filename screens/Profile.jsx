@@ -264,13 +264,12 @@ export default Profile
 
 const styles = StyleSheet.create({
     profileContainer: {
-        flex: 1,
+        flexGrow: 1,
         backgroundColor: Constants.colorDark,
         justifyContent: 'center',
         alignItems: 'center',
         color: Constants.colorWhite,
         width: '100%',
-        /* padding: 10 */
     },
     itemsContainer: {
         width: '100%',

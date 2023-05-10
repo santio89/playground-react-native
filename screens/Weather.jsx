@@ -201,10 +201,8 @@ const Weather = ({ navigation }) => {
   return (
     <>
       <View style={[styles.weatherAppContainer, !darkMode && styles.altWeatherAppContainer]}>
-        <View style={styles.weatherAppWrapper} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => loadLocation()} />} >
-
-
-          <ScrollView contentContainerStyle={styles.weatherData}>
+        <View style={styles.weatherAppWrapper}>
+          <ScrollView contentContainerStyle={styles.weatherData} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => loadLocation()} />} >
             {
               !forecast || !spForecast || reloading ?
                 <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />

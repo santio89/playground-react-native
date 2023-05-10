@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 1
+        flexGrow: 1
     },
     /* for dark mode off */
     backgroundWhite: {

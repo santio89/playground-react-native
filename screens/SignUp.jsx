@@ -96,9 +96,8 @@ const SignUp = ({ navigation }) => {
     return (
         <>
             <Header navigation={navigation} />
-            <View style={[styles.profileContainer, !darkMode && styles.colorDark, !darkMode && styles.backgroundWhite]}>
+            <ScrollView contentContainerStyle={[styles.profileContainer, !darkMode && styles.colorDark, !darkMode && styles.backgroundWhite]}>
                 <KeyboardAvoidingView style={[styles.itemsContainer, altColorTheme && styles.altItemsContainer]}>
-                    <ScrollView>
                         <View style={styles.profileItem}>
                             <Text style={[styles.profileItemLabel]}><Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator, !validEmail && { color: Constants.colorRed }]}>•&nbsp;</Text><Text style={!validEmail && { color: Constants.colorRed }}>{text.email}: </Text></Text>
                             <TextInput keyboardType='email-address' autoCapitalize='none' style={[styles.textInput, altColorTheme && styles.altTextInput, !validEmail && { borderBottomColor: Constants.colorRed }]} value={email} onChangeText={email => setEmail(email)} onSubmitEditing={() => validInputs && handleSignUp()} placeholder={text.minEmail} placeholderTextColor={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} />
@@ -123,9 +122,8 @@ const SignUp = ({ navigation }) => {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                    </ScrollView>
                 </KeyboardAvoidingView>
-            </View>
+            </ScrollView>
             <Modal visible={modalVisible} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
@@ -165,13 +163,12 @@ export default SignUp
 
 const styles = StyleSheet.create({
     profileContainer: {
-        flex: 1,
+        flexGrow: 1,
         backgroundColor: Constants.colorDark,
         justifyContent: 'center',
         alignItems: 'center',
         color: Constants.colorWhite,
         width: '100%',
-        /* padding: 10, */
         minHeight: 'auto'
     },
     itemsContainer: {
