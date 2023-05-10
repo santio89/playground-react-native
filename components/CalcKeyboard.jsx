@@ -37,7 +37,7 @@ const CalcKeyboard = () => {
         }
 
         if (firstNumber.length < 9) {
-            firstNumber === "" || firstNumber === "0" ? (btnVal === '.' ? setFirstNumber('0' + btnVal) : setFirstNumber(btnVal)) : (firstNumber === '-0' ? (btnVal === '.' ? setFirstNumber('-0' + btnVal) : setFirstNumber('-' + btnVal) ) : setFirstNumber(firstNumber + btnVal))
+            firstNumber === "" || firstNumber === "0" ? (btnVal === '.' ? setFirstNumber('0' + btnVal) : setFirstNumber(btnVal)) : (firstNumber === '-0' ? (btnVal === '.' ? setFirstNumber('-0' + btnVal) : setFirstNumber('-' + btnVal)) : setFirstNumber(firstNumber + btnVal))
         }
     }
 
@@ -111,14 +111,14 @@ const CalcKeyboard = () => {
                 break;
             default:
                 clearScreen()
-                setResult(result ? result : (secondNumber ? Number(secondNumber) : (firstNumber && firstNumber != '-0' ? Number(firstNumber) : 0)))
+                setResult(result ? result : (secondNumber ? Number(secondNumber) : (firstNumber && Number(firstNumber).toLocaleString('en-US', { maximumFractionDigits: 4 }) != '-0' ? Number(firstNumber) : 0)))
                 break;
         }
     }
 
     const firstNumberDisplay = () => {
         if (result !== null) {
-            return <Text style={[styles.screenFirstNumber, { fontFamily: Constants.fontPrimaryBold, color: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark }, result.toLocaleString('en-US', { maximumFractionDigits: 4 }).length > 8 && { fontSize: 40 }, result.toLocaleString('en-US', { maximumFractionDigits: 4 }).length > 12 && { fontSize: 34 }, result.toLocaleString('en-US', { maximumFractionDigits: 4 }).length > 14 && { fontSize: 34 }, result > 999999999 && { fontSize: 40 }, (result === Infinity || isNaN(result)) && {fontSize: 60}]}>{result === Infinity || isNaN(result) ? "ERROR" : (result > 999999999 ? result?.toExponential(2).toLocaleString('en-US', { maximumFractionDigits: 4 }) : result?.toLocaleString('en-US', { maximumFractionDigits: 4 }))}</Text>
+            return <Text style={[styles.screenFirstNumber, { fontFamily: Constants.fontPrimaryBold, color: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark }, result.toLocaleString('en-US', { maximumFractionDigits: 4 }).length > 8 && { fontSize: 40 }, result.toLocaleString('en-US', { maximumFractionDigits: 4 }).length > 12 && { fontSize: 34 }, result.toLocaleString('en-US', { maximumFractionDigits: 4 }).length > 14 && { fontSize: 34 }, result > 999999999 && { fontSize: 40 }, (result === Infinity || isNaN(result)) && { fontSize: 60 }]}>{result === Infinity || isNaN(result) ? "ERROR" : (result > 999999999 ? result?.toExponential(2).toLocaleString('en-US', { maximumFractionDigits: 4 }) : result?.toLocaleString('en-US', { maximumFractionDigits: 4 }))}</Text>
         }
         if (Number(firstNumber) > 999999999) {
             return (
