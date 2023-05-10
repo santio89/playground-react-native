@@ -76,7 +76,6 @@ const Profile = ({ navigation }) => {
         dispatch(getUserData(token, dispatchRefreshToken))
         dispatch(getSettingsFirebase(userId))
         dispatch(getAppsData(userId))
-        setLoading(false)
     }
 
     const validateName = (name) => {
