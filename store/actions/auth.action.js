@@ -179,7 +179,7 @@ export const refreshToken = (refresh_token, callbackFn) => {
     }
 }
 
-export const getUserData = (idToken, dispatchRefreshGetUserData) => {
+export const getUserData = (idToken, dispatchRefreshToken) => {
 
     return async dispatch => {
         try {
@@ -199,7 +199,7 @@ export const getUserData = (idToken, dispatchRefreshGetUserData) => {
                 let message = 'cant_get_user_data__';
 
                 if (errorId === 'INVALID_ID_TOKEN') {
-                    dispatchRefreshGetUserData()
+                    dispatchRefreshToken()
                 } else {
                     throw new Error(message + errorId);
                 }

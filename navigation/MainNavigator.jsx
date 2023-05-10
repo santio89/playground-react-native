@@ -32,18 +32,14 @@ const MainNavigator = () => {
     };
 
 
-    /* dispatchRefresh en caso de que la token haya expirado */
-    const dispatchRefreshGetUserData = () => {
-        const dispatchGetUserData = () => {
-            dispatch(getUserData(id_token))
-        }
-
-        dispatch(refreshToken(refresh_token, dispatchGetUserData))
+    /* dispatchRefreshToken en caso de que la token haya expirado */
+    const dispatchRefreshToken = () => {
+        dispatch(refreshToken(refresh_token))
     }
 
     /* dispatch getUserData, si existe usuario. envio refresh por si la token ha expirado */
     useEffect(() => {
-        userId && dispatch(getUserData(id_token, dispatchRefreshGetUserData))
+        (id_token || userId) && dispatch(getUserData(id_token, dispatchRefreshToken))
     }, [id_token])
 
     /* cuando se cambia user se trae data de apps/settings */
