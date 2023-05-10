@@ -44,7 +44,7 @@ const MainNavigator = () => {
     /* dispatch getUserData, si existe usuario. envio refresh por si la token ha expirado */
     useEffect(() => {
         userId && dispatch(getUserData(id_token, dispatchRefreshGetUserData))
-    }, [])
+    }, [id_token])
 
     /* cuando se cambia user se trae data de apps/settings */
     useEffect(() => {
