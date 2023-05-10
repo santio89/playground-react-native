@@ -4,7 +4,9 @@ import { useEffect, useState } from 'react'
 import { LANGS } from '../constants/Langs.js'
 import Constants from '../constants/Styles.js'
 import Header from '../components/Header'
-import { logOut, refreshToken, getUserData, updateAvatar, updateUsername } from '../store/actions/auth.action.js'
+import { logOut, refreshToken, updateAvatar, updateUsername, getUserData } from '../store/actions/auth.action.js'
+import { getSettingsFirebase } from '../store/actions/settings.action.js'
+import { getAppsData } from '../store/actions/apps.action.js'
 import Emojis from '../constants/Emojis.js'
 import { LinearGradient } from 'expo-linear-gradient'
 
@@ -35,8 +37,12 @@ const Profile = ({ navigation }) => {
     const [avatarModal, setAvatarModal] = useState(false)
     const [updateAvatarLoading, setUpdateAvatarLoading] = useState(false)
 
+    const [logOutModal, setLogOutModal] = useState(false)
+
     const [avatarArray, setAvatarArray] = useState([])
 
+    const appLoading = useSelector(state => state.apps.isLoading)
+    const [loading, setLoading] = useState(appLoading)
 
     const dispatchRefreshUpdateUsername = (inputUsername) => {
         const dispatchUpdateUsername = () => {
@@ -62,6 +68,17 @@ const Profile = ({ navigation }) => {
         dispatch(updateAvatar(token, selectedAvatar + displayName, setAvatarModal, setUpdateAvatarLoading, dispatchRefreshUpdateAvatar))
     }
 
+    const dispatchRefreshToken = () => {
+        dispatch(refreshToken(refresh_token))
+    }
+    const refreshUserData = () => {
+        setLoading(true)
+        dispatch(getUserData(token, dispatchRefreshToken))
+        dispatch(getSettingsFirebase(userId))
+        dispatch(getAppsData(userId))
+        setLoading(false)
+    }
+
     const validateName = (name) => {
         var re = /[^ ]{4,16}/;
         return re.test(name);
@@ -85,6 +102,10 @@ const Profile = ({ navigation }) => {
     useEffect(() => {
         setSelectedAvatar(avatar)
     }, [avatar])
+
+    useEffect(() => {
+        setLoading(appLoading)
+    }, [appLoading])
 
     useEffect(() => {
         /* avatar array */
@@ -142,11 +163,28 @@ const Profile = ({ navigation }) => {
                                     <Text style={styles.profileItemAvatar}>{avatar}</Text>
                                 </TouchableOpacity>
                             </View>
+
                             <View style={styles.profileItem}>
                                 <View style={[styles.profileItemLabel]}>
                                     <Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>•&nbsp;</Text>
-                                    <TouchableOpacity style={styles.profileItemButtonLogOut} onPress={() => { dispatch(logOut()); setLogOutSuccess(true) }}>
-                                        <Text style={[styles.settingsItemText, { fontFamily: Constants.fontPrimaryBold }]}>{text.logOut}</Text>
+                                    <TouchableOpacity style={styles.profileItemButtonLogOut} onPress={() => { refreshUserData() }}>
+                                        <Text style={[styles.settingsItemText, { fontFamily: Constants.fontPrimaryBold }]}>
+                                            {loading ?
+                                                <ActivityIndicator size="small" color={Constants.colorWhite} /> :
+                                                <Text>{text.refreshUser}</Text>
+                                            }
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+
+                            <View style={styles.profileItem}>
+                                <View style={[styles.profileItemLabel]}>
+                                    <Text style={[styles.profileItemIndicator, altColorTheme && styles.altProfileItemIndicator]}>•&nbsp;</Text>
+                                    <TouchableOpacity style={styles.profileItemButtonLogOut} onPress={() => { setLogOutModal(true) }}>
+                                        <Text style={[styles.settingsItemText, { fontFamily: Constants.fontPrimaryBold }]}>
+                                            <Text>{text.logOut}</Text>
+                                        </Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -162,19 +200,40 @@ const Profile = ({ navigation }) => {
 
 
             {/* log out modal */}
-            <Modal visible={logOutSuccess} transparent={true} animationType='fade'>
+            <Modal visible={logOutModal} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
-                    <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
-                        <View style={styles.modalTitle}>
-                            <Text style={{ fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite }}>{`${text.goodbye}\n`}</Text>
-                            <Text style={[styles.modalText, altColorTheme && styles.altModalText, { fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite }, Platform.OS !== 'web' && { marginTop: -20 }]}>{text.userLoggedOut}</Text>
+                    {!logOutSuccess ?
+                        <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
+                            <View style={styles.modalTitle}>
+                                <Text style={[styles.modalTitle, { marginBottom: 0 }]}>{text.logOut}?</Text>
+                            </View>
+
+                            <View style={styles.modalBtnContainer}>
+                                <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setLogOutModal(false) }}>
+                                    <Text style={[styles.modalBtnText]}>{text.cancel}</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn, styles.borderRed]} onPress={() => { dispatch(logOut()); setLogOutSuccess(true) }}>
+                                    <Text style={[styles.modalBtnText]}>{text.logOut}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View> :
+                        <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
+                            <View style={styles.modalTitle}>
+                                <Text style={{ fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite }}>{`${text.goodbye}\n`}</Text>
+                                <Text style={[styles.modalText, altColorTheme && styles.altModalText, { fontSize: Constants.fontLg, fontFamily: Constants.fontPrimaryBold, color: Constants.colorWhite }, Platform.OS !== 'web' && { marginTop: -20 }]}>{text.userLoggedOut}</Text>
+                            </View>
+                            <View style={styles.modalBtnContainer}>
+                                <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setLogOutSuccess(false); setLogOutModal(false); navigation.navigate("AppsHome") }}>
+                                    <Text style={[styles.modalBtnText]}>OK</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                        <View style={styles.modalBtnContainer}>
-                            <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setLogOutSuccess(false); navigation.navigate("AppsHome") }}>
-                                <Text style={[styles.modalBtnText]}>OK</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+
+                    }
+
+
+
                 </SafeAreaView>
             </Modal>
 
@@ -304,6 +363,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 4,
+        height: 24,
+        minHeight: 24,
+        maxHeight: 24,
     },
     profileItemText: {
         fontFamily: Constants.fontPrimary,
@@ -330,6 +392,13 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: Constants.colorPrimaryDark,
         maxWidth: '100%'
+    },
+    profileItemButtonRefresh: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        maxWidth: '100%',
+        marginTop: 2,
     },
     profileItemButtonLogOut: {
         display: 'flex',
@@ -359,7 +428,10 @@ const styles = StyleSheet.create({
         fontSize: Constants.fontMd,
         color: Constants.colorWhite,
         maxWidth: '100%',
-        textAlign: 'center'
+        textAlign: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     modal: {
         flex: 1,
@@ -432,6 +504,9 @@ const styles = StyleSheet.create({
     },
     modalBorderDark: {
         borderColor: Constants.colorDark,
+    },
+    borderRed: {
+        borderColor: Constants.colorRed,
     },
     inputUsername: {
         width: '100%',

@@ -63,7 +63,8 @@ export const LANGS = [{
         album: "ALBUM",
         noImg: "NO IMAGES TO DISPLAY",
         tryMobile: "MOBILE APP",
-        downloadApk: "DOWNLOAD APK"
+        downloadApk: "DOWNLOAD APK",
+        refreshUser: "REFRESH DATA",
     }
 }, {
     id: 2, lang: "spanish", text: {
@@ -130,6 +131,7 @@ export const LANGS = [{
         album: "ÁLBUM",
         noImg: "NO HAY IMÁGENES PARA MOSTRAR",
         tryMobile: "APP MÓVIL",
-        downloadApk: "DESCARGAR APK"
+        downloadApk: "DESCARGAR APK",
+        refreshUser: "REFRESCAR DATOS",
     }
 }]

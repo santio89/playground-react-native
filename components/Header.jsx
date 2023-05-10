@@ -22,7 +22,7 @@ export default function Header({ navigation }) {
           <View>
             {avatar ?
               <Text style={styles.avatar}>{avatar}</Text> :
-              <Entypo name="login" size={28} color={Constants.colorWhite} />}
+              <Entypo name="login" size={Constants.fontLg} color={Constants.colorWhite} />}
           </View>
         </TouchableOpacity>
       </View>
