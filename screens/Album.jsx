@@ -183,12 +183,10 @@ const Album = ({ navigation }) => {
       <Modal visible={modalImg.active} transparent={true} animationType='fade'>
         <ScrollView contentContainerStyle={{ flex: 1, backgroundColor: altColorTheme ? Constants.colorSecondaryOpacity : Constants.colorPrimaryOpacity, justifyContent: 'center', alignItems: 'center', zIndex: 999 }}>
           <Image style={styles.albumModalImg} source={{ uri: modalImg.uri }} />
-
           <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => setModalImg({ active: false, id: null, uri: null })}>
             <Text style={[styles.modalBtnText]} >{text.close}</Text>
           </TouchableOpacity>
         </ScrollView>
-
       </Modal>
     </View>
   )
