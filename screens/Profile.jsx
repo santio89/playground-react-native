@@ -207,7 +207,6 @@ const Profile = ({ navigation }) => {
                             <View style={styles.modalTitle}>
                                 <Text style={[styles.modalTitle, { marginBottom: 0 }]}>{text.logOut}?</Text>
                             </View>
-
                             <View style={styles.modalBtnContainer}>
                                 <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setLogOutModal(false) }}>
                                     <Text style={[styles.modalBtnText]}>{text.cancel}</Text>
@@ -229,11 +228,7 @@ const Profile = ({ navigation }) => {
                                 </TouchableOpacity>
                             </View>
                         </View>
-
                     }
-
-
-
                 </SafeAreaView>
             </Modal>
 
