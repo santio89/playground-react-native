@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Platform, Linking } from 'react-native'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectLang, selectDarkMode, selectColorTheme, getSettingsFirebase } from '../store/actions/settings.action.js';
+import { selectLang, selectDarkMode, selectColorTheme } from '../store/actions/settings.action.js';
 import Constants from '../constants/Styles'
 import { LANGS } from '../constants/Langs.js';
 import Header from '../components/Header'
