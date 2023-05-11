@@ -1,4 +1,4 @@
-import { SELECT_LANG, SELECT_DARKMODE, SELECT_COLORTHEME, SET_SETTINGS, GET_SETTINGS } from "../actions/settings.action";
+import { SELECT_LANG, SELECT_DARKMODE, SELECT_COLORTHEME, SET_SETTINGS } from "../actions/settings.action";
 
 const initialState = {
     language: {
@@ -31,8 +31,6 @@ const settingsReducer = (state = initialState, action) => {
                 ...state,
                 altColorTheme: { ...state.altColorTheme, enabled: action.altColorTheme }
             }
-        case GET_SETTINGS:
-            return state
         case SET_SETTINGS:
             return {
                 ...state,
