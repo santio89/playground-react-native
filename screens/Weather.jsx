@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, SafeAreaView, KeyboardAvoidingView, ScrollView, FlatList, ActivityIndicator, RefreshControl, Image, Dimensions, TouchableOpacity, Modal } from 'react-native'
+import { StyleSheet, Text, TextInput, View, SafeAreaView, KeyboardAvoidingView, ScrollView, FlatList, ActivityIndicator, Image, Dimensions, TouchableOpacity, Modal } from 'react-native'
 import * as Location from 'expo-location'
 import { Entypo } from '@expo/vector-icons'
 import { Foundation } from '@expo/vector-icons';
@@ -202,7 +202,7 @@ const Weather = ({ navigation }) => {
     <>
       <View style={[styles.weatherAppContainer, !darkMode && styles.altWeatherAppContainer]}>
         <View style={styles.weatherAppWrapper}>
-          <ScrollView contentContainerStyle={styles.weatherData} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => loadLocation()} />} >
+          <ScrollView contentContainerStyle={styles.weatherData}>
             {
               !forecast || !spForecast || reloading ?
                 <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
@@ -266,18 +266,16 @@ const Weather = ({ navigation }) => {
             <View style={[styles.modalTitle]}>
               <Text style={[styles.modalTitleText, searchError && { color: Constants.colorRed }]}>{searchError ? searchError : text.inputLocation}</Text>
               <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText]}>
-
-                <TextInput style={[styles.inputLocation, altColorTheme && styles.altInputLocation]} autoCapitalize='none' placeholder={forecast?.name.toLocaleUpperCase()}
-                  placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} value={inputLocation} onChangeText={location => setInputLocation(location.toLocaleUpperCase())} onSubmitEditing={() => { location !== "" && fetchWeatherData(inputLocation.trim()); setInputLocation("") }} />
-
+                <TextInput style={[styles.inputLocation, altColorTheme && styles.altInputLocation, refreshing && { color: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary }, searchError && { color: Constants.colorRed }]} autoCapitalize='characters' placeholder={forecast?.name.toLocaleUpperCase()}
+                  placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} value={inputLocation} onChangeText={location => setInputLocation(location.toLocaleUpperCase())} onSubmitEditing={() => { location !== "" && fetchWeatherData(inputLocation.trim()) }} disabled={reloading || refreshing} />
               </KeyboardAvoidingView>
             </View>
             <View style={styles.modalBtnContainer}>
               <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setModalVisible(false); setInputLocation(""); setSearchError(null) }}>
                 <Text style={[styles.modalBtnText]}>{text.close}</Text>
               </TouchableOpacity>
-              <TouchableOpacity disabled={refreshing || !validInput} style={[styles.modalBtn, altColorTheme && styles.altModalBtn, !validInput && styles.modalBtnDisabled]} onPress={() => { location !== "" && fetchWeatherData(inputLocation.trim()); setInputLocation("") }}>
-                {refreshing ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Text style={[styles.modalBtnText, !validInput && styles.modalBtnTextDisabled]}>{text.search}</Text>}
+              <TouchableOpacity disabled={reloading || refreshing || !validInput} style={[styles.modalBtn, altColorTheme && styles.altModalBtn, !validInput && styles.modalBtnDisabled]} onPress={() => { location !== "" && fetchWeatherData(inputLocation.trim()) }}>
+                {(reloading || refreshing) ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Text style={[styles.modalBtnText, !validInput && styles.modalBtnTextDisabled]}>{text.search}</Text>}
               </TouchableOpacity>
             </View>
           </View>
