@@ -157,7 +157,6 @@ export const getAppsData = (userId, storageGetItem) => {
                     type: GET_APPS_DATA,
                     appsData: data
                 })
-
             } catch (e) {
                 console.log("appsDataException-", e)
             } finally {
