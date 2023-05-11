@@ -8,7 +8,7 @@ export const UPDATE_USERNAME = "UPDATE_USERNAME"
 export const UPDATE_AVATAR = "UPDATE_AVATAR"
 export const GET_USER_DATA = "GET_USER_DATA"
 
-export const signUp = (email, password, displayName, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings, setSettingsFirebase, setListItems, setMemoScore, setAlbumItems) => {
+export const signUp = (email, password, displayName, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings, setSettings, setListItems, setMemoScore, setAlbumItems) => {
 
     return async dispatch => {
         setSignUpLoading(true)
@@ -43,7 +43,7 @@ export const signUp = (email, password, displayName, setEmailError, setModalVisi
                 const data = await response.json()
 
                 /* envio a firebase configs default de usuario */
-                dispatch(setSettingsFirebase(settings, data.localId))
+                dispatch(setSettings(settings, data.localId))
                 dispatch(setListItems(data.localId, []))
                 dispatch(setMemoScore(data.localId, "-"))
                 dispatch(setAlbumItems(data.localId, []))

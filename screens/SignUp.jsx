@@ -6,7 +6,7 @@ import Header from '../components/Header'
 import Constants from '../constants/Styles.js'
 import { LANGS } from '../constants/Langs'
 import { signUp } from '../store/actions/auth.action'
-import { setSettingsFirebase } from '../store/actions/settings.action'
+import { setSettings } from '../store/actions/settings.action'
 import { setListItems, setMemoScore, setAlbumItems } from '../store/actions/apps.action'
 
 const SignUp = ({ navigation }) => {
@@ -53,7 +53,7 @@ const SignUp = ({ navigation }) => {
     };
 
     const handleSignUp = () => {
-        dispatch(signUp(email.trim(), password, `🦊${displayName.trim()}`, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings, setSettingsFirebase, setListItems, setMemoScore, setAlbumItems))
+        dispatch(signUp(email.trim(), password, `🦊${displayName.trim()}`, setEmailError, setModalVisible, setSignUpLoading, setValidInputs, setAccountCreatedModal, setAccountEmail, settings, setSettings, setListItems, setMemoScore, setAlbumItems))
     }
 
     useEffect(() => {

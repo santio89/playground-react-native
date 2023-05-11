@@ -4,10 +4,10 @@ import TabNavigator from './TabNavigator';
 import Constants from '../constants/Styles.js'
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from "react";
-import { getSettingsFirebase, setSettingsFirebase } from "../store/actions/settings.action";
+import { getSettings, setSettings } from "../store/actions/settings.action";
 import { getAppsData } from "../store/actions/apps.action";
 import { refreshToken, getUserData } from '../store/actions/auth.action';
-import { storageGetItem } from "../utils/AsyncStorage";
+import { storageGetItem, storageSetItem } from "../utils/AsyncStorage";
 
 const MainNavigator = () => {
     const dispatch = useDispatch();
@@ -45,12 +45,12 @@ const MainNavigator = () => {
     /* cuando se cambia user se trae data de apps/settings */
     useEffect(() => {
         dispatch(getAppsData(userId, storageGetItem));
-        userId && dispatch(getSettingsFirebase(userId));
+        dispatch(getSettings(userId, storageGetItem));
     }, [userId])
 
     /* cambio settings instantaneamente y en el background se envian a firebase */
     useEffect(() => {
-        userId && dispatch(setSettingsFirebase(settings, userId))
+        dispatch(setSettings(settings, userId, storageSetItem))
     }, [settings])
 
 

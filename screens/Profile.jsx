@@ -5,7 +5,7 @@ import { LANGS } from '../constants/Langs.js'
 import Constants from '../constants/Styles.js'
 import Header from '../components/Header'
 import { logOut, refreshToken, updateAvatar, updateUsername, getUserData } from '../store/actions/auth.action.js'
-import { getSettingsFirebase } from '../store/actions/settings.action.js'
+import { getSettings } from '../store/actions/settings.action.js'
 import { getAppsData } from '../store/actions/apps.action.js'
 import Emojis from '../constants/Emojis.js'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -74,7 +74,7 @@ const Profile = ({ navigation }) => {
     const refreshUserData = () => {
         setLoading(true)
         dispatch(getUserData(token, dispatchRefreshToken))
-        dispatch(getSettingsFirebase(userId))
+        dispatch(getSettings(userId))
         dispatch(getAppsData(userId))
     }
 
