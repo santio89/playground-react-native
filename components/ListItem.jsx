@@ -6,7 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { setListItems } from '../store/actions/apps.action';
 import { storageSetItem } from '../utils/AsyncStorage';
 
-export default function ListItem({ index, userId, items, setItems, item, modalVisible, setModalVisible }) {
+export default function ListItem({ userId, items, setItems, item, modalVisible, setModalVisible }) {
     const dispatch = useDispatch()
 
     const [itemComplete, setItemComplete] = useState(item.completed);
@@ -14,7 +14,6 @@ export default function ListItem({ index, userId, items, setItems, item, modalVi
 
     const toggleItemComplete = () => {
         item.completed = !itemComplete
-        items[index].completed = !itemComplete
 
         setItemComplete(itemComplete => !itemComplete)
         setItems(items)

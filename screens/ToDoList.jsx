@@ -73,14 +73,14 @@ export default function ToDoList({ navigation }) {
 
                         <TouchableOpacity disabled={btnDisabled} onPress={() => { addItem({ id: uuid.v4(), text: input, completed: false }); setInput('') }} style={[styles.buttonAddContainer, altColorTheme && styles.buttonAddContainer, altColorTheme && styles.altButtonAddContainer, btnDisabled && styles.buttonDisabled]}>
                             <Text style={[styles.buttonAdd, , btnDisabled && { color: 'lightgray' }]}>
-                                {loading?<ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />:text.add}
+                                {loading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : text.add}
                             </Text>
                         </TouchableOpacity>
                     </KeyboardAvoidingView>
                     {appLoading ? <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <FlatList contentContainerStyle={styles.listItemsContainer}
                         data={items}
-                        renderItem={({ item, index }) => (
-                            <ListItem index={index} userId={userId} items={items} setItems={setItems} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} />
+                        renderItem={({ item }) => (
+                            <ListItem userId={userId} items={items} setItems={setItems} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} />
                         )}
                         keyExtractor={item => item.id}
                     />}
