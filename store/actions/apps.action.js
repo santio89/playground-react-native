@@ -203,6 +203,7 @@ export const getAppsData = (userId, storageGetItem) => {
                     items: []
                 })
 
+                setDataUpdated && setDataUpdated(true)
             } catch (e) {
                 console.log("error retrieving data from storage: ", e)
             } finally {
