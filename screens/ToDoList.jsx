@@ -80,7 +80,7 @@ export default function ToDoList({ navigation }) {
                     {appLoading ? <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <FlatList contentContainerStyle={styles.listItemsContainer}
                         data={items}
                         renderItem={({ item }) => (
-                            <ListItem userId={userId} items={items} setItems={setItems} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} />
+                            <ListItem userId={userId} items={items} setItems={setItems} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} text={text} />
                         )}
                         keyExtractor={item => item.id}
                     />}
