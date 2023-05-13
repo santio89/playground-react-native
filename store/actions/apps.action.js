@@ -47,9 +47,10 @@ export const setMemoScore = (userId, bestScore, storageSetItem) => {
     }
 }
 
-export const setListItems = (userId, items, storageSetItem) => {
+export const setListItems = (userId, items, storageSetItem, setLoading) => {
     if (userId) {
         return async dispatch => {
+            setLoading && setLoading(true)
             try {
                 await fetch(`${URL_API}apps/${userId}.json?auth=${userId}`, {
                     method: 'PATCH',
@@ -69,10 +70,13 @@ export const setListItems = (userId, items, storageSetItem) => {
                 })
             } catch (e) {
                 console.log("error setting list items: ", e)
+            } finally {
+                setLoading && setLoading(false)
             }
         }
     } else {
         return async dispatch => {
+            setLoading && setLoading(true)
             try {
                 await storageSetItem("pg-tdl-list", JSON.stringify(items));
 
@@ -82,6 +86,8 @@ export const setListItems = (userId, items, storageSetItem) => {
                 })
             } catch (e) {
                 console.log("error saving data to storage: ", e)
+            } finally {
+                setLoading && setLoading(false)
             }
         }
     }

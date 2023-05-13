@@ -33,13 +33,16 @@ export default function ToDoList({ navigation }) {
         item.text = item.text.trim()
         if (item.text === "") { return }
 
-        setLoading(true)
-        dispatch(setListItems(userId, [item, ...items], storageSetItem))
+        dispatch(setListItems(userId, [item, ...items], storageSetItem, setLoading))
     }
 
     const deleteItem = (id) => {
-        setLoading(true)
-        dispatch(setListItems(userId, items.filter(item => item.id != id), storageSetItem))
+        dispatch(setListItems(userId, items.filter(item => item.id != id), storageSetItem, setLoading))
+    }
+
+    const editItem = (item, editInput) => {
+        item.text = editInput
+        dispatch(setListItems(userId, items, storageSetItem, setLoading))
     }
 
 
@@ -78,7 +81,7 @@ export default function ToDoList({ navigation }) {
                     {appLoading ? <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <FlatList contentContainerStyle={styles.listItemsContainer}
                         data={items}
                         renderItem={({ item }) => (
-                            <ListItem userId={userId} items={items} setItems={setItems} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} text={text} />
+                            <ListItem userId={userId} items={items} setItems={setItems} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} text={text} editItem={editItem} loading={loading} />
                         )}
                         keyExtractor={item => item.id}
                     />}

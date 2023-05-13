@@ -6,7 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { setListItems } from '../store/actions/apps.action';
 import { storageSetItem } from '../utils/AsyncStorage';
 
-export default function ListItem({ userId, items, setItems, item, modalVisible, setModalVisible, text }) {
+export default function ListItem({ userId, items, setItems, item, modalVisible, setModalVisible, text, editItem, loading }) {
     const dispatch = useDispatch()
 
     const [itemComplete, setItemComplete] = useState(item.completed);
@@ -19,12 +19,6 @@ export default function ListItem({ userId, items, setItems, item, modalVisible, 
         item.completed = !itemComplete
 
         setItemComplete(itemComplete => !itemComplete)
-        setItems(items)
-        dispatch(setListItems(userId, items, storageSetItem))
-    }
-
-    const editTask = () => {
-        item.text = input
         setItems(items)
         dispatch(setListItems(userId, items, storageSetItem))
     }
@@ -60,14 +54,14 @@ export default function ListItem({ userId, items, setItems, item, modalVisible, 
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
                         <View style={styles.modalTitle}>
                             <Text style={styles.modalTitleText}>{text.editTask}</Text>
-                            <TextInput selection={{ start: input.length, end: input.length }} value={input} style={styles.modalText} placeholder={text.enterTask} placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} onChangeText={input => setInput(input)} onSubmitEditing={() => { editTask() }} onContentSizeChange={(e) => { }} />
+                            <TextInput selection={{ start: input.length, end: input.length }} value={input} style={styles.modalText} placeholder={text.enterTask} placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} onChangeText={input => setInput(input)} onSubmitEditing={() => { editItem(item, input), setEditMode(false) }} onContentSizeChange={(e) => { }} />
                         </View>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setInput(item.text); setEditMode(false) }}>
                                 <Text style={[styles.modalBtnText]} >{text.cancel}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity disabled={input.trim() === ""} style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { editTask(), setEditMode(false) }}>
-                                <Text style={[styles.modalBtnText]}>{"OK"}</Text>
+                            <TouchableOpacity disabled={loading || input.trim() === ""} style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { editItem(item, input), setEditMode(false) }}>
+                                <Text style={[styles.modalBtnText, (loading || input.trim() === "") && { color: 'darkgray' }]}>{loading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : "OK"}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
