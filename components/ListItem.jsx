@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderWidth: 2,
         width: '100%',
-        minHeight: 62
+        minHeight: 100
     },
     listItemModalSelected: {
         backgroundColor: 'gray',
