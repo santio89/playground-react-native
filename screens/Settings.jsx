@@ -128,7 +128,7 @@ const Settings = ({ navigation }) => {
                         <View style={styles.settingsItem}>
                             <Text style={[styles.settingsItemLabel]}><Text style={[styles.settingsItemIndicator, altColorTheme && styles.altSettingsItemIndicator]}>•&nbsp;</Text><Text>{text.tryMobile}: </Text></Text>
                             <View style={[styles.settingsItemTextWrapper]}>
-                                <TouchableOpacity onPress={() => { Linking.openURL("https://drive.google.com/uc?export=download&id=1HfmYJ41hk3kR_3fIV2gFn2XBnQbgghJu") }} style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, styles.itemSelected]} >
+                                <TouchableOpacity onPress={() => { Linking.openURL("https://drive.google.com/uc?export=download&id=1_reJ1_YaHsO0xbW4VRbT998Nx-smfn2G") }} style={[styles.settingsItemTextButton, altColorTheme && styles.altSettingsItemTextButton, styles.itemSelected]} >
                                     <LinearGradient
                                         colors={[altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark]}
                                         start={{ x: 0, y: 0 }}
