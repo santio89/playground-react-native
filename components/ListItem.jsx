@@ -54,13 +54,13 @@ export default function ListItem({ userId, items, setItems, item, modalVisible, 
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
                         <View style={styles.modalTitle}>
                             <Text style={styles.modalTitleText}>{text.editTask}</Text>
-                            <TextInput selection={{ start: input.length, end: input.length }} value={input} style={styles.modalText} placeholder={text.enterTask} placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} onChangeText={input => setInput(input)} onSubmitEditing={() => { editItem(item, input), setEditMode(false) }} onContentSizeChange={(e) => { }} />
+                            <TextInput value={input} style={styles.modalText} placeholder={text.enterTask} placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} onChangeText={input => setInput(input)} onSubmitEditing={() => { editItem(item, input), setEditMode(false), setInput(input => input.trim()) }} />
                         </View>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setInput(item.text); setEditMode(false) }}>
                                 <Text style={[styles.modalBtnText]} >{text.cancel}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity disabled={loading || input.trim() === ""} style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { editItem(item, input), setEditMode(false) }}>
+                            <TouchableOpacity disabled={loading || input.trim() === ""} style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { editItem(item, input), setEditMode(false), setInput(input => input.trim()) }}>
                                 <Text style={[styles.modalBtnText, (loading || input.trim() === "") && { color: 'darkgray' }]}>{loading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : "OK"}</Text>
                             </TouchableOpacity>
                         </View>
