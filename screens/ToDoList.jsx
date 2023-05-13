@@ -41,7 +41,7 @@ export default function ToDoList({ navigation }) {
     }
 
     const editItem = (item, editInput) => {
-        item.text = editInput
+        item.text = editInput.trim()
         dispatch(setListItems(userId, items, storageSetItem, setLoading))
     }
 
