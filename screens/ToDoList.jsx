@@ -6,8 +6,7 @@ import ListItem from '../components/ListItem';
 import { storageSetItem } from '../utils/AsyncStorage';
 import Constants from '../constants/Styles';
 import { LANGS } from '../constants/Langs';
-import { setListItems, getAppsData } from '../store/actions/apps.action';
-import { storageGetItem } from '../utils/AsyncStorage';
+import { setListItems } from '../store/actions/apps.action';
 
 export default function ToDoList({ navigation }) {
     const dispatch = useDispatch()
@@ -70,7 +69,6 @@ export default function ToDoList({ navigation }) {
                 <View style={styles.listContainer}>
                     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.inputContainer}>
                         <TextInput disabled={loading || appLoading} value={input} onChangeText={input => setInput(input)} onSubmitEditing={() => { addItem({ id: uuid.v4(), text: input }); setInput('') }} placeholder={text.newTask} placeholderTextColor="#808080" style={[styles.input, !darkMode && styles.colorDark, altColorTheme && styles.altInput, (loading || appLoading) && { borderBottomColor: 'dimgray' }]} />
-
                         <TouchableOpacity disabled={btnDisabled} onPress={() => { addItem({ id: uuid.v4(), text: input, completed: false }); setInput('') }} style={[styles.buttonAddContainer, altColorTheme && styles.buttonAddContainer, altColorTheme && styles.altButtonAddContainer, btnDisabled && styles.buttonDisabled]}>
                             <Text style={[styles.buttonAdd, , btnDisabled && { color: 'lightgray' }]}>
                                 {loading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : text.add}
@@ -84,6 +82,7 @@ export default function ToDoList({ navigation }) {
                         )}
                         keyExtractor={item => item.id}
                     />}
+
                     <Modal visible={modalVisible.active} transparent={true} animationType='fade'>
                         <SafeAreaView style={styles.modal}>
                             <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>

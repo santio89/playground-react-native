@@ -288,7 +288,7 @@ const Weather = ({ navigation }) => {
           <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
             <View style={styles.modalTitle}>
               <Text style={styles.modalTitleText}>{text.forecast}: {forecast?.name?.toLocaleUpperCase()}</Text>
-              <KeyboardAvoidingView style={[styles.modalText, altColorTheme && styles.altModalText, { minHeight: 340 }]}>
+              <View style={[styles.modalText, altColorTheme && styles.altModalText, { minHeight: 340 }]}>
                 {fetchingExtendedForecast ?
                   <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> :
                   <FlatList style={styles.calendarContainer}
@@ -312,9 +312,8 @@ const Weather = ({ navigation }) => {
                     keyExtractor={(_, index) => index}
                   />
                 }
-              </KeyboardAvoidingView>
+              </View>
             </View>
-
             <View style={styles.modalBtnContainer}>
               <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setCalendarModal(false) }}>
                 <Text style={[styles.modalBtnText]}>{text.close}</Text>
@@ -323,7 +322,6 @@ const Weather = ({ navigation }) => {
           </View>
         </SafeAreaView>
       </Modal>
-
     </>
   )
 }

@@ -65,7 +65,8 @@ export const LANGS = [{
         tryMobile: "MOBILE APP",
         downloadApk: "DOWNLOAD APK",
         refreshUser: "REFRESH DATA",
-        editTask: "EDIT TASK"
+        editTask: "EDIT TASK",
+        enterTask: "ENTER TASK"
     }
 }, {
     id: 2, lang: "spanish", text: {
@@ -134,6 +135,7 @@ export const LANGS = [{
         tryMobile: "APP MÓVIL",
         downloadApk: "DESCARGAR APK",
         refreshUser: "REFRESCAR DATOS",
-        editTask: "EDITAR TAREA"
+        editTask: "EDITAR TAREA",
+        enterTask: "INGRESAR TAREA"
     }
 }]

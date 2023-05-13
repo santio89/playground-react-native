@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { Text, StyleSheet, TouchableOpacity, View, TextInput, Modal, SafeAreaView } from 'react-native'
+import { useState } from 'react'
+import { Text, StyleSheet, TouchableOpacity, View, TextInput, Modal, SafeAreaView, ActivityIndicator } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux';
 import Constants from '../constants/Styles'
 import { MaterialIcons } from '@expo/vector-icons';
@@ -23,15 +23,16 @@ export default function ListItem({ userId, items, setItems, item, modalVisible, 
         dispatch(setListItems(userId, items, storageSetItem))
     }
 
-    useEffect(() => {
-        setInput(item.text)
-    }, [editMode])
+    const editTask = () => {
+        item.text = input
+        setItems(items)
+        dispatch(setListItems(userId, items, storageSetItem))
+    }
 
     return (
         <>
             <View style={styles.listItemContainer}>
                 <TouchableOpacity style={[styles.listItem, itemComplete && styles.listItemComplete, altColorTheme && styles.altListItem, itemComplete && altColorTheme && styles.altListItemComplete, modalVisible.active && modalVisible.id === item.id && styles.listItemModalSelected]} onPress={toggleItemComplete}>
-
                     <Text style={[styles.listItemText, itemComplete && { color: 'darkgray' }]}>
                         <Text style={[styles.listItemIndicator, altColorTheme && styles.altListItemIndicator, itemComplete && { color: 'darkgray' }, modalVisible.active && modalVisible.id === item.id && { color: 'dimgray' }]}>
                             •&nbsp;
@@ -39,15 +40,13 @@ export default function ListItem({ userId, items, setItems, item, modalVisible, 
                         <Text style={[itemComplete && [styles.lineThrough, { color: 'darkgray' }], modalVisible.active && modalVisible.id === item.id && { color: 'lightgray' }]}>{item.text}
                         </Text>
                     </Text>
-
-
                     <View style={{ padding: 4, justifyContent: 'center', alignItems: 'center' }}>
                         <TouchableOpacity disabled={itemComplete} onPress={() => { setEditMode(true) }}>
                             <View style={{ paddingBottom: 2, justifyContent: 'center', alignItems: 'center' }}>
                                 <MaterialIcons name="mode-edit" size={Constants.fontLgg} color={(itemComplete || (modalVisible.active && modalVisible.id === item.id)) ? 'dimgray' : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark)} />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => editMode ? dispatchEdit() : setModalVisible({ active: true, id: item.id })}>
+                        <TouchableOpacity onPress={() => setModalVisible({ active: true, id: item.id })}>
                             <View style={{ paddingTop: 2, justifyContent: 'center', alignItems: 'center' }}>
                                 <MaterialIcons name="delete" size={Constants.fontLgg} color={modalVisible.active && modalVisible.id === item.id ? 'dimgray' : Constants.colorRed} />
                             </View>
@@ -59,13 +58,16 @@ export default function ListItem({ userId, items, setItems, item, modalVisible, 
             <Modal visible={editMode} transparent={true} animationType='fade'>
                 <SafeAreaView style={styles.modal}>
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
-                        <Text style={styles.modalTitle}>{text.editTask}?</Text>
+                        <View style={styles.modalTitle}>
+                            <Text style={styles.modalTitleText}>{text.editTask}</Text>
+                            <TextInput selection={{ start: input.length, end: input.length }} value={input} style={styles.modalText} placeholder={text.enterTask} placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} onChangeText={input => setInput(input)} onSubmitEditing={() => { editTask() }} onContentSizeChange={(e) => { }} />
+                        </View>
                         <View style={styles.modalBtnContainer}>
-                            <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setEditMode(false) }}>
+                            <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setInput(item.text); setEditMode(false) }}>
                                 <Text style={[styles.modalBtnText]} >{text.cancel}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity disabled={input.trim() === ""} style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setEditMode(false) }}>
-                                <Text style={[styles.modalBtnText]}>OK</Text>
+                            <TouchableOpacity disabled={input.trim() === ""} style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { editTask(), setEditMode(false) }}>
+                                <Text style={[styles.modalBtnText]}>{"OK"}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -153,13 +155,34 @@ const styles = StyleSheet.create({
         minHeight: 300,
     },
     modalTitle: {
+        marginBottom: 20,
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center'
+    },
+    modalTitleText: {
         fontSize: Constants.fontLg,
         fontWeight: 'bold',
         fontFamily: Constants.fontPrimaryBold,
         color: Constants.colorWhite,
-        marginBottom: 20,
+    },
+    modalText: {
+        fontFamily: Constants.fontPrimary,
+        backgroundColor: Constants.colorPrimaryDark,
+        padding: 8,
+        borderRadius: 4,
         width: '100%',
-        textAlign: 'center'
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: 20,
+        alignItems: 'center',
+        textAlign: 'center',
+        color: Constants.colorWhite,
+        fontSize: Constants.fontLg,
+        fontFamily: Constants.fontPrimary,
     },
     modalBtnContainer: {
         flexDirection: 'row',
