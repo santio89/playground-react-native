@@ -114,7 +114,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-        /* padding: 10 */
     },
     listContainer: {
         flex: 1,
@@ -146,6 +145,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: Constants.colorPrimaryDark,
         padding: 8,
+        display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         width: 114
@@ -159,7 +159,6 @@ const styles = StyleSheet.create({
         fontFamily: Constants.fontPrimary,
         color: Constants.colorWhite,
         fontSize: Constants.fontMd,
-        width: '100%',
         textAlign: 'center',
         display: 'flex',
         justifyContent: 'center',
