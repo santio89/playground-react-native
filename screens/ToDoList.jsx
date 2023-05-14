@@ -89,7 +89,7 @@ export default function ToDoList({ navigation }) {
                     <Modal visible={modalVisible.active} transparent={true} animationType='fade'>
                         <SafeAreaView style={styles.modal}>
                             <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
-                                <Text style={styles.modalTitle}>{text.deleteTask}?</Text>
+                                <Text style={styles.modalTitle}>{text.deleteTask}</Text>
                                 <View style={styles.modalBtnContainer}>
                                     <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => setModalVisible({ active: false, id: null })}>
                                         <Text style={[styles.modalBtnText]} >{text.cancel}</Text>
