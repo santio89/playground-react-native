@@ -26,7 +26,7 @@ ENV_WEATHER_API_KEY = openweather api key for forecast
 ```
 
 ## Apps
->· TO DO LIST: add/remove tasks
+>· TO DO LIST: add/edit/remove tasks
 ><br/>· MEMO GAME: memory card game
 ><br/>· CALCULATOR: basic math operations
 ><br/>· ALBUM: add/remove photos
