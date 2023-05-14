@@ -60,8 +60,8 @@ export default function ListItem({ userId, items, setItems, item, modalVisible, 
                             <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setInput(item.text); setEditMode(false) }}>
                                 <Text style={[styles.modalBtnText]} >{text.cancel}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity disabled={loading || input.trim() === "" || input.trim() === item.text} style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { editItem(item, input), setEditMode(false), setInput(input => input.trim()) }}>
-                                <Text style={[styles.modalBtnText, (loading || input.trim() === "") && { color: 'darkgray' }]}>{loading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : "OK"}</Text>
+                            <TouchableOpacity disabled={loading || input.trim() === "" || input.trim() === item.text} style={[styles.modalBtn, altColorTheme && styles.altModalBtn, (loading || input.trim() === "" || input.trim() === item.text) && { borderColor: 'darkgray' }]} onPress={() => { editItem(item, input), setEditMode(false), setInput(input => input.trim()) }}>
+                                <Text style={[styles.modalBtnText, (loading || input.trim() === "" || input.trim() === item.text) && { color: 'darkgray' }]}>{loading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : "OK"}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
