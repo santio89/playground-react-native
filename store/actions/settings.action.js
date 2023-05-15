@@ -1,8 +1,9 @@
+import { URL_API } from "../../constants/Database"
+
 export const SELECT_LANG = 'SELECT_LANG'
 export const SELECT_DARKMODE = "SELECT_DARKMODE"
 export const SELECT_COLORTHEME = "SELECT_COLORTHEME"
 export const SET_SETTINGS = "SEND_SETTINGS"
-import { URL_API } from "../../constants/Database"
 
 export const selectLang = (lang) => ({
     type: SELECT_LANG,
