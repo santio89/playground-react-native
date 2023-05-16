@@ -18,13 +18,6 @@ export default function ListItem({ index, userId, items, setItems, item, modalVi
     const toggleItemComplete = () => {
         item.completed = !itemComplete
 
-        if (item.completed && exchangeObj.index1 === index) {
-            setExchangeObj({ ...exchangeObj, index1: null })
-        }
-        if (item.completed && exchangeObj.index2 === index) {
-            setExchangeObj({ ...exchangeObj, index2: null })
-        }
-
         setItemComplete(itemComplete => !itemComplete)
         setItems(items)
         dispatch(setListItems(userId, items, storageSetItem))
@@ -46,11 +39,12 @@ export default function ListItem({ index, userId, items, setItems, item, modalVi
         }
     }
 
+    
     return (
         <>
             <View style={styles.listItemContainer}>
-                <TouchableOpacity disabled={loading} style={[styles.listItem, itemComplete && styles.listItemComplete, altColorTheme && styles.altListItem, itemComplete && altColorTheme && styles.altListItemComplete, modalVisible.active && modalVisible.id === item.id && styles.listItemModalSelected, editMode && { borderStyle: 'dotted' }]} onPress={toggleItemComplete}>
-                    <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row', alignSelf: 'flex-end' }}>
+                <TouchableOpacity disabled={loading} style={[styles.listItem, itemComplete && styles.listItemComplete, altColorTheme && styles.altListItem, itemComplete && altColorTheme && styles.altListItemComplete, modalVisible.active && modalVisible.id === item.id && styles.listItemModalSelected, editMode && { borderStyle: 'dotted' }, (exchangeObj.index1 === index || exchangeObj.index2 === index) && {borderStyle: 'dotted'}]} onPress={toggleItemComplete}>
+                    <View style={styles.itemBtnContainer}>
                         <TouchableOpacity disabled={loading} onPress={() => { handleExchange() }}>
                             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                                 <MaterialIcons name="swap-vert" size={Constants.fontLg} color={((modalVisible.active && modalVisible.id === item.id)) ? 'dimgray' : (exchangeObj.index1 === index || exchangeObj.index2 === index ? Constants.colorWhite : (itemComplete ? (altColorTheme ? Constants.colorSecondary : Constants.colorPrimary) : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark)))} />
@@ -157,7 +151,15 @@ const styles = StyleSheet.create({
     lineThrough: {
         textDecorationLine: 'line-through',
     },
-
+    itemBtnContainer: { 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        flexDirection: 'row', 
+        alignSelf: 'flex-end',
+        height: 28,
+        minHeight: 28,
+        maxHeight: 28 
+    },
     modal: {
         flex: 1,
         justifyContent: 'center',

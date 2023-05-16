@@ -44,6 +44,7 @@ export default function ToDoList({ navigation }) {
 
     const editItem = (item, editInput) => {
         item.text = editInput.trim()
+        
         dispatch(setListItems(userId, items, storageSetItem, setLoading))
     }
 
@@ -52,7 +53,6 @@ export default function ToDoList({ navigation }) {
         const mItem = items[index1]
         mItems[index1] = { ...mItems[index2] }
         mItems[index2] = { ...mItem }
-
 
         dispatch(setListItems(userId, mItems, storageSetItem, setLoading))
     }
