@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View, ScrollView, SafeAreaView, Dimensions, TouchableOpacity, Image, Modal, Platform, ActivityIndicator } from 'react-native'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setAlbumItems, getAppsData } from '../store/actions/apps.action'
+import { setAlbumItems } from '../store/actions/apps.action'
 import Constants from '../constants/Styles'
 import { LANGS } from '../constants/Langs'
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import uuid from 'react-native-uuid';
 import * as ImagePicker from 'expo-image-picker'
-import { storageSetItem, storageGetItem } from '../utils/AsyncStorage'
+import { storageSetItem } from '../utils/AsyncStorage'
 import Alert from '../utils/Alert'
 
 const Album = ({ navigation }) => {
@@ -129,6 +129,26 @@ const Album = ({ navigation }) => {
     })
   }, [text])
 
+  const returnNext = (id) => {
+    const index = uriList.findIndex(item => item.id === id)
+
+    if (uriList[index + 1]) {
+      return uriList[index + 1]
+    } else {
+      return uriList[0]
+    }
+  }
+
+  const returnPrev = (id) => {
+    const index = uriList.findIndex(item => item.id === id)
+
+    if (uriList[index - 1]) {
+      return uriList[index - 1]
+    } else {
+      return uriList[uriList.length - 1]
+    }
+  }
+
 
   return (
     <View style={[styles.albumWrapper, !darkMode && styles.backgroundWhite]}>
@@ -180,12 +200,28 @@ const Album = ({ navigation }) => {
           </View>
         </SafeAreaView>
       </Modal>
+
       <Modal visible={modalImg.active} transparent={true} animationType='fade'>
-        <ScrollView contentContainerStyle={{ flex: 1, backgroundColor: altColorTheme ? Constants.colorSecondaryOpacity : Constants.colorPrimaryOpacity, justifyContent: 'center', alignItems: 'center', zIndex: 999 }}>
-          <Image style={styles.albumModalImg} source={{ uri: modalImg.uri }} />
-          <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => setModalImg({ active: false, id: null, uri: null })}>
-            <Text style={[styles.modalBtnText]} >{text.close}</Text>
-          </TouchableOpacity>
+        <ScrollView contentContainerStyle={{ flex: 1, backgroundColor: 'rgba(20,20,20,.8)', justifyContent: 'center', alignItems: 'center', zIndex: 999 }}>
+          <View style={{ flex: 1, width: '80%', minWidth: 280, maxWidth: 680, justifyContent: 'center', alignItems: 'center' }}>
+            <Image style={[styles.albumModalImg]} source={{ uri: modalImg.uri }} />
+            <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ flexDirection: 'row', backgroundColor: Constants.colorPrimaryDark, borderRadius: 4, borderWidth: 2, borderColor: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, marginHorizontal: 4 }}>
+                <TouchableOpacity style={{ padding: 8, width: 58 }} onPress={() => { const prevImg = returnPrev(modalImg.id); setModalImg({ active: true, id: prevImg.id, uri: prevImg.uri }) }}>
+                  <MaterialIcons name="navigate-before" size={Constants.fontXl} color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={{ padding: 8, width: 58 }} onPress={() => { const nextImg = returnNext(modalImg.id); setModalImg({ active: true, id: nextImg.id, uri: nextImg.uri }) }}>
+                  <MaterialIcons name="navigate-next" size={Constants.fontXl} color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
+                </TouchableOpacity>
+              </View>
+              <View style={{ marginHorizontal: 4 }}>
+                <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn, { padding: 8, borderColor: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, borderWidth: 2, margin: 0 }]} onPress={() => setModalImg({ active: false, id: null, uri: null })}>
+                  <MaterialIcons name="close" size={Constants.fontXl} color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
         </ScrollView>
       </Modal>
     </View>
@@ -266,12 +302,10 @@ const styles = StyleSheet.create({
   },
   albumModalImg: {
     borderRadius: 8,
-    width: '80%',
-    minWidth: 280,
-    maxWidth: 500,
-    aspectRatio: 1,
+    width: '100%',
+    aspectRatio: 4 / 3,
     position: 'relative',
-    marginVertical: 20
+    marginVertical: 8
   },
   albumImgBtn: {
     margin: 10,
@@ -279,7 +313,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-
   modal: {
     flex: 1,
     justifyContent: 'center',
