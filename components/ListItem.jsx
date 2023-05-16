@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderWidth: 2,
         width: '100%',
-        minHeight: 100
+        minHeight: 92
     },
     listItemModalSelected: {
         backgroundColor: 'gray',
@@ -141,10 +141,10 @@ const styles = StyleSheet.create({
         color: Constants.colorWhite,
         maxWidth: '100%',
         fontFamily: Constants.fontPrimary,
-        paddingTop: 8,
-        paddingBottom: 16,
-        paddingRight: 8,
-        paddingLeft: 8
+        padding: 8,
+        paddingTop: 4,
+        paddingBottom: 4,
+        marginBottom: 28,
     },
     listItemDelete: {
         fontWeight: 'bold',
