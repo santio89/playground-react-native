@@ -49,16 +49,16 @@ export default function ListItem({ index, userId, items, setItems, item, modalVi
     return (
         <>
             <View style={styles.listItemContainer}>
-                <TouchableOpacity disabled={loading} style={[styles.listItem, itemComplete && styles.listItemComplete, altColorTheme && styles.altListItem, itemComplete && altColorTheme && styles.altListItemComplete, modalVisible.active && modalVisible.id === item.id && styles.listItemModalSelected]} onPress={toggleItemComplete}>
+                <TouchableOpacity disabled={loading} style={[styles.listItem, itemComplete && styles.listItemComplete, altColorTheme && styles.altListItem, itemComplete && altColorTheme && styles.altListItemComplete, modalVisible.active && modalVisible.id === item.id && styles.listItemModalSelected, editMode && { borderStyle: 'dotted' }]} onPress={toggleItemComplete}>
                     <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row', alignSelf: 'flex-end' }}>
-                        <TouchableOpacity disabled={itemComplete || loading} onPress={() => { handleExchange() }}>
+                        <TouchableOpacity disabled={loading} onPress={() => { handleExchange() }}>
                             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                <MaterialIcons name="swap-vert" size={Constants.fontLg} color={(itemComplete || (modalVisible.active && modalVisible.id === item.id)) ? 'dimgray' : (exchangeObj.index1 === index || exchangeObj.index2 === index ? Constants.colorWhite : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark))} />
+                                <MaterialIcons name="swap-vert" size={Constants.fontLg} color={((modalVisible.active && modalVisible.id === item.id)) ? 'dimgray' : (exchangeObj.index1 === index || exchangeObj.index2 === index ? Constants.colorWhite : (itemComplete ? (altColorTheme ? Constants.colorSecondary : Constants.colorPrimary) : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark)))} />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity disabled={itemComplete || loading} onPress={() => { setEditMode(true) }}>
+                        <TouchableOpacity disabled={loading} onPress={() => { setEditMode(true) }}>
                             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                <MaterialIcons name="mode-edit" size={Constants.fontLg} color={(itemComplete || (modalVisible.active && modalVisible.id === item.id)) ? 'dimgray' : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark)} />
+                                <MaterialIcons name="mode-edit" size={Constants.fontLg} color={((modalVisible.active && modalVisible.id === item.id)) ? 'dimgray' : (itemComplete ? (altColorTheme ? Constants.colorSecondary : Constants.colorPrimary) : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark))} />
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity disabled={loading} onPress={() => setModalVisible({ active: true, id: item.id })}>
