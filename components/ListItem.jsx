@@ -6,7 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { setListItems } from '../store/actions/apps.action';
 import { storageSetItem } from '../utils/AsyncStorage';
 
-export default function ListItem({ userId, items, setItems, item, modalVisible, setModalVisible, text, editItem, loading }) {
+export default function ListItem({ index, userId, items, setItems, item, modalVisible, setModalVisible, text, editItem, loading, exchangeObj, setExchangeObj }) {
     const dispatch = useDispatch()
 
     const [itemComplete, setItemComplete] = useState(item.completed);
@@ -18,15 +18,55 @@ export default function ListItem({ userId, items, setItems, item, modalVisible, 
     const toggleItemComplete = () => {
         item.completed = !itemComplete
 
+        if (item.completed && exchangeObj.index1 === index) {
+            setExchangeObj({ ...exchangeObj, index1: null })
+        }
+        if (item.completed && exchangeObj.index2 === index) {
+            setExchangeObj({ ...exchangeObj, index2: null })
+        }
+
         setItemComplete(itemComplete => !itemComplete)
         setItems(items)
         dispatch(setListItems(userId, items, storageSetItem))
     }
 
+    const handleExchange = () => {
+        if (exchangeObj.index1 === index) {
+            setExchangeObj({ ...exchangeObj, index1: null })
+        }
+        if (exchangeObj.index2 === index) {
+            setExchangeObj({ ...exchangeObj, index2: null })
+        }
+        if (exchangeObj.index1 !== index && exchangeObj.index2 !== index) {
+            if (exchangeObj.index1 === null) {
+                setExchangeObj({ ...exchangeObj, index1: index })
+            } else if (exchangeObj.index2 === null) {
+                setExchangeObj({ ...exchangeObj, index2: index })
+            }
+        }
+    }
+
     return (
         <>
             <View style={styles.listItemContainer}>
-                <TouchableOpacity style={[styles.listItem, itemComplete && styles.listItemComplete, altColorTheme && styles.altListItem, itemComplete && altColorTheme && styles.altListItemComplete, modalVisible.active && modalVisible.id === item.id && styles.listItemModalSelected]} onPress={toggleItemComplete}>
+                <TouchableOpacity disabled={loading} style={[styles.listItem, itemComplete && styles.listItemComplete, altColorTheme && styles.altListItem, itemComplete && altColorTheme && styles.altListItemComplete, modalVisible.active && modalVisible.id === item.id && styles.listItemModalSelected]} onPress={toggleItemComplete}>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row', alignSelf: 'flex-end' }}>
+                        <TouchableOpacity disabled={itemComplete || loading} onPress={() => { handleExchange() }}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                <MaterialIcons name="swap-vert" size={Constants.fontLg} color={(itemComplete || (modalVisible.active && modalVisible.id === item.id)) ? 'dimgray' : (exchangeObj.index1 === index || exchangeObj.index2 === index ? Constants.colorWhite : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark))} />
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity disabled={itemComplete || loading} onPress={() => { setEditMode(true) }}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                <MaterialIcons name="mode-edit" size={Constants.fontLg} color={(itemComplete || (modalVisible.active && modalVisible.id === item.id)) ? 'dimgray' : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark)} />
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity disabled={loading} onPress={() => setModalVisible({ active: true, id: item.id })}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                <MaterialIcons name="delete" size={Constants.fontLg} color={modalVisible.active && modalVisible.id === item.id ? 'dimgray' : Constants.colorRed} />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                     <Text style={[styles.listItemText, itemComplete && { color: 'darkgray' }]}>
                         <Text style={[styles.listItemIndicator, altColorTheme && styles.altListItemIndicator, itemComplete && { color: 'darkgray' }, modalVisible.active && modalVisible.id === item.id && { color: 'dimgray' }]}>
                             •&nbsp;
@@ -34,18 +74,7 @@ export default function ListItem({ userId, items, setItems, item, modalVisible, 
                         <Text style={[itemComplete && [styles.lineThrough, { color: 'darkgray' }], modalVisible.active && modalVisible.id === item.id && { color: 'lightgray' }]}>{item.text}
                         </Text>
                     </Text>
-                    <View style={{ padding: 4, justifyContent: 'center', alignItems: 'center' }}>
-                        <TouchableOpacity disabled={itemComplete} onPress={() => { setEditMode(true) }}>
-                            <View style={{ paddingBottom: 2, justifyContent: 'center', alignItems: 'center' }}>
-                                <MaterialIcons name="mode-edit" size={Constants.fontLgg} color={(itemComplete || (modalVisible.active && modalVisible.id === item.id)) ? 'dimgray' : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark)} />
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setModalVisible({ active: true, id: item.id })}>
-                            <View style={{ paddingTop: 2, justifyContent: 'center', alignItems: 'center' }}>
-                                <MaterialIcons name="delete" size={Constants.fontLgg} color={modalVisible.active && modalVisible.id === item.id ? 'dimgray' : Constants.colorRed} />
-                            </View>
-                        </TouchableOpacity>
-                    </View>
+
                 </TouchableOpacity>
             </View>
 
@@ -83,10 +112,9 @@ const styles = StyleSheet.create({
         backgroundColor: Constants.colorPrimary,
         borderColor: Constants.colorPrimaryDark,
         borderRadius: 4,
-        padding: 8,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
         borderStyle: 'solid',
         borderWidth: 2,
         width: '100%',
@@ -111,8 +139,12 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: Constants.fontMd,
         color: Constants.colorWhite,
-        maxWidth: '90%',
-        fontFamily: Constants.fontPrimary
+        maxWidth: '100%',
+        fontFamily: Constants.fontPrimary,
+        paddingTop: 8,
+        paddingBottom: 16,
+        paddingRight: 8,
+        paddingLeft: 8
     },
     listItemDelete: {
         fontWeight: 'bold',

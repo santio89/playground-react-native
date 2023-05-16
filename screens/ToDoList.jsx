@@ -28,6 +28,8 @@ export default function ToDoList({ navigation }) {
     const appLoading = useSelector(state => state.apps.isLoading)
     const [loading, setLoading] = useState(false)
 
+    const [exchangeObj, setExchangeObj] = useState({ index1: null, index2: null })
+
 
     const addItem = (item) => {
         item.text = item.text.trim()
@@ -45,9 +47,24 @@ export default function ToDoList({ navigation }) {
         dispatch(setListItems(userId, items, storageSetItem, setLoading))
     }
 
+    const exchangeItem = (index1, index2) => {
+        const mItems = [...items]
+        const mItem = items[index1]
+        mItems[index1] = { ...mItems[index2] }
+        mItems[index2] = { ...mItem }
+
+
+        dispatch(setListItems(userId, mItems, storageSetItem, setLoading))
+    }
+
+
+    useEffect(() => {
+        exchangeObj.index1 !== null && exchangeObj.index2 !== null && exchangeItem(exchangeObj.index1, exchangeObj.index2)
+    }, [exchangeObj])
 
     useEffect(() => {
         setItems(listItems)
+        setExchangeObj({ index1: null, index2: null })
         setLoading(false)
     }, [listItems])
 
@@ -80,8 +97,8 @@ export default function ToDoList({ navigation }) {
                     </KeyboardAvoidingView>
                     {appLoading ? <ActivityIndicator size="large" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <FlatList contentContainerStyle={styles.listItemsContainer}
                         data={items}
-                        renderItem={({ item }) => (
-                            <ListItem userId={userId} items={items} setItems={setItems} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} text={text} editItem={editItem} loading={loading} />
+                        renderItem={({ item, index }) => (
+                            <ListItem index={index} userId={userId} items={items} setItems={setItems} item={item} deleteItem={deleteItem} modalVisible={modalVisible} setModalVisible={setModalVisible} text={text} editItem={editItem} loading={loading} exchangeObj={exchangeObj} setExchangeObj={setExchangeObj} />
                         )}
                         keyExtractor={item => item.id}
                     />}
