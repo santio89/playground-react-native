@@ -176,10 +176,10 @@ const Album = ({ navigation }) => {
                 uriList.map((item) => (
                   item && <TouchableOpacity disabled={itemDeleting === item.id} key={item.id} style={[styles.albumImgBtn, Platform.OS === 'web' && modalVisible.active && modalVisible.id === item.id && { filter: 'grayscale(1)' }, Platform.OS === 'web' && itemDeleting === item.id && { filter: 'grayscale(1)' }]} onPress={() => { setModalImg({ active: true, id: item.id, uri: item.uri }) }}>
                     <Image style={styles.albumImg} source={item.uri && item.uri !== "" ? { uri: item.uri } : require('../assets/icon.png')} />
-                    <TouchableOpacity disabled={itemDeleting === item.id} style={{ position: 'absolute', bottom: -16, right: -16 }} onPress={() => setModalVisible({ active: true, id: item.id })}>
+                    <TouchableOpacity disabled={itemDeleting === item.id} style={{ position: 'absolute', bottom: -8, right: -8 }} onPress={() => setModalVisible({ active: true, id: item.id })}>
                       <View style={{ padding: 4, justifyContent: 'center', alignItems: 'center' }}>
                         {itemDeleting === item.id ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} /> :
-                          <MaterialIcons name="delete" size={Constants.fontLgg} color={modalVisible.active && modalVisible.id === item.id ? 'dimgray' : Constants.colorRed} />
+                          <MaterialIcons name="delete" size={Constants.fontLg} color={modalVisible.active && modalVisible.id === item.id ? 'dimgray' : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark)} />
                         }
                       </View>
                     </TouchableOpacity>
