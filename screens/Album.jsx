@@ -75,7 +75,8 @@ const Album = ({ navigation }) => {
     }
 
     setLoading(true)
-    dispatch(setAlbumItems(userId, [{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image?.assets[0].base64}` : image?.assets[0].uri }, ...uriList], storageSetItem))
+    const imgNew = { id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image?.assets[0].base64}` : image?.assets[0].uri }
+    dispatch(setAlbumItems(userId, [imgNew, ...uriList], storageSetItem))
   }
 
   const handleUploadImage = async () => {
@@ -84,18 +85,21 @@ const Album = ({ navigation }) => {
 
     const image = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
       base64: true,
+      allowsMultipleSelection: true,
     })
 
-    if (image?.assets === null || undefined) {
+
+    if (image?.assets === null || image?.assets === undefined) {
       return
     }
 
     setLoading(true)
-    dispatch(setAlbumItems(userId, [{ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${image?.assets[0].base64}` : image?.assets[0].uri }, ...uriList], storageSetItem))
+    const assets = image.assets
+    const imgArray = assets.map((asset) => ({ id: uuid.v4(), uri: Platform.OS !== 'web' ? `data:image/jpeg;base64,${asset.base64}` : asset.uri })).toReversed()
+    dispatch(setAlbumItems(userId, [...imgArray, ...uriList], storageSetItem))
   }
 
   const deleteItem = (id) => {
