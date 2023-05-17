@@ -10,6 +10,7 @@ export default function ListItem({ index, userId, items, setItems, item, modalVi
     const dispatch = useDispatch()
 
     const [itemComplete, setItemComplete] = useState(item.completed);
+    const [important, setImportant] = useState(item.important)
     const altColorTheme = useSelector(state => state.settings.altColorTheme.enabled)
     const darkMode = useSelector(state => state.settings.darkMode.enabled)
     const [input, setInput] = useState(item.text)
@@ -19,6 +20,14 @@ export default function ListItem({ index, userId, items, setItems, item, modalVi
         item.completed = !itemComplete
 
         setItemComplete(itemComplete => !itemComplete)
+        setItems(items)
+        dispatch(setListItems(userId, items, storageSetItem))
+    }
+
+    const toggleImportant = () => {
+        item.important = !important
+
+        setImportant(important => !important)
         setItems(items)
         dispatch(setListItems(userId, items, storageSetItem))
     }
@@ -39,11 +48,11 @@ export default function ListItem({ index, userId, items, setItems, item, modalVi
         }
     }
 
-    
+
     return (
         <>
             <View style={styles.listItemContainer}>
-                <TouchableOpacity disabled={loading} style={[styles.listItem, itemComplete && styles.listItemComplete, altColorTheme && styles.altListItem, itemComplete && altColorTheme && styles.altListItemComplete, modalVisible.active && modalVisible.id === item.id && styles.listItemModalSelected, editMode && { borderStyle: 'dotted' }, (exchangeObj.index1 === index || exchangeObj.index2 === index) && {borderStyle: 'dotted'}]} onPress={toggleItemComplete}>
+                <TouchableOpacity disabled={loading} style={[styles.listItem, itemComplete && styles.listItemComplete, altColorTheme && styles.altListItem, itemComplete && altColorTheme && styles.altListItemComplete, modalVisible.active && modalVisible.id === item.id && styles.listItemModalSelected, editMode && { borderStyle: 'dotted', borderColor: Constants.colorWhite }, (exchangeObj.index1 === index || exchangeObj.index2 === index) && { borderStyle: 'dotted', borderColor: Constants.colorWhite }]} onPress={toggleItemComplete}>
                     <View style={styles.itemBtnContainer}>
                         <TouchableOpacity disabled={loading} onPress={() => { handleExchange() }}>
                             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -52,12 +61,17 @@ export default function ListItem({ index, userId, items, setItems, item, modalVi
                         </TouchableOpacity>
                         <TouchableOpacity disabled={loading} onPress={() => { setEditMode(true) }}>
                             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                <MaterialIcons name="mode-edit" size={Constants.fontLg} color={((modalVisible.active && modalVisible.id === item.id)) ? 'dimgray' : (itemComplete ? (altColorTheme ? Constants.colorSecondary : Constants.colorPrimary) : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark))} />
+                                <MaterialIcons name="mode-edit" size={Constants.fontLg} color={((modalVisible.active && modalVisible.id === item.id)) ? 'dimgray' : (editMode ? Constants.colorWhite : (itemComplete ? (altColorTheme ? Constants.colorSecondary : Constants.colorPrimary) : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark)))} />
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity disabled={loading} onPress={() => setModalVisible({ active: true, id: item.id })}>
                             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                <MaterialIcons name="delete" size={Constants.fontLg} color={modalVisible.active && modalVisible.id === item.id ? 'dimgray' : Constants.colorRed} />
+                                <MaterialIcons name="delete" size={Constants.fontLg} color={modalVisible.active && modalVisible.id === item.id ? Constants.colorWhite : (itemComplete ? (altColorTheme ? Constants.colorSecondary : Constants.colorPrimary) : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark))} />
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity disabled={loading} onPress={() => { toggleImportant() }}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                <MaterialIcons name="label-important" size={Constants.fontLg} color={((modalVisible.active && modalVisible.id === item.id)) ? 'dimgray' : (item.important ? Constants.colorWhite : (itemComplete ? (altColorTheme ? Constants.colorSecondary : Constants.colorPrimary) : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark)))} />
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -116,7 +130,8 @@ const styles = StyleSheet.create({
     },
     listItemModalSelected: {
         backgroundColor: 'gray',
-        borderColor: 'dimgray',
+        borderColor: Constants.colorWhite,
+        borderStyle: 'dotted'
     },
     listItemComplete: {
         borderStyle: 'dotted',
@@ -151,14 +166,14 @@ const styles = StyleSheet.create({
     lineThrough: {
         textDecorationLine: 'line-through',
     },
-    itemBtnContainer: { 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        flexDirection: 'row', 
-        alignSelf: 'flex-end',
+    itemBtnContainer: {
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        flexDirection: 'row',
         height: 28,
         minHeight: 28,
-        maxHeight: 28 
+        maxHeight: 28,
+        width: '100%'
     },
     modal: {
         flex: 1,
