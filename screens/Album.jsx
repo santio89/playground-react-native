@@ -30,12 +30,12 @@ const Album = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState({ active: false, id: null })
   const [modalImg, setModalImg] = useState({ active: false, id: null, uri: null })
 
+  const [bigImg, setBigImg] = useState(false)
+
   const appLoading = useSelector(state => state.apps.isLoading)
   const [loading, setLoading] = useState(false)
 
   const [itemDeleting, setItemDeleting] = useState(null)
-
-  const [bigImg, setBigImg] = useState(false)
 
   const updateWindowWidth = () => {
     setWindowWidth(Dimensions.get('window').width)
@@ -114,6 +114,26 @@ const Album = ({ navigation }) => {
     dispatch(setAlbumItems(userId, uriList.filter(item => item.id != id), storageSetItem))
   }
 
+  const returnNext = (id) => {
+    const index = uriList.findIndex(item => item.id === id)
+
+    if (uriList[index + 1]) {
+      return uriList[index + 1]
+    } else {
+      return uriList[0]
+    }
+  }
+
+  const returnPrev = (id) => {
+    const index = uriList.findIndex(item => item.id === id)
+
+    if (uriList[index - 1]) {
+      return uriList[index - 1]
+    } else {
+      return uriList[uriList.length - 1]
+    }
+  }
+
 
   useEffect(() => {
     setUriList(uriListData)
@@ -140,26 +160,6 @@ const Album = ({ navigation }) => {
       title: `${text.album} | PLAYGROUND`,
     })
   }, [text])
-
-  const returnNext = (id) => {
-    const index = uriList.findIndex(item => item.id === id)
-
-    if (uriList[index + 1]) {
-      return uriList[index + 1]
-    } else {
-      return uriList[0]
-    }
-  }
-
-  const returnPrev = (id) => {
-    const index = uriList.findIndex(item => item.id === id)
-
-    if (uriList[index - 1]) {
-      return uriList[index - 1]
-    } else {
-      return uriList[uriList.length - 1]
-    }
-  }
 
 
   return (
