@@ -207,11 +207,11 @@ const Album = ({ navigation }) => {
             <Image style={[styles.albumModalImg]} source={{ uri: modalImg.uri }} />
             <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
               <View style={{ flexDirection: 'row', backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, borderRadius: 4, borderWidth: 2, borderColor: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, marginHorizontal: 4 }}>
-                <TouchableOpacity style={{ padding: 8, width: 58 }} onPress={() => { const prevImg = returnPrev(modalImg.id); setModalImg({ active: true, id: prevImg.id, uri: prevImg.uri }) }}>
+                <TouchableOpacity style={{ padding: 8, width: 58, backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark }} onPress={() => { const prevImg = returnPrev(modalImg.id); setModalImg({ active: true, id: prevImg.id, uri: prevImg.uri }) }}>
                   <MaterialIcons name="navigate-before" size={Constants.fontLg} color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{ padding: 8, width: 58 }} onPress={() => { const nextImg = returnNext(modalImg.id); setModalImg({ active: true, id: nextImg.id, uri: nextImg.uri }) }}>
+                <TouchableOpacity style={{ padding: 8, width: 58, backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark }} onPress={() => { const nextImg = returnNext(modalImg.id); setModalImg({ active: true, id: nextImg.id, uri: nextImg.uri }) }}>
                   <MaterialIcons name="navigate-next" size={Constants.fontLg} color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
                 </TouchableOpacity>
               </View>
