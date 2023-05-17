@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, ScrollView } from 'react-native'
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import Constants from '../constants/Styles'

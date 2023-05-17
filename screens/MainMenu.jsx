@@ -107,7 +107,6 @@ const MainMenu = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-
                 </ScrollView>
             </View >
         </>

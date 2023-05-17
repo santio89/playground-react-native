@@ -1,7 +1,6 @@
 import { StyleSheet, Text, TextInput, View, SafeAreaView, KeyboardAvoidingView, ScrollView, FlatList, ActivityIndicator, Image, Dimensions, TouchableOpacity, Modal } from 'react-native'
 import * as Location from 'expo-location'
-import { Entypo } from '@expo/vector-icons'
-import { Foundation } from '@expo/vector-icons';
+import { Entypo, Foundation } from '@expo/vector-icons'
 import { useState, useEffect } from 'react'
 import Constants from '../constants/Styles.js'
 import { LANGS } from '../constants/Langs.js'

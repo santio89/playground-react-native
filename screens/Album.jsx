@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setAlbumItems } from '../store/actions/apps.action'
 import Constants from '../constants/Styles'
 import { LANGS } from '../constants/Langs'
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import uuid from 'react-native-uuid';
 import * as ImagePicker from 'expo-image-picker'
@@ -23,6 +23,7 @@ const Album = ({ navigation }) => {
   const [uriList, setUriList] = useState(uriListData)
 
   const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
+  const [windowHeight, setWindowHeight] = useState(Dimensions.get('window').height);
 
   const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
@@ -34,8 +35,13 @@ const Album = ({ navigation }) => {
 
   const [itemDeleting, setItemDeleting] = useState(null)
 
+  const [bigImg, setBigImg] = useState(false)
+
   const updateWindowWidth = () => {
     setWindowWidth(Dimensions.get('window').width)
+  }
+  const updateWindowHeight = () => {
+    setWindowHeight(Dimensions.get('window').height)
   }
 
   const verifyPermissions = async () => {
@@ -117,9 +123,11 @@ const Album = ({ navigation }) => {
 
   useEffect(() => {
     const dimensionsHandler = Dimensions.addEventListener("change", updateWindowWidth)
+    const dimensionsHandlerH = Dimensions.addEventListener("change", updateWindowHeight)
 
     return () => {
       dimensionsHandler.remove()
+      dimensionsHandlerH.remove()
     }
   })
 
@@ -207,25 +215,58 @@ const Album = ({ navigation }) => {
 
       <Modal visible={modalImg.active} transparent={true} animationType='fade'>
         <ScrollView contentContainerStyle={{ flex: 1, backgroundColor: 'rgba(20,20,20,.8)', justifyContent: 'center', alignItems: 'center', zIndex: 999 }}>
-          <View style={{ flex: 1, width: '90%', minWidth: 280, maxWidth: 680, justifyContent: 'center', alignItems: 'center' }}>
-            <Image style={[styles.albumModalImg]} source={{ uri: modalImg.uri }} />
-            <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-              <View style={{ flexDirection: 'row', backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, borderRadius: 4, borderWidth: 2, borderColor: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, marginHorizontal: 4 }}>
-                <TouchableOpacity style={{ padding: 8, width: 58, backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark }} onPress={() => { const prevImg = returnPrev(modalImg.id); setModalImg({ active: true, id: prevImg.id, uri: prevImg.uri }) }}>
-                  <MaterialIcons name="navigate-before" size={Constants.fontLg} color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
-                </TouchableOpacity>
 
-                <TouchableOpacity style={{ padding: 8, width: 58, backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark }} onPress={() => { const nextImg = returnNext(modalImg.id); setModalImg({ active: true, id: nextImg.id, uri: nextImg.uri }) }}>
-                  <MaterialIcons name="navigate-next" size={Constants.fontLg} color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
-                </TouchableOpacity>
-              </View>
-              <View style={{ marginHorizontal: 4 }}>
-                <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn, { padding: 8, borderColor: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, borderWidth: 2, margin: 0 }]} onPress={() => setModalImg({ active: false, id: null, uri: null })}>
-                  <MaterialIcons name="close" size={Constants.fontLg} color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
-                </TouchableOpacity>
+          {bigImg ?
+            <View style={{ flex: 1, width: windowWidth, minWidth: windowWidth, maxWidth: windowWidth, height: windowHeight, minHeight: windowHeight, maxHeight: windowHeight, justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
+              <Image style={[styles.albumModalImg, { aspectRatio: 'auto', width: '100%', height: '100%', borderRadius: 0 }]} source={{ uri: modalImg.uri }} />
+
+              <View style={{ width: 'auto', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 0, right: 0 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, borderRadius: 0, borderWidth: 2, borderRightWidth: 1, borderColor: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, marginHorizontal: 0, marginLeft: 0 }}>
+                  <TouchableOpacity style={{ padding: 4, width: 30, backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, display: 'flex', justifyContent: 'center', alignItems: 'center' }} onPress={() => { const prevImg = returnPrev(modalImg.id); setModalImg({ active: true, id: prevImg.id, uri: prevImg.uri }) }}>
+                    <MaterialIcons style={{ width: 20, height: 20 }} name="navigate-before" size={Constants.fontMd} color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
+                  </TouchableOpacity>
+
+                  <TouchableOpacity style={{ padding: 4, width: 30, backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, display: 'flex', justifyContent: 'center', alignItems: 'center' }} onPress={() => { const nextImg = returnNext(modalImg.id); setModalImg({ active: true, id: nextImg.id, uri: nextImg.uri }) }}>
+                    <MaterialIcons style={{ width: 20, height: 20 }} name="navigate-next" size={Constants.fontMd} color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
+                  </TouchableOpacity>
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginHorizontal: 0, marginRight: 0, borderStyle: 'solid', borderColor: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, borderWidth: 2, borderLeftWidth: 1, backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark }}>
+                  <TouchableOpacity style={{ padding: 4, width: 30, backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, display: 'flex', justifyContent: 'center', alignItems: 'center' }} onPress={() => { setBigImg(false) }}>
+                    <MaterialCommunityIcons style={{ width: 20, height: 20 }} name="arrow-collapse-all" size={Constants.fontMd} color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
+                  </TouchableOpacity>
+
+                  <TouchableOpacity style={{ padding: 4, width: 30, backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, display: 'flex', justifyContent: 'center', alignItems: 'center' }} onPress={() => { setBigImg(false); setModalImg({ active: false, id: null, uri: null }) }}>
+                    <MaterialIcons style={{ width: 20, height: 20 }} name="close" size={Constants.fontMd} color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-          </View>
+            :
+            <View style={{ flex: 1, width: '90%', minWidth: 280, maxWidth: 680, justifyContent: 'center', alignItems: 'center' }}>
+              <Image style={[styles.albumModalImg]} source={{ uri: modalImg.uri }} />
+              <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, borderRadius: 4, borderWidth: 2, borderColor: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, marginHorizontal: 4 }}>
+                  <TouchableOpacity style={{ padding: 4, width: 48, backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, display: 'flex', justifyContent: 'center', alignItems: 'center' }} onPress={() => { const prevImg = returnPrev(modalImg.id); setModalImg({ active: true, id: prevImg.id, uri: prevImg.uri }) }}>
+                    <MaterialIcons style={{ width: 28, height: 28 }} name="navigate-before" size={Constants.fontLg} color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
+                  </TouchableOpacity>
+
+                  <TouchableOpacity style={{ padding: 4, width: 48, backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, display: 'flex', justifyContent: 'center', alignItems: 'center' }} onPress={() => { const nextImg = returnNext(modalImg.id); setModalImg({ active: true, id: nextImg.id, uri: nextImg.uri }) }}>
+                    <MaterialIcons style={{ width: 28, height: 28 }} name="navigate-next" size={Constants.fontLg} color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
+                  </TouchableOpacity>
+                </View>
+
+                <View style={{ flexDirection: 'row', backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, borderRadius: 4, borderWidth: 2, borderColor: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, marginHorizontal: 4 }}>
+                  <TouchableOpacity style={{ padding: 4, width: 48, backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, display: 'flex', justifyContent: 'center', alignItems: 'center' }} onPress={() => { setBigImg(true) }}>
+                    <MaterialCommunityIcons style={{ width: 28, height: 28 }} name="arrow-expand-all" size={Constants.fontLg} color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
+                  </TouchableOpacity>
+
+                  <TouchableOpacity style={{ padding: 4, width: 48, backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, display: 'flex', justifyContent: 'center', alignItems: 'center' }} onPress={() => { setBigImg(false); setModalImg({ active: false, id: null, uri: null }) }}>
+                    <MaterialIcons style={{ width: 28, height: 28 }} name="close" size={Constants.fontLg} color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          }
         </ScrollView>
       </Modal>
     </View>
