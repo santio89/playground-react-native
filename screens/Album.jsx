@@ -23,7 +23,6 @@ const Album = ({ navigation }) => {
   const [uriList, setUriList] = useState(uriListData)
 
   const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
-  const [windowHeight, setWindowHeight] = useState(Dimensions.get('window').height);
 
   const [text, setText] = useState(LANGS.find(lang => lang.lang === languageSelected).text)
 
@@ -39,9 +38,6 @@ const Album = ({ navigation }) => {
 
   const updateWindowWidth = () => {
     setWindowWidth(Dimensions.get('window').width)
-  }
-  const updateWindowHeight = () => {
-    setWindowHeight(Dimensions.get('window').height)
   }
 
   const verifyPermissions = async () => {
@@ -143,11 +139,9 @@ const Album = ({ navigation }) => {
 
   useEffect(() => {
     const dimensionsHandler = Dimensions.addEventListener("change", updateWindowWidth)
-    const dimensionsHandlerH = Dimensions.addEventListener("change", updateWindowHeight)
 
     return () => {
       dimensionsHandler.remove()
-      dimensionsHandlerH.remove()
     }
   })
 
@@ -217,7 +211,7 @@ const Album = ({ navigation }) => {
         <ScrollView contentContainerStyle={{ flex: 1, backgroundColor: 'rgba(20,20,20,.8)', justifyContent: 'center', alignItems: 'center', zIndex: 999 }}>
 
           {bigImg ?
-            <View style={{ flex: 1, width: windowWidth, minWidth: windowWidth, maxWidth: windowWidth, height: windowHeight, minHeight: windowHeight, maxHeight: windowHeight, justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
+            <SafeAreaView style={{ flex: 1, width: '100%', minWidth: '100%', maxWidth: '100%', height: '100%', minHeight: '100%', maxHeight: '100%', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
               <Image style={[styles.albumModalImg, { aspectRatio: 'auto', width: '100%', height: '100%', borderRadius: 0 }]} source={{ uri: modalImg.uri }} />
 
               <View style={{ width: 'auto', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 0, right: 0 }}>
@@ -240,9 +234,9 @@ const Album = ({ navigation }) => {
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>
+            </SafeAreaView>
             :
-            <View style={{ flex: 1, width: '90%', minWidth: 280, maxWidth: 680, justifyContent: 'center', alignItems: 'center' }}>
+            <SafeAreaView style={{ flex: 1, width: '90%', minWidth: 280, maxWidth: 680, justifyContent: 'center', alignItems: 'center' }}>
               <Image style={[styles.albumModalImg]} source={{ uri: modalImg.uri }} />
               <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                 <View style={{ flexDirection: 'row', backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, borderRadius: 4, borderWidth: 2, borderColor: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, marginHorizontal: 4 }}>
@@ -265,7 +259,7 @@ const Album = ({ navigation }) => {
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>
+            </SafeAreaView>
           }
         </ScrollView>
       </Modal>
