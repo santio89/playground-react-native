@@ -206,7 +206,7 @@ const Album = ({ navigation }) => {
           <View style={{ flex: 1, width: '90%', minWidth: 280, maxWidth: 680, justifyContent: 'center', alignItems: 'center' }}>
             <Image style={[styles.albumModalImg]} source={{ uri: modalImg.uri }} />
             <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-              <View style={{ flexDirection: 'row', backgroundColor: Constants.colorPrimaryDark, borderRadius: 4, borderWidth: 2, borderColor: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, marginHorizontal: 4 }}>
+              <View style={{ flexDirection: 'row', backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, borderRadius: 4, borderWidth: 2, borderColor: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, marginHorizontal: 4 }}>
                 <TouchableOpacity style={{ padding: 8, width: 58 }} onPress={() => { const prevImg = returnPrev(modalImg.id); setModalImg({ active: true, id: prevImg.id, uri: prevImg.uri }) }}>
                   <MaterialIcons name="navigate-before" size={Constants.fontLg} color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
                 </TouchableOpacity>
