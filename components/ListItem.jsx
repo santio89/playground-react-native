@@ -91,7 +91,7 @@ export default function ListItem({ index, userId, items, setItems, item, modalVi
                     <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
                         <View style={styles.modalTitle}>
                             <Text style={styles.modalTitleText}>{text.editTask}</Text>
-                            <TextInput value={input} style={styles.modalText} placeholder={text.enterTask} placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} onChangeText={input => setInput(input)} onSubmitEditing={() => { editItem(item, input), setEditMode(false), setInput(input => input.trim()) }} />
+                            <TextInput value={input} style={[styles.modalText, altColorTheme && styles.altModalText]} placeholder={text.enterTask} placeholderTextColor={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} onChangeText={input => setInput(input)} onSubmitEditing={() => { editItem(item, input), setEditMode(false), setInput(input => input.trim()) }} />
                         </View>
                         <View style={styles.modalBtnContainer}>
                             <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setInput(item.text); setEditMode(false) }}>
@@ -273,4 +273,7 @@ const styles = StyleSheet.create({
     altModalBtn: {
         backgroundColor: Constants.colorSecondaryDark,
     },
+    altModalText: {
+        backgroundColor: Constants.colorSecondaryDark,
+    }
 })
