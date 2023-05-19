@@ -207,8 +207,6 @@ export const getAppsData = (userId, storageGetItem) => {
                     type: SET_ALBUM_ITEMS,
                     items: []
                 })
-
-                setDataUpdated && setDataUpdated(true)
             } catch (e) {
                 console.log("error retrieving data from storage: ", e)
             } finally {
