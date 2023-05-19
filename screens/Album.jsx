@@ -36,6 +36,8 @@ const Album = ({ navigation }) => {
 
   const [itemDeleting, setItemDeleting] = useState(null)
 
+  const [exchangeObj, setExchangeObj] = useState({ index1: null, index2: null })
+
   const updateWindowWidth = () => {
     setWindowWidth(Dimensions.get('window').width)
   }
@@ -105,8 +107,33 @@ const Album = ({ navigation }) => {
 
   const deleteItem = (id) => {
     setLoading(true)
-    setItemDeleting(id)
     dispatch(setAlbumItems(userId, uriList.filter(item => item.id != id), storageSetItem))
+  }
+
+  const exchangeItem = (index1, index2) => {
+    const mItems = [...uriList]
+    const mItem = uriList[index1]
+    mItems[index1] = { ...mItems[index2] }
+    mItems[index2] = { ...mItem }
+
+    setLoading(true)
+    dispatch(setAlbumItems(userId, mItems, storageSetItem))
+  }
+
+  const handleExchange = (index) => {
+    if (exchangeObj.index1 === index) {
+      setExchangeObj({ ...exchangeObj, index1: null })
+    }
+    if (exchangeObj.index2 === index) {
+      setExchangeObj({ ...exchangeObj, index2: null })
+    }
+    if (exchangeObj.index1 !== index && exchangeObj.index2 !== index) {
+      if (exchangeObj.index1 === null) {
+        setExchangeObj({ ...exchangeObj, index1: index })
+      } else if (exchangeObj.index2 === null) {
+        setExchangeObj({ ...exchangeObj, index2: index })
+      }
+    }
   }
 
   const returnNext = (id) => {
@@ -129,11 +156,16 @@ const Album = ({ navigation }) => {
     }
   }
 
+  useEffect(() => {
+    exchangeObj.index1 !== null && exchangeObj.index2 !== null && exchangeItem(exchangeObj.index1, exchangeObj.index2)
+  }, [exchangeObj])
+
 
   useEffect(() => {
     setUriList(uriListData)
     setLoading(false)
     setItemDeleting(null)
+    setExchangeObj({ index1: null, index2: null })
   }, [uriListData])
 
   useEffect(() => {
@@ -174,17 +206,25 @@ const Album = ({ navigation }) => {
                   <Text style={{ color: Constants.colorWhite, fontFamily: Constants.fontPrimary, fontSize: Constants.fontLg, textAlign: 'center' }}>{text.noImg}
                   </Text>
                 </View> :
-                uriList.map((item) => (
-                  item && <TouchableOpacity disabled={itemDeleting === item.id} key={item.id} style={[styles.albumImgBtn, Platform.OS === 'web' && modalVisible.active && modalVisible.id === item.id && { filter: 'grayscale(1)' }, Platform.OS === 'web' && itemDeleting === item.id && { filter: 'grayscale(1)' }]} onPress={() => { setModalImg({ active: true, id: item.id, uri: item.uri }) }}>
-                    <Image style={styles.albumImg} source={item.uri && item.uri !== "" ? { uri: item.uri } : require('../assets/icon.png')} />
-                    <TouchableOpacity disabled={(itemDeleting === item.id) || loading} style={{ position: 'absolute', bottom: -8, right: -8 }} onPress={() => setModalVisible({ active: true, id: item.id })}>
-                      <View style={{ padding: 4, justifyContent: 'center', alignItems: 'center' }}>
-                        {itemDeleting === item.id ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark} /> :
-                          <MaterialIcons name="delete" size={Constants.fontLg} color={((modalVisible.active && modalVisible.id === item.id) || loading) ? 'dimgray' : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark)} />
-                        }
-                      </View>
+                uriList.map((item, index) => (
+                  item &&
+                  <View key={item.id} style={{ margin: 8 }}>
+                    <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', backgroundColor: (itemDeleting === item.id) ? 'gray' : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark), borderTopLeftRadius: 8, borderTopRightRadius: 8, paddingHorizontal: 2 }}>
+                      <TouchableOpacity disabled={loading} onPress={() => { handleExchange(index) }}>
+                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                          <MaterialIcons name="swap-vert" size={Constants.fontLg} color={((itemDeleting === item.id)) ? 'dimgray' : (exchangeObj.index1 === index || exchangeObj.index2 === index ? Constants.colorWhite : (altColorTheme ? Constants.colorSecondary : Constants.colorPrimary))} />
+                        </View>
+                      </TouchableOpacity>
+                      <TouchableOpacity disabled={loading} onPress={() => { setItemDeleting(item.id); setModalVisible({ active: true, id: item.id }) }}>
+                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                          <MaterialIcons name="delete" size={Constants.fontLg} color={(itemDeleting === item.id) ? Constants.colorWhite : (altColorTheme ? Constants.colorSecondary : Constants.colorPrimary)} />
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity disabled={itemDeleting === item.id} style={[styles.albumImgBtn, Platform.OS === 'web' && modalVisible.active && modalVisible.id === item.id && { filter: 'grayscale(1)' }, Platform.OS === 'web' && itemDeleting === item.id && { filter: 'grayscale(1)' }]} onPress={() => { setModalImg({ active: true, id: item.id, uri: item.uri }) }}>
+                      <Image style={styles.albumImg} source={item.uri && item.uri !== "" ? { uri: item.uri } : require('../assets/icon.png')} />
                     </TouchableOpacity>
-                  </TouchableOpacity>
+                  </View>
                 )))
           }
         </ScrollView>
@@ -195,7 +235,7 @@ const Album = ({ navigation }) => {
           <View style={[styles.modalInner, !darkMode && styles.modalBorderDark, altColorTheme && styles.altModalInner]}>
             <Text style={styles.modalTitle}>{text.deletePic}?</Text>
             <View style={styles.modalBtnContainer}>
-              <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => setModalVisible({ active: false, id: null })}>
+              <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn]} onPress={() => { setItemDeleting(null); setModalVisible({ active: false, id: null }) }}>
                 <Text style={[styles.modalBtnText]} >{text.cancel}</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.modalBtn, altColorTheme && styles.altModalBtn, styles.borderRed]} onPress={() => { deleteItem(modalVisible.id); setModalVisible({ active: false, id: null }) }}>
@@ -212,7 +252,6 @@ const Album = ({ navigation }) => {
           {bigImg ?
             <SafeAreaView style={{ flex: 1, width: '100%', minWidth: '100%', maxWidth: '100%', height: '100%', minHeight: '100%', maxHeight: '100%', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
               <Image style={[styles.albumModalImg, { aspectRatio: 'auto', width: '100%', height: '100%', borderRadius: 0 }]} source={{ uri: modalImg.uri }} />
-
               <View style={{ width: 'auto', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 0, right: 0 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, borderRadius: 0, borderWidth: 2, borderRightWidth: 1, borderColor: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, marginHorizontal: 0, marginLeft: 0 }}>
                   <TouchableOpacity style={{ padding: 4, width: 30, backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, display: 'flex', justifyContent: 'center', alignItems: 'center' }} onPress={() => { const prevImg = returnPrev(modalImg.id); setModalImg({ active: true, id: prevImg.id, uri: prevImg.uri }) }}>
@@ -262,7 +301,7 @@ const Album = ({ navigation }) => {
           }
         </ScrollView>
       </Modal>
-    </View>
+    </View >
   )
 }
 
@@ -326,17 +365,17 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: '100%',
     minWidth: 300,
-    padding: 8,
     marginVertical: 16
   },
   albumImg: {
     borderRadius: 8,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
     width: '100%',
-    minWidth: 140,
-    maxWidth: 140,
+    minWidth: 160,
+    maxWidth: 160,
     aspectRatio: 1,
     position: 'relative',
-    margin: 8
   },
   albumModalImg: {
     borderRadius: 8,
@@ -346,7 +385,6 @@ const styles = StyleSheet.create({
     marginVertical: 8
   },
   albumImgBtn: {
-    margin: 10,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
