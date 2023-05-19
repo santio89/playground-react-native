@@ -3,7 +3,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const AlbumImg = ({ item, index, loading, itemDeleting, handleExchange, exchangeObj, setItemDeleting, setModalVisible, Platform, setModalImg, altColorTheme, Constants, modalVisible }) => {
     return (
-        <View style={{ margin: 8, backgroundColor: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, borderRadius: 8, overflow: 'hidden' }}>
+        <View style={{ margin: 8, backgroundColor: (itemDeleting === item.id) ? 'darkgray' : (altColorTheme ? Constants.colorSecondary : Constants.colorPrimary), borderRadius: 8, overflow: 'hidden' }}>
             <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', backgroundColor: (itemDeleting === item.id) ? 'gray' : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark), paddingHorizontal: 2, minHeight: 28, maxHeight: 28 }}>
                 <TouchableOpacity disabled={loading} onPress={() => { handleExchange(index) }}>
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
