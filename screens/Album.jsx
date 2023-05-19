@@ -10,6 +10,7 @@ import uuid from 'react-native-uuid';
 import * as ImagePicker from 'expo-image-picker'
 import { storageSetItem } from '../utils/AsyncStorage'
 import Alert from '../utils/Alert'
+import AlbumImg from '../components/AlbumImg'
 
 const Album = ({ navigation }) => {
   const dispatch = useDispatch()
@@ -37,6 +38,8 @@ const Album = ({ navigation }) => {
   const [itemDeleting, setItemDeleting] = useState(null)
 
   const [exchangeObj, setExchangeObj] = useState({ index1: null, index2: null })
+
+  const [fullAlbum, setFullAlbum] = useState(false)
 
   const updateWindowWidth = () => {
     setWindowWidth(Dimensions.get('window').width)
@@ -111,12 +114,11 @@ const Album = ({ navigation }) => {
   }
 
   const exchangeItem = (index1, index2) => {
+    setLoading(true)
     const mItems = [...uriList]
     const mItem = uriList[index1]
     mItems[index1] = { ...mItems[index2] }
     mItems[index2] = { ...mItem }
-
-    setLoading(true)
     dispatch(setAlbumItems(userId, mItems, storageSetItem))
   }
 
@@ -166,6 +168,8 @@ const Album = ({ navigation }) => {
     setLoading(false)
     setItemDeleting(null)
     setExchangeObj({ index1: null, index2: null })
+
+    uriListData.length < 24 ? setFullAlbum(false) : setFullAlbum(true)
   }, [uriListData])
 
   useEffect(() => {
@@ -190,11 +194,17 @@ const Album = ({ navigation }) => {
   return (
     <View style={[styles.albumWrapper, !darkMode && styles.backgroundWhite]}>
       <View style={[styles.btnContainer]}>
-        <TouchableOpacity disabled={loading || appLoading} style={[styles.albumBtn, altColorTheme && styles.altAlbumBtn, (loading || appLoading) && { backgroundColor: 'gray', borderColor: 'dimgray' }]} onPress={handleTakeImage}>
-          <Text style={[styles.albumText]}>{loading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Entypo name="camera" size={Constants.fontXl} color={Constants.colorWhite} />}</Text>
+        <TouchableOpacity disabled={loading || appLoading || fullAlbum} style={[styles.albumBtn, altColorTheme && styles.altAlbumBtn, (loading || appLoading || fullAlbum) && { backgroundColor: 'gray', borderColor: 'dimgray' }]} onPress={handleTakeImage}>
+          {fullAlbum ?
+            <Text style={{ fontFamily: Constants.fontPrimary, fontSize: Constants.fontMd, color: Constants.colorWhite }}>{`${text.max}\n24 IMG`}</Text> :
+            <Text style={[styles.albumText]}>{loading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Entypo name="camera" size={Constants.fontXl} color={Constants.colorWhite} />}</Text>
+          }
         </TouchableOpacity>
-        <TouchableOpacity disabled={loading || appLoading} style={[styles.albumBtn, altColorTheme && styles.altAlbumBtn, (loading || appLoading) && { backgroundColor: 'gray', borderColor: 'dimgray' }]} onPress={handleUploadImage}>
-          <Text style={[styles.albumText]}>{loading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Entypo name="upload" size={Constants.fontXl} color={Constants.colorWhite} />}</Text>
+        <TouchableOpacity disabled={loading || appLoading || fullAlbum} style={[styles.albumBtn, altColorTheme && styles.altAlbumBtn, (loading || appLoading || fullAlbum) && { backgroundColor: 'gray', borderColor: 'dimgray' }]} onPress={handleUploadImage}>
+          {fullAlbum ?
+            <Text style={{ fontFamily: Constants.fontPrimary, fontSize: Constants.fontMd, color: Constants.colorWhite }}>{`${text.max}\n24 IMG`}</Text> :
+            <Text style={[styles.albumText]}>{loading ? <ActivityIndicator size="small" color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} /> : <Entypo name="upload" size={Constants.fontXl} color={Constants.colorWhite} />}</Text>
+          }
         </TouchableOpacity>
       </View>
       <View style={[styles.albumContainer, !darkMode && styles.backgroundWhite]}>
@@ -208,23 +218,7 @@ const Album = ({ navigation }) => {
                 </View> :
                 uriList.map((item, index) => (
                   item &&
-                  <View key={item.id} style={{ margin: 8 }}>
-                    <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', backgroundColor: (itemDeleting === item.id) ? 'gray' : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark), borderTopLeftRadius: 8, borderTopRightRadius: 8, paddingHorizontal: 2 }}>
-                      <TouchableOpacity disabled={loading} onPress={() => { handleExchange(index) }}>
-                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                          <MaterialIcons name="swap-vert" size={Constants.fontLg} color={((itemDeleting === item.id)) ? 'dimgray' : (exchangeObj.index1 === index || exchangeObj.index2 === index ? Constants.colorWhite : (altColorTheme ? Constants.colorSecondary : Constants.colorPrimary))} />
-                        </View>
-                      </TouchableOpacity>
-                      <TouchableOpacity disabled={loading} onPress={() => { setItemDeleting(item.id); setModalVisible({ active: true, id: item.id }) }}>
-                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                          <MaterialIcons name="delete" size={Constants.fontLg} color={(itemDeleting === item.id) ? Constants.colorWhite : (altColorTheme ? Constants.colorSecondary : Constants.colorPrimary)} />
-                        </View>
-                      </TouchableOpacity>
-                    </View>
-                    <TouchableOpacity disabled={itemDeleting === item.id} style={[styles.albumImgBtn, Platform.OS === 'web' && modalVisible.active && modalVisible.id === item.id && { filter: 'grayscale(1)' }, Platform.OS === 'web' && itemDeleting === item.id && { filter: 'grayscale(1)' }]} onPress={() => { setModalImg({ active: true, id: item.id, uri: item.uri }) }}>
-                      <Image style={styles.albumImg} source={item.uri && item.uri !== "" ? { uri: item.uri } : require('../assets/icon.png')} />
-                    </TouchableOpacity>
-                  </View>
+                  <AlbumImg key={item.id} item={item} index={index} loading={loading} itemDeleting={itemDeleting} handleExchange={handleExchange} exchangeObj={exchangeObj} setItemDeleting={setItemDeleting} setModalVisible={setModalVisible} Platform={Platform} setModalImg={setModalImg} altColorTheme={altColorTheme} Constants={Constants} modalVisible={modalVisible} />
                 )))
           }
         </ScrollView>
@@ -367,27 +361,12 @@ const styles = StyleSheet.create({
     minWidth: 300,
     marginVertical: 16
   },
-  albumImg: {
-    borderRadius: 8,
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
-    width: '100%',
-    minWidth: 160,
-    maxWidth: 160,
-    aspectRatio: 1,
-    position: 'relative',
-  },
   albumModalImg: {
     borderRadius: 8,
     width: '100%',
     aspectRatio: 4 / 3,
     position: 'relative',
     marginVertical: 8
-  },
-  albumImgBtn: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
   },
   modal: {
     flex: 1,

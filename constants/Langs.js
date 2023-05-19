@@ -66,7 +66,8 @@ export const LANGS = [{
         downloadApk: "DOWNLOAD APK",
         refreshUser: "REFRESH DATA",
         editTask: "EDIT TASK",
-        enterTask: "ENTER TASK"
+        enterTask: "ENTER TASK",
+        max: "MAX"
     }
 }, {
     id: 2, lang: "spanish", text: {
@@ -136,6 +137,7 @@ export const LANGS = [{
         downloadApk: "DESCARGAR APK",
         refreshUser: "REFRESCAR DATOS",
         editTask: "EDITAR TAREA",
-        enterTask: "INGRESAR TAREA"
+        enterTask: "INGRESAR TAREA",
+        max: "MÁX"
     }
 }]
