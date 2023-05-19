@@ -3,8 +3,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const AlbumImg = ({ item, index, loading, itemDeleting, handleExchange, exchangeObj, setItemDeleting, setModalVisible, Platform, setModalImg, altColorTheme, Constants, modalVisible }) => {
     return (
-        <View style={{ margin: 8 }}>
-            <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', backgroundColor: (itemDeleting === item.id) ? 'gray' : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark), borderTopLeftRadius: 8, borderTopRightRadius: 8, paddingHorizontal: 2 }}>
+        <View style={{ margin: 8, backgroundColor: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, borderRadius: 8, overflow: 'hidden' }}>
+            <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', backgroundColor: (itemDeleting === item.id) ? 'gray' : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark), paddingHorizontal: 2 }}>
                 <TouchableOpacity disabled={loading} onPress={() => { handleExchange(index) }}>
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                         <MaterialIcons name="swap-vert" size={Constants.fontLg} color={((itemDeleting === item.id)) ? 'dimgray' : (exchangeObj.index1 === index || exchangeObj.index2 === index ? Constants.colorWhite : (altColorTheme ? Constants.colorSecondary : Constants.colorPrimary))} />
@@ -27,9 +27,6 @@ export default AlbumImg
 
 const styles = StyleSheet.create({
     albumImg: {
-        borderRadius: 8,
-        borderTopLeftRadius: 0,
-        borderTopRightRadius: 0,
         width: '100%',
         minWidth: 160,
         maxWidth: 160,
