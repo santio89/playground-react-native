@@ -3,7 +3,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const AlbumImg = ({ item, index, loading, itemDeleting, handleExchange, exchangeObj, setItemDeleting, setModalVisible, Platform, setModalImg, altColorTheme, Constants, modalVisible }) => {
     return (
-        <View style={{ width: '100%', minWidth: 180, maxWidth: 240, flex: 1, margin: 8, backgroundColor: (itemDeleting === item.id) ? 'darkgray' : (altColorTheme ? Constants.colorSecondary : Constants.colorPrimary), borderRadius: 8, borderWidth: 2, borderColor: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, overflow: 'hidden', justifyContent: 'space-between', alignItems: 'center' }}>
+        <View style={{ flex: 1, width: '100%', minWidth: 220, maxWidth: 220, margin: 8, backgroundColor: (itemDeleting === item.id) ? 'darkgray' : (altColorTheme ? Constants.colorSecondary : Constants.colorPrimary), borderRadius: 8, borderWidth: 2, borderColor: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, overflow: 'hidden', justifyContent: 'space-between', alignItems: 'center' }}>
             <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', backgroundColor: (itemDeleting === item.id) ? 'gray' : (altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark), paddingHorizontal: 2, minHeight: 28, maxHeight: 28 }}>
                 <TouchableOpacity disabled={loading} onPress={() => { handleExchange(index) }}>
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>

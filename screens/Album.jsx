@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
-    maxWidth: 800,
+    maxWidth: 1024,
     margin: 'auto'
   },
   btnContainer: {
