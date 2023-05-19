@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
   },
   albumBtn: {
     backgroundColor: Constants.colorPrimary,
-    padding: 10,
+    padding: 2,
     borderRadius: 4,
     borderWidth: 2,
     borderColor: Constants.colorPrimaryDark,
