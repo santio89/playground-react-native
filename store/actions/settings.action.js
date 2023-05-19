@@ -58,7 +58,22 @@ export const getSettings = (userId, storageGetItem) => {
 
             try {
                 const response = await fetch(`${URL_API}settings/${userId}.json?auth=${userId}`)
-                const data = await response.json()
+                let data = await response.json()
+
+                /* in case of db issue */
+                if (data.error && data.error.startsWith("The Firebase database")) {
+                    data = {
+                        language: {
+                            selected: "english"
+                        },
+                        darkMode: {
+                            enabled: true
+                        },
+                        altColorTheme: {
+                            enabled: false
+                        }
+                    }
+                }
 
                 data && dispatch({
                     type: SET_SETTINGS,
