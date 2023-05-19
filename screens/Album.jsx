@@ -286,7 +286,7 @@ const Album = ({ navigation }) => {
                     <MaterialCommunityIcons style={{ width: 28, height: 28 }} name="arrow-expand-all" size={Constants.fontLg} color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
                   </TouchableOpacity>
 
-                  <TouchableOpacity style={{ padding: 4, width: 48, backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, display: 'flex', justifyContent: 'center', alignItems: 'center' }} onPress={() => { setBigImg(false); setModalImg({ active: false, id: null, uri: null }) }}>
+                  <TouchableOpacity style={{ padding: 4, width: 48, backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, display: 'flex', justifyContent: 'center', alignItems: 'center' }} onPress={() => { setModalImg({ active: false, id: null, uri: null }); setBigImg(false) }}>
                     <MaterialIcons style={{ width: 28, height: 28 }} name="close" size={Constants.fontLg} color={altColorTheme ? Constants.colorSecondary : Constants.colorPrimary} />
                   </TouchableOpacity>
                 </View>
