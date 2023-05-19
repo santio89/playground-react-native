@@ -62,6 +62,7 @@ export const getSettings = (userId, storageGetItem) => {
 
                 /* in case of db issue */
                 if (data.error && data.error.startsWith("The Firebase database")) {
+                    console.log("db-connection-failed")
                     data = {
                         language: {
                             selected: "english"
