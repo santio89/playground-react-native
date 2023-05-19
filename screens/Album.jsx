@@ -245,7 +245,7 @@ const Album = ({ navigation }) => {
 
           {bigImg ?
             <SafeAreaView style={{ flex: 1, width: '100%', minWidth: '100%', maxWidth: '100%', height: '100%', minHeight: '100%', maxHeight: '100%', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
-              <Image style={[styles.albumModalImg, { aspectRatio: 'auto', width: '100%', height: '100%', borderRadius: 0 }]} source={modalImg.uri && modalImg.uri !== "" ? { uri: modalImg.uri } : require('../assets/icon-holder.png')} />
+              <Image style={[styles.albumModalImg, { aspectRatio: 'auto', width: '100%', height: '100%', borderRadius: 0 }]} source={{ uri: modalImg.uri }} />
               <View style={{ width: 'auto', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 0, right: 0 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, borderRadius: 0, borderWidth: 2, borderRightWidth: 1, borderColor: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, marginHorizontal: 0, marginLeft: 0 }}>
                   <TouchableOpacity style={{ padding: 4, width: 30, backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, display: 'flex', justifyContent: 'center', alignItems: 'center' }} onPress={() => { const prevImg = returnPrev(modalImg.id); setModalImg({ active: true, id: prevImg.id, uri: prevImg.uri }) }}>
@@ -269,7 +269,7 @@ const Album = ({ navigation }) => {
             </SafeAreaView>
             :
             <SafeAreaView style={{ flex: 1, width: '90%', minWidth: 280, maxWidth: 680, justifyContent: 'center', alignItems: 'center' }}>
-              <Image style={[styles.albumModalImg]} source={modalImg.uri && modalImg.uri !== "" ? { uri: modalImg.uri } : require('../assets/icon-holder.png')} />
+              <Image style={[styles.albumModalImg]} source={{ uri: modalImg.uri }} />
               <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                 <View style={{ flexDirection: 'row', backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, borderRadius: 4, borderWidth: 2, borderColor: altColorTheme ? Constants.colorSecondary : Constants.colorPrimary, marginHorizontal: 4 }}>
                   <TouchableOpacity style={{ padding: 4, width: 48, backgroundColor: altColorTheme ? Constants.colorSecondaryDark : Constants.colorPrimaryDark, display: 'flex', justifyContent: 'center', alignItems: 'center' }} onPress={() => { const prevImg = returnPrev(modalImg.id); setModalImg({ active: true, id: prevImg.id, uri: prevImg.uri }) }}>
